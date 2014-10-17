@@ -61,9 +61,17 @@ gulp.task 'styles', ['clean'], ->
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
 
+gulp.task 'images', ['clean'], ->
+  gulp.src('app/images/**/*')
+    .pipe $.cache($.imagemin(
+      optimizationLevel: 3,
+      progressive: true,
+      interlaced: true
+    ))
+    .pipe gulp.dest('dist/images')
 
 gulp.task 'dev', ['set-development', 'default']
 
-gulp.task 'default', ['scripts', 'styles']
+gulp.task 'default', ['scripts', 'styles', 'images']
 
 
