@@ -1,8 +1,4 @@
 
-# Set config
-config =
-  production: true
-
 # Load libs
 gulp       = require 'gulp'
 del        = require 'del'
@@ -14,8 +10,22 @@ source     = require 'vinyl-source-stream'
 $ = require('gulp-load-plugins')()
 
 
-# Helpers
+# Set vars
+config =
+  production: true
 
+base =
+  app: './app/'
+  dist: './dist/'
+
+paths =
+  entries: ["#{base.app}scripts/app.coffee"]
+  scripts: ['scripts/**/*.coffee']
+  styles: ['styles/**/*.scss']
+  images: ['images/**/*']
+  html: ['index.html']
+
+# Helpers
 bundleName = ->
   if config.production
     'app.min.js'
@@ -24,21 +34,20 @@ bundleName = ->
 
 
 # Tasks
-
 gulp.task 'set-development', ->
   config.production = false
 
 gulp.task 'clean', (cb)->
-  del './dist/', cb
+  del base.dist, cb
 
 gulp.task 'lint', ->
-  gulp.src './app/**/*.coffee'
+  gulp.src paths.scripts, cwd: base.app
     .pipe $.coffeelint()
     .pipe $.coffeelint.reporter()
 
 gulp.task 'scripts', ['clean', 'lint'], ->
   bundler = browserify
-    entries: './app/scripts/app.coffee'
+    entries: paths.entries
     debug: not config.production
 
   bundler
@@ -47,7 +56,7 @@ gulp.task 'scripts', ['clean', 'lint'], ->
     .pipe source(bundleName())
     .pipe buffer()
     .pipe $.if(config.production, $.uglify())
-    .pipe gulp.dest('./dist/scripts/')
+    .pipe gulp.dest("#{base.dist}/scripts")
 
 gulp.task 'dev', ['set-development', 'default']
 
