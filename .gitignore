@@ -27,3 +27,6 @@ config/secrets.yml
 /node_modules
 /bower_components
 /dist
+
+# sass
+/.sass-cache
