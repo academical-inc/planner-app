@@ -21,16 +21,9 @@ base =
 paths =
   entries: ["#{base.app}scripts/app.coffee"]
   scripts: ['scripts/**/*.coffee']
-  styles: ['styles/**/*.scss']
+  styles: ['styles/main.scss']
   images: ['images/**/*']
   html: ['index.html']
-
-# Helpers
-bundleName = ->
-  if config.production
-    'app.min.js'
-  else
-    'app.js'
 
 
 # Tasks
@@ -53,13 +46,24 @@ gulp.task 'scripts', ['clean', 'lint'], ->
   bundler
     .transform 'coffeeify'
     .bundle()
-    .pipe source(bundleName())
+    .pipe source('app.js')
     .pipe buffer()
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
+gulp.task 'styles', ['clean'], ->
+  gulp.src paths.styles, cwd: base.app
+    .pipe $.rubySass(
+      style: 'expanded'
+      loadPath: ['bower_components']
+    )
+    .pipe $.autoprefixer('last 2 version')
+    .pipe $.if(config.production, $.minifyCss())
+    .pipe gulp.dest("#{base.dist}/styles")
+
+
 gulp.task 'dev', ['set-development', 'default']
 
-gulp.task 'default', ['scripts']
+gulp.task 'default', ['scripts', 'styles']
 
 

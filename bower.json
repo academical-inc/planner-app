@@ -1,0 +1,27 @@
+{
+  "name": "planner-app",
+  "version": "0.0.0",
+  "homepage": "https://github.com/academical-inc/planner-app",
+  "authors": [
+    "Juan Tejada <juans.tejada@gmail.com>"
+  ],
+  "description": "course schedule planning app",
+  "main": "dist/scripts/app.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "fullcalendar": "~2.1.1",
+    "bootstrap-sass-official": "~3.2.0+2"
+  }
+}
