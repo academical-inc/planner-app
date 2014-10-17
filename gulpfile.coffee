@@ -62,7 +62,7 @@ gulp.task 'styles', ['clean'], ->
     .pipe gulp.dest("#{base.dist}/styles")
 
 gulp.task 'images', ['clean'], ->
-  gulp.src('app/images/**/*')
+  gulp.src paths.images, cwd: base.app
     .pipe $.cache($.imagemin(
       optimizationLevel: 3,
       progressive: true,
@@ -70,8 +70,17 @@ gulp.task 'images', ['clean'], ->
     ))
     .pipe gulp.dest('dist/images')
 
+gulp.task 'html', ['clean'], ->
+  # TODO Should probably inject bower dependencies here somehow
+  gulp.src paths.html, cwd: base.app
+    .pipe gulp.dest(base.dist)
+
+gulp.task 'copy-extras', ['clean'], ->
+  gulp.src '*.*', cwd: base.app
+    .pipe gulp.dest(base.dist)
+
 gulp.task 'dev', ['set-development', 'default']
 
-gulp.task 'default', ['scripts', 'styles', 'images']
+gulp.task 'default', ['scripts', 'styles', 'images', 'html', 'copy-extras']
 
 
