@@ -41,16 +41,13 @@ gulp.task 'scripts', ['clean', 'lint'], ->
     entries: './app/scripts/app.coffee'
     debug: not config.production
 
-  s = bundler
+  bundler
     .transform 'coffeeify'
     .bundle()
     .pipe source(bundleName())
     .pipe buffer()
-
-  s = s.pipe $.uglify() if config.production
-
-  s.pipe gulp.dest('./dist/scripts/')
-  s
+    .pipe $.if(config.production, $.uglify())
+    .pipe gulp.dest('./dist/scripts/')
 
 gulp.task 'dev', ['set-development', 'default']
 
