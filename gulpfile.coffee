@@ -5,6 +5,7 @@ config =
 
 # Load libs
 gulp       = require 'gulp'
+del        = require 'del'
 browserify = require 'browserify'
 buffer     = require 'vinyl-buffer'
 source     = require 'vinyl-source-stream'
@@ -12,6 +13,17 @@ source     = require 'vinyl-source-stream'
 # Load plugins
 $ = require('gulp-load-plugins')()
 
+
+# Helpers
+
+bundleName = ->
+  if config.production
+    'app.min.js'
+  else
+    'app.js'
+
+
+# Tasks
 
 gulp.task 'set-development', ->
   config.production = false
@@ -24,7 +36,7 @@ gulp.task 'lint', ->
     .pipe $.coffeelint()
     .pipe $.coffeelint.reporter()
 
-gulp.task 'browserify', ['lint'], ->
+gulp.task 'scripts', ['clean', 'lint'], ->
   bundler = browserify
     entries: './app/scripts/app.coffee'
     debug: not config.production
@@ -32,15 +44,13 @@ gulp.task 'browserify', ['lint'], ->
   s = bundler
     .transform 'coffeeify'
     .bundle()
-    .pipe source('app.js')
+    .pipe source(bundleName())
     .pipe buffer()
 
   s = s.pipe $.uglify() if config.production
 
   s.pipe gulp.dest('./dist/scripts/')
   s
-
-gulp.task 'scripts', ['browserify']
 
 gulp.task 'dev', ['set-development', 'default']
 
