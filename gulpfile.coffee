@@ -6,6 +6,7 @@ browserify = require 'browserify'
 buffer     = require 'vinyl-buffer'
 source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
+wiredep    = require 'wiredep'
 
 # Load plugins
 $ = require('gulp-load-plugins')()
@@ -16,15 +17,16 @@ config =
   production: true
 
 base =
-  app: './app/'
-  dist: './dist/'
+  app: './app'
+  dist: './dist'
 
 paths =
-  entries: ["#{base.app}scripts/app.coffee"]
+  entries: ["#{base.app}/scripts/app.coffee"]
   scripts: ['scripts/**/*.coffee']
   styles: ['styles/main.scss']
   images: ['images/**/*']
   html: ['index.html']
+  extras: ['*.*', '!*.html']
 
 
 # Tasks
@@ -43,6 +45,7 @@ gulp.task 'scripts', ['lint'], ->
   bundler = browserify
     entries: paths.entries
     debug: not config.production
+    extensions: ['.coffee']
 
   bundler
     .transform 'coffeeify'
@@ -69,15 +72,18 @@ gulp.task 'images', ->
       progressive: true,
       interlaced: true
     ))
-    .pipe gulp.dest('dist/images')
+    .pipe gulp.dest("#{base.dist}/images")
 
 gulp.task 'html', ->
   # TODO Should probably inject bower dependencies here somehow
-  gulp.src paths.html, cwd: base.app
+  gulp.src "#{base.app}/#{paths.html}"
+    .pipe wiredep.stream(
+      exclude: ['bootstrap-sass-official']
+    )
     .pipe gulp.dest(base.dist)
 
 gulp.task 'copy-extras', ->
-  gulp.src '*.*', cwd: base.app
+  gulp.src paths.extras, cwd: base.app
     .pipe gulp.dest(base.dist)
 
 gulp.task 'serve', ->
@@ -88,10 +94,10 @@ gulp.task 'serve', ->
     )
 
 gulp.task 'watch', ['serve'], ->
-  gulp.watch "#{base.app}#{paths.scripts}", ['scripts']
-  gulp.watch "#{base.app}#{paths.styles}" , ['styles']
-  gulp.watch "#{base.app}#{paths.images}" , ['images']
-  gulp.watch "#{base.app}#{paths.html}"   , ['html']
+  gulp.watch "#{base.app}/#{paths.scripts}", ['scripts']
+  gulp.watch "#{base.app}/#{paths.styles}" , ['styles']
+  gulp.watch "#{base.app}/#{paths.images}" , ['images']
+  gulp.watch "#{base.app}/#{paths.html}"   , ['html']
 
 
 gulp.task 'build', (cb)->
