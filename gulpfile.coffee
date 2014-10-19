@@ -7,6 +7,7 @@ buffer     = require 'vinyl-buffer'
 source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
 wiredep    = require 'wiredep'
+merge      = require 'merge-stream'
 
 # Load plugins
 $ = require('gulp-load-plugins')()
@@ -65,6 +66,21 @@ gulp.task 'styles', ->
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
 
+gulp.task 'vendor', ->
+  jsStream = gulp.src wiredep().js
+    .pipe $.concat('vendor.js')
+    .pipe $.if(config.production, $.uglify())
+    .pipe gulp.dest("#{base.dist}/scripts")
+
+  cssStream = gulp.src wiredep(
+    exclude: ['bootstrap-sass-official']
+  ).css
+    .pipe $.concat('vendor.css')
+    .pipe $.if(config.production, $.minifyCss())
+    .pipe gulp.dest("#{base.dist}/styles")
+
+  merge(jsStream, cssStream)
+
 gulp.task 'images', ->
   gulp.src paths.images, cwd: base.app
     .pipe $.cache($.imagemin(
@@ -75,11 +91,7 @@ gulp.task 'images', ->
     .pipe gulp.dest("#{base.dist}/images")
 
 gulp.task 'html', ->
-  # TODO Should probably inject bower dependencies here somehow
-  gulp.src "#{base.app}/#{paths.html}"
-    .pipe wiredep.stream(
-      exclude: ['bootstrap-sass-official']
-    )
+  gulp.src paths.html, cwd: base.app
     .pipe gulp.dest(base.dist)
 
 gulp.task 'copy-extras', ->
@@ -102,7 +114,7 @@ gulp.task 'watch', ['serve'], ->
 
 gulp.task 'build', (cb)->
   runSeq 'clean',
-         ['scripts', 'styles', 'images', 'html', 'copy-extras'],
+         ['scripts', 'styles', 'vendor', 'images', 'html', 'copy-extras'],
          cb
 
 gulp.task 'dev', ['set-development', 'default']
