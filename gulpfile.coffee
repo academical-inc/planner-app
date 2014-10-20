@@ -3,6 +3,7 @@
 gulp       = require 'gulp'
 del        = require 'del'
 browserify = require 'browserify'
+watchify   = require 'watchify'
 buffer     = require 'vinyl-buffer'
 source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
@@ -30,6 +31,31 @@ paths =
   extras: ['*.*', '!*.html']
 
 
+# Helpers
+
+bundler = (watch = false)->
+  # Create bundler
+  b = browserify
+    entries: paths.entries
+    debug: not config.production
+    extensions: ['.coffee']
+
+  # Wrap in watchify if watching
+  b = watchify b if watch
+
+  # Apply browserify transforms
+  b.transform 'coffeeify'
+  b
+
+bundle = (b)->
+  b.bundle()
+    .on 'error', $.util.log.bind($.util, "Browserify Error")
+    .pipe source('app.js')
+    .pipe buffer()
+    .pipe $.if(config.production, $.uglify())
+    .pipe gulp.dest("#{base.dist}/scripts")
+
+
 # Tasks
 gulp.task 'set-development', ->
   config.production = false
@@ -43,18 +69,7 @@ gulp.task 'lint', ->
     .pipe $.coffeelint.reporter()
 
 gulp.task 'scripts', ['lint'], ->
-  bundler = browserify
-    entries: paths.entries
-    debug: not config.production
-    extensions: ['.coffee']
-
-  bundler
-    .transform 'coffeeify'
-    .bundle()
-    .pipe source('app.js')
-    .pipe buffer()
-    .pipe $.if(config.production, $.uglify())
-    .pipe gulp.dest("#{base.dist}/scripts")
+  bundle bundler()
 
 gulp.task 'styles', ->
   gulp.src paths.styles, cwd: base.app
@@ -106,7 +121,13 @@ gulp.task 'serve', ->
     )
 
 gulp.task 'watch', ['serve'], ->
-  gulp.watch "#{base.app}/#{paths.scripts}", ['scripts']
+  # Watch scripts with watchify
+  b = bundler(true)
+  b.on 'update', ->
+    $.util.log "Starting re-bundling scripts"
+    bundle(b).on 'end', -> $.util.log("Finished re-bundling scripts")
+
+  # Watch other files
   gulp.watch "#{base.app}/#{paths.styles}" , ['styles']
   gulp.watch "#{base.app}/#{paths.images}" , ['images']
   gulp.watch "#{base.app}/#{paths.html}"   , ['html']
