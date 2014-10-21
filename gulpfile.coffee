@@ -9,6 +9,7 @@ source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
 wiredep    = require 'wiredep'
 merge      = require 'merge-stream'
+karma      = require('karma').server
 
 # Load plugins
 $ = require('gulp-load-plugins')()
@@ -112,6 +113,11 @@ gulp.task 'html', ->
 gulp.task 'copy-extras', ->
   gulp.src paths.extras, cwd: base.app
     .pipe gulp.dest(base.dist)
+
+gulp.task 'test', (cb)->
+  karma.start
+    configFile: "#{__dirname}/karma.conf.coffee"
+  , cb
 
 gulp.task 'serve', ->
   gulp.src base.dist
