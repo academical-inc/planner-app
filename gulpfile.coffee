@@ -130,8 +130,10 @@ gulp.task 'watch', ['serve'], ->
   # Watch scripts with watchify
   b = bundler(true)
   b.on 'update', ->
-    $.util.log "Starting re-bundling scripts"
-    bundle(b).on 'end', -> $.util.log("Finished re-bundling scripts")
+    $.util.log "Starting", $.util.colors.cyan("'re-bundling scripts'")
+    bundle(b).on 'end', ->
+      $.util.log "Finished", $.util.colors.cyan("'re-bundling scripts'")
+  bundle(b)
 
   # Watch other files
   gulp.watch "#{base.app}/#{paths.styles}" , ['styles']
