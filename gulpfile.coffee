@@ -42,7 +42,7 @@ bundler = (watch = false)->
     extensions: ['.coffee']
 
   # Wrap in watchify if watching
-  b = watchify b if watch
+  b = watchify b, watchify.args if watch
 
   # Apply browserify transforms
   b.transform 'coffeeify'
