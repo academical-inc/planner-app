@@ -1,22 +1,15 @@
 
-React = require 'react'
-R     = React.DOM
+React             = require 'react'
+PlannerHeader     = require './PlannerHeader.react'
+PlannerBody       = require './PlannerBody.react'
+R                 = React.DOM
 
 PlannerApp = React.createClass(
 
-  componentDidMount: ->
-    $(@getDOMNode()).fullCalendar(
-      defaultView: "agendaWeek"
-      allDaySlot: false
-      allDayText: false
-      header:
-        left: 'prev'
-        center: 'today'
-        right: 'next'
-    )
-
   render: ->
-    R.div className: 'calendar'
+    R.div className: 'pla-content',
+      PlannerHeader({})
+      PlannerBody({})
 
 )
 
