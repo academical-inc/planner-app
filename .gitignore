@@ -30,3 +30,7 @@ config/secrets.yml
 
 # sass
 /.sass-cache
+
+# divshot
+/.divshot-cache
+divshot.json
