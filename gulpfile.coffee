@@ -127,6 +127,7 @@ gulp.task 'serve', ->
     .pipe $.webserver(
       livereload: true
       port: 9000
+      host: "0.0.0.0"
     )
 
 gulp.task 'watch', ['serve'], ->
