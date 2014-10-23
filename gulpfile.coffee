@@ -24,9 +24,11 @@ base =
   dist: './dist'
 
 paths =
-  entries: ["#{base.app}/scripts/app.coffee"]
+  main:
+    script: ['scripts/app.coffee']
+    style: ['styles/main.scss']
   scripts: ['scripts/**/*.coffee']
-  styles: ['styles/main.scss']
+  styles: ['styles/**/*.scss']
   images: ['images/**/*']
   html: ['index.html']
   extras: ['*.*', '!*.html']
@@ -37,7 +39,7 @@ paths =
 bundler = (watch = false)->
   # Create bundler
   b = browserify
-    entries: paths.entries
+    entries: "#{base.app}/#{paths.main.script}"
     debug: not config.production
     extensions: ['.coffee']
 
@@ -73,11 +75,12 @@ gulp.task 'scripts', ['lint'], ->
   bundle bundler()
 
 gulp.task 'styles', ->
-  gulp.src paths.styles, cwd: base.app
+  gulp.src paths.main.style, cwd: base.app
     .pipe $.rubySass(
       style: 'expanded'
       loadPath: ['bower_components']
     )
+    .on 'error', $.util.log.bind($.util, "Sass Error")
     .pipe $.autoprefixer('last 2 version')
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
