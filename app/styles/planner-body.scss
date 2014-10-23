@@ -2,7 +2,7 @@
 .pla-planner-body {
   @include make-row();
 
-  height: 92%;
+  height: 100%;
 
   .pla-side-bar {
     @include make-md-column(3);
@@ -12,3 +12,11 @@
     @include make-md-column(9);
   }
 }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+  .pla-planner-body {
+    height: 92%;
+  }
+}
+
