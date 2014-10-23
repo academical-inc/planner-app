@@ -12,8 +12,15 @@ html, body {
 
 /* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+  body {
+      padding-top: 20px;
+      padding-bottom: 20px;
+  }
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
