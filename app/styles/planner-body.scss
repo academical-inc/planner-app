@@ -10,6 +10,7 @@
 
   .pla-week-calendar {
     @include make-md-column(9);
+    @include make-xs-column(12);
   }
 }
 
