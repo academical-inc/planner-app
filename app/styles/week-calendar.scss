@@ -3,4 +3,23 @@
 
   height: 100%;
 
+  .fc-toolbar {
+    height: 7%;
+  }
+
+  .fc-view-container {
+    height: 93%;
+    overflow-y: scroll;
+  }
+
+  /* Small devices (tablets, 768px and up) */
+  @media (min-width: $screen-sm-min) {
+    .fc-toolbar {
+      height: 5%;
+    }
+    .fc-view-containe {
+      height: 95%;
+    }
+  }
+
 }
