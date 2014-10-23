@@ -1,0 +1,14 @@
+
+.pla-planner-body {
+  @include make-row();
+
+  height: 92%;
+
+  .pla-side-bar {
+    @include make-md-column(3);
+  }
+
+  .pla-week-calendar {
+    @include make-md-column(9);
+  }
+}

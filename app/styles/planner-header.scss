@@ -1,0 +1,20 @@
+
+.pla-planner-header {
+  @include make-row();
+
+  height: 8%;
+
+  .pla-logo {
+    @include make-md-column(3);
+  }
+
+  .pla-schedule-list {
+    @include make-md-column(6);
+  }
+
+  .pla-profile-box {
+    @include make-md-column(3);
+  }
+
+
+}

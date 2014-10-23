@@ -7,7 +7,7 @@ R                 = React.DOM
 PlannerApp = React.createClass(
 
   render: ->
-    R.div className: 'pla-content',
+    R.div className: 'pla-content container-fluid',
       PlannerHeader({})
       PlannerBody({})
 

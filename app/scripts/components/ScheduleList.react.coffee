@@ -5,9 +5,10 @@ R     = React.DOM
 ScheduleList = React.createClass(
 
   render: ->
-    R.ul null,
-      R.li null, "Schedule 1"
-      R.li null, "Schedule 2"
+    R.div className: 'pla-schedule-list',
+      R.ul null,
+        R.li null, "Schedule 1"
+        R.li null, "Schedule 2"
 
 )
 

@@ -1,19 +1,16 @@
 
-React             = require 'react'
-WeekCalendar      = require './WeekCalendar.react'
-SectionSearchPane = require './SectionSearchPane.react'
-R                 = React.DOM
+React          = require 'react'
+WeekCalendar   = require './WeekCalendar.react'
+PlannerSideBar = require './PlannerSideBar.react'
+R              = React.DOM
 
 
 PlannerBody = React.createClass(
 
   render: ->
-    R.div className: 'container-fluid',
-      R.div className: 'row',
-        R.div className: 'col-md-3',
-          SectionSearchPane({})
-        R.div className: 'col-md-9',
-          WeekCalendar({})
+    R.div className: 'pla-planner-body',
+      PlannerSideBar({})
+      WeekCalendar({})
 
 )
 

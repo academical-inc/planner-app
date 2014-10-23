@@ -5,7 +5,7 @@ R     = React.DOM
 ProfileBox = React.createClass(
 
   render: ->
-    R.div null,
+    R.div className: 'pla-profile-box',
       R.span null, "Someone's name"
 
 )

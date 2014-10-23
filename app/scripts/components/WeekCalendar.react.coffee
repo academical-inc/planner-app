@@ -16,7 +16,7 @@ WeekCalendar = React.createClass(
     )
 
   render: ->
-    R.div className: 'week-calendar'
+    R.div className: 'pla-week-calendar'
 
 )
 

@@ -2,15 +2,15 @@
 React = require 'react'
 R     = React.DOM
 
-SectionSearchPane = React.createClass(
+PlannerSideBar = React.createClass(
 
   render: ->
-    R.div null,
+    R.div className: 'pla-side-bar',
       R.span null, "Search here"
       R.input placeholder: "Input"
 
 )
 
-module.exports = SectionSearchPane
+module.exports = PlannerSideBar
 
 
