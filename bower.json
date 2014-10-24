@@ -22,6 +22,19 @@
   "dependencies": {
     "jquery": "~2.1.1",
     "fullcalendar": "~2.1.1",
-    "bootstrap-sass-official": "~3.2.0"
+    "bootstrap-sass-official": "~3.2.0",
+    "jQuery.mmenu": "~4.5.7",
+    "hammerjs": "hammerjs/hammer.js#~2.0.4"
+  },
+  "overrides": {
+    "jQuery.mmenu": {
+      "main": [
+        "src/js/jquery.mmenu.min.js",
+        "src/js/addons/jquery.mmenu.dragopen.min.js"
+      ],
+      "dependencies": {
+        "hammerjs": "~2.0.4"
+      }
+    }
   }
 }
