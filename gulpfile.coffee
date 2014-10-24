@@ -143,6 +143,9 @@ gulp.task 'watch', ['serve'], ->
   gulp.watch "#{base.app}/#{paths.images}" , ['images']
   gulp.watch "#{base.app}/#{paths.html}"   , ['html']
 
+  # Watch bower.json
+  gulp.watch "./bower.json", ['vendor']
+
 
 gulp.task 'build', (cb)->
   runSeq 'clean',
