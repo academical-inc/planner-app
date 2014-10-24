@@ -5,8 +5,10 @@
 .pla-content {
 
   height: 100%;
+
   @import "./planner-header";
   @import "./planner-body";
   @import "./planner-side-bar";
+  @import "./slide-menu-handle";
   @import "./week-calendar";
 }

@@ -12,7 +12,14 @@
     overflow-y: scroll;
   }
 
-  /* Small devices (tablets, 768px and up) */
+  /* Only small and extra small devices (tablets, phones) */
+  @media (max-width: ($screen-md-min - 1)) {
+    .fc-toolbar {
+      padding-left: 46px;
+    }
+  }
+
+  /* Small devices and up (tablets, 768px and up) */
   @media (min-width: $screen-sm-min) {
     .fc-toolbar {
       height: 5%;
