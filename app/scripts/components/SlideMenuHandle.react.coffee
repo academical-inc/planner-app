@@ -1,11 +1,13 @@
 
 React = require 'react/addons'
-R = React.DOM
+R     = React.DOM
+
+S     = require('../constants/PlannerConstants').selectors
 
 SlideMenuHandle = React.createClass(
 
-  getDOMHandle: ->
-    @getDOMNode()
+  handleClick: (e)->
+    $(S.SCHEDULE_LIST).trigger "open.mm"
 
   render: ->
     classes = React.addons.classSet({
@@ -16,7 +18,7 @@ SlideMenuHandle = React.createClass(
       'fa-th-list'
       'fa-2x'
     })
-    R.i className: classes
+    R.i className: classes, onClick: @handleClick
 
 )
 

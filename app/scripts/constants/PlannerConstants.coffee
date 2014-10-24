@@ -6,3 +6,6 @@ module.exports =
     SCREEN_MD_MIN: 992
     SCREEN_LG_MIN: 1200
   }
+  selectors: {
+    SCHEDULE_LIST: '.pla-schedule-list'
+  }
