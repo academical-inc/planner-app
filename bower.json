@@ -24,7 +24,8 @@
     "fullcalendar": "~2.1.1",
     "bootstrap-sass-official": "~3.2.0",
     "jQuery.mmenu": "~4.5.7",
-    "hammerjs": "hammerjs/hammer.js#~2.0.4"
+    "hammerjs": "hammerjs/hammer.js#~2.0.4",
+    "font-awesome": "~4.2.0"
   },
   "overrides": {
     "jQuery.mmenu": {
