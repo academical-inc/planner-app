@@ -92,9 +92,7 @@ gulp.task 'vendor', ->
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
-  cssStream = gulp.src wiredep(
-    exclude: ['bootstrap-sass-official']
-  ).css
+  cssStream = gulp.src wiredep().css
     .pipe $.concat('vendor.css')
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
