@@ -79,6 +79,7 @@ gulp.task 'styles', ->
     .pipe $.rubySass(
       style: 'expanded'
       loadPath: ['bower_components']
+      bundleExec: true
     )
     .on 'error', $.util.log.bind($.util, "Sass Error")
     .pipe $.autoprefixer('last 2 version')
