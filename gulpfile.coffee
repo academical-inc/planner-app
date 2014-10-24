@@ -9,6 +9,7 @@ source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
 wiredep    = require 'wiredep'
 merge      = require 'merge-stream'
+bowerFiles = require 'main-bower-files'
 karma      = require('karma').server
 
 # Load plugins
@@ -99,6 +100,12 @@ gulp.task 'vendor', ->
 
   merge(jsStream, cssStream)
 
+gulp.task 'fonts', ->
+  gulp.src bowerFiles()
+    .pipe $.filter('**/*.{eot,svg,ttf,woff}')
+    .pipe $.flatten()
+    .pipe gulp.dest("#{base.dist}/styles/fonts")
+
 gulp.task 'images', ->
   gulp.src paths.images, cwd: base.app
     .pipe $.cache($.imagemin(
@@ -144,12 +151,12 @@ gulp.task 'watch', ['serve'], ->
   gulp.watch "#{base.app}/#{paths.html}"   , ['html']
 
   # Watch bower.json
-  gulp.watch "./bower.json", ['vendor']
+  gulp.watch "./bower.json", ['vendor', 'fonts']
 
 
 gulp.task 'build', (cb)->
   runSeq 'clean',
-         ['scripts', 'styles', 'vendor', 'images', 'html', 'copy-extras'],
+         ['scripts', 'styles', 'vendor', 'fonts', 'images', 'html', 'copy-extras'],
          cb
 
 gulp.task 'dev', ['set-development', 'default']
