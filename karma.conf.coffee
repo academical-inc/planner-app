@@ -16,7 +16,9 @@ module.exports = (config) ->
     # list of files / patterns to load in the browser
     files: [
       'dist/scripts/vendor.js'
-      'test/**/*.spec.coffee'
+      'test/shims/*.{js,coffee}'
+      'test/SpecHelper.coffee'
+      'test/spec/**/*.spec.coffee'
     ]
 
 
@@ -62,7 +64,7 @@ module.exports = (config) ->
 
     # start these browsers
     # available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS']
+    browsers: ['PhantomJS']
 
 
     # Continuous Integration mode
