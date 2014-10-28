@@ -1,9 +1,5 @@
 
-React = require 'react/addons'
-TestUtils = React.addons.TestUtils
-
 MediaQueries = require '../../../app/scripts/utils/MediaQueries'
-
 
 describe MediaQueries, ->
 
