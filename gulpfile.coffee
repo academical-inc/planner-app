@@ -49,6 +49,7 @@ bundler = (watch = false)->
 
   # Apply browserify transforms
   b.transform 'coffeeify'
+  b.transform 'browserify-shim'
   b
 
 bundle = (b)->

@@ -65,7 +65,7 @@ module.exports = (config) ->
 
     # start these browsers
     # available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS']
+    browsers: ['Chrome']
 
 
     # Continuous Integration mode
@@ -75,7 +75,7 @@ module.exports = (config) ->
     browserify: {
       extensions: ['.coffee']
       debug: true
-      transform: ['coffeeify']
+      transform: ['coffeeify', 'browserify-shim']
     }
 
 

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/academical-inc/planner-app",
   "devDependencies": {
     "browserify": "^6.2.0",
+    "browserify-shim": "^3.8.0",
     "coffee-script": "^1.8.0",
     "coffeeify": "^0.7.0",
     "del": "^0.1.3",
@@ -56,5 +57,18 @@
     "compression": "^1.2.0",
     "express": "^4.10.0",
     "react": "^0.11.2"
+  },
+  "browserify-shim": {
+    "jquery": "global:$",
+    "fullcalendar": {
+      "depends": [
+        "jquery:$"
+      ]
+    },
+    "jQuery.mmenu": {
+      "depends": [
+        "jquery:$"
+      ]
+    }
   }
 }
