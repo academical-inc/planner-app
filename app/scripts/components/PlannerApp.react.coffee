@@ -15,8 +15,8 @@ PlannerApp = React.createClass(
         scheduleListSelector: C.selectors.SCHEDULE_LIST,
         $: $
       )
-      PlannerHeader({})
-      PlannerBody({})
+      PlannerHeader($: $)
+      PlannerBody($: $)
 
 )
 

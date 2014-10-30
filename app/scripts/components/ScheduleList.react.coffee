@@ -1,5 +1,4 @@
 
-$     = require 'jquery'
 React = require 'react'
 R     = React.DOM
 
@@ -9,7 +8,7 @@ ScheduleList = React.createClass(
 
   componentDidMount: ->
     if not mq.matchesMDAndUp()
-      $(@getDOMNode()).mmenu(
+      @props.$(@getDOMNode()).mmenu(
         dragOpen:
           open: true
       )
