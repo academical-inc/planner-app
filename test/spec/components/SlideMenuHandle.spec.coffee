@@ -2,7 +2,7 @@
 helper          = require '../../SpecHelper'
 SlideMenuHandle = require '../../../app/scripts/components/SlideMenuHandle.react'
 
-describe SlideMenuHandle, ->
+describe "SlideMenuHandle", ->
 
   describe 'css classes', ->
 

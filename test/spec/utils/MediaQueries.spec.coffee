@@ -1,7 +1,7 @@
 
 MediaQueries = require '../../../app/scripts/utils/MediaQueries'
 
-describe MediaQueries, ->
+describe "MediaQueries", ->
 
   describe '._buildMinQuery', ->
 
