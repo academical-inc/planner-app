@@ -75,7 +75,7 @@ module.exports = (config) ->
     browserify: {
       extensions: ['.coffee']
       debug: true
-      transform: ['coffeeify', 'browserify-shim']
+      transform: ['coffeeify', 'browserify-shim', 'rewireify']
     }
 
 
