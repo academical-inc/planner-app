@@ -18,8 +18,7 @@ describe "SlideMenuHandle", ->
   describe 'on click', ->
 
     it 'should open slide menu', ->
-      mockEl = jasmine.createSpyObj "mockEl", ["trigger"]
-      mock$ = jasmine.createSpy("mock$").and.returnValue mockEl
+      [mock$, mock$El] = helper.mock$()
 
       slideMenu = helper.TestUtils.renderIntoDocument SlideMenuHandle(
         scheduleListSelector: "selector"
@@ -28,6 +27,6 @@ describe "SlideMenuHandle", ->
 
       helper.TestUtils.Simulate.click(slideMenu.getDOMNode())
       expect(mock$).toHaveBeenCalledWith "selector"
-      expect(mockEl.trigger).toHaveBeenCalledWith "open.mm"
+      expect(mock$El.trigger).toHaveBeenCalledWith "open.mm"
 
 
