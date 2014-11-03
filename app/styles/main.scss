@@ -6,9 +6,10 @@
 
   height: 100%;
 
+  @import "./slide-menu-handle";
   @import "./planner-header";
   @import "./planner-body";
   @import "./planner-side-bar";
-  @import "./slide-menu-handle";
+  @import "./search-bar";
   @import "./week-calendar";
 }
