@@ -89,16 +89,19 @@ gulp.task 'styles', ->
     .pipe gulp.dest("#{base.dist}/styles")
 
 gulp.task 'vendor', ->
-  deps = wiredep(
+  jsDeps = wiredep(
+    exclude: ['font-awesome']
+  )
+  cssDeps = wiredep(
     exclude: ['bootstrap-sass-official', 'font-awesome']
   )
 
-  jsStream = gulp.src deps.js
+  jsStream = gulp.src jsDeps.js
     .pipe $.concat('vendor.js')
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
-  cssStream = gulp.src deps.css
+  cssStream = gulp.src cssDeps.css
     .pipe $.concat('vendor.css')
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")

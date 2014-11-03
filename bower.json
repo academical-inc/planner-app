@@ -36,6 +36,13 @@
       "dependencies": {
         "hammerjs": "~2.0.4"
       }
+    },
+    "bootstrap-sass-official": {
+      "main": [
+        "assets/javascripts/bootstrap/transition.js",
+        "assets/javascripts/bootstrap/collapse.js",
+        "assets/javascripts/bootstrap/modal.js"
+      ]
     }
   }
 }
