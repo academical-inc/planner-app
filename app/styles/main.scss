@@ -1,6 +1,7 @@
 
 @import "./vendor";
 @import "./base";
+@import "./colors";
 
 .pla-content {
 
@@ -11,5 +12,6 @@
   @import "./planner-body";
   @import "./planner-side-bar";
   @import "./search-bar";
+  @import "./section-list";
   @import "./week-calendar";
 }
