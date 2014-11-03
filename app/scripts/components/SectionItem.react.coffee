@@ -11,10 +11,11 @@ SectionItem = React.createClass(
         R.h4(className: "panel-title",
           R.a(
             {
+              className: "collapsed"
               href: "#collapse-#{@props.key}"
               "data-toggle": "collapse"
               "data-parent": "##{@props.parent}"
-              "aria-expanded": "true"
+              "aria-expanded": "false"
               "aria-controls": "collapse-#{@props.key}"
             },
             @props.key
@@ -23,7 +24,7 @@ SectionItem = React.createClass(
       ),
       R.div(
         {
-          className: "panel-collapse collapse in"
+          className: "panel-collapse collapse"
           role: "tabpanel"
           id: "collapse-#{@props.key}"
           "aria-labelledby": "heading-#{@props.key}"
