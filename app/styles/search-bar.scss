@@ -4,4 +4,28 @@
   div,input[type=text] {
     width: 100%;
   }
+
+  .search-input {
+    margin-bottom: 0.3em;
+  }
+
+  .filters-toggle {
+
+    color: inherit;
+
+    &:before {
+      font-family: FontAwesome;
+      padding-right: 0.3em;
+      content: "\f0d8"; // Caret up icon
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .filters-toggle.collapsed:before {
+    content: "\f0d7"; // Caret down icon
+  }
+
 }
