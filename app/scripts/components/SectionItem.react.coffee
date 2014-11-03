@@ -23,7 +23,7 @@ SectionItem = React.createClass(
               className: "collapsed"
               href: "#collapse-#{@props.key}"
               "data-toggle": "collapse"
-              "data-parent": "##{@props.parent}"
+              "data-parent": @props.accSelector
               "aria-expanded": "false"
               "aria-controls": "collapse-#{@props.key}"
             },
