@@ -12,8 +12,15 @@ SectionList = React.createClass(
     accordionId = "pla-section-list-accordion"
     R.div className: "pla-section-list container-fluid",
       R.h4 null, "Classes: 1 Credits: 3"
-      R.div {className: "panel-group", id: accordionId, role: "tablist", ariaMultiselectable: "true"},
-        (SectionItem({key: sec, parent: accordionId}) for sec in @state.data)
+      R.div(
+        {
+          className: "panel-group"
+          id: accordionId
+          role: "tablist"
+          "aria-multiselectable": "true"
+        },
+        (SectionItem(key: sec, parent: accordionId) for sec in @state.data)
+      )
 )
 
 module.exports = SectionList
