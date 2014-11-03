@@ -4,9 +4,6 @@ R           = React.DOM
 
 SectionItem = React.createClass(
 
-  getInitialState: ->
-    fata: ["Algebra"]
-
   render: ->
     R.div className: "panel panel-default",
       R.div(
