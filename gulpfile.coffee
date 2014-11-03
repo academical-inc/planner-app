@@ -110,7 +110,7 @@ gulp.task 'vendor', ->
 
 gulp.task 'fonts', ->
   gulp.src bowerFiles()
-    .pipe $.filter('bower_components/font-awesome/**/*.{eot,svg,ttf,woff}')
+    .pipe $.filter('**/*.{eot,svg,ttf,woff}')
     .pipe $.flatten()
     .pipe gulp.dest("#{base.dist}/styles/fonts")
 
