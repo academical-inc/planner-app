@@ -10,8 +10,6 @@ WeekCalendar = React.createClass(
       allDaySlot: false
       allDayText: false
       scrollTime: "07:00:00"
-      minTime: "06:00:00"
-      maxTime: "21:00:00"
       firstDay: 1
       weekends: true
       editable: true
