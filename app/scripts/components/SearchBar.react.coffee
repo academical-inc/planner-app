@@ -18,10 +18,10 @@ SearchBar = React.createClass(
             "aria-expanded": "false"
             "aria-controls": "filters-body"
           },
-          R.span null, "Filters"
+          "Filters"
         )
-      R.div className: "collapse", id: "filters-body",
-        "Here be the filters"
+        R.div className: "collapse", id: "filters-body",
+          "Here be the filters"
 
 )
 
