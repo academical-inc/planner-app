@@ -1,16 +1,59 @@
 
 .pla-section-list {
 
-  .panel-title {
-    font-size: 13px;
+  .stats {
+    text-align: center;
   }
 
   .panel-heading {
-    padding: 7px 12px;
+    padding: 7px 10px;
     border-left: 5px solid #eee;
   }
 
+  .panel-title {
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .panel-title i {
+    color: $gray-light;
+    cursor: pointer;
+  }
+
+  // .panel-title a {
+  //   &:before {
+  //     font-family: FontAwesome;
+  //     display: inline-block;
+  //     padding-right: 0.3em;
+  //     content: "\f0d8"; // Caret up icon
+  //   }
+  // }
+
+  // .panel-title a.collapsed:before {
+  //   content: "\f0d7"; // Caret down icon
+  // }
+
   .panel-collapse {
     border-left: 5px solid #eee;
+  }
+
+  .list-group {
+    margin-bottom: 0;
+
+    .list-group-item {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      font-size: 13px;
+      padding: 5px 10px;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .teachers {
+      font-weight: bold;
+    }
   }
 }

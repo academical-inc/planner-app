@@ -6,6 +6,8 @@ colors      = require('../constants/PlannerConstants').colors
 SectionItem = React.createClass(
 
   render: ->
+    headingId = "section-heading-#{@props.key}"
+    contentId = "section-info-#{@props.key}"
     style =
       borderColor: colors[Math.floor(Math.random() * colors.length)]
 
@@ -15,20 +17,21 @@ SectionItem = React.createClass(
           className: "panel-heading"
           style: style
           role: "tab"
-          id: "heading-#{@props.key}"
-        },
-        R.h4(className: "panel-title",
+          id: headingId
+        }
+        R.h4(className: "panel-title clearfix",
           R.a(
             {
               className: "collapsed"
-              href: "#collapse-#{@props.key}"
+              href: "##{contentId}"
               "data-toggle": "collapse"
-              "data-parent": @props.accSelector
               "aria-expanded": "false"
-              "aria-controls": "collapse-#{@props.key}"
+              "aria-controls": contentId
             },
-            @props.key
+            @props.section.name
           )
+          R.span className: "pull-right",
+            R.i className: "fa fa-trash-o"
         )
       ),
       R.div(
@@ -36,10 +39,12 @@ SectionItem = React.createClass(
           className: "panel-collapse collapse"
           style: style
           role: "tabpanel"
-          id: "collapse-#{@props.key}"
-          "aria-labelledby": "heading-#{@props.key}"
+          id: contentId
+          "aria-labelledby": headingId
         },
-        R.div className: "panel-body", "Section Info"
+        R.ul className: "list-group",
+          R.li className: "list-group-item teachers", "Mr. Anderson"
+          R.li className: "list-group-item", "Section 2, 3 credits"
       )
 )
 

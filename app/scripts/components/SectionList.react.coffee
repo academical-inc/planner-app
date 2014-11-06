@@ -6,20 +6,27 @@ R           = React.DOM
 SectionList = React.createClass(
 
   getInitialState: ->
-    data: ["Algebra", "Spanish"]
+    data: [
+      {
+        id: "1"
+        name: "MATE1203 - Algebra"
+      },
+      {
+        id: "2"
+        name: "LANG1505 - Spanish"
+      }
+    ]
 
   render: ->
-    accId = "pla-section-list-accordion"
     R.div className: "pla-section-list container-fluid",
-      R.h5 null, "Classes: 2 Credits: 6"
+      R.h5 className: "stats", "Classes: 2 Credits: 6"
       R.div(
         {
           className: "panel-group"
-          id: accId
           role: "tablist"
           "aria-multiselectable": "true"
         },
-        (SectionItem(key: sec, accSelector: "##{accId}") for sec in @state.data)
+        (SectionItem(key: s.id, section: s) for s in @state.data)
       )
 )
 
