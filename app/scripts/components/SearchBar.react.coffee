@@ -14,7 +14,6 @@ SearchBar = React.createClass(
             className: "filters-toggle collapsed"
             href: "#filters-body"
             "data-toggle": "collapse"
-            "data-target": "#filters-body"
             "aria-expanded": "false"
             "aria-controls": "filters-body"
           },
