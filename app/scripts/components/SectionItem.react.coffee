@@ -8,6 +8,7 @@ SectionItem = React.createClass(
   render: ->
     headingId = "section-heading-#{@props.key}"
     contentId = "section-info-#{@props.key}"
+    colorsId  = "section-colors-#{@props.key}"
     style =
       borderColor: colors[Math.floor(Math.random() * colors.length)]
 
@@ -55,13 +56,13 @@ SectionItem = React.createClass(
             R.span null, "Math Department"
             R.a
               className: "color-picker pull-right collapsed"
-              href: "#colors"
+              href: "##{colorsId}"
               "data-toggle": "collapse"
-              "data-target": "#colors"
               "aria-expanded": "false"
-              "aria-controls": "colors"
-            R.div className: "collapse", id: "colors",
+              "aria-controls": colorsId
+            R.div className: "collapse color-palette", id: colorsId,
               (R.div(
+                key: color
                 className: "color"
                 style: {backgroundColor: color}
                ) for color in colors)
