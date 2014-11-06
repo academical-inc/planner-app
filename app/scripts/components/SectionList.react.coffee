@@ -18,7 +18,7 @@ SectionList = React.createClass(
     ]
 
   render: ->
-    R.div className: "pla-section-list container-fluid",
+    R.div className: "pla-section-list",
       R.h5 className: "stats", "Classes: 2 Credits: 6"
       R.div(
         {
