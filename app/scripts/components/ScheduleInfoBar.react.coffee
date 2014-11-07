@@ -25,6 +25,7 @@ ScheduleInfoBar = React.createClass(
       PanelItemList
         itemType: PersonalEventItem
         header: "Other Events"
+        handleItemAdd: ->
         initialState: [
           {
             id: "1"

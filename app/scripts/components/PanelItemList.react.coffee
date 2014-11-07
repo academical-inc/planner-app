@@ -18,6 +18,16 @@ PanelItemList = React.createClass(
         },
         (@props.itemType(key: item.id, item: item) for item in @state.items)
       )
+      if @props.handleItemAdd?
+        R.div className: "add-item-bar",
+          R.button(
+            {
+              type: "button"
+              className: "btn btn-info btn-circle"
+              onClick: @props.handleItemAdd
+            },
+            R.i className: "fa fa-plus"
+          )
 )
 
 module.exports = PanelItemList
