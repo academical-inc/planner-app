@@ -1,0 +1,15 @@
+
+.pla-color-palette {
+  text-align: center;
+  margin-top: 0.5em;
+
+  .color {
+    height: 0.95em;
+    width: 0.95em;
+    display: inline-block;
+    margin-right: 1px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+}
+
