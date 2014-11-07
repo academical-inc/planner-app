@@ -1,18 +1,20 @@
 
-React       = require 'react'
-R           = React.DOM
-colors      = require('../constants/PlannerConstants').colors
+React        = require 'react'
+ColorPicker  = require './ColorPicker.react'
+ColorPalette = require './ColorPalette.react'
+colors       = require('../constants/PlannerConstants').colors
+R            = React.DOM
 
 SectionItem = React.createClass(
 
   render: ->
-    headingId = "section-heading-#{@props.key}"
-    contentId = "section-info-#{@props.key}"
-    colorsId  = "section-colors-#{@props.key}"
-    style =
+    headingId      = "section-heading-#{@props.key}"
+    contentId      = "section-info-#{@props.key}"
+    colorPaletteId = "section-colors-#{@props.key}"
+    style          =
       borderColor: colors[Math.floor(Math.random() * colors.length)]
 
-    R.div className: "panel panel-default",
+    R.div className: "pla-section-item panel panel-default",
       R.div(
         {
           className: "panel-heading"
@@ -29,11 +31,11 @@ SectionItem = React.createClass(
               "aria-expanded": "false"
               "aria-controls": contentId
             },
-            @props.section.name
+            @props.item.name
           )
           R.span className: "pull-right",
             R.span className: "label label-seats label-success", "20"
-            R.i className: "fa fa-trash-o"
+            R.i className: "fa fa-trash-o delete"
         )
       ),
       R.div(
@@ -54,18 +56,8 @@ SectionItem = React.createClass(
             R.span null, "45578"
           R.li className: "list-group-item clearfix",
             R.span null, "Math Department"
-            R.a
-              className: "color-picker pull-right collapsed"
-              href: "##{colorsId}"
-              "data-toggle": "collapse"
-              "aria-expanded": "false"
-              "aria-controls": colorsId
-            R.div className: "collapse color-palette", id: colorsId,
-              (R.div(
-                key: color
-                className: "color"
-                style: {backgroundColor: color}
-               ) for color in colors)
+            ColorPicker colorPaletteId: colorPaletteId
+            ColorPalette id: colorPaletteId
       )
 )
 
