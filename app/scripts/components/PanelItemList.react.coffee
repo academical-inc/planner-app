@@ -18,13 +18,16 @@ PanelItemList = React.createClass(
         },
         (@props.itemType(key: item.id, item: item) for item in @state.items)
       )
-      if @props.handleItemAdd?
+      if @props.handleItemAdd? or\
+          (@props.itemAddDataToggle? and @props.itemAddDataTarget?)
         R.div className: "add-item-bar",
           R.button(
             {
               type: "button"
               className: "btn btn-info btn-circle"
               onClick: @props.handleItemAdd
+              "data-toggle": @props.itemAddDataToggle
+              "data-target": @props.itemAddDataTarget
             },
             R.i className: "fa fa-plus"
           )

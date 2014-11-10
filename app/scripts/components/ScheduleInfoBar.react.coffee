@@ -3,6 +3,7 @@ React             = require 'react'
 PanelItemList     = require './PanelItemList.react'
 SectionItem       = require './SectionItem.react'
 PersonalEventItem = require './PersonalEventItem.react'
+C                 = require '../constants/PlannerConstants'
 R                 = React.DOM
 
 ScheduleInfoBar = React.createClass(
@@ -25,7 +26,8 @@ ScheduleInfoBar = React.createClass(
       PanelItemList
         itemType: PersonalEventItem
         header: "Other Events"
-        handleItemAdd: ->
+        itemAddDataToggle: "modal"
+        itemAddDataTarget: C.selectors.PERSONAL_EVENT_MODAL
         initialState: [
           {
             id: "1"
