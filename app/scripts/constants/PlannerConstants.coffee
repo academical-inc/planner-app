@@ -7,6 +7,9 @@ module.exports =
     SCREEN_LG_MIN: 1200
   selectors:
     SCHEDULE_LIST: '.pla-schedule-list'
+    PERSONAL_EVENT_MODAL: '#pla-personal-event-modal'
+  htmlEntities:
+    TIMES: "\u00d7"
   colors: [
     "#f27979"
     "#f2a979"
