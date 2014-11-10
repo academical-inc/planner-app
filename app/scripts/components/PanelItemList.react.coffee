@@ -32,6 +32,3 @@ PanelItemList = React.createClass(
 
 module.exports = PanelItemList
 
-
-
-
