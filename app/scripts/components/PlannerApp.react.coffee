@@ -4,6 +4,7 @@ React             = require 'react'
 PlannerHeader     = require './PlannerHeader.react'
 PlannerBody       = require './PlannerBody.react'
 SlideMenuHandle   = require './SlideMenuHandle.react'
+PlannerModals     = require './PlannerModals.react'
 C                 = require '../constants/PlannerConstants'
 R                 = React.DOM
 
@@ -17,6 +18,7 @@ PlannerApp = React.createClass(
       )
       PlannerHeader($: $)
       PlannerBody($: $)
+      PlannerModals({})
 
 )
 
