@@ -70,6 +70,11 @@
       "depends": [
         "jquery:$"
       ]
+    },
+    "jquery-timepicker-jt": {
+      "depends": [
+        "jquery:$"
+      ]
     }
   }
 }
