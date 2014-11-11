@@ -1,7 +1,7 @@
 
 React             = require 'react'
-Modal             = require './Modal.react'
-PersonalEventForm = require './PersonalEventForm.react'
+Modal             = require './Modal'
+PersonalEventForm = require './PersonalEventForm'
 R                 = React.DOM
 
 PlannerModals = React.createClass(

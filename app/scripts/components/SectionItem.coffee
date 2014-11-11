@@ -1,7 +1,7 @@
 
 React        = require 'react'
-ColorPicker  = require './ColorPicker.react'
-ColorPalette = require './ColorPalette.react'
+ColorPicker  = require './ColorPicker'
+ColorPalette = require './ColorPalette'
 colors       = require('../constants/PlannerConstants').colors
 R            = React.DOM
 

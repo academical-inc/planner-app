@@ -1,7 +1,7 @@
 
 React          = require 'react'
-WeekCalendar   = require './WeekCalendar.react'
-PlannerSideBar = require './PlannerSideBar.react'
+WeekCalendar   = require './WeekCalendar'
+PlannerSideBar = require './PlannerSideBar'
 R              = React.DOM
 
 

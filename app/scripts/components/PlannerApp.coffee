@@ -1,10 +1,10 @@
 
 $                 = require 'jquery'
 React             = require 'react'
-PlannerHeader     = require './PlannerHeader.react'
-PlannerBody       = require './PlannerBody.react'
-SlideMenuHandle   = require './SlideMenuHandle.react'
-PlannerModals     = require './PlannerModals.react'
+PlannerHeader     = require './PlannerHeader'
+PlannerBody       = require './PlannerBody'
+SlideMenuHandle   = require './SlideMenuHandle'
+PlannerModals     = require './PlannerModals'
 C                 = require '../constants/PlannerConstants'
 R                 = React.DOM
 

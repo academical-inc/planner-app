@@ -1,8 +1,8 @@
 
 React             = require 'react'
-PanelItemList     = require './PanelItemList.react'
-SectionItem       = require './SectionItem.react'
-PersonalEventItem = require './PersonalEventItem.react'
+PanelItemList     = require './PanelItemList'
+SectionItem       = require './SectionItem'
+PersonalEventItem = require './PersonalEventItem'
 C                 = require '../constants/PlannerConstants'
 R                 = React.DOM
 
