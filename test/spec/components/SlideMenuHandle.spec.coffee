@@ -1,6 +1,6 @@
 
 helper          = require '../../SpecHelper'
-SlideMenuHandle = require '../../../app/scripts/components/SlideMenuHandle.react'
+SlideMenuHandle = require '../../../app/scripts/components/SlideMenuHandle'
 
 describe "SlideMenuHandle", ->
 

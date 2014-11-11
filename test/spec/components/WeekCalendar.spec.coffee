@@ -1,6 +1,6 @@
 
 helper       = require '../../SpecHelper'
-WeekCalendar = require '../../../app/scripts/components/WeekCalendar.react'
+WeekCalendar = require '../../../app/scripts/components/WeekCalendar'
 
 
 describe 'WeekCalendar', ->

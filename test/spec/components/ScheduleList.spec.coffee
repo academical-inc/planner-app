@@ -1,6 +1,6 @@
 
 helper       = require '../../SpecHelper.coffee'
-ScheduleList = require '../../../app/scripts/components/ScheduleList.react'
+ScheduleList = require '../../../app/scripts/components/ScheduleList'
 
 describe "ScheduleList", ->
 
