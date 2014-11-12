@@ -17,7 +17,7 @@ describe "ScheduleList", ->
         {"mq.matchesMDAndUp": helper.spy("matcher", retVal: false)}
       scheduleList = helper.render ScheduleList, {$: @mock$}
 
-      expect(@mock$).toHaveBeenCalledWith(scheduleList.getDOMNode())
+      expect(@mock$).toHaveBeenCalledWith scheduleList.getDOMNode()
       expect(@mock$El.mmenu).toHaveBeenCalled()
 
     it 'should init jquery slide menu if screen size is MD or larger', ->

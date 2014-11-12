@@ -7,10 +7,10 @@ describe "SlideMenuHandle", ->
   describe 'css classes', ->
 
     it 'is hidden on medium and large screens', ->
-      slideMenu = helper.TestUtils.renderIntoDocument SlideMenuHandle(
+      slideMenu = helper.render SlideMenuHandle, {
         scheduleListSelector: "selector"
         $: {}
-      )
+      }
       expect(slideMenu.getDOMNode().className).toContain 'hidden-md'
       expect(slideMenu.getDOMNode().className).toContain 'hidden-lg'
 
@@ -20,10 +20,10 @@ describe "SlideMenuHandle", ->
     it 'should open slide menu', ->
       [mock$, mock$El] = helper.mock$()
 
-      slideMenu = helper.TestUtils.renderIntoDocument SlideMenuHandle(
+      slideMenu = helper.render SlideMenuHandle, {
         scheduleListSelector: "selector"
         $: mock$
-      )
+      }
 
       helper.TestUtils.Simulate.click(slideMenu.getDOMNode())
       expect(mock$).toHaveBeenCalledWith "selector"
