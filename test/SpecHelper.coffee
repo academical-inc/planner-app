@@ -46,25 +46,39 @@ class SpecHelper
     rendered = @render(reactComponent, props)
     [rendered, restore]
 
-  @findAllInTree: (reactEl, test)->
-    return [] if not reactEl?
+  @findAllInTree: (tree, test)->
+    return findAllInRenderedTree tree, test if not TestUtils.isElement tree
+    return [] if not tree?
 
-    ret = if test reactEl then [reactEl] else []
+    ret = if test tree then [tree] else []
 
-    if reactEl.props? and reactEl.props.children?\
-        and Array.isArray reactEl.props.children
-      children = reactEl.props.children
+    if tree.props? and tree.props.children?\
+        and Array.isArray tree.props.children
+      children = tree.props.children
       for child in children
         ret = ret.concat(
           SpecHelper.findAllInTree child, test
         )
     ret
 
+  @findWithTag: (tree, tagName)->
+    if TestUtils.isElement tree
+      res = SpecHelper.findAllInTree tree, (el)->
+        el.type == tagName
+      if res.length != 1
+        throw new Error "Did not find exactly one match for tag: #{tagName}"
+      res[0]
+    else
+      TestUtils.findRenderedDOMComponentWithTag tree, tagName
+
+  @scryWithTag: (tree, tagName)->
+    if TestUtils.isElement tree
+      SpecHelper.findAllInTree tree, (el)->
+        el.type == tagName
+    else
+      TestUtils.scryRenderedDOMComponentsWithTag tree, tagName
+
   @sim: TestUtils.Simulate
-
-  @findWithTag: TestUtils.findRenderedDOMComponentWithTag
-
-  @scryWithTag: TestUtils.scryRenderedDOMComponentsWithTag
 
 
 

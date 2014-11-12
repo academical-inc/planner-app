@@ -29,15 +29,10 @@ describe "PersonalEventForm", ->
     it 'should returna DOM tree with an input containing the correct props', ->
       tree = @form.renderInput "id", "label",\
         ref: "ref", placeholder: "placeholder", val: "defVal"
-      input = helper.findAllInTree tree, (el)->
-        el.type == "input"
-      label = helper.findAllInTree tree, (el)->
-        el.type == "label"
-      expect(label.length).toEqual 1
-      expect(input.length).toEqual 1
 
-      input = input[0]
-      label = label[0]
+      input = helper.findWithTag tree, "input"
+      label = helper.findWithTag tree, "label"
+
       expect(label.props.children).toEqual "label"
       expect(input.ref).toEqual "ref"
       expect(input.props.type).toEqual "text"
@@ -46,12 +41,10 @@ describe "PersonalEventForm", ->
       expect(input.props.defaultValue).toEqual "defVal"
 
 
-
     describe "when creating bootstrap input group", ->
 
 
     describe "when not creating bootstrap input group", ->
-
 
 
   describe "#render", ->
