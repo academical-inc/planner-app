@@ -1,8 +1,8 @@
 
 React        = require 'react'
-ColorPicker  = require './ColorPicker'
-ColorPalette = require './ColorPalette'
 colors       = require('../constants/PlannerConstants').colors
+ColorPicker  = React.createFactory require './ColorPicker'
+ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
 
 SectionItem = React.createClass(

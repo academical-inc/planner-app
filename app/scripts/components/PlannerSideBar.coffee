@@ -1,7 +1,7 @@
 
 React             = require 'react'
-SearchBar         = require './SearchBar'
-ScheduleInfoBar   = require './ScheduleInfoBar'
+SearchBar         = React.createFactory require './SearchBar'
+ScheduleInfoBar   = React.createFactory require './ScheduleInfoBar'
 R                 = React.DOM
 
 PlannerSideBar = React.createClass(

@@ -1,11 +1,11 @@
 
 $                 = require 'jquery'
 React             = require 'react'
-PlannerHeader     = require './PlannerHeader'
-PlannerBody       = require './PlannerBody'
-SlideMenuHandle   = require './SlideMenuHandle'
-PlannerModals     = require './PlannerModals'
 C                 = require '../constants/PlannerConstants'
+PlannerHeader     = React.createFactory require './PlannerHeader'
+PlannerBody       = React.createFactory require './PlannerBody'
+SlideMenuHandle   = React.createFactory require './SlideMenuHandle'
+PlannerModals     = React.createFactory require './PlannerModals'
 R                 = React.DOM
 
 PlannerApp = React.createClass(

@@ -1,9 +1,9 @@
 
 React             = require 'react'
-PanelItemList     = require './PanelItemList'
-SectionItem       = require './SectionItem'
-PersonalEventItem = require './PersonalEventItem'
 C                 = require '../constants/PlannerConstants'
+PanelItemList     = React.createFactory require './PanelItemList'
+SectionItem       = React.createFactory require './SectionItem'
+PersonalEventItem = React.createFactory require './PersonalEventItem'
 R                 = React.DOM
 
 ScheduleInfoBar = React.createClass(

@@ -1,7 +1,7 @@
 
 React        = require 'react'
-ScheduleList = require './ScheduleList'
-ProfileBox   = require './ProfileBox'
+ScheduleList = React.createFactory require './ScheduleList'
+ProfileBox   = React.createFactory require './ProfileBox'
 R            = React.DOM
 
 

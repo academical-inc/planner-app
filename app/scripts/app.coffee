@@ -1,8 +1,8 @@
 
 React      = require 'react'
-PlannerApp = require './components/PlannerApp'
+PlannerApp = React.createFactory require './components/PlannerApp'
 
-React.renderComponent(
+React.render(
   PlannerApp({}),
   document.body
 )

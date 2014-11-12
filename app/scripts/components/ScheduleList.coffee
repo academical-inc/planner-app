@@ -1,8 +1,7 @@
 
 React = require 'react'
-R     = React.DOM
-
 mq    = require '../utils/MediaQueries.coffee'
+R     = React.DOM
 
 ScheduleList = React.createClass(
 

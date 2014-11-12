@@ -39,7 +39,7 @@ class SpecHelper
     restore
 
   @render: (reactComponent, props={})->
-    TestUtils.renderIntoDocument reactComponent(props)
+    TestUtils.renderIntoDocument React.createFactory(reactComponent)(props)
 
   @rewireAndRender: (reactComponent, props={}, stubs={})->
     restore = @rewire(reactComponent, stubs)
