@@ -25,7 +25,7 @@ describe "SlideMenuHandle", ->
         $: mock$
       }
 
-      helper.TestUtils.Simulate.click(slideMenu.getDOMNode())
+      helper.sim.click(slideMenu.getDOMNode())
       expect(mock$).toHaveBeenCalledWith "selector"
       expect(mock$El.trigger).toHaveBeenCalledWith "open.mm"
 

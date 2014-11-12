@@ -46,4 +46,26 @@ class SpecHelper
     rendered = @render(reactComponent, props)
     [rendered, restore]
 
+  @findAllInTree: (reactEl, test)->
+    return [] if not reactEl?
+
+    ret = if test reactEl then [reactEl] else []
+
+    if reactEl.props? and reactEl.props.children?\
+        and Array.isArray reactEl.props.children
+      children = reactEl.props.children
+      for child in children
+        ret = ret.concat(
+          SpecHelper.findAllInTree child, test
+        )
+    ret
+
+  @sim: TestUtils.Simulate
+
+  @findWithTag: TestUtils.findRenderedDOMComponentWithTag
+
+  @scryWithTag: TestUtils.scryRenderedDOMComponentsWithTag
+
+
+
 module.exports = SpecHelper
