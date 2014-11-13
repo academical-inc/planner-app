@@ -5,7 +5,7 @@ R                 = React.DOM
 PanelItemList = React.createClass(
 
   getInitialState: ->
-    items: @props.initialState
+    items: @props.initialState || []
 
   render: ->
     R.div className: "pla-panel-item-list",
