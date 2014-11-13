@@ -43,6 +43,14 @@ main = ->
   pathParts  = modulePath.split("/")
   moduleName = pathParts[pathParts.length-1]
 
+  relativeDirPath = pathParts.slice(0, pathParts.length-1).join "/"
+  moduleDir       = "#{__dirname}/../app/scripts/#{relativeDirPath}"
+
+  if not fs.existsSync(moduleDir)
+    console.log "Module directory 'app/scripts/#{relativeDirPath}' does not
+                exist"
+    process.exit()
+
   data =
     modulePath: modulePath
     moduleName: moduleName
@@ -53,10 +61,16 @@ main = ->
   content  = Mustache.render specTemplate, data
 
   console.log "Creating spec file for: #{modulePath}"
+  if fs.existsSync specPath
+    console.log "A spec already exists at test/spec/#{modulePath}.spec.coffee"
+    console.log "Remove it to generate a new one"
+    process.exit()
+
   fs.writeFile specPath, content, (err)->
     if err
       console.log err
     else
-      console.log "The spec file was saved!"
+      console.log "The spec file was saved at
+                  test/spec/#{modulePath}.spec.coffee!"
 
 main()
