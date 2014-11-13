@@ -1,6 +1,6 @@
 
-React             = require 'react'
-R                 = React.DOM
+React = require 'react'
+R     = React.DOM
 
 PanelItemList = React.createClass(
 

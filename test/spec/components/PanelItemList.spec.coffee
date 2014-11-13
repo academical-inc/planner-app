@@ -3,7 +3,7 @@ H             = require '../../SpecHelper'
 PanelItemList = require '../../../app/scripts/components/PanelItemList'
 
 
-ddescribe 'PanelItemList', ->
+describe 'PanelItemList', ->
 
   describe '#render', ->
 
