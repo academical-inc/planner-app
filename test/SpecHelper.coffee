@@ -13,7 +13,7 @@ class SpecHelper
     mock$ = @spy "mock$", retVal: mock$El
     [mock$, mock$El]
 
-  @spy: (name, {retVal})->
+  @spy: (name, {retVal}={})->
     jasmine.createSpy(name).and.returnValue retVal
 
   @spyObj: (name, spyFuncs)->
