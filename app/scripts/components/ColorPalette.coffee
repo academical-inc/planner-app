@@ -13,6 +13,7 @@ ColorPalette = React.createClass(
         className: "color"
         style: {backgroundColor: color}
         onClick: @props.handleColorSelect
+        "data-color": color
        ) for color in colors)
 
 )
