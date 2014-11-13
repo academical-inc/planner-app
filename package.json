@@ -46,6 +46,8 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "main-bower-files": "^2.1.0",
     "merge-stream": "^0.1.6",
+    "minimist": "^1.1.0",
+    "mustache": "^0.8.2",
     "rewireify": "0.0.11",
     "run-sequence": "^1.0.1",
     "vinyl-buffer": "^1.0.0",

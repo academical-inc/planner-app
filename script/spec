@@ -1,0 +1,51 @@
+#!/usr/bin/env coffee
+
+Mustache  = require 'mustache'
+parseArgs = require 'minimist'
+fs        = require 'fs'
+
+
+specTemplate = """
+
+H{{{padding}}}= require '../../SpecHelper'
+{{{moduleName}}} = require '../../../app/scripts/{{{modulePath}}}'
+
+
+describe '{{{moduleName}}}', ->
+
+{{#isComponent}}
+  describe '#render', ->
+
+
+{{/isComponent}}
+
+"""
+
+
+main = ->
+  args       = parseArgs process.argv.slice(2)
+  modulePath = args._[0]
+  modulePath = modulePath.replace ".coffee", ""
+  modulePath = modulePath.replace /\/$/, ""
+  modulePath = modulePath.replace /^\//, ""
+
+  pathParts  = modulePath.split("/")
+  moduleName = pathParts[pathParts.length-1]
+
+  data =
+    modulePath: modulePath
+    moduleName: moduleName
+    isComponent: pathParts[0] == "components"
+    padding: Array(moduleName.length+1).join " "
+
+  specPath = "#{__dirname}/../test/spec/#{modulePath}.spec.coffee"
+  content  = Mustache.render specTemplate, data
+
+  console.log "Creating spec file for: #{modulePath}"
+  fs.writeFile specPath, content, (err)->
+    if err
+      console.log err
+    else
+      console.log "The spec file was saved!"
+
+main()
