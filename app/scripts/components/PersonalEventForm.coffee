@@ -1,15 +1,15 @@
 
-React = require 'react'
-$     = require 'jquery'
-R     = React.DOM
+React     = require 'react'
+$         = require 'jquery'
+days      = require('../constants/PlannerConstants').days
+DateUtils = require '../utils/DateUtils'
+R         = React.DOM
 
 PersonalEventForm = React.createClass(
 
   getInitialState: ->
-    {
-      startTime: "10:00am"
-      endTime: "11:30am"
-      day: "We"
+    @props.initialState || {
+      checkedDays: [DateUtils.getDayForDate DateUtils.now()]
     }
 
   componentDidMount: ->
@@ -22,7 +22,24 @@ PersonalEventForm = React.createClass(
     $(@refs.endInput.getDOMNode()).timepicker opts
     return
 
-  renderInput: (id, label, {ref, type, placeholder, inputGroup, val}={})->
+  handleStartTimeChange: (e)->
+    @setState $.extend({}, @state, startTime: e.target.value)
+
+  handleEndTimeChange: (e)->
+    @setState $.extend({}, @state, endTime: e.target.value)
+
+  handleDayChecked: (e)->
+    day     = e.target.value
+    checked = e.target.checked
+    checkedDays = @state.checkedDays.slice 0
+    if checked == true
+      checkedDays = checkedDays.concat [day]
+    else
+      checkedDays.splice checkedDays.indexOf(day)
+    @setState $.extend({}, @state, checkedDays: checkedDays)
+
+  renderInput: (id, label, {ref, type, placeholder, inputGroup,\
+      val, onChange}={})->
     type ?= "text"
 
     inputProps =
@@ -31,7 +48,9 @@ PersonalEventForm = React.createClass(
       id: id
       ref: ref
       placeholder: placeholder
-      defaultValue: val
+      defaultValue: val if not onChange?
+      value: val if onChange?
+      onChange: onChange
 
     if inputGroup?
       R.div className: "form-group",
@@ -52,13 +71,19 @@ PersonalEventForm = React.createClass(
     startRef = "startInput"
     endRef   = "endInput"
 
-    days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
-
     clockIcon = R.i className: "fa fa-clock-o fa-fw"
-    startInput = @renderInput startId, "Start time", ref: startRef,\
-      val: @state.startTime, inputGroup: clockIcon, placeholder: "10:00am"
-    endInput = @renderInput endId, "End time", ref: endRef,\
-      val: @state.endTime, inputGroup: clockIcon, placeholder: "11:30am"
+    startInput = @renderInput startId, "Start time",
+      val: @state.startTime
+      onChange: @handleStartTimeChange
+      inputGroup: clockIcon
+      placeholder: "10:00am"
+      ref: startRef
+    endInput = @renderInput endId, "End time",
+      val: @state.endTime
+      onChange: @handleEndTimeChange
+      inputGroup: clockIcon
+      placeholder: "11:30am"
+      ref: endRef
 
     R.form className: "pla-personal-event-form", role: "form",
       @renderInput nameId, "Name", placeholder: "e.g. gym"
@@ -72,9 +97,9 @@ PersonalEventForm = React.createClass(
             R.label className: "checkbox-inline", key: day,
               R.input(
                 type: "checkbox"
-                id: "day-input-#{day}",
                 value: day
-                defaultChecked: true if day == @state.day
+                checked: @state.checkedDays.indexOf(day) != -1
+                onChange: @handleDayChecked
               )
               day
           ).bind(this)
