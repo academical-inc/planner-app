@@ -10,6 +10,7 @@ module.exports =
     PERSONAL_EVENT_MODAL: '#pla-personal-event-modal'
   htmlEntities:
     TIMES: "\u00d7"
+  days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
   colors: [
     "#f27979"
     "#f2a979"
