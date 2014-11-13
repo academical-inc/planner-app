@@ -47,7 +47,8 @@ class SpecHelper
     [rendered, restore]
 
   @findAllInTree: (tree, test)->
-    return findAllInRenderedTree tree, test if not TestUtils.isElement tree
+    return TestUtils.findAllInRenderedTree tree, test\
+      if not TestUtils.isElement tree
     return [] if not tree?
 
     ret = if test tree then [tree] else []
@@ -77,6 +78,34 @@ class SpecHelper
         el.type == tagName
     else
       TestUtils.scryRenderedDOMComponentsWithTag tree, tagName
+
+  @findWithClass: (tree, className)->
+    if TestUtils.isElement tree
+      res = SpecHelper.findAllInTree tree, (el)->
+        el.props.className == className
+      if res.length != 1
+        throw new Error "Did not find exactly one match for class: #{className}"
+      res[0]
+    else
+      TestUtils.findRenderedDOMComponentWithClass tree, className
+
+  @scryWithClass: (tree, className)->
+    if TestUtils.isElement tree
+      SpecHelper.findAllInTree tree, (el)->
+        el.props.className == className
+    else
+      TestUtils.scryRenderedDOMComponentsWithClass tree, className
+
+  @findWithId: (tree, id)->
+    res = SpecHelper.findAllInTree tree, (el)->
+      TestUtils.isDOMComponent(el) and el.props.id == id
+    if res.length != 1
+      throw new Error "Did not find exactly one match for id: #{id}"
+    res[0]
+
+  @scryWithId: (tree, id)->
+    SpecHelper.findAllInTree tree, (el)->
+      TestUtils.isDOMComponent(el) and el.props.id == id
 
   @sim: TestUtils.Simulate
 
