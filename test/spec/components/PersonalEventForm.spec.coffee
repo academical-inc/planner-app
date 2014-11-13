@@ -1,5 +1,5 @@
 
-helper            = require '../../SpecHelper.coffee'
+H                 = require '../../SpecHelper.coffee'
 PersonalEventForm = require '../../../app/scripts/components/PersonalEventForm'
 
 describe "PersonalEventForm", ->
@@ -7,14 +7,14 @@ describe "PersonalEventForm", ->
   describe "#componentDidMount", ->
 
     beforeEach ->
-      [@mock$, @mock$El] = helper.mock$()
-      @restore = helper.rewire PersonalEventForm, $: @mock$
+      [@mock$, @mock$El] = H.mock$()
+      @restore = H.rewire PersonalEventForm, $: @mock$
 
     afterEach ->
       @restore()
 
     it 'should init jquery timepicker on time inputs with correct options', ->
-      form = helper.render PersonalEventForm
+      form = H.render PersonalEventForm
 
       expect(@mock$).toHaveBeenCalledWith form.refs.startInput.getDOMNode()
       expect(@mock$).toHaveBeenCalledWith form.refs.endInput.getDOMNode()
@@ -25,7 +25,7 @@ describe "PersonalEventForm", ->
 
     beforeEach ->
       @e    = target: value: "Mo"
-      @form = helper.render PersonalEventForm, initialState: checkedDays: ["We"]
+      @form = H.render PersonalEventForm, initialState: checkedDays: ["We"]
       spyOn @form, "setState"
 
     describe 'updates checkedDays state correctly', ->
@@ -51,8 +51,8 @@ describe "PersonalEventForm", ->
     assertInputProps = (tree, onChangeSet=false)->
       expect(tree.props.className).toEqual "form-group"
 
-      input = helper.findWithTag tree, "input"
-      label = helper.findWithTag tree, "label"
+      input = H.findWithTag tree, "input"
+      label = H.findWithTag tree, "label"
 
       expect(label.props.children).toEqual "label"
       expect(input.ref).toEqual "ref"
@@ -63,7 +63,7 @@ describe "PersonalEventForm", ->
       expect(input.props.defaultValue).toEqual "defVal" if not onChangeSet
 
     beforeEach ->
-      @form = helper.render PersonalEventForm
+      @form = H.render PersonalEventForm
 
     it 'sets value prop when onChange handler prop is provided', ->
       tree = getInput @form, onChange: ->
@@ -77,9 +77,9 @@ describe "PersonalEventForm", ->
       tree = getInput @form, inputGroup: "@"
       assertInputProps tree
 
-      expect(-> helper.findWithClass(tree, "input-group")).not.toThrow()
+      expect(-> H.findWithClass(tree, "input-group")).not.toThrow()
 
-      span = helper.findWithTag tree, "span"
+      span = H.findWithTag tree, "span"
       expect(span.props.className).toEqual "input-group-addon"
       expect(span.props.children).toEqual "@"
 
@@ -87,20 +87,20 @@ describe "PersonalEventForm", ->
       tree = getInput @form
       assertInputProps tree
 
-      expect(-> helper.findWithClass(tree, "input-group")).toThrow()
-      expect(helper.scryWithTag(tree, "span").length).toEqual 0
+      expect(-> H.findWithClass(tree, "input-group")).toThrow()
+      expect(H.scryWithTag(tree, "span").length).toEqual 0
 
 
   describe "#render", ->
 
     assertRenderedState = (form, state)->
-      startInput = helper.findWithId form, "personal-event-start-time-input"
-      endInput   = helper.findWithId form, "personal-event-end-time-input"
+      startInput = H.findWithId form, "personal-event-start-time-input"
+      endInput   = H.findWithId form, "personal-event-end-time-input"
 
       expect(startInput.props.value).toEqual state.startTime
       expect(endInput.props.value).toEqual state.endTime
 
-      checkedDays = helper.findAllInTree form, (el)->
+      checkedDays = H.findAllInTree form, (el)->
         el.props.checked == true
       expect(checkedDays.length).toEqual state.checkedDays.length
       for day in checkedDays
@@ -113,15 +113,15 @@ describe "PersonalEventForm", ->
         checkedDays: "We"
       }
       @days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
-      @restore = helper.rewire PersonalEventForm,\
+      @restore = H.rewire PersonalEventForm,\
         days: @days
 
     afterEach ->
       @restore()
 
     it 'renders the form with the correct days', ->
-      @form = helper.render PersonalEventForm
-      daysDiv = helper.findWithClass @form, "days"
+      @form = H.render PersonalEventForm
+      daysDiv = H.findWithClass @form, "days"
       days = daysDiv.props.children
 
       expect(days.length).toEqual @days.length
@@ -133,11 +133,11 @@ describe "PersonalEventForm", ->
       ).bind this
 
     it 'renders the form correctly based on initial state', ->
-      @form = helper.render PersonalEventForm, initialState: @state
+      @form = H.render PersonalEventForm, initialState: @state
       assertRenderedState @form, @state
 
     it 'updates form correctly when state is updated', ->
-      @form = helper.render PersonalEventForm
+      @form = H.render PersonalEventForm
       @form.setState @state, (->
         assertRenderedState @form, @state
       ).bind this

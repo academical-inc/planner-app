@@ -1,11 +1,11 @@
 
-helper    = require '../../SpecHelper'
+H         = require '../../SpecHelper'
 DateUtils = require '../../../app/scripts/utils/DateUtils'
 
 describe "DateUtils", ->
 
   beforeEach ->
-    @restore = helper.rewire DateUtils,\
+    @restore = H.rewire DateUtils,\
       days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
 
   afterEach ->
