@@ -38,8 +38,9 @@ class SpecHelper
         mod.__set__ key, originals[key]
     restore
 
-  @render: (reactComponent, props={})->
-    TestUtils.renderIntoDocument React.createFactory(reactComponent)(props)
+  @render: (reactComponent, props={}, children)->
+    factory = React.createFactory(reactComponent)
+    TestUtils.renderIntoDocument factory(props, children)
 
   @rewireAndRender: (reactComponent, props={}, stubs={})->
     restore = @rewire(reactComponent, stubs)

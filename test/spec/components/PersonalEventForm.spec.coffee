@@ -2,6 +2,7 @@
 H                 = require '../../SpecHelper.coffee'
 PersonalEventForm = require '../../../app/scripts/components/PersonalEventForm'
 
+
 describe "PersonalEventForm", ->
 
   describe "#componentDidMount", ->
