@@ -21,6 +21,27 @@ describe "PersonalEventForm", ->
       expect(@mock$El.timepicker.calls.count()).toEqual 2
 
 
+  describe "#handleDayChecked", ->
+
+    beforeEach ->
+      @e    = target: value: "Mo"
+      @form = helper.render PersonalEventForm, initialState: checkedDays: ["We"]
+      spyOn @form, "setState"
+
+    describe 'updates checkedDays state correctly', ->
+
+      it 'when checking a day', ->
+        @e.target.checked = true
+        @form.handleDayChecked @e
+        expect(@form.setState).toHaveBeenCalledWith checkedDays: ["We", "Mo"]
+
+      it 'when unchecking a day', ->
+        @e.target.value   = "We"
+        @e.target.checked = false
+        @form.handleDayChecked @e
+        expect(@form.setState).toHaveBeenCalledWith checkedDays: []
+
+
   describe "#renderInput", ->
 
     getInput = (form, {inputGroup, onChange}={})->
@@ -61,7 +82,6 @@ describe "PersonalEventForm", ->
       span = helper.findWithTag tree, "span"
       expect(span.props.className).toEqual "input-group-addon"
       expect(span.props.children).toEqual "@"
-
 
     it 'does not create input group when not creating one', ->
       tree = getInput @form
