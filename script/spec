@@ -1,5 +1,16 @@
 #!/usr/bin/env coffee
 
+# Usage:
+# Will generate spec file for given module
+#
+# spec <modulePath>
+#
+# modulePath: path for module relative to app/scripts.
+#
+# Example:
+#   spec components/MyReactComponent
+#   => Creates test/spec/components/MyReactComponent.spec.coffee
+
 Mustache  = require 'mustache'
 parseArgs = require 'minimist'
 fs        = require 'fs'
