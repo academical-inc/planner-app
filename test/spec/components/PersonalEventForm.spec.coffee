@@ -94,19 +94,6 @@ describe "PersonalEventForm", ->
 
   describe "#render", ->
 
-    assertRenderedState = (form, state)->
-      startInput = H.findWithId form, "personal-event-start-time-input"
-      endInput   = H.findWithId form, "personal-event-end-time-input"
-
-      expect(startInput.props.value).toEqual state.startTime
-      expect(endInput.props.value).toEqual state.endTime
-
-      checkedDays = H.findAllInTree form, (el)->
-        el.props.checked == true
-      expect(checkedDays.length).toEqual state.checkedDays.length
-      for day in checkedDays
-        expect(state.checkedDays.indexOf(day.props.value)).not.toEqual -1
-
     beforeEach ->
       @state = {
         startTime:   "10:00am"
@@ -119,6 +106,19 @@ describe "PersonalEventForm", ->
 
     afterEach ->
       @restore()
+
+    assertRenderedState = (form, state)->
+      startInput = H.findWithId form, "personal-event-start-time-input"
+      endInput   = H.findWithId form, "personal-event-end-time-input"
+
+      expect(startInput.props.value).toEqual state.startTime
+      expect(endInput.props.value).toEqual state.endTime
+
+      checkedDays = H.findAllInTree form, (el)->
+        el.props.checked == true
+      expect(checkedDays.length).toEqual state.checkedDays.length
+      for day in checkedDays
+        expect(state.checkedDays.indexOf(day.props.value)).not.toEqual -1
 
     it 'renders the form with the correct days', ->
       @form = H.render PersonalEventForm
