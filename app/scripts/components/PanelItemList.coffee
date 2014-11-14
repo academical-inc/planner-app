@@ -16,7 +16,8 @@ PanelItemList = React.createClass(
           role: "tablist"
           "aria-multiselectable": "true"
         },
-        (@props.itemType(key: item.id, item: item) for item in @state.items)
+        (@props.itemType(key: item.id, itemKey: item.id, item: item)\
+          for item in @state.items)
       )
       if @props.handleItemAdd? or\
           (@props.itemAddDataToggle? and @props.itemAddDataTarget?)
