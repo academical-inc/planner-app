@@ -108,8 +108,11 @@ class SpecHelper
     SpecHelper.findAllInTree tree, (el)->
       TestUtils.isDOMComponent(el) and el.props.id == id
 
-  @sim: TestUtils.Simulate
+  @findWithType: TestUtils.findRenderedComponentWithType
 
+  @scryWithType: TestUtils.scryRenderedComponentsWithType
+
+  @sim: TestUtils.Simulate
 
 
 module.exports = SpecHelper
