@@ -9,9 +9,13 @@ describe 'WeekCalendar', ->
 
     beforeEach ->
       [@mock$, @mock$El] = H.mock$()
+      @restore = H.rewire WeekCalendar, $: @mock$
+
+    afterEach ->
+      @restore
 
     it 'should initialize the fullcalendar plugin', ->
-      cal = H.render WeekCalendar, $: @mock$
+      cal = H.render WeekCalendar
       expect(@mock$).toHaveBeenCalledWith(cal.getDOMNode())
       expect(@mock$El.fullCalendar).toHaveBeenCalled()
 

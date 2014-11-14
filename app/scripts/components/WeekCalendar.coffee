@@ -1,11 +1,12 @@
 
 React = require 'react'
+$     = require 'jquery'
 R     = React.DOM
 
 WeekCalendar = React.createClass(
 
   componentDidMount: ->
-    @props.$(@getDOMNode()).fullCalendar(
+    $(@getDOMNode()).fullCalendar(
       defaultView: "agendaWeek"
       allDaySlot: false
       allDayText: false

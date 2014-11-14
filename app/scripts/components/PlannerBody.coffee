@@ -10,7 +10,7 @@ PlannerBody = React.createClass(
   render: ->
     R.div className: 'pla-planner-body',
       PlannerSideBar({})
-      WeekCalendar($: @props.$)
+      WeekCalendar({})
 
 )
 

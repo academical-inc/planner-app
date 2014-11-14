@@ -1,5 +1,4 @@
 
-$                 = require 'jquery'
 React             = require 'react'
 C                 = require '../constants/PlannerConstants'
 PlannerHeader     = React.createFactory require './PlannerHeader'
@@ -14,10 +13,9 @@ PlannerApp = React.createClass(
     R.div className: 'pla-content container-fluid',
       SlideMenuHandle(
         scheduleListSelector: C.selectors.SCHEDULE_LIST,
-        $: $
       )
-      PlannerHeader($: $)
-      PlannerBody($: $)
+      PlannerHeader({})
+      PlannerBody({})
       PlannerModals({})
 
 )

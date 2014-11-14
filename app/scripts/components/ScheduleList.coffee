@@ -1,5 +1,6 @@
 
 React = require 'react'
+$     = require 'jquery'
 mq    = require '../utils/MediaQueries.coffee'
 R     = React.DOM
 
@@ -7,7 +8,7 @@ ScheduleList = React.createClass(
 
   componentDidMount: ->
     if not mq.matchesMDAndUp()
-      @props.$(@getDOMNode()).mmenu(
+      $(@getDOMNode()).mmenu(
         dragOpen:
           open: true
       )
