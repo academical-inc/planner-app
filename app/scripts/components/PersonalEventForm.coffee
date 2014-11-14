@@ -93,7 +93,7 @@ PersonalEventForm = React.createClass(
       R.div className: "form-group",
         R.label null, "Days"
         R.div className: "days",
-          days.map ((day)->
+          days.map (day)=>
             R.label className: "checkbox-inline", key: day,
               R.input(
                 type: "checkbox"
@@ -102,7 +102,6 @@ PersonalEventForm = React.createClass(
                 onChange: @handleDayChecked
               )
               day
-          ).bind(this)
 
 )
 

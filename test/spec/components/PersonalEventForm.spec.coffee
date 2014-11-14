@@ -126,12 +126,11 @@ describe "PersonalEventForm", ->
       days = daysDiv.props.children
 
       expect(days.length).toEqual @days.length
-      days.forEach ((day, i)->
+      days.forEach (day, i)=>
         expect(day.props.children[1]).toEqual @days[i]
 
         dayInput = day.props.children[0]
         expect(dayInput.props.value).toEqual @days[i]
-      ).bind this
 
     it 'renders the form correctly based on initial state', ->
       @form = H.render PersonalEventForm, initialState: @state
@@ -139,6 +138,5 @@ describe "PersonalEventForm", ->
 
     it 'updates form correctly when state is updated', ->
       @form = H.render PersonalEventForm
-      @form.setState @state, (->
+      @form.setState @state, =>
         assertRenderedState @form, @state
-      ).bind this

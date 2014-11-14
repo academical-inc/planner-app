@@ -28,13 +28,12 @@ describe 'PanelItemList', ->
 
       items = H.findWithClass(list, "panel-group").props.children
       expect(items.length).toEqual expected.length
-      items.forEach ((item, i)->
+      items.forEach (item, i)=>
         expect(item).toEqual "data"
         expect(@itemType.calls.argsFor(i)).toEqual [{
           key: expected[i].id
           item: expected[i]
         }]
-      ).bind this
 
     it 'does not render add button if required props not provided', ->
       list = H.render PanelItemList, @defProps
