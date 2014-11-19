@@ -9,7 +9,11 @@
   }
 
   .pla-schedule-list {
-    @include make-xs-column(6);
+    @include make-xs-column(3);
+  }
+
+  .pla-options-list {
+    @include make-xs-column(3);
   }
 
   .pla-profile-box {
