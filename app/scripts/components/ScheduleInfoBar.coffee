@@ -14,12 +14,40 @@ ScheduleInfoBar = React.createClass(
       totalSections: 2
       sections: [
         {
-          id: "1"
-          name: "MATE1203 - Algebra"
-        },
+          id: "5fb6679adb55"
+          sectionId:  "45578"
+          sectionNumber: 2
+          courseName: "Algebra"
+          courseCode: "MATE1203"
+          seats:
+            available: 20
+          teacherNames: ["Dimitri Alejo", "Juan Tejada"]
+          credits: 3
+          departments: [{name: "Math Department"}]
+        }
         {
-          id: "2"
-          name: "LANG1505 - Spanish"
+          id: "5fb6679adb54"
+          sectionId:  "37442"
+          sectionNumber: 2
+          courseName: "Spanish"
+          courseCode: "LANG1550"
+          seats:
+            available: 5
+          teacherNames: ["Gregorio Hernandez"]
+          credits: 3
+          departments: [{name: "Foreign Languages"}]
+        }
+        {
+          id: "5fb6679ad499"
+          sectionId:  "12345"
+          sectionNumber: 1
+          courseName: "Physics 1"
+          courseCode: "FISI2222"
+          seats:
+            available: 15
+          teacherNames: ["Manolo Rodriguez, Lorena Hernandez"]
+          credits: 3
+          departments: [{name: "Physics"}]
         }
       ]
       personalEvents: [
