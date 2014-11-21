@@ -3,7 +3,7 @@ H           = require '../../SpecHelper'
 SectionItem = require '../../../app/scripts/components/SectionItem'
 
 
-ddescribe 'SectionItem', ->
+describe 'SectionItem', ->
 
   beforeEach ->
     @data =
