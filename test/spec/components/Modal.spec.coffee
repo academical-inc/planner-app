@@ -34,6 +34,7 @@ describe "Modal", ->
     expect(cancelBtn.props["data-dismiss"]).toEqual "modal"
     expect(cancelBtn.props.className).toEqual "btn btn-#{data.cancel.type}"
     expect(cancelBtn.props.children).toEqual data.cancel.text
+    expect(acceptBtn.props["data-dismiss"]).toEqual "modal"
     expect(acceptBtn.props.className).toEqual "btn btn-#{data.accept.type}"
     expect(acceptBtn.props.children).toEqual data.accept.text
 

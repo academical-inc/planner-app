@@ -25,7 +25,7 @@ Modal = React.createClass(
       R.button className: "btn btn-#{c.type}", key: "cancel",\
         onClick: c.handler, "data-dismiss": "modal", c.text
       R.button className: "btn btn-#{a.type}", key: "accept",\
-        onClick: a.handler, a.text
+        onClick: a.handler, "data-dismiss": "modal", a.text
     ]
 
   render: ->
