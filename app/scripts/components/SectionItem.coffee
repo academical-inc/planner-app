@@ -21,7 +21,7 @@ SectionItem = React.createClass(
     else
       seatsMap.ZERO.className
 
-  getSectionColor: ->
+  getColor: ->
     # TODO: Random color selection is temporary
     @state.color || colors[Math.floor(Math.random() * colors.length)]
 
@@ -31,7 +31,7 @@ SectionItem = React.createClass(
     colorPaletteId = "section-colors-#{@props.itemKey}"
     seatsClass     = @getSeatsColorClass()
     colorStyle     =
-      borderColor: @getSectionColor()
+      borderColor: @getColor()
 
     R.div className: "pla-section-item panel panel-default",
       R.div(
