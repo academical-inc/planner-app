@@ -1,10 +1,9 @@
 
-React      = require 'react'
-I18n       = require './utils/I18n'
-PlannerApp = React.createFactory require './components/PlannerApp'
-
+I18n = require './utils/I18n'
 I18n.init()
-I18n.setLocale "en"
+
+React      = require 'react'
+PlannerApp = React.createFactory require './components/PlannerApp'
 
 React.render(
   PlannerApp({})

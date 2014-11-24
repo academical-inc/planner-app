@@ -54,6 +54,7 @@ describe 'I18n', ->
   describe '.init', ->
 
     beforeEach ->
+      H.spyOn I18n, "setLocale"
       @restore = H.rewire I18n, DEFAULT_LOCALE: "fr"
 
     afterEach ->
@@ -61,17 +62,16 @@ describe 'I18n', ->
 
     it 'should set locale to module default if no argument passed', ->
       I18n.init()
-      expect(I18n.locale).toEqual "fr"
+      expect(I18n.setLocale).toHaveBeenCalledWith "fr"
 
     it 'should set locale to default passed as parameter', ->
       I18n.init("en")
-      expect(I18n.locale).toEqual "en"
+      expect(I18n.setLocale).toHaveBeenCalledWith "en"
 
 
   describe '.setLocale', ->
 
     beforeEach ->
-      I18n.init()
       @restore = H.rewire I18n, messages: en: "data", es: "other"
 
     afterEach ->
@@ -90,10 +90,6 @@ describe 'I18n', ->
     it 'throws error if no messages present at all', ->
       @restore = H.rewire I18n, messages: {}
       expect(-> I18n.setLocale("de")).toThrowError()
-
-    it 'thows error if module has not been inited', ->
-      I18n.locale = undefined
-      expect(-> I18n.setLocale("es")).toThrowError()
 
 
   describe '.t', ->

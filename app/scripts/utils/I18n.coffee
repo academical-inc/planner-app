@@ -20,23 +20,22 @@ class I18n
       text = text.replace new RegExp("{{#{key}}}", "g"), values[key]
     text
 
-  @init: (defaultLocale)->
-    @locale = DEFAULT_LOCALE
-    @locale = defaultLocale if defaultLocale?
+  @init: (locale)->
+    @setLocale (locale || DEFAULT_LOCALE)
 
   @setLocale = (locale)->
-    throw new Error("Must init I18n before setting locale") if not @locale?
     locale = @_simpleLocale locale
 
     if locale of messages
       @locale = locale
       @localeMessages = messages[locale]
-    else if @locale of messages
+    else if DEFAULT_LOCALE of messages
+      @locale = DEFAULT_LOCALE
       console.warn "Message translations missing for the provided
         locale '#{locale}'. Falling back to default locale: '#{@locale}'"
       @localeMessages = messages[@locale]
     else
-      throw new Error("Message translations missing for locale #{@locale}")
+      throw new Error("Message translations missing for locale #{locale}")
 
   @t = (key, values)->
     res = @_valueFor key, @localeMessages
