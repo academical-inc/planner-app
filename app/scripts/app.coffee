@@ -1,14 +1,12 @@
 
-# Load and use polyfill for ECMA-402.
-if not global.Intl?
-  global.Intl = require('intl')
-I18n       = require '../locales/i18n.json'
-
 React      = require 'react'
+I18n       = require './utils/I18n'
 PlannerApp = React.createFactory require './components/PlannerApp'
 
+I18n.init()
+I18n.setLocale "en"
 
 React.render(
-  PlannerApp(locales: ["en"], messages: I18n.messages["en"])
+  PlannerApp({})
   document.body
 )

@@ -1,6 +1,5 @@
 
 React           = require 'react'
-ReactIntlMixin  = require 'react-intl'
 C               = require '../constants/PlannerConstants'
 PlannerHeader   = React.createFactory require './PlannerHeader'
 PlannerBody     = React.createFactory require './PlannerBody'
@@ -9,7 +8,6 @@ PlannerModals   = React.createFactory require './PlannerModals'
 R               = React.DOM
 
 PlannerApp = React.createClass(
-  mixins: [ReactIntlMixin]
 
   render: ->
     R.div className: 'pla-content container-fluid',
