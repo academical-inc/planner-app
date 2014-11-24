@@ -85,10 +85,9 @@ describe 'SectionItem', ->
       expect(info_list[0].props.children).toContain data.seats.available
       expect(info_list[1].props.children).toEqual data.teacherNames.join(", ")
 
-      spans = info_list[2].props.children
-      expect(spans[0].props.children).toContain data.credits
-      expect(spans[1].props.children).toContain data.sectionNumber
-      expect(spans[2].props.children).toContain data.sectionId
+      expect(info_list[2].props.children).toContain data.credits
+      expect(info_list[2].props.children).toContain data.sectionNumber
+      expect(info_list[2].props.children).toContain data.sectionId
 
       final = info_list[3].props.children
       expect(final[0].props.children).toContain data.departments[0].name
