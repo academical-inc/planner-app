@@ -1,5 +1,6 @@
 
 React        = require 'react'
+I18nMixin    = require '../mixins/I18nMixin'
 constants    = require '../constants/PlannerConstants'
 colors       = constants.colors
 seatsMap     = constants.sectionSeatsMap
@@ -9,6 +10,8 @@ R            = React.DOM
 
 
 SectionItem = React.createClass(
+
+  mixins: [I18nMixin]
 
   getInitialState: ->
     @props.item
@@ -69,13 +72,12 @@ SectionItem = React.createClass(
         },
         R.ul className: "list-group",
           R.li className: "list-group-item list-group-item-#{seatsClass} seats",
-            "#{@state.seats.available} seats available"
+            @t("sidebar.section.seats", seats: @state.seats.available)
           R.li className: "list-group-item teachers",
             @state.teacherNames.join ", "
           R.li className: "list-group-item",
-            R.span null, "#{@state.credits} credits - "
-            R.span null, "Section #{@state.sectionNumber} - "
-            R.span null, "#{@state.sectionId}"
+            @t("sidebar.section.info", credits: @state.credits,\
+              number: @state.sectionNumber, id: @state.sectionId)
           R.li className: "list-group-item clearfix",
             R.span null, "#{@state.departments[0].name}"
             ColorPicker colorPaletteId: colorPaletteId

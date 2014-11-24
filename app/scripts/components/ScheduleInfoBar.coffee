@@ -1,12 +1,15 @@
 
 React             = require 'react'
 C                 = require '../constants/PlannerConstants'
+I18nMixin         = require '../mixins/I18nMixin'
 PanelItemList     = React.createFactory require './PanelItemList'
 SectionItem       = React.createFactory require './SectionItem'
 PersonalEventItem = React.createFactory require './PersonalEventItem'
 R                 = React.DOM
 
 ScheduleInfoBar = React.createClass(
+
+  mixins: [I18nMixin]
 
   getInitialState: ->
     @props.initialState || {
@@ -66,12 +69,12 @@ ScheduleInfoBar = React.createClass(
     R.div className: "pla-schedule-info-bar",
       PanelItemList
         itemType: SectionItem
-        header: "Sections: #{@state.totalSections} Credits:
-                #{@state.totalCredits}"
+        header: @t "sidebar.sectionsHeader", sections: @state.totalSections,\
+          credits: @state.totalCredits
         initialState: @state.sections
       PanelItemList
         itemType: PersonalEventItem
-        header: "Other Events"
+        header: @t "sidebar.eventsHeader"
         itemAddDataToggle: "modal"
         itemAddDataTarget: C.selectors.PERSONAL_EVENT_MODAL
         initialState: @state.personalEvents
