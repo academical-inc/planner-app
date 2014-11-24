@@ -1,11 +1,14 @@
 
 React     = require 'react'
 $         = require 'jquery'
+I18nMixin = require '../mixins/I18nMixin'
 days      = require('../constants/PlannerConstants').days
 DateUtils = require '../utils/DateUtils'
 R         = React.DOM
 
 PersonalEventForm = React.createClass(
+
+  mixins: [I18nMixin]
 
   getInitialState: ->
     @props.initialState || {
@@ -72,13 +75,13 @@ PersonalEventForm = React.createClass(
     endRef   = "endInput"
 
     clockIcon = R.i className: "fa fa-clock-o fa-fw"
-    startInput = @renderInput startId, "Start time",
+    startInput = @renderInput startId, @t("eventForm.start"),
       val: @state.startTime
       onChange: @handleStartTimeChange
       inputGroup: clockIcon
       placeholder: "10:00am"
       ref: startRef
-    endInput = @renderInput endId, "End time",
+    endInput = @renderInput endId, @t("eventForm.end"),
       val: @state.endTime
       onChange: @handleEndTimeChange
       inputGroup: clockIcon
@@ -86,12 +89,13 @@ PersonalEventForm = React.createClass(
       ref: endRef
 
     R.form className: "pla-personal-event-form", role: "form",
-      @renderInput nameId, "Name", placeholder: "e.g. gym"
+      @renderInput nameId, @t("eventForm.name"),\
+        placeholder: @t("eventForm.namePlaceholder")
       R.div className: "row",
         R.div className: "col-md-6", startInput
         R.div className: "col-md-6", endInput
       R.div className: "form-group",
-        R.label null, "Days"
+        R.label null, @t("eventForm.days")
         R.div className: "days",
           days.map (day)=>
             R.label className: "checkbox-inline", key: day,

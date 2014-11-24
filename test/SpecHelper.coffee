@@ -1,17 +1,27 @@
 
+$         = require 'jquery'
 React     = require 'react/addons'
+I18n      = require '../app/scripts/utils/I18n'
 TestUtils = React.addons.TestUtils
+
+I18n.init()
 
 class SpecHelper
 
-  @React: React
+  @React:     React
   @TestUtils: TestUtils
+  @$:         $
 
   @mock$: ({spyFuncs}={})->
     spyFuncs ?= ["trigger", "mmenu", "fullCalendar", "timepicker"]
     mock$El = @spyObj "mock$El", spyFuncs
     mock$ = @spy "mock$", retVal: mock$El
     [mock$, mock$El]
+
+  @mockComponent: ->
+    React.createFactory 'div'
+
+  @spyOn: spyOn
 
   @spy: (name, {retVal}={})->
     jasmine.createSpy(name).and.returnValue retVal

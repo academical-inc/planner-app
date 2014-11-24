@@ -11,7 +11,7 @@ describe 'ScheduleInfoBar', ->
     beforeEach ->
       @modalSelector = ".modal-selector"
       @sectionItem   = ->
-      @eventItem = ->
+      @eventItem     = ->
       @restore = H.rewire ScheduleInfoBar,
         C: selectors: PERSONAL_EVENT_MODAL: @modalSelector
         SectionItem: @sectionItem
@@ -23,19 +23,17 @@ describe 'ScheduleInfoBar', ->
         sections: [ {id: "s1"}, {id: "s2"} ]
         personalEvents: [ {id: "p1"}, {id: "p2"} ]
 
-      @sectionsHeader = "Sections: #{@data.totalSections} Credits:
-                        #{@data.totalCredits}"
 
     afterEach ->
       @restore
 
-    assertRenderedState = (lists, data, sectionItem, sectionsHeader,\
-        eventItem, modalSelector)->
+    assertRenderedState = (lists, data, sectionItem, eventItem, modalSelector)->
       expect(lists.length).toEqual 2
 
       sections = lists[0]
       expect(sections.props.itemType).toEqual sectionItem
-      expect(sections.props.header).toEqual sectionsHeader
+      expect(sections.props.header).toContain data.totalSections
+      expect(sections.props.header).toContain data.totalCredits
       expect(sections.props.initialState).toEqual data.sections
 
       events = lists[1]
@@ -47,13 +45,12 @@ describe 'ScheduleInfoBar', ->
     it 'renders correctly based on initial state', ->
       bar   = H.render ScheduleInfoBar, initialState: @data
       lists = H.scryWithType bar, PanelItemList
-      assertRenderedState lists, @data, @sectionItem, @sectionsHeader,\
-        @eventItem, @modalSelector
+      assertRenderedState lists, @data, @sectionItem, @eventItem, @modalSelector
 
     it 'updates correctly when state is updated', ->
       bar   = H.render ScheduleInfoBar
       bar.setState @data, =>
         lists = H.scryWithType bar, PanelItemList
-        assertRenderedState lists, @data, @sectionItem, @sectionsHeader,\
-          @eventItem, @modalSelector
+        assertRenderedState lists, @data, @sectionItem, @eventItem, \
+          @modalSelector
 

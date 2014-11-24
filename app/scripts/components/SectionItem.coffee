@@ -1,24 +1,46 @@
 
 React        = require 'react'
-colors       = require('../constants/PlannerConstants').colors
+I18nMixin    = require '../mixins/I18nMixin'
+constants    = require '../constants/PlannerConstants'
+colors       = constants.colors
+seatsMap     = constants.sectionSeatsMap
 ColorPicker  = React.createFactory require './ColorPicker'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
 
+
 SectionItem = React.createClass(
 
+  mixins: [I18nMixin]
+
+  getInitialState: ->
+    @props.item
+
+  getSeatsColorClass: ->
+    if @state.seats.available >= seatsMap.UPPER.bound
+      seatsMap.UPPER.className
+    else if @state.seats.available >= seatsMap.LOWER.bound
+      seatsMap.LOWER.className
+    else
+      seatsMap.ZERO.className
+
+  getColor: ->
+    # TODO: Random color selection is temporary
+    @state.color || colors[Math.floor(Math.random() * colors.length)]
+
   render: ->
-    headingId      = "section-heading-#{@props.key}"
-    contentId      = "section-info-#{@props.key}"
-    colorPaletteId = "section-colors-#{@props.key}"
-    style          =
-      borderColor: colors[Math.floor(Math.random() * colors.length)]
+    headingId      = "section-heading-#{@props.itemKey}"
+    contentId      = "section-info-#{@props.itemKey}"
+    colorPaletteId = "section-colors-#{@props.itemKey}"
+    seatsClass     = @getSeatsColorClass()
+    colorStyle     =
+      borderColor: @getColor()
 
     R.div className: "pla-section-item panel panel-default",
       R.div(
         {
           className: "panel-heading"
-          style: style
+          style: colorStyle
           role: "tab"
           id: headingId
         }
@@ -31,31 +53,33 @@ SectionItem = React.createClass(
               "aria-expanded": "false"
               "aria-controls": contentId
             },
-            @props.item.name
+            "#{@state.courseCode} - #{@state.courseName}"
           )
           R.span className: "pull-right",
-            R.span className: "label label-seats label-success", "20"
-            R.i className: "fa fa-trash-o delete"
+            R.span className: "label label-seats label-#{seatsClass}",
+              @state.seats.available
+            R.i className: "fa fa-trash-o delete",\
+              onClick: @props.handleItemDelete
         )
       ),
       R.div(
         {
           className: "panel-collapse collapse"
-          style: style
+          style: colorStyle
           role: "tabpanel"
           id: contentId
           "aria-labelledby": headingId
         },
         R.ul className: "list-group",
-          R.li className: "list-group-item list-group-item-success seats",
-            "20 seats available"
-          R.li className: "list-group-item teachers", "Dimitri Alejo, Juan Tejada"
+          R.li className: "list-group-item list-group-item-#{seatsClass} seats",
+            @t("sidebar.section.seats", seats: @state.seats.available)
+          R.li className: "list-group-item teachers",
+            @state.teacherNames.join ", "
           R.li className: "list-group-item",
-            R.span null, "3 credits - "
-            R.span null, "Section 2 - "
-            R.span null, "45578"
+            @t("sidebar.section.info", credits: @state.credits,\
+              number: @state.sectionNumber, id: @state.sectionId)
           R.li className: "list-group-item clearfix",
-            R.span null, "Math Department"
+            R.span null, "#{@state.departments[0].name}"
             ColorPicker colorPaletteId: colorPaletteId
             ColorPalette id: colorPaletteId
       )

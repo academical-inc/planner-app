@@ -1,6 +1,7 @@
 
 React             = require 'react'
 C                 = require '../constants/PlannerConstants'
+I18nMixin         = require '../mixins/I18nMixin'
 PanelItemList     = React.createFactory require './PanelItemList'
 SectionItem       = React.createFactory require './SectionItem'
 PersonalEventItem = React.createFactory require './PersonalEventItem'
@@ -8,18 +9,48 @@ R                 = React.DOM
 
 ScheduleInfoBar = React.createClass(
 
+  mixins: [I18nMixin]
+
   getInitialState: ->
     @props.initialState || {
       totalCredits: 6
       totalSections: 2
       sections: [
         {
-          id: "1"
-          name: "MATE1203 - Algebra"
-        },
+          id: "5fb6679adb55"
+          sectionId:  "45578"
+          sectionNumber: 2
+          courseName: "Algebra"
+          courseCode: "MATE1203"
+          seats:
+            available: 20
+          teacherNames: ["Dimitri Alejo", "Juan Tejada"]
+          credits: 3
+          departments: [{name: "Math Department"}]
+        }
         {
-          id: "2"
-          name: "LANG1505 - Spanish"
+          id: "5fb6679adb54"
+          sectionId:  "37442"
+          sectionNumber: 2
+          courseName: "Spanish"
+          courseCode: "LANG1550"
+          seats:
+            available: 5
+          teacherNames: ["Gregorio Hernandez"]
+          credits: 3
+          departments: [{name: "Foreign Languages"}]
+        }
+        {
+          id: "5fb6679ad499"
+          sectionId:  "12345"
+          sectionNumber: 1
+          courseName: "Physics 1"
+          courseCode: "FISI2222"
+          seats:
+            available: 15
+          teacherNames: ["Manolo Rodriguez, Lorena Hernandez"]
+          credits: 3
+          departments: [{name: "Physics"}]
         }
       ]
       personalEvents: [
@@ -38,12 +69,12 @@ ScheduleInfoBar = React.createClass(
     R.div className: "pla-schedule-info-bar",
       PanelItemList
         itemType: SectionItem
-        header: "Sections: #{@state.totalSections} Credits:
-                #{@state.totalCredits}"
+        header: @t "sidebar.sectionsHeader", sections: @state.totalSections,\
+          credits: @state.totalCredits
         initialState: @state.sections
       PanelItemList
         itemType: PersonalEventItem
-        header: "Other Events"
+        header: @t "sidebar.eventsHeader"
         itemAddDataToggle: "modal"
         itemAddDataTarget: C.selectors.PERSONAL_EVENT_MODAL
         initialState: @state.personalEvents

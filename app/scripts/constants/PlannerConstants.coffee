@@ -10,6 +10,10 @@ module.exports =
     PERSONAL_EVENT_MODAL: '#pla-personal-event-modal'
   htmlEntities:
     TIMES: "\u00d7"
+  sectionSeatsMap:
+    UPPER: bound: 20, className: "success"
+    LOWER:   bound: 10, className: "warning"
+    ZERO:  className: "danger"
   days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
   colors: [
     "#f27979"
