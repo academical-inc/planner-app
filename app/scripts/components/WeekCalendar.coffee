@@ -1,15 +1,19 @@
 
-React = require 'react'
-$     = require 'jquery'
-R     = React.DOM
+React     = require 'react'
+$         = require 'jquery'
+I18nMixin = require '../mixins/I18nMixin'
+R         = React.DOM
 
 WeekCalendar = React.createClass(
+
+  mixins: [I18nMixin]
 
   componentDidMount: ->
     $(@getDOMNode()).fullCalendar(
       defaultView: "agendaWeek"
       allDaySlot: false
       allDayText: false
+      dayNamesShort: @t "calendar.days"
       scrollTime: "07:00:00"
       firstDay: 1
       weekends: true
@@ -17,7 +21,7 @@ WeekCalendar = React.createClass(
       selectable: true
       header:
         left: "prev"
-        center: "today"
+        center: @t "calendar.today"
         right: "next"
     )
 

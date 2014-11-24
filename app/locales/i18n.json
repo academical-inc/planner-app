@@ -1,0 +1,56 @@
+{
+  "en": {
+    "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    "searchBar": {
+      "placeholder": "Search Course Sections...",
+      "filters": "Filters"
+    },
+    "sidebar": {
+      "sectionsHeader": "Sections: {{sections}} Credits: {{credits}}",
+      "eventsHeader": "Other Events",
+      "section": {
+        "seats": "{{seats}} seats available",
+        "info": "{{credits}} credits - Section {{number}} - {{id}}"
+      }
+    },
+    "calendar": {
+      "today": "today",
+      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    },
+    "eventForm": {
+      "header": "Add a personal event",
+      "start": "Start time",
+      "end": "End time",
+      "name": "Name",
+      "namePlaceholder": "e.g. gym",
+      "days": "Days"
+    }
+  },
+  "es": {
+    "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
+    "searchBar": {
+      "placeholder": "Busca Secciones...",
+      "filters": "Filtros"
+    },
+    "sidebar": {
+      "sectionsHeader": "Secciones: {{sections}} Créditos: {{credits}}",
+      "eventsHeader": "Mis Eventos",
+      "section": {
+        "seats": "{{seats}} cupos disponibles",
+        "info": "{{credits}} créditos - Sección {{number}} - {{id}}"
+      }
+    },
+    "calendar": {
+      "today": "hoy",
+      "days": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]
+    },
+    "eventForm": {
+      "header": "Agrega un evento personal",
+      "start": "Hora de Inicio",
+      "end": "Hora de Fin",
+      "name": "Nombre",
+      "namePlaceholder": "ej: gimnasio",
+      "days": "Días"
+    }
+  }
+}

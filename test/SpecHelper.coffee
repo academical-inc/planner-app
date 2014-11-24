@@ -1,7 +1,10 @@
 
 $         = require 'jquery'
 React     = require 'react/addons'
+I18n      = require '../app/scripts/utils/I18n'
 TestUtils = React.addons.TestUtils
+
+I18n.init()
 
 class SpecHelper
 
