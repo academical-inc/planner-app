@@ -1,8 +1,10 @@
 
-React = require 'react'
-$     = require 'jquery'
-mq    = require '../utils/MediaQueries.coffee'
-R     = React.DOM
+React    = require 'react'
+$        = require 'jquery'
+mq       = require '../utils/MediaQueries.coffee'
+Dropdown = React.createFactory require './Dropdown'
+R        = React.DOM
+
 
 ScheduleList = React.createClass(
 
@@ -15,12 +17,19 @@ ScheduleList = React.createClass(
     return
 
   getInitialState: ->
-    data: ["Schedule1", "Schedule2"]
+    data: [{key: "S1", val: "Schedule 1"}, {key: "S2", val: "Schedule 2"}]
 
   render: ->
-    R.div className: 'pla-schedule-list',
-      R.ul null,
-        (R.li(key: sch, sch) for sch in @state.data)
+    Dropdown(
+      className: 'pla-schedule-list'
+      rootTag: @props.rootTag
+      title: @state.data[0].val
+      items: @state.data
+      updateNameOnSelect: true
+    )
+    # R.div className: 'pla-schedule-list',
+    #   R.ul null,
+    #     (R.li(key: sch, sch) for sch in @state.data)
 
 )
 
