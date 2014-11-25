@@ -64,12 +64,16 @@ class SpecHelper
 
     ret = if test tree then [tree] else []
 
-    if tree.props? and tree.props.children?\
-        and Array.isArray tree.props.children
-      children = tree.props.children
-      for child in children
+    if tree.props? and tree.props.children?
+      if Array.isArray tree.props.children
+        children = tree.props.children
+        for child in children
+          ret = ret.concat(
+            SpecHelper.findAllInTree child, test
+          )
+      else
         ret = ret.concat(
-          SpecHelper.findAllInTree child, test
+          SpecHelper.findAllInTree tree.props.children, test
         )
     ret
 
