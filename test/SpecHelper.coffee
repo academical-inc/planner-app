@@ -58,24 +58,30 @@ class SpecHelper
     [rendered, restore]
 
   @findAllInTree: (tree, test)->
-    return TestUtils.findAllInRenderedTree tree, test\
-      if not TestUtils.isElement tree
-    return [] if not tree?
+    if not tree?
+      []
+    else if TestUtils.isDOMComponent(tree) or\
+        TestUtils.isCompositeComponent(tree)
 
-    ret = if test tree then [tree] else []
+      TestUtils.findAllInRenderedTree tree, test
 
-    if tree.props? and tree.props.children?
-      if Array.isArray tree.props.children
-        children = tree.props.children
-        for child in children
+    else if TestUtils.isElement(tree)
+      ret = if test tree then [tree] else []
+
+      if tree.props? and tree.props.children?
+        if Array.isArray tree.props.children
+          children = tree.props.children
+          for child in children
+            ret = ret.concat(
+              SpecHelper.findAllInTree child, test
+            )
+        else
           ret = ret.concat(
-            SpecHelper.findAllInTree child, test
+            SpecHelper.findAllInTree tree.props.children, test
           )
-      else
-        ret = ret.concat(
-          SpecHelper.findAllInTree tree.props.children, test
-        )
-    ret
+      ret
+    else
+      []
 
   @findWithTag: (tree, tagName)->
     if TestUtils.isElement tree
