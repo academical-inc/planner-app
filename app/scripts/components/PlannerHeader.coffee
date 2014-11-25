@@ -10,11 +10,16 @@ R            = React.DOM
 PlannerHeader = React.createClass(
 
   render: ->
-    R.div className: 'pla-planner-header hidden-xs hidden-sm',
-      LogoBox({})
-      ScheduleList({})
-      OptionsList({})
-      ProfileBox({})
+    R.section className: 'pla-planner-header hidden-xs hidden-sm',
+      R.nav className: "navbar navbar-default", role: "navigation",
+        R.div className: "container-fluid",
+          LogoBox({})
+          R.ul className: "nav navbar-nav navbar-left",
+            ScheduleList rootTag: R.li
+
+      # ScheduleList({})
+      # OptionsList({})
+      # ProfileBox({})
 
 )
 
