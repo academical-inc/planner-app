@@ -1,5 +1,6 @@
 
 React             = require 'react'
+$                 = require 'jquery'
 C                 = require '../constants/PlannerConstants'
 I18nMixin         = require '../mixins/I18nMixin'
 PanelItemList     = React.createFactory require './PanelItemList'
@@ -65,19 +66,21 @@ ScheduleInfoBar = React.createClass(
       ]
     }
 
+  handlePersonalEventAdd: ->
+    $(C.selectors.PERSONAL_EVENT_MODAL).modal "show"
+
   render: ->
     R.div className: "pla-schedule-info-bar",
       PanelItemList
         itemType: SectionItem
         header: @t "sidebar.sectionsHeader", sections: @state.totalSections,\
           credits: @state.totalCredits
-        initialState: @state.sections
+        items: @state.sections
       PanelItemList
         itemType: PersonalEventItem
         header: @t "sidebar.eventsHeader"
-        itemAddDataToggle: "modal"
-        itemAddDataTarget: C.selectors.PERSONAL_EVENT_MODAL
-        initialState: @state.personalEvents
+        handleItemAdd: @handlePersonalEventAdd
+        items: @state.personalEvents
 
 )
 
