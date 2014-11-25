@@ -3,7 +3,7 @@ H        = require '../../SpecHelper'
 Dropdown = require '../../../app/scripts/components/Dropdown'
 
 
-ddescribe 'Dropdown', ->
+describe 'Dropdown', ->
 
   describe '#handleItemSelected', ->
 
@@ -36,7 +36,12 @@ ddescribe 'Dropdown', ->
 
     assertRenderedItem = (item, expected)->
       expect(item.key).toEqual expected.key
-      expect(H.findWithTag(item, "a").props.children).toEqual expected.val
+      if expected.icon?
+        expect(H.findWithTag(item, "a").props.children[0]).toEqual expected.icon
+        expect(H.findWithTag(item, "a").props.children[1]).toEqual \
+          " #{expected.val}"
+      else
+        expect(H.findWithTag(item, "a").props.children).toEqual expected.val
 
     beforeEach ->
       @dd = H.render Dropdown,
@@ -59,14 +64,39 @@ ddescribe 'Dropdown', ->
       expect(items[4].props.className).toEqual "divider"
       assertRenderedItem items[5], data[2]
 
-    it 'renders items correctly when no headers present', ->
+    it 'renders dropdown items correctly when only headers present', ->
+      data = [
+        {header: "h1", items: [{key: "k1", val: "v1"}]}
+        {header: "h2", items: [{key: "k2", val: "v2"}]}
+      ]
+      items = @dd.renderItems data
+      expect(items.length).toEqual 5
+      d = 0
+      for i in [0, 3]
+        expect(items[i].props.children).toEqual data[d].header
+        assertRenderedItem items[i+1], data[d].items[0]
+        # Don't render last divider:
+        expect(items[i+2].props.className).toEqual "divider" if d == 0
+        d += 1
+
+    it 'renders dropdown items correctly when no headers present', ->
       data = [
         {key: "k1", val: "v1"}
         {key: "k2", val: "v2"}
       ]
       items = @dd.renderItems data
+      expect(items.length).toEqual 2
       assertRenderedItem items[0], data[0]
       assertRenderedItem items[1], data[1]
+
+    it 'renders icons for items correctly when icons specified', ->
+      data = [
+        {key: "k1", val: "v1", icon: "i"}
+      ]
+      items = @dd.renderItems data
+      expect(items.length).toEqual 1
+      assertRenderedItem items[0], data[0]
+
 
 
   describe '#render', ->
