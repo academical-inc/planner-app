@@ -17,7 +17,7 @@ ScheduleList = React.createClass(
     return
 
   getInitialState: ->
-    data: [{key: "S1", val: "Schedule 1"}, {key: "S2", val: "Schedule 2"}]
+    data: [{id: "S1", val: "Schedule 1"}, {id: "S2", val: "Schedule 2"}]
 
   render: ->
     Dropdown(
@@ -26,6 +26,7 @@ ScheduleList = React.createClass(
       title: @state.data[0].val
       items: @state.data
       updateNameOnSelect: true
+      handleItemAdd: ->
     )
     # R.div className: 'pla-schedule-list',
     #   R.ul null,

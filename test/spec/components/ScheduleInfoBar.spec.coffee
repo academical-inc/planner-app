@@ -6,14 +6,30 @@ PanelItemList   = require '../../../app/scripts/components/PanelItemList'
 
 describe 'ScheduleInfoBar', ->
 
+  describe '#handlePersonalEventAdd', ->
+
+    beforeEach ->
+      [@mock$, @mock$El] = H.mock$()
+      @modalSelector = ".modal-selector"
+      @restore = H.rewire ScheduleInfoBar,
+        selectors: PERSONAL_EVENT_MODAL: @modalSelector
+        $: @mock$
+
+    afterEach ->
+      @restore()
+
+    it 'should open the modal for personal event form', ->
+      bar = H.render ScheduleInfoBar
+      bar.handlePersonalEventAdd()
+      expect(@mock$).toHaveBeenCalledWith @modalSelector
+      expect(@mock$El.modal).toHaveBeenCalledWith "show"
+
   describe '#render', ->
 
     beforeEach ->
-      @modalSelector = ".modal-selector"
       @sectionItem   = ->
       @eventItem     = ->
       @restore = H.rewire ScheduleInfoBar,
-        C: selectors: PERSONAL_EVENT_MODAL: @modalSelector
         SectionItem: @sectionItem
         PersonalEventItem: @eventItem
 
