@@ -27,30 +27,27 @@ describe 'ScheduleInfoBar', ->
     afterEach ->
       @restore
 
-    assertRenderedState = (lists, data, sectionItem, eventItem, modalSelector)->
+    assertRenderedState = (lists, data, sectionItem, eventItem)->
       expect(lists.length).toEqual 2
 
       sections = lists[0]
       expect(sections.props.itemType).toEqual sectionItem
       expect(sections.props.header).toContain data.totalSections
       expect(sections.props.header).toContain data.totalCredits
-      expect(sections.props.initialState).toEqual data.sections
+      expect(sections.props.items).toEqual data.sections
 
       events = lists[1]
       expect(events.props.itemType).toEqual eventItem
-      expect(events.props.itemAddDataToggle).toEqual "modal"
-      expect(events.props.itemAddDataTarget).toEqual modalSelector
-      expect(events.props.initialState).toEqual data.personalEvents
+      expect(events.props.items).toEqual data.personalEvents
 
     it 'renders correctly based on initial state', ->
       bar   = H.render ScheduleInfoBar, initialState: @data
       lists = H.scryWithType bar, PanelItemList
-      assertRenderedState lists, @data, @sectionItem, @eventItem, @modalSelector
+      assertRenderedState lists, @data, @sectionItem, @eventItem
 
     it 'updates correctly when state is updated', ->
       bar   = H.render ScheduleInfoBar
       bar.setState @data, =>
         lists = H.scryWithType bar, PanelItemList
-        assertRenderedState lists, @data, @sectionItem, @eventItem, \
-          @modalSelector
+        assertRenderedState lists, @data, @sectionItem, @eventItem
 
