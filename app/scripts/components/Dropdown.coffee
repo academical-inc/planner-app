@@ -1,74 +1,60 @@
 
-React = require 'react'
-$     = require 'jquery'
-mq    = require '../utils/MediaQueries.coffee'
+React = require 'react/addons'
 R     = React.DOM
+
 
 Dropdown = React.createClass(
 
-  componentDidMount: ->
-    if not mq.matchesMDAndUp()
-      $(@getDOMNode()).mmenu(
-        dragOpen:
-          open: true
-      )
-    return
-
   getInitialState: ->
-    data: ["Schedule1", "Schedule2"]
+    title: @props.title
+
+  handleItemSelected: (item)->
+    if @props.updateNameOnSelect == true
+      @setState title: item.val
+    @props.handleItemSelected item if @props.handleItemSelected?
+
+  renderItems: (items)->
+    r = []
+    for item in items
+      if item.header?
+        r.push R.li(className: "dropdown-header", key: item.header, item.header)
+        r = r.concat (
+          for i in item.items
+            R.li key: i.key, onClick: @handleItemSelected.bind(this, i),
+              R.a href: "#", i.val
+        )
+        r.push R.li(className: "divider", key: "#{item.header}-divider")
+      else
+        r.push (
+          R.li key: item.key, onClick: @handleItemSelected.bind(this, item),
+            R.a href: "#", item.val
+        )
+    return r
 
   render: ->
-    R.div className: 'dropdown',
-      R.button(
+    classes = dropdown: true
+    classes[@props.className] = @props.className?
+    classes = React.addons.classSet classes
+
+    @props.rootTag className: classes,
+      R.a(
         {
-          className: 'btn btn-default dropdown-toggle'
-          type: 'button'
-          id: 'dropdownMenu1'
-          'data-toggle': 'dropdown'
-          'aria-expanded': 'true'
+          className: "dropdown-toggle"
+          role: "button"
+          href: "#"
+          "data-toggle": "dropdown"
+          "aria-expanded": false
         }
-        "Opciones "
-        R.span className: 'caret', null
+        @state.title
+        R.span className: 'caret'
       )
       R.ul(
         {
-          className:'dropdown-menu'
-          role: 'menu'
-          'aria-labelledby': 'dropdownMenu1'
+          className:"dropdown-menu"
+          role: "menu"
         }
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"General:")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Resumen")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Cambiar Nombre")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Duplicar")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Comparte tu Horario")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Borrar")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Exportar:")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Calendario")
-        )
-        R.li({role:'presentation'}
-          R.a({role:'menuitem',tabindex:'-1',href:'#'},"Imagen")
-        )
+        @renderItems @props.items
       )
-      # R.ul null
-      # R.button({className:'btn btn-default dropdown-toggle',
-        # type:'button',id:'dropdownMenu1','data-toggle':'dropdown',
-        # 'aria-expanded':'true'},null)
-      # R.ul null, (R.li(key: sch, sch) for sch in @state.data)
 )
 
 module.exports = Dropdown
