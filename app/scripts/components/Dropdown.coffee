@@ -8,6 +8,12 @@ Dropdown = React.createClass(
   getInitialState: ->
     title: @props.title
 
+  handleItemAdd: (e)->
+    e.preventDefault()
+    itemName = @refs.itemName.getDOMNode().value.trim()
+    @props.handleItemAdd itemName
+    @refs.itemName.getDOMNode().value = ''
+
   handleItemSelected: (item)->
     if @props.updateNameOnSelect == true
       @setState title: item.val
@@ -22,13 +28,15 @@ Dropdown = React.createClass(
 
   renderAddInput: ->
     R.li key: "add-input",
-      R.form className: 'navbar-form',
+      R.form className: 'navbar-form', onSubmit: @handleItemAdd,
         R.div className: 'form-group',
-          R.input type: "text", placeholder: @props.addItemPlaceholder
+          R.input
+            ref: "itemName"
+            type: "text"
+            placeholder: @props.addItemPlaceholder
         R.button
           className: 'btn btn-info btn-xs'
           type: "submit"
-          onClick: @props.handleItemAdd
           "Add"
 
   renderItems: (items)->

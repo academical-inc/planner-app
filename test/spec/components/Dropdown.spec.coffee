@@ -6,6 +6,26 @@ Dropdown = require '../../../app/scripts/components/Dropdown'
 describe 'Dropdown', ->
 
 
+  describe '#handleItemAdd', ->
+
+    beforeEach ->
+      @handler = H.spy "handler"
+      @dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: [{id: "i1", val: "v1"}]
+        itemType: H.mockComponent()
+        handleItemAdd: @handler
+      @input = @dd.refs.itemName
+      @input.getDOMNode().value = "  Value!  "
+      @dd.handleItemAdd preventDefault: ->
+
+    it 'calls provided handler with correct value', ->
+      expect(@handler).toHaveBeenCalledWith "Value!"
+
+    it 'clears input after adding', ->
+      expect(@input.getDOMNode().value).toEqual ""
+
+
   describe '#handleItemSelected', ->
 
     beforeEach ->
@@ -153,8 +173,8 @@ describe 'Dropdown', ->
       expect(H.findWithTag(ul, "input").props.placeholder).toEqual(
         @props.addItemPlaceholder
       )
-      expect(H.findWithTag(ul, "button").props.onClick).toEqual(
-        @props.handleItemAdd
+      expect(H.findWithTag(ul, "form").props.onSubmit).toEqual(
+        dd.handleItemAdd
       )
 
     it 'calls item add handler when provided', ->
@@ -162,8 +182,8 @@ describe 'Dropdown', ->
       @props.handleItemAdd = handler
       dd = H.render Dropdown, @props
 
-      button = H.findWithTag dd, "button"
-      H.sim.click button.getDOMNode()
+      form = H.findWithTag dd, "form"
+      H.sim.submit form.getDOMNode()
       expect(handler).toHaveBeenCalled()
 
 
