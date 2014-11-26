@@ -1,8 +1,8 @@
 
 React             = require 'react'
 $                 = require 'jquery'
-C                 = require '../constants/PlannerConstants'
 I18nMixin         = require '../mixins/I18nMixin'
+selectors         = require('../constants/PlannerConstants').selectors
 PanelItemList     = React.createFactory require './PanelItemList'
 SectionItem       = React.createFactory require './SectionItem'
 PersonalEventItem = React.createFactory require './PersonalEventItem'
@@ -67,7 +67,7 @@ ScheduleInfoBar = React.createClass(
     }
 
   handlePersonalEventAdd: ->
-    $(C.selectors.PERSONAL_EVENT_MODAL).modal "show"
+    $(selectors.PERSONAL_EVENT_MODAL).modal "show"
 
   render: ->
     R.div className: "pla-schedule-info-bar",
