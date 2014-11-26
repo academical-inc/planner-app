@@ -5,7 +5,7 @@ ColorPalette      = require '../../../app/scripts/components/ColorPalette'
 PersonalEventItem = require '../../../app/scripts/components/PersonalEventItem'
 
 
-ddescribe 'PersonalEventItem', ->
+describe 'PersonalEventItem', ->
 
   describe '#render', ->
 

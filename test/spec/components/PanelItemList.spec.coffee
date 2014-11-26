@@ -33,7 +33,6 @@ describe 'PanelItemList', ->
         expect(item).toEqual "data"
         expect(@itemType.calls.argsFor(i)).toEqual [{
           key: expected[i].id
-          itemKey: expected[i].id
           item: expected[i]
           handleItemDelete: @defProps.handleItemDelete
         }]
