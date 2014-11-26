@@ -5,6 +5,7 @@ Dropdown = require '../../../app/scripts/components/Dropdown'
 
 describe 'Dropdown', ->
 
+
   describe '#handleItemSelected', ->
 
     beforeEach ->
@@ -15,6 +16,7 @@ describe 'Dropdown', ->
         handleItemSelected: @handler
         updateNameOnSelect: true
         items: []
+        itemType: H.mockComponent()
 
     it 'calls handler set by parent in the props', ->
       @dd.handleItemSelected @item
@@ -32,82 +34,101 @@ describe 'Dropdown', ->
       expect(@dd.setState).not.toHaveBeenCalled()
 
 
-  describe '#renderItems', ->
+  describe '#getItem', ->
 
-    assertRenderedItem = (item, expected)->
-      expect(item.key).toEqual expected.key
-      if expected.icon?
-        expect(H.findWithTag(item, "a").props.children[0]).toEqual expected.icon
-        expect(H.findWithTag(item, "a").props.children[1]).toEqual \
-          " #{expected.val}"
-      else
-        expect(H.findWithTag(item, "a").props.children).toEqual expected.val
+    beforeEach ->
+      @factory = H.spy "factory"
+      @bindRet = ->
+      @dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: []
+        itemType: @factory
+        handleItemDelete: ->
+      H.spyOn(@dd.handleItemSelected, "bind").and.returnValue @bindRet
+      @item = {id: "k1", val: "v1"}
+
+    it 'returns the correct item component', ->
+      @dd.getItem @item
+      expect(@factory).toHaveBeenCalledWith(
+        key: @item.id
+        item: @item
+        onClick: @bindRet
+        handleItemDelete: @dd.props.handleItemDelete
+      )
+      expect(@dd.handleItemSelected.bind).toHaveBeenCalledWith @dd, @item
+
+
+  describe '#renderItems', ->
 
     beforeEach ->
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
         items: []
+        itemType: H.mockComponent()
+      H.spyOn @dd, "getItem"
 
     it 'renders dropdown items correctly when headers present', ->
       data = [
-        {key: "k1", val: "v1"}
-        {header: "h1", items: [{key: "k2", val: "v2"}, {key: "k3", val: "v3"}]}
-        {key: "k4", val: "v4"}
+        {id: "k1", val: "v1"}
+        {header: "h1", items: [{id: "k2", val: "v2"}, {id: "k3", val: "v3"}]}
+        {id: "k4", val: "v4"}
       ]
       items = @dd.renderItems data
 
       expect(items.length).toEqual 6
-      assertRenderedItem items[0], data[0]
       expect(items[1].props.children).toEqual "h1"
-      for i in [2..3]
-        assertRenderedItem items[i], data[1].items[i-2]
       expect(items[4].props.className).toEqual "divider"
-      assertRenderedItem items[5], data[2]
+      expect(@dd.getItem.calls.allArgs()).toEqual [
+        [data[0]]
+        [data[1].items[0]]
+        [data[1].items[1]]
+        [data[2]]
+      ]
 
     it 'renders dropdown items correctly when only headers present', ->
       data = [
-        {header: "h1", items: [{key: "k1", val: "v1"}]}
-        {header: "h2", items: [{key: "k2", val: "v2"}]}
+        {header: "h1", items: [{id: "k1", val: "v1"}]}
+        {header: "h2", items: [{id: "k2", val: "v2"}]}
       ]
       items = @dd.renderItems data
       expect(items.length).toEqual 5
       d = 0
       for i in [0, 3]
         expect(items[i].props.children).toEqual data[d].header
-        assertRenderedItem items[i+1], data[d].items[0]
         # Don't render last divider:
         expect(items[i+2].props.className).toEqual "divider" if d == 0
         d += 1
+      expect(@dd.getItem.calls.allArgs()).toEqual [
+        [data[0].items[0]]
+        [data[1].items[0]]
+      ]
 
     it 'renders dropdown items correctly when no headers present', ->
       data = [
-        {key: "k1", val: "v1"}
-        {key: "k2", val: "v2"}
+        {id: "k1", val: "v1"}
+        {id: "k2", val: "v2"}
       ]
       items = @dd.renderItems data
       expect(items.length).toEqual 2
-      assertRenderedItem items[0], data[0]
-      assertRenderedItem items[1], data[1]
-
-    it 'renders icons for items correctly when icons specified', ->
-      data = [
-        {key: "k1", val: "v1", icon: "i"}
+      expect(@dd.getItem.calls.allArgs()).toEqual [
+        [data[0]]
+        [data[1]]
       ]
-      items = @dd.renderItems data
-      expect(items.length).toEqual 1
-      assertRenderedItem items[0], data[0]
-
 
 
   describe '#render', ->
 
-    it 'renders state and props correctly', ->
-      root = H.mockComponent()
-      dd = H.render Dropdown,
+    beforeEach ->
+      @props =
         rootTag: H.mockComponent()
-        items: [{key: "k1", val: "v1"}, {key: "k2", val: "v2"}]
+        items: [{id: "k1", val: "v1"}, {id: "k2", val: "v2"}]
+        itemType: H.mockComponent()
         title: "title"
         className: "klass"
+
+    it 'renders state and props correctly', ->
+      root = H.mockComponent()
+      dd = H.render Dropdown, @props
 
       ddNode = dd.getDOMNode()
       expect(ddNode.tagName.toLowerCase()).toEqual root.type
@@ -120,5 +141,29 @@ describe 'Dropdown', ->
       ul = H.findWithTag dd, "ul"
       expect(ul.props.children.length).toEqual 2
 
+    it 'renders add input as final item when add item handler provided', ->
+      @props.handleItemAdd = ->
+      @props.addItemPlaceholder = "Add custom item"
+      dd = H.render Dropdown, @props
+
+      ul = H.findWithTag dd, "ul"
+      children = ul.props.children
+      expect(children.length).toEqual 4
+      expect(children[2].key).toEqual "add-divider"
+      expect(H.findWithTag(ul, "input").props.placeholder).toEqual(
+        @props.addItemPlaceholder
+      )
+      expect(H.findWithTag(ul, "button").props.onClick).toEqual(
+        @props.handleItemAdd
+      )
+
+    it 'calls item add handler when provided', ->
+      handler = H.spy "handler"
+      @props.handleItemAdd = handler
+      dd = H.render Dropdown, @props
+
+      button = H.findWithTag dd, "button"
+      H.sim.click button.getDOMNode()
+      expect(handler).toHaveBeenCalled()
 
 

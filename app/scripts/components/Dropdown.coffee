@@ -13,19 +13,23 @@ Dropdown = React.createClass(
       @setState title: item.val
     @props.handleItemSelected item if @props.handleItemSelected?
 
-  renderAddInput: ->
-    R.li null,
-      R.form className: 'navbar-form',
-        R.div className: 'form-group',
-          R.input type: "text", placeholder: "Add item"
-        R.button className: 'btn btn-info btn-xs', type: "submit", "Add"
-
   getItem: (item)->
     @props.itemType
       key: item.id
       item: item
       onClick: @handleItemSelected.bind this, item
       handleItemDelete: @props.handleItemDelete
+
+  renderAddInput: ->
+    R.li key: "add-input",
+      R.form className: 'navbar-form',
+        R.div className: 'form-group',
+          R.input type: "text", placeholder: @props.addItemPlaceholder
+        R.button
+          className: 'btn btn-info btn-xs'
+          type: "submit"
+          onClick: @props.handleItemAdd
+          "Add"
 
   renderItems: (items)->
     r = []
@@ -52,6 +56,16 @@ Dropdown = React.createClass(
 
     classes = React.addons.classSet classes
 
+    ulProps = className: "dropdown-menu", role: "menu"
+    ul = if @props.handleItemAdd?
+      R.ul ulProps,
+        @renderItems(@props.items).concat [
+          R.li className: "divider", key: "add-divider"
+          @renderAddInput()
+        ]
+    else
+      R.ul ulProps, @renderItems(@props.items)
+
     @props.rootTag className: classes,
       R.a(
         {
@@ -64,15 +78,7 @@ Dropdown = React.createClass(
         @state.title
         R.span className: 'caret'
       )
-      R.ul(
-        {
-          className:"dropdown-menu"
-          role: "menu"
-        }
-        @renderItems @props.items
-        R.li className: "divider" if @props.handleItemAdd?
-        @renderAddInput() if @props.handleItemAdd?
-      )
+      ul
 )
 
 module.exports = Dropdown
