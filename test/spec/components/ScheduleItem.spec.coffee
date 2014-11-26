@@ -5,7 +5,7 @@ ScheduleItem = require '../../../app/scripts/components/ScheduleItem'
 
 describe 'ScheduleItem', ->
 
-  ddescribe '#render', ->
+  describe '#render', ->
 
     beforeEach ->
       @clickHandler = H.spy "clickHandler"
