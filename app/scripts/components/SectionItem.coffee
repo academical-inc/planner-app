@@ -58,7 +58,7 @@ SectionItem = React.createClass(
           R.span className: "pull-right",
             R.span className: "label label-seats label-#{seatsClass}",
               @state.seats.available
-            R.i className: "fa fa-trash-o delete",\
+            R.i className: "fa fa-trash-o delete-icon",\
               onClick: @props.handleItemDelete
         )
       ),
