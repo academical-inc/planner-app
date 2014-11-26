@@ -1,9 +1,12 @@
 
-React = require 'react/addons'
-R     = React.DOM
+React     = require 'react/addons'
+I18nMixin = require '../mixins/I18nMixin'
+R         = React.DOM
 
 
 Dropdown = React.createClass(
+
+  mixins: [I18nMixin]
 
   getInitialState: ->
     title: @props.title
@@ -37,7 +40,7 @@ Dropdown = React.createClass(
         R.button
           className: 'btn btn-info btn-xs'
           type: "submit"
-          "Add"
+          @t "dropdown.addBtn"
 
   renderItems: (items)->
     r = []

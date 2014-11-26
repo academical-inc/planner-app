@@ -1,6 +1,20 @@
 {
   "en": {
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    "dropdown": {
+      "addBtn": "Add"
+    },
+    "scheduleList": {
+      "namePlaceholder": "Add a new schedule"
+    },
+    "options": {
+      "summary": "Summary",
+      "changeName": "Change name",
+      "duplicate": "Duplicate",
+      "share": "Share your schedule",
+      "calendar": "Calendar",
+      "image": "Image"
+    },
     "searchBar": {
       "placeholder": "Search Course Sections...",
       "filters": "Filters"
@@ -28,6 +42,20 @@
   },
   "es": {
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
+    "dropdown": {
+      "addBtn": "Agregar"
+    },
+    "scheduleList": {
+      "namePlaceholder": "Crea un nuevo horario"
+    },
+    "options": {
+      "summary": "Resumen",
+      "changeName": "Cambiar nombre",
+      "duplicate": "Duplicar",
+      "share": "Comparte tu horario",
+      "calendar": "Calendario",
+      "image": "Imagen"
+    },
     "searchBar": {
       "placeholder": "Busca Secciones...",
       "filters": "Filtros"

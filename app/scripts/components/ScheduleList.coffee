@@ -2,12 +2,15 @@
 React        = require 'react'
 $            = require 'jquery'
 mq           = require '../utils/MediaQueries.coffee'
+I18nMixin    = require '../mixins/I18nMixin'
 Dropdown     = React.createFactory require './Dropdown'
 ScheduleItem = React.createFactory require './ScheduleItem'
 R            = React.DOM
 
 
 ScheduleList = React.createClass(
+
+  mixins: [I18nMixin]
 
   componentDidMount: ->
     if not mq.matchesMDAndUp()
@@ -29,6 +32,7 @@ ScheduleList = React.createClass(
       itemType: ScheduleItem
       updateNameOnSelect: true
       handleItemAdd: ->
+      addItemPlaceholder: @t "scheduleList.namePlaceholder"
     )
 
 )
