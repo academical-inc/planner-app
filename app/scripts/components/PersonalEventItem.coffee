@@ -31,7 +31,8 @@ PersonalEventItem = React.createClass(
           R.a null, @state.name
           R.span className: "pull-right",
             ColorPicker colorPaletteId: colorPaletteId
-            R.i className: "fa fa-trash-o delete"
+            R.i className: "fa fa-trash-o delete",\
+              onClick: @props.handleItemDelete
           ColorPalette id: colorPaletteId
       )
 
