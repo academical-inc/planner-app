@@ -104,8 +104,14 @@ describe 'SectionItem', ->
       @restore
 
     it 'renders correctly based on state', ->
-      item = H.render SectionItem, itemKey: @data.id, item: @data
+      item = H.render SectionItem, item: @data
       assertRenderedState item, @data
 
+    it 'calls the on delete item callback correctly', ->
+      handler = H.spy "handler"
+      item = H.render SectionItem, item: @data, handleItemDelete: handler
+      deleteIcon = H.findWithClass item, "delete-icon"
 
+      H.sim.click deleteIcon.getDOMNode()
+      expect(handler).toHaveBeenCalled()
 
