@@ -31,7 +31,7 @@ describe 'ScheduleItem', ->
     it 'calls item delete handler correctly', ->
       icon = H.findWithTag @item, "i"
       H.sim.click icon.getDOMNode()
-      expect(@deleteHandler).toHaveBeenCalled()
+      expect(@deleteHandler).toHaveBeenCalledWith @props.item
       expect(@clickHandler).not.toHaveBeenCalled()
 
 

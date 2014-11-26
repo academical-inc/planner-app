@@ -113,5 +113,5 @@ describe 'SectionItem', ->
       deleteIcon = H.findWithClass item, "delete-icon"
 
       H.sim.click deleteIcon.getDOMNode()
-      expect(handler).toHaveBeenCalled()
+      expect(handler).toHaveBeenCalledWith @data
 
