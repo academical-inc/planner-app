@@ -54,6 +54,40 @@ describe 'Dropdown', ->
       expect(@dd.setState).not.toHaveBeenCalled()
 
 
+  describe '#handleInputChange', ->
+
+    beforeEach ->
+      @restore = H.rewire Dropdown, MAX_INPUT_LENGTH: 5
+      @dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: []
+        itemType: H.mockComponent()
+        handleItemAdd: ->
+      H.spyOn @dd, "setState"
+
+    afterEach ->
+      @restore()
+
+    it 'disables button if input is >= max allowed length', ->
+      input = @dd.refs.itemName.getDOMNode()
+      input.value = "12345"
+      @dd.handleInputChange()
+      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+      input.value = "123456789"
+      @dd.handleInputChange()
+      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+
+    it 'enables button otherwise', ->
+      input = @dd.refs.itemName.getDOMNode()
+      input.value = "1234"
+      @dd.handleInputChange()
+      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
+      @dd.setState.calls.reset()
+      input.value = ""
+      @dd.handleInputChange()
+      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
+
+
   describe '#getItem', ->
 
     beforeEach ->
@@ -161,29 +195,41 @@ describe 'Dropdown', ->
       ul = H.findWithTag dd, "ul"
       expect(ul.props.children.length).toEqual 2
 
-    it 'renders add input as final item when add item handler provided', ->
-      @props.handleItemAdd = ->
-      @props.addItemPlaceholder = "Add custom item"
-      dd = H.render Dropdown, @props
+    describe "when handleItemAdd handler provided", ->
 
-      ul = H.findWithTag dd, "ul"
-      children = ul.props.children
-      expect(children.length).toEqual 4
-      expect(children[2].key).toEqual "add-divider"
-      expect(H.findWithTag(ul, "input").props.placeholder).toEqual(
-        @props.addItemPlaceholder
-      )
-      expect(H.findWithTag(ul, "form").props.onSubmit).toEqual(
-        dd.handleItemAdd
-      )
+      beforeEach ->
+        @handler = H.spy "handler"
+        @props.handleItemAdd = @handler
+        @props.addItemPlaceholder = "Add custom item"
+        @dd = H.render Dropdown, @props
 
-    it 'calls item add handler when provided', ->
-      handler = H.spy "handler"
-      @props.handleItemAdd = handler
-      dd = H.render Dropdown, @props
+      it 'renders input to add item', ->
+        ul = H.findWithTag @dd, "ul"
+        children = ul.props.children
+        expect(children.length).toEqual 4
+        expect(children[2].key).toEqual "add-divider"
 
-      form = H.findWithTag dd, "form"
-      H.sim.submit form.getDOMNode()
-      expect(handler).toHaveBeenCalled()
+        input = H.findWithTag ul, "input"
+        expect(input.props.placeholder).toEqual @props.addItemPlaceholder
+
+      it 'calls handleItemAdd when form submitted', ->
+        form = H.findWithTag @dd, "form"
+        H.sim.submit form.getDOMNode()
+        expect(@handler).toHaveBeenCalled()
+
+      it 'enables and disables button correctly based on state', ->
+        @dd.setState buttonDisabled: false, =>
+          expect(H.findWithTag(@dd, "button").props.disabled).toEqual false
+        @dd.setState buttonDisabled: true, =>
+          expect(H.findWithTag(@dd, "button").props.disabled).toEqual true
+
+      # TODO there's no proper way to test this right now apparently
+      # will have to wait for issue to be resolved
+      xit 'calls handleInputChange when input changes', ->
+        H.spyOn @dd, "handleInputChange"
+
+        input = H.findWithTag @dd, "input"
+        H.sim.change input.getDOMNode()
+        expect(@dd.handleInputChange).toHaveBeenCalled()
 
 

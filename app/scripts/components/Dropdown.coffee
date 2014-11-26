@@ -3,6 +3,9 @@ React     = require 'react/addons'
 I18nMixin = require '../mixins/I18nMixin'
 R         = React.DOM
 
+MAX_INPUT_LENGTH = require('../constants/PlannerConstants').dropdown.\
+  MAX_INPUT_LENGTH
+
 
 Dropdown = React.createClass(
 
@@ -10,6 +13,7 @@ Dropdown = React.createClass(
 
   getInitialState: ->
     title: @props.title
+    buttonDisabled: false
 
   handleItemAdd: (e)->
     e.preventDefault()
@@ -21,6 +25,13 @@ Dropdown = React.createClass(
     if @props.updateNameOnSelect == true
       @setState title: item.val
     @props.handleItemSelected item if @props.handleItemSelected?
+
+  handleInputChange: (e)->
+    val = @refs.itemName.getDOMNode().value.trim()
+    if val.length >= MAX_INPUT_LENGTH
+      @setState buttonDisabled: true
+    else
+      @setState buttonDisabled: false
 
   getItem: (item)->
     @props.itemType
@@ -37,9 +48,11 @@ Dropdown = React.createClass(
             ref: "itemName"
             type: "text"
             placeholder: @props.addItemPlaceholder
+            onChange: @handleInputChange
         R.button
           className: 'btn btn-info btn-xs'
           type: "submit"
+          disabled: @state.buttonDisabled
           @t "dropdown.addBtn"
 
   renderItems: (items)->
