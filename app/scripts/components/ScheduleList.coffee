@@ -1,9 +1,10 @@
 
-React    = require 'react'
-$        = require 'jquery'
-mq       = require '../utils/MediaQueries.coffee'
-Dropdown = React.createFactory require './Dropdown'
-R        = React.DOM
+React        = require 'react'
+$            = require 'jquery'
+mq           = require '../utils/MediaQueries.coffee'
+Dropdown     = React.createFactory require './Dropdown'
+ScheduleItem = React.createFactory require './ScheduleItem'
+R            = React.DOM
 
 
 ScheduleList = React.createClass(
@@ -25,12 +26,10 @@ ScheduleList = React.createClass(
       rootTag: @props.rootTag
       title: @state.data[0].val
       items: @state.data
+      itemType: ScheduleItem
       updateNameOnSelect: true
       handleItemAdd: ->
     )
-    # R.div className: 'pla-schedule-list',
-    #   R.ul null,
-    #     (R.li(key: sch, sch) for sch in @state.data)
 
 )
 

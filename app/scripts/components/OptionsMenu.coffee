@@ -1,7 +1,8 @@
 
-React    = require 'react'
-Dropdown = React.createFactory require './Dropdown'
-R        = React.DOM
+React       = require 'react'
+Dropdown    = React.createFactory require './Dropdown'
+OptionsItem = React.createFactory require './OptionsItem'
+R           = React.DOM
 
 OptionsMenu = React.createClass(
 
@@ -13,17 +14,17 @@ OptionsMenu = React.createClass(
       {
         header: "General:"
         items: [
-          {key: "opt1", val: "Summary", icon: @icon "book"}
-          {key: "opt2", val: "Change name", icon: @icon "pencil"}
-          {key: "opt3", val: "Duplicate", icon: @icon "copy"}
-          {key: "opt4", val: "Share your schedule", icon: @icon "share-alt"}
+          {id: "opt1", val: "Summary", icon: @icon "book"}
+          {id: "opt2", val: "Change name", icon: @icon "pencil"}
+          {id: "opt3", val: "Duplicate", icon: @icon "copy"}
+          {id: "opt4", val: "Share your schedule", icon: @icon "share-alt"}
         ]
       }
       {
         header: "Export:"
         items: [
-          {key: "opt5", val: "Calendar", icon: @icon "calendar"}
-          {key: "opt6", val: "Image", icon: @icon "camera-retro"}
+          {id: "opt5", val: "Calendar", icon: @icon "calendar"}
+          {id: "opt6", val: "Image", icon: @icon "camera-retro"}
         ]
       }
     ]
@@ -33,6 +34,7 @@ OptionsMenu = React.createClass(
       className: 'pla-options-list'
       rootTag: @props.rootTag
       title: @icon "gears"
+      itemType: OptionsItem
       items: @getItems()
     )
 
