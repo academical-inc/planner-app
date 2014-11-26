@@ -10,7 +10,7 @@ ScheduleItem = React.createClass(
 
   render: ->
     R.li className: "pla-schedule-item", onClick: @props.onClick,
-      R.a href: "#", @props.item.val,
+      R.a className: "clearfix", href: "#", @props.item.val,
         R.span className: "pull-right",
           @renderDeleteIcon()
 
