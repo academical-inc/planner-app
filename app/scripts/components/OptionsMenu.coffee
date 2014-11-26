@@ -1,16 +1,15 @@
 
 React       = require 'react'
 I18nMixin   = require '../mixins/I18nMixin'
+IconMixin   = require '../mixins/IconMixin'
 Dropdown    = React.createFactory require './Dropdown'
 OptionsItem = React.createFactory require './OptionsItem'
 R           = React.DOM
 
+
 OptionsMenu = React.createClass(
 
-  mixins: [I18nMixin]
-
-  icon: (icon)->
-    R.i className: "fa fa-#{icon} fa-fw"
+  mixins: [I18nMixin, IconMixin]
 
   getItems: ->
     [
