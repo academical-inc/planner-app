@@ -1,20 +1,18 @@
 
-React = require 'react'
-R     = React.DOM
+React     = require 'react'
+ItemMixin = require '../mixins/ItemMixin'
+R         = React.DOM
 
 
 ScheduleItem = React.createClass(
 
-  handleItemDelete: (e)->
-    e.stopPropagation()
-    @props.handleItemDelete @props.item
+  mixins: [ItemMixin]
 
   render: ->
     R.li className: "pla-schedule-item", onClick: @props.onClick,
       R.a href: "#", @props.item.val,
         R.span className: "pull-right",
-          R.i className: "fa fa-trash-o delete-icon",\
-            onClick: @handleItemDelete
+          @renderDeleteIcon()
 
 )
 

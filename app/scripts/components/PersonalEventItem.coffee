@@ -1,11 +1,14 @@
 
 React        = require 'react'
+ItemMixin    = require '../mixins/ItemMixin'
 colors       = require('../constants/PlannerConstants').colors
 ColorPicker  = React.createFactory require './ColorPicker'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
 
 PersonalEventItem = React.createClass(
+
+  mixins: [ItemMixin]
 
   getInitialState: ->
     @props.item
@@ -31,8 +34,7 @@ PersonalEventItem = React.createClass(
           R.a null, @state.name
           R.span className: "pull-right",
             ColorPicker colorPaletteId: colorPaletteId
-            R.i className: "fa fa-trash-o delete-icon",\
-              onClick: @props.handleItemDelete
+            @renderDeleteIcon()
           ColorPalette id: colorPaletteId
       )
 

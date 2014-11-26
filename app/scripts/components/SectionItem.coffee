@@ -1,6 +1,7 @@
 
 React        = require 'react'
 I18nMixin    = require '../mixins/I18nMixin'
+ItemMixin    = require '../mixins/ItemMixin'
 constants    = require '../constants/PlannerConstants'
 colors       = constants.colors
 seatsMap     = constants.sectionSeatsMap
@@ -11,7 +12,7 @@ R            = React.DOM
 
 SectionItem = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, ItemMixin]
 
   getInitialState: ->
     @props.item
@@ -58,8 +59,7 @@ SectionItem = React.createClass(
           R.span className: "pull-right",
             R.span className: "label label-seats label-#{seatsClass}",
               @state.seats.available
-            R.i className: "fa fa-trash-o delete-icon",\
-              onClick: @props.handleItemDelete
+            @renderDeleteIcon()
         )
       ),
       R.div(
