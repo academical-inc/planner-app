@@ -18,8 +18,7 @@ PlannerHeader = React.createClass(
             ScheduleList rootTag: R.li
           R.ul className: "nav navbar-nav navbar-right",
             OptionsMenu rootTag: R.li
-
-      # ProfileBox({})
+            ProfileBox rootTag: R.li, name: "Juan", url: "//placehold.it/50x50"
 
 )
 

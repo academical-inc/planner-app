@@ -15,6 +15,9 @@
       "calendar": "Calendar",
       "image": "Image"
     },
+    "profile": {
+      "logout": "Log Out"
+    },
     "searchBar": {
       "placeholder": "Search Course Sections...",
       "filters": "Filters"
@@ -55,6 +58,9 @@
       "share": "Comparte tu horario",
       "calendar": "Calendario",
       "image": "Imagen"
+    },
+    "profile": {
+      "logout": "Salir"
     },
     "searchBar": {
       "placeholder": "Busca Secciones...",
