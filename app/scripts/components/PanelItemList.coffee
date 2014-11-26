@@ -16,7 +16,6 @@ PanelItemList = React.createClass(
         for item in @props.items
           @props.itemType
             key: item.id
-            itemKey: item.id
             item: item
             handleItemDelete: @props.handleItemDelete
       )

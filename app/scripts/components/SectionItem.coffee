@@ -29,9 +29,9 @@ SectionItem = React.createClass(
     @state.color || colors[Math.floor(Math.random() * colors.length)]
 
   render: ->
-    headingId      = "section-heading-#{@props.itemKey}"
-    contentId      = "section-info-#{@props.itemKey}"
-    colorPaletteId = "section-colors-#{@props.itemKey}"
+    headingId      = "section-heading-#{@props.item.id}"
+    contentId      = "section-info-#{@props.item.id}"
+    colorPaletteId = "section-colors-#{@props.item.id}"
     seatsClass     = @getSeatsColorClass()
     colorStyle     =
       borderColor: @getColor()

@@ -14,9 +14,9 @@ PersonalEventItem = React.createClass(
     @state.color || colors[Math.floor(Math.random() * colors.length)]
 
   render: ->
-    headingId = "personal-event-heading-#{@props.itemKey}"
-    colorPaletteId  = "personal-event-colors-#{@props.itemKey}"
-    colorStyle =
+    headingId      = "personal-event-heading-#{@props.item.id}"
+    colorPaletteId = "personal-event-colors-#{@props.item.id}"
+    colorStyle     =
       borderColor: @getColor()
 
     R.div className: "pla-personal-event-item panel panel-default",
