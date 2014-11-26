@@ -13,6 +13,20 @@ Dropdown = React.createClass(
       @setState title: item.val
     @props.handleItemSelected item if @props.handleItemSelected?
 
+  renderAddInput: ->
+    R.li null,
+      R.form className: 'navbar-form',
+        R.div className: 'form-group',
+          R.input type: "text", placeholder: "Add item"
+        R.button className: 'btn btn-info btn-xs', type: "submit", "Add"
+
+  getItem: (item)->
+    @props.itemType
+      key: item.id
+      item: item
+      onClick: @handleItemSelected.bind this, item
+      handleItemDelete: @props.handleItemDelete
+
   renderItems: (items)->
     r = []
     items.forEach (item, index)=>
@@ -20,27 +34,22 @@ Dropdown = React.createClass(
         r.push R.li(className: "dropdown-header", key: item.header, item.header)
         r = r.concat (
           for it in item.items
-            R.li key: it.key, onClick: @handleItemSelected.bind(this, it),
-              if it.icon?
-                R.a href: "#", it.icon, " #{it.val}"
-              else
-                R.a href: "#", it.val
+            @getItem it
         )
         if index != items.length-1
           r.push R.li(className: "divider", key: "#{item.header}-divider")
       else
         r.push (
-          R.li key: item.key, onClick: @handleItemSelected.bind(this, item),
-            if item.icon?
-              R.a href: "#", item.icon, " #{item.val}"
-            else
-              R.a href: "#", item.val
+          @getItem item
         )
     return r
 
   render: ->
-    classes = dropdown: true
+    classes = {}
+    classes["pla-dropdown"]   = true
+    classes["dropdown"]       = true
     classes[@props.className] = @props.className?
+
     classes = React.addons.classSet classes
 
     @props.rootTag className: classes,
@@ -61,6 +70,8 @@ Dropdown = React.createClass(
           role: "menu"
         }
         @renderItems @props.items
+        R.li className: "divider" if @props.handleItemAdd?
+        @renderAddInput() if @props.handleItemAdd?
       )
 )
 
