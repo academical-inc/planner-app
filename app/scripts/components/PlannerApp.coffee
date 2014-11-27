@@ -1,6 +1,5 @@
 
 React           = require 'react'
-C               = require '../constants/PlannerConstants'
 PlannerHeader   = React.createFactory require './PlannerHeader'
 PlannerBody     = React.createFactory require './PlannerBody'
 SlideMenuHandle = React.createFactory require './SlideMenuHandle'
@@ -11,9 +10,7 @@ PlannerApp = React.createClass(
 
   render: ->
     R.div className: 'pla-content container-fluid',
-      SlideMenuHandle(
-        scheduleListSelector: C.selectors.SCHEDULE_LIST,
-      )
+      SlideMenuHandle({})
       PlannerHeader({})
       PlannerBody({})
       PlannerModals({})

@@ -17,9 +17,11 @@ describe "SlideMenuHandle", ->
 
     it 'should open slide menu', ->
       [mock$, mock$El] = H.mock$()
-      restore = H.rewire SlideMenuHandle, $: mock$
+      restore = H.rewire SlideMenuHandle,
+        $: mock$
+        selectors: SCHEDULE_LIST: "selector"
 
-      slideMenu = H.render SlideMenuHandle, scheduleListSelector: "selector"
+      slideMenu = H.render SlideMenuHandle
 
       H.sim.click(slideMenu.getDOMNode())
       expect(mock$).toHaveBeenCalledWith "selector"
