@@ -2,6 +2,7 @@
 React        = require 'react'
 $            = require 'jquery'
 mq           = require '../utils/MediaQueries.coffee'
+ids          = require('../constants/PlannerConstants').ids
 I18nMixin    = require '../mixins/I18nMixin'
 Dropdown     = React.createFactory require './Dropdown'
 ScheduleItem = React.createFactory require './ScheduleItem'
@@ -25,6 +26,7 @@ ScheduleList = React.createClass(
 
   render: ->
     Dropdown(
+      id: ids.SCHEDULE_LIST
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
       title: @state.data[0].val

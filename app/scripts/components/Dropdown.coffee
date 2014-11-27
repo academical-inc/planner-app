@@ -90,7 +90,7 @@ Dropdown = React.createClass(
     else
       R.ul ulProps, @renderItems(@props.items)
 
-    @props.rootTag className: classes,
+    @props.rootTag className: classes, id: @props.id,
       R.a(
         {
           className: "dropdown-toggle"
