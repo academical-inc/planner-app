@@ -1,13 +1,18 @@
 
+ids =
+  SCHEDULE_LIST: 'pla-schedule-list'
+  PERSONAL_EVENT_MODAL: 'pla-personal-event-modal'
+
 module.exports =
   media:
     SCREEN_XS_MIN: 1
     SCREEN_SM_MIN: 768
     SCREEN_MD_MIN: 992
     SCREEN_LG_MIN: 1200
+  ids: ids
   selectors:
-    SCHEDULE_LIST: '.pla-schedule-list'
-    PERSONAL_EVENT_MODAL: '#pla-personal-event-modal'
+    SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
+    PERSONAL_EVENT_MODAL: "##{ids.PERSONAL_EVENT_MODAL}"
   htmlEntities:
     TIMES: "\u00d7"
   sectionSeatsMap:
