@@ -14,6 +14,8 @@ module.exports =
     UPPER: bound: 20, className: "success"
     LOWER:   bound: 10, className: "warning"
     ZERO:  className: "danger"
+  dropdown:
+    MAX_INPUT_LENGTH: 28
   days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
   colors: [
     "#f27979"

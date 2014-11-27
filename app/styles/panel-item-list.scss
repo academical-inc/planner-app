@@ -17,15 +17,6 @@
     font-weight: 200;
   }
 
-  .panel-title i.delete {
-    color: $gray-light;
-    cursor: pointer;
-
-    &:hover {
-      color: $brand-danger;
-    }
-  }
-
   .panel-collapse {
     border-left: 5px solid #eee;
   }

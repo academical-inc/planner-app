@@ -20,11 +20,12 @@ describe 'PanelItemList', ->
       @itemType = H.spy "itemType", retVal: "data"
       @defProps =
         itemType: @itemType
-        initialState: [id: "item1", id: "item2"]
+        items: [id: "item1", id: "item2"]
+        handleItemDelete: ->
 
-    it 'renders the list of items from state correctly', ->
+    it 'renders the list of items correctly', ->
       list     = H.render PanelItemList, @defProps
-      expected = @defProps.initialState
+      expected = @defProps.items
 
       items = H.findWithClass(list, "panel-group").props.children
       expect(items.length).toEqual expected.length
@@ -32,8 +33,8 @@ describe 'PanelItemList', ->
         expect(item).toEqual "data"
         expect(@itemType.calls.argsFor(i)).toEqual [{
           key: expected[i].id
-          itemKey: expected[i].id
           item: expected[i]
+          handleItemDelete: @defProps.handleItemDelete
         }]
 
     it 'does not render add button if required props not provided', ->
@@ -63,15 +64,5 @@ describe 'PanelItemList', ->
         button = H.findWithTag @list, "button"
         H.sim.click button.getDOMNode()
         expect(@itemAddHandler).toHaveBeenCalled()
-
-
-    describe 'when itemAddDataToggle and itemAddDataTarget provided', ->
-
-      it 'renders an add button correctly', ->
-        props = $.extend {}, @defProps,
-          itemAddDataToggle: "toggle-data"
-          itemAddDataTarget: "target-data"
-        list  = H.render PanelItemList, props
-        assertAddButtonRendered list, props
 
 

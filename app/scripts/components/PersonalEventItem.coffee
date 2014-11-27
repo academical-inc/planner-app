@@ -1,11 +1,14 @@
 
 React        = require 'react'
+ItemMixin    = require '../mixins/ItemMixin'
 colors       = require('../constants/PlannerConstants').colors
 ColorPicker  = React.createFactory require './ColorPicker'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
 
 PersonalEventItem = React.createClass(
+
+  mixins: [ItemMixin]
 
   getInitialState: ->
     @props.item
@@ -14,9 +17,9 @@ PersonalEventItem = React.createClass(
     @state.color || colors[Math.floor(Math.random() * colors.length)]
 
   render: ->
-    headingId = "personal-event-heading-#{@props.itemKey}"
-    colorPaletteId  = "personal-event-colors-#{@props.itemKey}"
-    colorStyle =
+    headingId      = "personal-event-heading-#{@props.item.id}"
+    colorPaletteId = "personal-event-colors-#{@props.item.id}"
+    colorStyle     =
       borderColor: @getColor()
 
     R.div className: "pla-personal-event-item panel panel-default",
@@ -31,7 +34,7 @@ PersonalEventItem = React.createClass(
           R.a null, @state.name
           R.span className: "pull-right",
             ColorPicker colorPaletteId: colorPaletteId
-            R.i className: "fa fa-trash-o delete"
+            @renderDeleteIcon()
           ColorPalette id: colorPaletteId
       )
 

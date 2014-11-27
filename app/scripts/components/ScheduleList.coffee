@@ -1,10 +1,16 @@
 
-React = require 'react'
-$     = require 'jquery'
-mq    = require '../utils/MediaQueries.coffee'
-R     = React.DOM
+React        = require 'react'
+$            = require 'jquery'
+mq           = require '../utils/MediaQueries.coffee'
+I18nMixin    = require '../mixins/I18nMixin'
+Dropdown     = React.createFactory require './Dropdown'
+ScheduleItem = React.createFactory require './ScheduleItem'
+R            = React.DOM
+
 
 ScheduleList = React.createClass(
+
+  mixins: [I18nMixin]
 
   componentDidMount: ->
     if not mq.matchesMDAndUp()
@@ -15,12 +21,19 @@ ScheduleList = React.createClass(
     return
 
   getInitialState: ->
-    data: ["Schedule1", "Schedule2"]
+    data: [{id: "S1", val: "Schedule 1"}, {id: "S2", val: "Schedule 2"}]
 
   render: ->
-    R.div className: 'pla-schedule-list',
-      R.ul null,
-        (R.li(key: sch, sch) for sch in @state.data)
+    Dropdown(
+      className: 'pla-schedule-list'
+      rootTag: @props.rootTag
+      title: @state.data[0].val
+      items: @state.data
+      itemType: ScheduleItem
+      updateNameOnSelect: true
+      handleItemAdd: ->
+      addItemPlaceholder: @t "scheduleList.namePlaceholder"
+    )
 
 )
 
