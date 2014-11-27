@@ -17,8 +17,8 @@ describe "PersonalEventForm", ->
     it 'should init jquery timepicker on time inputs with correct options', ->
       form = H.render PersonalEventForm
 
-      expect(@mock$).toHaveBeenCalledWith form.refs.startInput.getDOMNode()
-      expect(@mock$).toHaveBeenCalledWith form.refs.endInput.getDOMNode()
+      expect(@mock$).toHaveBeenCalledWith form.refs.startTime.getDOMNode()
+      expect(@mock$).toHaveBeenCalledWith form.refs.endTime.getDOMNode()
       expect(@mock$El.timepicker.calls.count()).toEqual 2
 
 
@@ -42,6 +42,16 @@ describe "PersonalEventForm", ->
         @form.handleDayChecked @e
         expect(@form.setState).toHaveBeenCalledWith checkedDays: []
 
+
+  describe "#handleSubmit", ->
+
+    it 'clears the inputs', ->
+      form = H.render PersonalEventForm
+      form.handleSubmit preventDefault: ->
+      expect(form.refs.name.getDOMNode().value).toEqual ''
+      expect(form.refs.startTime.getDOMNode().value).toEqual ''
+      expect(form.refs.endTime.getDOMNode().value).toEqual ''
+      expect(form.state.checkedDays.length).toEqual 1
 
   describe "#renderInput", ->
 

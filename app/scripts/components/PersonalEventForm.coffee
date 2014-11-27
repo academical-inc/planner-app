@@ -1,14 +1,17 @@
 
-React     = require 'react'
-$         = require 'jquery'
-I18nMixin = require '../mixins/I18nMixin'
-days      = require('../constants/PlannerConstants').days
-DateUtils = require '../utils/DateUtils'
-R         = React.DOM
+React      = require 'react'
+$          = require 'jquery'
+ModalMixin = require '../mixins/ModalMixin'
+I18nMixin  = require '../mixins/I18nMixin'
+DateUtils  = require '../utils/DateUtils'
+days       = require('../constants/PlannerConstants').days
+ids        = require('../constants/PlannerConstants').ids
+R          = React.DOM
+
 
 PersonalEventForm = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, ModalMixin]
 
   getInitialState: ->
     @props.initialState || {
@@ -21,15 +24,15 @@ PersonalEventForm = React.createClass(
       selectOnBlur: true
       scrollDefault: 'now'
 
-    $(@refs.startInput.getDOMNode()).timepicker opts
-    $(@refs.endInput.getDOMNode()).timepicker opts
+    $(@refs.startTime.getDOMNode()).timepicker opts
+    $(@refs.endTime.getDOMNode()).timepicker opts
     return
 
   handleStartTimeChange: (e)->
-    @setState $.extend({}, @state, startTime: e.target.value)
+    @setState startTime: e.target.value
 
   handleEndTimeChange: (e)->
-    @setState $.extend({}, @state, endTime: e.target.value)
+    @setState endTime: e.target.value
 
   handleDayChecked: (e)->
     day     = e.target.value
@@ -39,7 +42,26 @@ PersonalEventForm = React.createClass(
       checkedDays = checkedDays.concat [day]
     else
       checkedDays.splice checkedDays.indexOf(day)
-    @setState $.extend({}, @state, checkedDays: checkedDays)
+    @setState checkedDays: checkedDays
+
+  handleSubmit: (e)->
+    e.preventDefault()
+
+    name = @refs.name.getDOMNode()
+    startTime = @refs.startTime.getDOMNode()
+    endTime = @refs.endTime.getDOMNode()
+    # @state.checkedDays
+
+    # TODO grab data and perform action
+
+    # Clean up inputs
+    name.value = ''
+    @setState
+      startTime: ''
+      endTime: ''
+      checkedDays: [DateUtils.getDayForDate DateUtils.now()]
+    # Close
+    @hide()
 
   renderInput: (id, label, {ref, type, placeholder, inputGroup,\
       val, onChange}={})->
@@ -66,13 +88,10 @@ PersonalEventForm = React.createClass(
         R.label htmlFor: id, label
         R.input inputProps
 
-  render: ->
+  renderBody: (formId)->
     nameId  = "personal-event-name-input"
     startId = "personal-event-start-time-input"
     endId   = "personal-event-end-time-input"
-
-    startRef = "startInput"
-    endRef   = "endInput"
 
     clockIcon = R.i className: "fa fa-clock-o fa-fw"
     startInput = @renderInput startId, @t("eventForm.start"),
@@ -80,16 +99,16 @@ PersonalEventForm = React.createClass(
       onChange: @handleStartTimeChange
       inputGroup: clockIcon
       placeholder: "10:00am"
-      ref: startRef
+      ref: "startTime"
     endInput = @renderInput endId, @t("eventForm.end"),
       val: @state.endTime
       onChange: @handleEndTimeChange
       inputGroup: clockIcon
       placeholder: "11:30am"
-      ref: endRef
+      ref: "endTime"
 
-    R.form className: "pla-personal-event-form", role: "form",
-      @renderInput nameId, @t("eventForm.name"),\
+    R.form className: formId, role: "form", id: formId, onSubmit: @handleSubmit,
+      @renderInput nameId, @t("eventForm.name"), ref: "name",\
         placeholder: @t("eventForm.namePlaceholder")
       R.div className: "row",
         R.div className: "col-md-6", startInput
@@ -106,6 +125,15 @@ PersonalEventForm = React.createClass(
                 onChange: @handleDayChecked
               )
               day
+
+  render: ->
+    formId = "pla-personal-event-form"
+    @renderModal(
+      ids.PERSONAL_EVENT_MODAL
+      @t("eventForm.header")
+      @renderBody(formId)
+      {accept: {form: formId}}
+    )
 
 )
 
