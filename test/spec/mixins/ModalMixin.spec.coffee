@@ -1,9 +1,21 @@
 
-H     = require '../../SpecHelper'
-Modal = require '../../../app/scripts/components/Modal'
+H          = require '../../SpecHelper'
+ModalMixin = require '../../../app/scripts/mixins/ModalMixin'
 
 
-describe "Modal", ->
+describe "ModalMixin", ->
+
+  Modal = H.React.createClass(
+    mixins: [ModalMixin]
+
+    render: ->
+      @renderModal(
+        "modalId"
+        @props.header
+        @props.body
+        @props.buttons
+      )
+  )
 
   beforeEach ->
     @cancelHandler = H.spy "cancelHandler"
@@ -15,16 +27,16 @@ describe "Modal", ->
         accept:
           type: "success"
           text: "Save"
-
     @customData =
-        cancel:
-          type:    "cancel-type"
-          text:    "Off"
-          handler: @cancelHandler
-        accept:
-          type:    "accept-type"
-          text:    "On"
-          handler: @acceptHandler
+      cancel:
+        type:    "cancel-type"
+        text:    "Off"
+        handler: @cancelHandler
+      accept:
+        type:    "accept-type"
+        text:    "On"
+        handler: @acceptHandler
+    @formData = H.$.extend {}, @customData, form: "form-id"
 
   assertRenderedButtons = (buttons, data)->
     cancelBtn = buttons[0]
@@ -34,14 +46,18 @@ describe "Modal", ->
     expect(cancelBtn.props["data-dismiss"]).toEqual "modal"
     expect(cancelBtn.props.className).toEqual "btn btn-#{data.cancel.type}"
     expect(cancelBtn.props.children).toEqual data.cancel.text
-    expect(acceptBtn.props["data-dismiss"]).toEqual "modal"
     expect(acceptBtn.props.className).toEqual "btn btn-#{data.accept.type}"
     expect(acceptBtn.props.children).toEqual data.accept.text
 
     if data.cancel.handler?
       expect(cancelBtn.props.onClick).toEqual data.cancel.handler
-    if data.accept.handler?
+    if data.accept.form?
+      expect(acceptBtn.props.form).toEqual data.accept.form
+      expect(acceptBtn.props.onClick).not.toBeDefined()
+    else if data.accept.handler?
+      expect(acceptBtn.props["data-dismiss"]).toEqual "modal"
       expect(acceptBtn.props.onClick).toEqual data.accept.handler
+      expect(acceptBtn.props.form).not.toBeDefined()
 
 
   describe "#renderButtons", ->
@@ -57,8 +73,12 @@ describe "Modal", ->
       buttons = @modal.renderButtons @customData
       assertRenderedButtons buttons, @customData
 
+    it 'renders accept button with form attribute when provided', ->
+      buttons = @modal.renderButtons @formData
+      assertRenderedButtons buttons, @formData
 
-  describe "#render", ->
+
+  describe "#renderModal", ->
 
     it 'renders button descriptors passed in the properties', ->
       modal   = H.render Modal, buttons: @customData
@@ -68,7 +88,7 @@ describe "Modal", ->
       assertRenderedButtons buttons, @customData
 
     it 'renders with correct id, header and children', ->
-      modal  = H.render Modal, id: "modal-id", header: "My Header", "Body"
+      modal  = H.render Modal, id: "modal-id", header: "My Header", body: "Body"
       header = H.findWithTag modal, "h4"
       body   = H.findWithClass modal, "modal-body"
 
@@ -87,7 +107,4 @@ describe "Modal", ->
 
       H.sim.click acceptBtn.getDOMNode()
       expect(@acceptHandler).toHaveBeenCalled()
-
-
-
 
