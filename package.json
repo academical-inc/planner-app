@@ -63,20 +63,6 @@
   },
   "browserify-shim": {
     "jquery": "global:$",
-    "fullcalendar": {
-      "depends": [
-        "jquery:$"
-      ]
-    },
-    "jQuery.mmenu": {
-      "depends": [
-        "jquery:$"
-      ]
-    },
-    "jquery-timepicker-jt": {
-      "depends": [
-        "jquery:$"
-      ]
-    }
+    "bloodhound": "global:Bloodhound"
   }
 }
