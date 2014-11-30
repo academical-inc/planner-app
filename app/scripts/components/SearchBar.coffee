@@ -33,13 +33,13 @@ SearchBar = React.createClass(
   initSearchEngine: ->
     engine = new Bloodhound
       name: 'sections',
-      prefetch: urls.SECTIONS_DUMP
+      prefetch:
+        url: urls.SECTIONS_DUMP
+        ttl: 1
       limit: 30
       datumTokenizer: @datumTokenizer
       dupDetector:    @dupDetector
       queryTokenizer: Bloodhound.tokenizers.whitespace
-
-    window.engine = engine
 
     engine.initialize()
     engine.ttAdapter()
