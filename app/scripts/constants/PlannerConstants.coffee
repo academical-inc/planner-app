@@ -4,6 +4,8 @@ ids =
   PERSONAL_EVENT_MODAL: 'pla-personal-event-modal'
 
 module.exports =
+  urls:
+    SECTIONS_DUMP: "//s3.amazonaws.com/academical-catalogs/uniandes/magistral_sections.json"
   media:
     SCREEN_XS_MIN: 1
     SCREEN_SM_MIN: 768
