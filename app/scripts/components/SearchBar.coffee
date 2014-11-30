@@ -1,16 +1,69 @@
 
-React     = require 'react'
-I18nMixin = require '../mixins/I18nMixin'
-R         = React.DOM
+React                = require 'react'
+Bloodhound           = require 'bloodhound'
+TypeaheadSectionItem = require './TypeaheadSectionItem'
+I18nMixin            = require '../mixins/I18nMixin'
+urls                 = require('../constants/PlannerConstants').urls
+charMap              = require('../constants/PlannerConstants').charMap
+R                    = React.DOM
+
 
 SearchBar = React.createClass(
 
   mixins: [I18nMixin]
 
+  datumTokenizer:(section)->
+    teacherNames = section.teacherNames.map (name)->
+      Bloodhound.tokenizers.whitespace name
+
+    if teacherNames.length > 0
+      teacherNames = teacherNames.reduce (a1, a2) -> a1.concat(a2)
+
+    [].concat(
+      Bloodhound.tokenizers.whitespace section.courseName
+      [section.courseCode]
+      Bloodhound.tokenizers.whitespace section.departments[0].name
+      [section.sectionId]
+      teacherNames
+    )
+
+  dupDetector: (section1, section2)->
+    section1.sectionId == section2.sectionId
+
+  initSearchEngine: ->
+    engine = new Bloodhound
+      name: 'sections',
+      prefetch: urls.SECTIONS_DUMP
+      limit: 30
+      datumTokenizer: @datumTokenizer
+      dupDetector:    @dupDetector
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+
+    window.engine = engine
+
+    engine.initialize()
+    engine.ttAdapter()
+
+  componentDidMount: ->
+    engine = @initSearchEngine()
+    $(@refs.search.getDOMNode()).typeahead(
+      {hint: true, highlight: true, minLength: 1}
+      {
+        source: engine
+        displayKey: "courseName"
+        templates:
+          suggestion: TypeaheadSectionItem.render
+      }
+    )
+
   render: ->
     R.div className: "pla-search-bar container-fluid",
       R.div className: "search-input",
-        R.input type: "text", placeholder: @t("searchBar.placeholder")
+        R.input
+          className: "typeahead"
+          ref: "search"
+          type: "text"
+          placeholder: @t("searchBar.placeholder")
       R.div className: "search-filters",
         R.a(
           {
