@@ -49,6 +49,12 @@ class SpecHelper
   @mockComponent: ->
     React.createFactory 'div'
 
+  @mockLsCache: (getRetVal=null)->
+    @spyObj "mockLsCache", {get: getRetVal, set: null}
+
+  @mockCurrentSchool: (currentSchool)->
+    @spyObj "mockCurrentSchool", {currentSchool: currentSchool}
+
   @spyOn: spyOn
 
   @spy: (name, {retVal}={})->
