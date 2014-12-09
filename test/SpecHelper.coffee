@@ -6,10 +6,38 @@ TestUtils = React.addons.TestUtils
 
 I18n.init()
 
+class Ajax
+
+  @install: ->
+    jasmine.Ajax.install()
+
+  @uninstall: ->
+    jasmine.Ajax.uninstall()
+
+  @mostRecent: ->
+    jasmine.Ajax.requests.mostRecent()
+
+  @succeed: (data, req=@mostRecent(), {code}={})->
+    code ?= 200
+    req.response
+      status: code
+      contentType: "application/json"
+      responseText: JSON.stringify data: data
+
+  @fail: (data, req=@mostRecent(), {code, msg}={})->
+    code ?= 404
+    msg  ?= "Error"
+    req.response
+      status: code
+      contentType: "application/json"
+      responseText: JSON.stringify message: msg
+
+
 class SpecHelper
 
   @React:     React
   @TestUtils: TestUtils
+  @ajax:      Ajax
   @$:         $
 
   @mock$: ({spyFuncs}={})->
