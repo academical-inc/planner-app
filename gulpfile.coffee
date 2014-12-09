@@ -10,6 +10,8 @@ runSeq     = require 'run-sequence'
 wiredep    = require 'wiredep'
 merge      = require 'merge-stream'
 bowerFiles = require 'main-bower-files'
+envify     = require 'envify/custom'
+env        = require './.env.json'
 karma      = require('karma').server
 
 # Load plugins
@@ -50,6 +52,7 @@ bundler = (watch = false)->
   # Apply browserify transforms
   b.transform 'coffeeify'
   b.transform 'browserify-shim'
+  b.transform envify(env)
   b
 
 bundle = (b)->

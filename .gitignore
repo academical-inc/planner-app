@@ -35,3 +35,6 @@ config/secrets.yml
 # divshot
 /.divshot-cache
 divshot.json
+
+# environment
+.env.json
