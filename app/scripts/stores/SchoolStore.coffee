@@ -28,7 +28,7 @@ class SchoolStore
     else
       school = new School nickname: current
       school.fetch
-        success: (school)->
+        success: (model)=>
           LsCache.set current, school.attributes, EXPIRE_MINS
           @_school = school
           success @_school
