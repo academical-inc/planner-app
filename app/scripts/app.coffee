@@ -1,11 +1,23 @@
 
-I18n = require './utils/I18n'
-I18n.init()
+I18n        = require './utils/I18n'
+SchoolStore = require './stores/SchoolStore'
 
-React      = require 'react'
-PlannerApp = React.createFactory require './components/PlannerApp'
+require './boot'
 
-React.render(
-  PlannerApp({})
-  document.body
-)
+SchoolStore.init
+  success: (school)->
+    console.log school
+    I18n.init school.get("locale")
+
+  error: ->
+    console.warn "Could not find school"
+    I18n.init()
+
+  complete: ->
+    React      = require 'react'
+    PlannerApp = React.createFactory require './components/PlannerApp'
+
+    React.render(
+      PlannerApp appUi: SchoolStore.get("appUi")
+      document.body
+    )
