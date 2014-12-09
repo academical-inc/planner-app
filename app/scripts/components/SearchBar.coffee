@@ -3,7 +3,7 @@ React                = require 'react'
 Bloodhound           = require 'bloodhound'
 TypeaheadSectionItem = require './TypeaheadSectionItem'
 I18nMixin            = require '../mixins/I18nMixin'
-urls                 = require('../constants/PlannerConstants').urls
+urls                 = require('../config').urls
 charMap              = require('../constants/PlannerConstants').charMap
 R                    = React.DOM
 
@@ -34,7 +34,7 @@ SearchBar = React.createClass(
     engine = new Bloodhound
       name: 'sections',
       prefetch:
-        url: urls.SECTIONS_DUMP
+        url: urls.SECTIONS_URI
         ttl: 1
       limit: 30
       datumTokenizer: @datumTokenizer
