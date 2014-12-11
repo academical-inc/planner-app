@@ -1,18 +1,15 @@
 
 LsCache   = require 'lscache'
-Backbone  = require 'backbone'
+BaseModel = require './BaseModel'
 Config    = require '../config'
-ApiUtils  = require '../utils/ApiUtils'
 
 
 EXPIRE_MINS = 10080  # 1 week
 
-class School extends Backbone.Model
+class School extends BaseModel
 
   url: ->
     "schools/#{encodeURIComponent(@get("nickname"))}"
-
-  parse: ApiUtils.parse
 
 
 class SchoolStore
