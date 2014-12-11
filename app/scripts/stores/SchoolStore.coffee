@@ -7,7 +7,6 @@ ApiUtils  = require '../utils/ApiUtils'
 
 EXPIRE_MINS = 10080  # 1 week
 
-
 class School extends Backbone.Model
 
   url: ->
@@ -18,8 +17,7 @@ class School extends Backbone.Model
 
 class SchoolStore
 
-  @init: ({success, error, complete}={})->
-    current = ApiUtils.currentSchool()
+  @init: (current, {success, error, complete}={})->
     attrs   = LsCache.get current
     if attrs?
       @_school = new School attrs

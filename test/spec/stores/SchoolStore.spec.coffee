@@ -12,23 +12,18 @@ describe 'SchoolStore', ->
       @attrs        = {name: "U1", nickname: @currentSchool}
       @success      = H.spy "success"
       @complete     = H.spy "complete"
-      @restore = H.rewire SchoolStore,
-        ApiUtils: H.mockCurrentSchool(@currentSchool)
-
-    afterEach ->
-      @restore()
 
     describe 'when school is cached', ->
 
       beforeEach ->
-        @restoreInner = H.rewire SchoolStore,
+        @restore = H.rewire SchoolStore,
           LsCache: H.mockLsCache(@attrs)
 
       afterEach ->
-        @restoreInner()
+        @restore()
 
       it 'creates school from cache correctly', ->
-        SchoolStore.init success: @success, complete: @complete
+        SchoolStore.init @currentSchool, success: @success, complete: @complete
         expect(@success).toHaveBeenCalledWith SchoolStore._school
         expect(@complete).toHaveBeenCalled()
         expect(SchoolStore._school.attributes).toEqual @attrs
@@ -39,16 +34,16 @@ describe 'SchoolStore', ->
       beforeEach ->
         H.ajax.install()
         @lscache = H.mockLsCache()
-        @restoreInner = H.rewire SchoolStore,
+        @restore = H.rewire SchoolStore,
           LsCache: @lscache
           EXPIRE_MINS: 5
 
       afterEach ->
-        @restoreInner()
+        @restore()
         H.ajax.uninstall()
 
       it 'fetches the school correctly', ->
-        SchoolStore.init success: @success
+        SchoolStore.init @currentSchool, success: @success
         req = H.ajax.mostRecent()
         expect(req.url).toEqual "schools/uniandes"
 

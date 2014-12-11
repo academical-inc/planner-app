@@ -1,12 +1,14 @@
 
-I18n        = require './utils/I18n'
-SchoolStore = require './stores/SchoolStore'
+React        = require 'react'
+I18n         = require './utils/I18n'
+ApiUtils     = require './utils/ApiUtils'
+SchoolStore  = require './stores/SchoolStore'
+StudentStore = require './stores/StudentStore'
 
 require './boot'
 
-SchoolStore.init
+SchoolStore.init ApiUtils.currentSchool(),
   success: (school)->
-    console.log school
     I18n.init school.get("locale")
 
   error: ->
