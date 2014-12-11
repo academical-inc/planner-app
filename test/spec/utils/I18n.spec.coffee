@@ -5,6 +5,8 @@ I18n = require '../../../app/scripts/utils/I18n'
 
 describe 'I18n', ->
 
+  afterEach ->
+    I18n.init()
 
   describe '._simpleLocale', ->
 
