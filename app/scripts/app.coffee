@@ -16,10 +16,17 @@ SchoolStore.init ApiUtils.currentSchool(),
     I18n.init()
 
   complete: ->
-    React      = require 'react'
-    PlannerApp = React.createFactory require './components/PlannerApp'
+    StudentStore.init ApiUtils.currentStudent(),
+      success: (student)->
+        PlannerApp = React.createFactory require './components/PlannerApp'
+        React.render(
+          PlannerApp appUi: SchoolStore.get("appUi")
+          document.body
+        )
 
-    React.render(
-      PlannerApp appUi: SchoolStore.get("appUi")
-      document.body
-    )
+      error: ->
+        ErrorPage = React.createFactory require './components/ErrorPage'
+        React.render(
+          ErrorPage({})
+          document.body
+        )
