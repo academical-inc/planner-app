@@ -10,7 +10,6 @@ class Student extends BaseModel
 class StudentStore
 
   @init: (studentId, {success, error}={})->
-    # Need to get this from login
     student = new Student id: studentId
     student.fetch
       success: (model)=>
