@@ -42,16 +42,10 @@ describe 'Dropdown', ->
       @dd.handleItemSelected @item
       expect(@handler).toHaveBeenCalledWith @item
 
-    it 'updates title correctly when property to do so is specified', ->
-      H.spyOn @dd, "setState"
+    it 'does not call handler if not provided', ->
+      @dd.props.handleItemSelected = undefined
       @dd.handleItemSelected @item
-      expect(@dd.setState).toHaveBeenCalledWith title: @item.val
-
-    it 'does not update title when property to do so is not specified', ->
-      @dd.props.updateNameOnSelect = undefined
-      H.spyOn @dd, "setState"
-      @dd.handleItemSelected @item
-      expect(@dd.setState).not.toHaveBeenCalled()
+      expect(@handler).not.toHaveBeenCalled()
 
 
   describe '#handleInputChange', ->

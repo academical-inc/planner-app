@@ -12,7 +12,6 @@ Dropdown = React.createClass(
   mixins: [I18nMixin]
 
   getInitialState: ->
-    title: @props.title
     buttonDisabled: false
 
   handleItemAdd: (e)->
@@ -22,8 +21,6 @@ Dropdown = React.createClass(
     @refs.itemName.getDOMNode().value = ''
 
   handleItemSelected: (item)->
-    if @props.updateNameOnSelect == true
-      @setState title: item.val
     @props.handleItemSelected item if @props.handleItemSelected?
 
   handleInputChange: (e)->
@@ -99,7 +96,7 @@ Dropdown = React.createClass(
           "data-toggle": "dropdown"
           "aria-expanded": false
         }
-        @state.title
+        @props.title
         R.span className: 'caret'
       )
       ul
