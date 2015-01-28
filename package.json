@@ -66,6 +66,6 @@
   },
   "browserify-shim": {
     "jquery": "global:$",
-    "bloodhound": "global:Bloodhound",
+    "bloodhound": "global:Bloodhound"
   }
 }
