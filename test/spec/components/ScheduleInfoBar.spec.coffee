@@ -12,7 +12,7 @@ describe 'ScheduleInfoBar', ->
       [@mock$, @mock$El] = H.mock$()
       @modalSelector = ".modal-selector"
       @restore = H.rewire ScheduleInfoBar,
-        selectors: PERSONAL_EVENT_MODAL: @modalSelector
+        UIConstants: selectors: PERSONAL_EVENT_MODAL: @modalSelector
         $: @mock$
 
     afterEach ->

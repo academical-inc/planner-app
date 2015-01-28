@@ -6,7 +6,8 @@ describe "DateUtils", ->
 
   beforeEach ->
     @restore = H.rewire DateUtils,\
-      days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+      UIConstants:
+        days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
 
   afterEach ->
     @restore()

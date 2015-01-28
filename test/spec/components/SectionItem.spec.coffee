@@ -27,10 +27,11 @@ describe 'SectionItem', ->
 
     beforeEach ->
       @restore = H.rewire SectionItem,
-        seatsMap:
-          UPPER: bound: 50, className: "upper"
-          LOWER: bound: 15, className: "lower"
-          ZERO:  className: "zero"
+        UIConstants:
+          sectionSeatsMap:
+            UPPER: bound: 50, className: "upper"
+            LOWER: bound: 15, className: "lower"
+            ZERO:  className: "zero"
 
     afterEach ->
       @restore()

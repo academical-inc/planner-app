@@ -5,6 +5,7 @@ ApiUtils          = require './utils/ApiUtils'
 ErrorPage         = React.createFactory require './components/ErrorPage'
 PlannerApp        = React.createFactory require './components/PlannerApp'
 
+I18n.init()
 
 React.render(
   PlannerApp({})
