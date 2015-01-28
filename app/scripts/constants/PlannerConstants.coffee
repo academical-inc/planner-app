@@ -18,7 +18,7 @@ module.exports =
       TIMES: "\u00d7"
     sectionSeatsMap:
       UPPER: bound: 20, className: "success"
-      LOWER:   bound: 10, className: "warning"
+      LOWER: bound: 10, className: "warning"
       ZERO:  className: "danger"
     dropdown:
       MAX_INPUT_LENGTH: 28
