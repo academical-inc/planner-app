@@ -27,8 +27,7 @@
     "hammerjs": "hammerjs/hammer.js#~2.0.4",
     "font-awesome": "~4.3.0",
     "jquery-timepicker-jt": "~1.5.3",
-    "typeahead.js": "~0.10.5",
-    "backbone": "~1.1.2"
+    "typeahead.js": "~0.10.5"
   },
   "overrides": {
     "jQuery.mmenu": {

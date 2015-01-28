@@ -67,6 +67,5 @@
   "browserify-shim": {
     "jquery": "global:$",
     "bloodhound": "global:Bloodhound",
-    "backbone": "global:Backbone"
   }
 }
