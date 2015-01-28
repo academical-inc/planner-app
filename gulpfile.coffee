@@ -92,9 +92,8 @@ gulp.task 'styles', ->
     .pipe gulp.dest("#{base.dist}/styles")
 
 gulp.task 'vendor', ->
-  jsDeps = wiredep(
-    exclude: ['font-awesome']
-  )
+  jsDeps = wiredep()
+
   cssDeps = wiredep(
     exclude: ['bootstrap-sass-official', 'font-awesome']
   )

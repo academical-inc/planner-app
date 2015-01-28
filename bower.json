@@ -21,12 +21,12 @@
   ],
   "dependencies": {
     "jquery": "~2.1.1",
-    "fullcalendar": "~2.1.1",
-    "bootstrap-sass-official": "~3.2.0",
-    "jQuery.mmenu": "~4.5.7",
+    "fullcalendar": "~2.2.6",
+    "bootstrap-sass-official": "~3.3.3",
+    "jQuery.mmenu": "~4.7.5",
     "hammerjs": "hammerjs/hammer.js#~2.0.4",
-    "font-awesome": "~4.2.0",
-    "jquery-timepicker-jt": "~1.4.13",
+    "font-awesome": "~4.3.0",
+    "jquery-timepicker-jt": "~1.5.3",
     "typeahead.js": "~0.10.5",
     "backbone": "~1.1.2"
   },
@@ -48,5 +48,12 @@
         "assets/javascripts/bootstrap/dropdown.js"
       ]
     }
+  },
+  "resolutions": {
+    "jquery-timepicker-jt": "~1.5.3",
+    "jQuery.mmenu": "~4.7.5",
+    "bootstrap-sass-official": "~3.3.3",
+    "fullcalendar": "~2.2.6",
+    "font-awesome": "~4.3.0"
   }
 }
