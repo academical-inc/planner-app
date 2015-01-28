@@ -1,10 +1,10 @@
 
-React     = require 'react/addons'
-I18nMixin = require '../mixins/I18nMixin'
-R         = React.DOM
+React       = require 'react/addons'
+I18nMixin   = require '../mixins/I18nMixin'
+UIConstants = require('../constants/PlannerConstants').ui
+R           = React.DOM
 
-MAX_INPUT_LENGTH = require('../constants/PlannerConstants').dropdown.\
-  MAX_INPUT_LENGTH
+MAX_INPUT_LENGTH = UIConstants.dropdown.MAX_INPUT_LENGTH
 
 
 Dropdown = React.createClass(

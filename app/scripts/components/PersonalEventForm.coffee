@@ -1,12 +1,11 @@
 
-React      = require 'react'
-$          = require 'jquery'
-ModalMixin = require '../mixins/ModalMixin'
-I18nMixin  = require '../mixins/I18nMixin'
-DateUtils  = require '../utils/DateUtils'
-days       = require('../constants/PlannerConstants').days
-ids        = require('../constants/PlannerConstants').ids
-R          = React.DOM
+React       = require 'react'
+$           = require 'jquery'
+ModalMixin  = require '../mixins/ModalMixin'
+I18nMixin   = require '../mixins/I18nMixin'
+DateUtils   = require '../utils/DateUtils'
+UIConstants = require('../constants/PlannerConstants').ui
+R           = React.DOM
 
 
 PersonalEventForm = React.createClass(
@@ -93,6 +92,8 @@ PersonalEventForm = React.createClass(
     startId = "personal-event-start-time-input"
     endId   = "personal-event-end-time-input"
 
+    days = UIConstants.days
+
     clockIcon = R.i className: "fa fa-clock-o fa-fw"
     startInput = @renderInput startId, @t("eventForm.start"),
       val: @state.startTime
@@ -127,6 +128,8 @@ PersonalEventForm = React.createClass(
               day
 
   render: ->
+    ids = UIConstants.ids
+
     formId = "pla-personal-event-form"
     @renderModal(
       ids.PERSONAL_EVENT_MODAL

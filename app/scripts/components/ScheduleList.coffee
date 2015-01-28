@@ -1,12 +1,13 @@
 
-React        = require 'react'
-$            = require 'jquery'
-mq           = require '../utils/MediaQueries.coffee'
-ids          = require('../constants/PlannerConstants').ids
-I18nMixin    = require '../mixins/I18nMixin'
-Dropdown     = React.createFactory require './Dropdown'
-ScheduleItem = React.createFactory require './ScheduleItem'
-R            = React.DOM
+React             = require 'react'
+$                 = require 'jquery'
+MediaQueries      = require '../utils/MediaQueries.coffee'
+UIConstants       = require('../constants/PlannerConstants').ui
+I18nMixin         = require '../mixins/I18nMixin'
+ScheduleListStore = require '../stores/ScheduleListStore'
+Dropdown          = React.createFactory require './Dropdown'
+ScheduleItem      = React.createFactory require './ScheduleItem'
+R                 = React.DOM
 
 
 ScheduleList = React.createClass(
@@ -14,7 +15,8 @@ ScheduleList = React.createClass(
   mixins: [I18nMixin]
 
   componentDidMount: ->
-    if not mq.matchesMDAndUp()
+    ScheduleListStore.addChangeListener @onChange
+    if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
         dragOpen:
           open: true
@@ -26,7 +28,7 @@ ScheduleList = React.createClass(
 
   render: ->
     Dropdown(
-      id: ids.SCHEDULE_LIST
+      id: UIConstants.ids.SCHEDULE_LIST
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
       title: @state.data[0].val

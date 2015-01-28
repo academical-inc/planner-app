@@ -2,9 +2,7 @@
 React        = require 'react'
 I18nMixin    = require '../mixins/I18nMixin'
 ItemMixin    = require '../mixins/ItemMixin'
-constants    = require '../constants/PlannerConstants'
-colors       = constants.colors
-seatsMap     = constants.sectionSeatsMap
+UIConstants  = require('../constants/PlannerConstants').ui
 ColorPicker  = React.createFactory require './ColorPicker'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
@@ -18,6 +16,7 @@ SectionItem = React.createClass(
     @props.item
 
   getSeatsColorClass: ->
+    seatsMap = UIConstants.sectionSeatsMap
     if @state.seats.available >= seatsMap.UPPER.bound
       seatsMap.UPPER.className
     else if @state.seats.available >= seatsMap.LOWER.bound
@@ -27,6 +26,7 @@ SectionItem = React.createClass(
 
   getColor: ->
     # TODO: Random color selection is temporary
+    colors = UIConstants.colors
     @state.color || colors[Math.floor(Math.random() * colors.length)]
 
   render: ->
