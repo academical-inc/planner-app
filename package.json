@@ -62,7 +62,8 @@
     "flux": "^2.0.1",
     "lscache": "^1.0.2",
     "mustache": "^1.0.0",
-    "react": "^0.12.2"
+    "react": "^0.12.2",
+    "superagent": "^0.21.0"
   },
   "browserify-shim": {
     "jquery": "global:$",
