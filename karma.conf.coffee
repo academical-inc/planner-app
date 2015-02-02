@@ -79,7 +79,7 @@ module.exports = (config) ->
         'coffeeify'
         'browserify-shim',
         ['rewireify', {
-            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee"
+            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee"
           }
         ]
       ]

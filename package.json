@@ -5,8 +5,7 @@
   "main": "dist/scripts/app.js",
   "scripts": {
     "start": "node server.js",
-    "test": "karma start karma.conf.coffee --single-run",
-    "postinstall": "bower install && gulp build"
+    "test": "karma start karma.conf.coffee --single-run"
   },
   "repository": {
     "type": "git",
@@ -19,9 +18,9 @@
   },
   "homepage": "https://github.com/academical-inc/planner-app",
   "devDependencies": {
-    "browserify": "^8.1.1",
+    "browserify": "^8.1.3",
     "browserify-shim": "^3.8.2",
-    "coffee-script": "^1.8.0",
+    "coffee-script": "^1.9.0",
     "coffeeify": "^1.0.0",
     "del": "^1.1.1",
     "envify": "^3.2.0",
@@ -38,10 +37,10 @@
     "gulp-minify-css": "^0.4.3",
     "gulp-ruby-sass": "^0.7.1",
     "gulp-uglify": "^1.1.0",
-    "gulp-util": "^3.0.2",
+    "gulp-util": "^3.0.3",
     "gulp-webserver": "^0.9.0",
     "karma": "^0.12.31",
-    "karma-bro": "^0.11.1",
+    "karma-browserify": "^3.0.1",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
     "karma-jasmine-ajax": "^0.1.4",
@@ -53,14 +52,14 @@
     "run-sequence": "^1.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.2.1",
+    "watchify": "^2.3.0",
     "wiredep": "^2.2.2"
   },
   "dependencies": {
-    "compression": "^1.3.0",
-    "express": "^4.11.1",
+    "compression": "^1.4.0",
+    "express": "^4.11.2",
     "flux": "^2.0.1",
-    "lscache": "^1.0.2",
+    "lscache": "^1.0.5",
     "mustache": "^1.0.0",
     "react": "^0.12.2",
     "superagent": "^0.21.0"
