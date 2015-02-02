@@ -1,5 +1,5 @@
 
-React       = require 'React'
+React       = require 'react'
 UIConstants = require('../constants/PlannerConstants').ui
 R           = React.DOM
 
