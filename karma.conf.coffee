@@ -73,6 +73,7 @@ module.exports = (config) ->
     singleRun: false
 
     browserify: {
+      bundleDelay: 1000
       extensions: ['.coffee']
       debug: true
       transform: [
