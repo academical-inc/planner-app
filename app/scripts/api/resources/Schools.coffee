@@ -6,7 +6,7 @@ class Schools extends Resource
 
   path: "schools"
 
-  retrieve: @createApiCall
+  retrieve: Resource.createApiCall
     method: "get"
     path: "{id}"
     requiredParams: ["id"]
