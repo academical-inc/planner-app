@@ -6,10 +6,14 @@ request = require './request'
 class Resource
 
   constructor: (@_api)->
-    @basePath = Url.makeUrlInterpolator @_api.getApiField("basePath")
-    @path     = Url.makeUrlInterpolator @path
+    @basePath = Url.makeUrlInterpolator @_api.get("basePath")
+    if @path?
+      @path = Url.makeUrlInterpolator @path
+    else
+      @path = ""
 
-  createApiCall: ({method, path, requiredParams})->
+  @createApiCall: ({method, path, requiredParams})->
+    path ?= ""
     requiredParams ?= []
 
     (args..., cb)->
@@ -19,13 +23,20 @@ class Resource
       [urlArgs..., last] = args
       data = last if last.toString() == '[object Object]'
 
-      urlParams = Url.getUrlParamsObj urlArgs, requiredParams
-      fullUrl   = Url.fullUrl @basePath, @path, path, urlParams
+      urlParams = Url.getUrlParamsObj requiredParams, urlArgs
+      fullUrl   = Url.fullUrl(
+        @_api.get("protocol")
+        @_api.get("host")
+        @basePath
+        @path
+        path
+        urlParams
+      )
 
       request method, fullUrl, Resource._responseParser(cb),
         data: Resource._formatRequestData(data)
-        headers: @_api.getApiField("headers")
-        timeout: @_api.getApiField("timeout")
+        headers: @_api.get("headers")
+        timeout: @_api.get("timeout")
 
   @_responseParser: (cb)->
     (res)->
