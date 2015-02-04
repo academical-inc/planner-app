@@ -1,9 +1,12 @@
 
+resources =
+  Schools:   require './resources/Schools'
+  Students:  require './resources/Students'
+  Schedules: require './resources/Schedules'
 
 class Academical
 
   @DEFAULT_HOST:       'academical-api-staging.herokuapp.co'
-  @DEFAULT_PORT:       '80'
   @DEFAULT_PROTOCOL:   'https'
   @DEFAULT_BASE_PATH:  '/'
   @DEFAULT_TIMEOUT:    120000
@@ -13,11 +16,10 @@ class Academical
 
 
   #TODO should add api key and auth when functionality available
-  constructor: ()->
+  constructor: (resMap = resources)->
     @_api =
       auth:      null
       host:      Academical.DEFAULT_HOST
-      port:      Academical.DEFAULT_PORT
       protocol:  Academical.DEFAULT_PROTOCOL
       basePath:  Academical.DEFAULT_BASE_PATH
       timeout:   Academical.DEFAULT_TIMEOUT
@@ -26,33 +28,34 @@ class Academical
       dev:       false
 
     # Prepping resources
-    @schools   = require './resources/Schools'
-    @students  = require './resources/Students'
-    @schedules = require './resources/Schedules'
+    @_prepResources resMap
 
-
-  getApiField: (field)->
+  get: (field)->
     @_api[field]
 
-  setHost: (host, port, protocol) ->
-    @_setApiField "host", host
-    @setPort port if port
-    return
-
-  setPort: (port)->
-    @_setApiField "port", port
+  setHost: (host, protocol) ->
+    @setProtocol protocol if protocol?
+    @_set "host", host
 
   setProtocol: (protocol)->
-    @_setApiField "protocol", protocol
+    @_set "protocol", protocol
+
+  setBasePath: (basePath)->
+    @_set "basePath", basePath
 
   setHeaders: (headers)->
-    @_setApiField "headers", headers
+    @_set "headers", headers
 
-  setTiemout: (timeout)->
-    @_setApiField "tiemout", tiemout
+  setTimeout: (timeout)->
+    @_set "timeout", timeout
 
-  _setApiField: (field, value)->
+  _set: (field, value)->
     @_api[field] = value
+    return
+
+  _prepResources: (resMap)->
+    for name of resMap
+      @[name.toLowerCase()] = new resMap[name](@)
 
 
 module.exports = Academical
