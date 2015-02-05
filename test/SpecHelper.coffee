@@ -1,6 +1,7 @@
 
 $         = require 'jquery'
 React     = require 'react/addons'
+NodeUrl   = require 'url'
 I18n      = require '../app/scripts/utils/I18n'
 TestUtils = React.addons.TestUtils
 
@@ -31,6 +32,28 @@ class Ajax
       status: code
       contentType: "application/json"
       responseText: JSON.stringify message: msg
+
+  @assertRequest: (method, host, protocol, path, {req, data, headers}={})->
+    req   ?= @mostRecent()
+    method = method.toLowerCase()
+
+    expect(req.method.toLowerCase()).toEqual method
+
+    if headers?
+      reqHds = if req.requestHeaders? then req.requestHeaders else req.header
+      expect(reqHds).toEqual headers
+
+    url = NodeUrl.parse req.url
+    expect(url.host).toEqual       host
+    expect(url.protocol).toEqual   protocol + ":"
+    expect(url.pathname).toEqual   path
+
+    if method == "get"
+      expect(url.query).toEqual $.param(data) if data?
+    else
+      if data?
+        reqData = if req._data? then req._data else req.data()
+        expect(reqData).toEqual data
 
 
 class SpecHelper
