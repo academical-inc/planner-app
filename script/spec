@@ -18,8 +18,8 @@ fs        = require 'fs'
 
 specTemplate = """
 
-H{{{padding}}}= require '../../SpecHelper'
-{{{moduleName}}} = require '../../../app/scripts/{{{modulePath}}}'
+H{{{padding}}}= require '{{{steps}}}/SpecHelper'
+{{{moduleName}}} = require '{{{steps}}}/../app/scripts/{{{modulePath}}}'
 
 
 describe '{{{moduleName}}}', ->
@@ -34,7 +34,7 @@ describe '{{{moduleName}}}', ->
 
 
 main = ->
-  args       = parseArgs process.argv.slice(2)
+  args       = parseArgs process.argv[2..]
   modulePath = args._[0]
   modulePath = modulePath.replace ".coffee", ""
   modulePath = modulePath.replace /\/$/, ""
@@ -43,19 +43,27 @@ main = ->
   pathParts  = modulePath.split("/")
   moduleName = pathParts[pathParts.length-1]
 
-  relativeDirPath = pathParts.slice(0, pathParts.length-1).join "/"
+  relativeDirPath = pathParts[...-1].join "/"
   moduleDir       = "#{__dirname}/../app/scripts/#{relativeDirPath}"
+  testModuleDir   = "#{__dirname}/../test/spec/#{relativeDirPath}"
 
   if not fs.existsSync(moduleDir)
     console.log "Module directory 'app/scripts/#{relativeDirPath}' does not
                 exist"
     process.exit()
 
+  if not fs.existsSync(testModuleDir)
+    console.log "Creating dir 'test/spec/#{relativeDirPath}'"
+    fs.mkdirSync testModuleDir
+
+  steps = (".." for [1..pathParts.length]).join "/"
+
   data =
-    modulePath: modulePath
-    moduleName: moduleName
-    isComponent: pathParts[0] == "components"
-    padding: Array(moduleName.length+1).join " "
+    modulePath:   modulePath
+    moduleName:   moduleName
+    isComponent:  pathParts[0] == "components"
+    padding:      Array(moduleName.length+1).join " "
+    steps:        steps
 
   specPath = "#{__dirname}/../test/spec/#{modulePath}.spec.coffee"
   content  = Mustache.render specTemplate, data
