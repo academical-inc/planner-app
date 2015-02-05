@@ -24,12 +24,12 @@ describe 'request', ->
     expect(req._data).toEqual @data
 
   it 'calls the callback on success', ->
-    req = request "post", "https://host.com", @cb, data: @data
+    req = request "post", "https://host.com", @cb
     H.ajax.succeed success: true
     expect(@cb).toHaveBeenCalled()
 
   it 'calls the callback on failure', ->
-    req = request "post", "https://host.com", @cb, data: @data
+    req = request "post", "https://host.com", @cb
     H.ajax.fail success: false
     expect(@cb).toHaveBeenCalled()
 

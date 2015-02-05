@@ -2,7 +2,7 @@
 superagent = require 'superagent'
 
 
-module.exports = (method, url, cb, {data, headers, timeout})->
+module.exports = (method, url, cb, {data, headers, timeout}={})->
     data    ?= {}
     headers ?= {}
     timeout ?= 0
