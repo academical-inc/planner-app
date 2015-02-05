@@ -3,6 +3,7 @@ H          = require '../../../SpecHelper'
 Schools    = require '../../../../app/scripts/api/resources/Schools'
 Academical = require '../../../../app/scripts/api/Academical'
 
+
 describe 'Schools', ->
 
   beforeEach ->
