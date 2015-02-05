@@ -5,6 +5,41 @@ Url = require '../../../app/scripts/api/Url'
 
 describe 'Url', ->
 
+  describe '.extractUrlArgsAndData', ->
+
+    it 'extracts all urlArgs when only urlArgs provided', ->
+      args = ["arg1", "arg2"]
+      [urlArgs, data] = Url.extractUrlArgsAndData args
+
+      expect(urlArgs).toEqual args
+      expect(data).toBeUndefined()
+
+    it 'extracts data when only data provided', ->
+      argData = {q:1, g:2}
+      args    = [argData]
+      [urlArgs, data] = Url.extractUrlArgsAndData args
+
+      expect(urlArgs).toEqual []
+      expect(data).toEqual argData
+
+    it 'extracts urlArgs and data when both provided', ->
+      argData = {q:1, g:2}
+      args    = ["arg1", "arg2", argData]
+      [urlArgs, data] = Url.extractUrlArgsAndData args
+
+      expect(urlArgs).toEqual ["arg1", "arg2"]
+      expect(data).toEqual argData
+
+    it 'extracts nothing when args are empty', ->
+      [urlArgs, data] = Url.extractUrlArgsAndData()
+      expect(urlArgs).toEqual []
+      expect(data).toBeUndefined()
+
+      [urlArgs, data] = Url.extractUrlArgsAndData []
+      expect(urlArgs).toEqual []
+      expect(data).toBeUndefined()
+
+
   describe '.fullUrl', ->
 
     beforeEach ->
@@ -49,6 +84,10 @@ describe 'Url', ->
       obj = Url.getUrlParamsObj required, values
       expect(obj).toEqual v1: "1", v2: "2", v3: "3"
 
+    it 'returns an empty object when provided empty args', ->
+      obj = Url.getUrlParamsObj [], []
+      expect(obj).toEqual {}
+
     it 'throws error when one of the values is null or undefined', ->
       required = ["v1", "v2", "v3"]
       values   = ["1", null, "3"]
@@ -59,8 +98,8 @@ describe 'Url', ->
       expect(->Url.getUrlParamsObj(required, values)).toThrowError()
 
     it 'throws error when values are missing for requiredKeys', ->
-      required = ["id", "schoolId"]
-      values   = ["544bc"]
+      required = ["id"]
+      values   = []
       expect(->Url.getUrlParamsObj(required, values)).toThrowError()
 
     it 'throws error when there are more values than requiredKeys', ->

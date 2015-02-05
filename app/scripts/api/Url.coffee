@@ -4,6 +4,15 @@ Path = require 'path'
 
 class Url
 
+  @extractUrlArgsAndData: (args=[])->
+    [urlArgs..., last] = args
+    lastArgIsObj       = last? and last.toString() == '[object Object]'
+    if lastArgIsObj
+      data = last
+    else
+      urlArgs.push last if last?
+    [urlArgs, data]
+
   @fullUrl: (protocol, paths..., urlParams)->
     try
       "#{protocol}://" + Path.join.apply(
