@@ -20,8 +20,7 @@ class Resource
       if not (typeof cb == 'function')
         throw new Error("Academical: Must provide a callback")
 
-      [urlArgs..., last] = args
-      data = last if last.toString() == '[object Object]'
+      [urlArgs, data] = Url.extractUrlArgsAndData args
 
       urlParams = Url.getUrlParamsObj requiredParams, urlArgs
       fullUrl   = Url.fullUrl(
