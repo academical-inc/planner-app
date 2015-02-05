@@ -12,5 +12,4 @@ class Schools extends Resource
     requiredParams: ["id"]
 
 
-
 module.exports = Schools
