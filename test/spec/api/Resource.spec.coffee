@@ -8,13 +8,10 @@ describe 'Resource', ->
 
   beforeEach ->
     @api = new Academical {}
-    @api.setBasePath "/"
-    @api.setHeaders  {h1: "h1"}
-    @api.setTimeout  120000
-    @api.setHost     "host.com", "http"
 
+    @basePath        = @api.get "basePath"
     @urlInterpolator = H.spy("urlInterpolator").and.callFake (path)-> path
-    @restore = H.rewire Resource,
+    @restore         = H.rewire Resource,
       "Url.makeUrlInterpolator": @urlInterpolator
 
   afterEach ->
@@ -24,8 +21,8 @@ describe 'Resource', ->
 
     it 'inits base path correctly', ->
       res = new Resource @api
-      expect(@urlInterpolator).toHaveBeenCalledWith "/"
-      expect(res.basePath).toEqual @api.get("basePath")
+      expect(@urlInterpolator).toHaveBeenCalledWith @basePath
+      expect(res.basePath).toEqual @basePath
 
     it 'inits path correctly when provided', ->
       class Res1 extends Resource
