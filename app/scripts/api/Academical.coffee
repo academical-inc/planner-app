@@ -10,10 +10,10 @@ class Academical
   @DEFAULT_PROTOCOL:   'https'
   @DEFAULT_BASE_PATH:  '/'
   @DEFAULT_TIMEOUT:    120000
-  @DEAFULT_HEADERS:
+  @DEFAULT_HEADERS: {
     "Content-Type": "application/json"
     "Accept": "application/json"
-
+  }
 
   #TODO should add api key and auth when functionality available
   constructor: (resMap = resources)->

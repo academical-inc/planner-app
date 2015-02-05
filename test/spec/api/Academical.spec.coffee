@@ -19,3 +19,10 @@ describe 'Academical', ->
       expect(api.res1).toEqual jasmine.any(Res1)
       expect(api.res2).toEqual jasmine.any(Res2)
 
+    it 'assigns defaults correctly', ->
+      api = new Academical {}
+      expect(api.get("host")).toEqual Academical.DEFAULT_HOST
+      expect(api.get("protocol")).toEqual Academical.DEFAULT_PROTOCOL
+      expect(api.get("basePath")).toEqual Academical.DEFAULT_BASE_PATH
+      expect(api.get("timeout")).toEqual Academical.DEFAULT_TIMEOUT
+      expect(api.get("headers")).toEqual Academical.DEFAULT_HEADERS

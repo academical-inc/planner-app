@@ -11,7 +11,7 @@ describe 'Resource', ->
     @api.setBasePath "/"
     @api.setHeaders  {h1: "h1"}
     @api.setTimeout  120000
-    @api.setHost     "host.com", 80, "http"
+    @api.setHost     "host.com", "http"
 
     @urlInterpolator = H.spy("urlInterpolator").and.callFake (path)-> path
     @restore = H.rewire Resource,
