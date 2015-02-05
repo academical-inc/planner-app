@@ -13,7 +13,7 @@ class Resource
       @path = ""
 
   @createApiCall: ({method, path, requiredParams})->
-    path ?= ""
+    path           ?= ""
     requiredParams ?= []
 
     (args..., cb)->

@@ -20,7 +20,7 @@ class Ajax
 
   @succeed: (data, req=@mostRecent(), {code}={})->
     code ?= 200
-    req.response
+    req.respondWith
       status: code
       contentType: "application/json"
       responseText: JSON.stringify data: data
@@ -28,7 +28,7 @@ class Ajax
   @fail: (data, req=@mostRecent(), {code, msg}={})->
     code ?= 404
     msg  ?= "Error"
-    req.response
+    req.respondWith
       status: code
       contentType: "application/json"
       responseText: JSON.stringify message: msg
