@@ -32,8 +32,10 @@ class Resource
         urlParams
       )
 
+      data = Resource._formatRequestData method, data if data?
+
       request method, fullUrl, Resource._responseParser(cb),
-        data: Resource._formatRequestData(data)
+        data: data
         headers: @_api.get("headers")
         timeout: @_api.get("timeout")
 
@@ -41,8 +43,11 @@ class Resource
     (res)->
       cb res.data
 
-  @_formatRequestData: (data)->
-    data: data
+  @_formatRequestData: (method, data)->
+    if method.toLowerCase() != "get"
+      data: data
+    else
+      data
 
 
 module.exports = Resource
