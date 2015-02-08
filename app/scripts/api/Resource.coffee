@@ -1,6 +1,7 @@
 
-Url     = require './Url'
-request = require './request'
+Url      = require './Url'
+ApiError = require './ApiError'
+request  = require './request'
 
 
 class Resource
@@ -34,20 +35,25 @@ class Resource
 
       data = Resource._formatRequestData method, data if data?
 
-      request method, fullUrl, Resource._responseParser(cb),
+      request method, fullUrl, Resource._responseHandler(cb),
         data: data
         headers: @_api.get("headers")
         timeout: @_api.get("timeout")
-
-  @_responseParser: (cb)->
-    (res)->
-      cb res.data
 
   @_formatRequestData: (method, data)->
     if method.toLowerCase() != "get"
       data: data
     else
       data
+
+  @_responseHandler: (cb)->
+    (error, res)->
+      if error?
+        throw new ApiError error.message
+      else if res.error? and res.error # res.error is not null and not false
+        throw new ApiError res.error.message, res.status, res.body.message
+      else
+        cb res.body.data
 
 
 module.exports = Resource
