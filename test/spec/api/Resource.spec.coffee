@@ -1,6 +1,7 @@
 
 H          = require '../../SpecHelper'
 Resource   = require '../../../app/scripts/api/Resource'
+ApiError   = require '../../../app/scripts/api/ApiError'
 Academical = require '../../../app/scripts/api/Academical'
 
 
@@ -38,14 +39,29 @@ describe 'Resource', ->
       expect(res.path).toEqual ""
 
 
-  describe '._responseParser', ->
+  describe '._responseHandler', ->
 
-    it 'returns tha correct parser for json data', ->
-      response = data: {f1: 1, f2: 2}, success: true
-      cb       = H.spy "cb"
-      parser   = Resource._responseParser cb
-      parser response
-      expect(cb).toHaveBeenCalledWith(f1: 1, f2: 2)
+    beforeEach ->
+      @cb       = H.spy "cb"
+      @handler  = Resource._responseHandler @cb
+
+    it 'passes correct data to callback when request succeeds', ->
+      response = body: {data: {f1: 1, f2: 2}, success: true}
+      @handler null, response
+      expect(@cb).toHaveBeenCalledWith(f1: 1, f2: 2)
+
+    it 'throws correct error when a connection error occurs', ->
+      err = message: "Some connection error"
+      expect(@handler.bind(null, err)).toThrowError ApiError, "Connection Error
+      - Some connection error"
+
+    it 'throws correct error when api error in response occurs', ->
+      response =
+        error: message: "Incorrect!"
+        status: 503
+        body: {message: "Wrong", success: false}
+      expect(@handler.bind(null, null, response)).toThrowError ApiError,\
+        "API Error - Incorrect!\nResponse Status: 503\nAPI Message: Wrong"
 
 
   describe '._formatRequestData', ->
@@ -62,17 +78,88 @@ describe 'Resource', ->
       expect(result).toEqual @reqData
 
 
-  xdescribe '@createApiCall', ->
+  describe '@createApiCall', ->
 
     beforeEach ->
+      H.ajax.install()
       @api = new Academical {}
       @res = new Resource @api
-
-      callSpec =
+      @cb = H.spy "cb"
+      @res.call = Resource.createApiCall
         method: "get"
         path: "call/path/{p1}"
         requiredParams: ["p1"]
-      @res.call = Resource.createApiCall callSpec
 
-    it "creates correct api call when", ->
+    afterEach ->
+      H.ajax.uninstall()
+
+    it 'throws error when callback not provided', ->
+      @res.call = Resource.createApiCall method: "get"
+      expect(->@res.call()).toThrowError()
+
+    it 'throws error when request fails', ->
+      try
+        @res.call "param1", @cb
+        H.ajax.fail 500, "Oops!"
+      catch e
+        expect(e).toEqual H.any(ApiError)
+        expect(e.apiMsg).toEqual "Oops!"
+
+    describe 'when sending a "get" request', ->
+
+      it 'sends correct request, query string data and calls callback', ->
+        @res.call "param1", {count: true}, @cb
+        H.ajax.assertRequest(
+          "get"
+          @api.get "host"
+          @api.get "protocol"
+          "/call/path/param1"
+          data:
+            count: true
+        )
+        H.ajax.succeed f1: 1, f2: 2
+        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+
+      it 'sends correct request without data and calls callback', ->
+        @res.call "param1", @cb
+        H.ajax.assertRequest(
+          "get"
+          @api.get "host"
+          @api.get "protocol"
+          "/call/path/param1"
+        )
+        H.ajax.succeed f1: 1, f2: 2
+        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+
+    describe 'when sending a request different from "get"', ->
+
+      beforeEach ->
+        @res.call = Resource.createApiCall
+          method: "post"
+          path: "call/path/{p1}"
+          requiredParams: ["p1"]
+
+      it 'sends correct request, data in body and calls callback', ->
+        @res.call "param1", {count: true}, @cb
+        H.ajax.assertRequest(
+          "post"
+          @api.get "host"
+          @api.get "protocol"
+          "/call/path/param1"
+          data:
+            count: true
+        )
+        H.ajax.succeed f1: 1, f2: 2
+        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+
+      it 'sends correct request without data and calls callback', ->
+        @res.call "param1", @cb
+        H.ajax.assertRequest(
+          "post"
+          @api.get "host"
+          @api.get "protocol"
+          "/call/path/param1"
+        )
+        H.ajax.succeed f1: 1, f2: 2
+        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
 
