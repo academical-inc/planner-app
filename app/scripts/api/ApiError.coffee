@@ -2,13 +2,14 @@
 
 class ApiError extends Error
 
-  constructor: (msg, @statusCode, @apiMsg, @name='ApiError')->
+  constructor: (msg, @statusCode, @apiMsg, @name='AcademicalApiError')->
     @message = if @statusCode? and @apiMsg?
-      "Academical API Error: #{msg}\nResponse Status: #{@status}\n
-        API Message: #{@apiMsg}"
+      "API Error - #{msg}\nResponse Status: #{@statusCode}\n" +
+      "API Message: #{@apiMsg}"
     else
-      "Academical Connection Error: #{msg}"
+      "Connection Error - #{msg}"
 
     Error.captureStackTrace @, @
+
 
 module.exports = ApiError
