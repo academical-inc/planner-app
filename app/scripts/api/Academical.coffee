@@ -6,7 +6,7 @@ resources =
 
 class Academical
 
-  @DEFAULT_HOST:       'academical-api-staging.herokuapp.co'
+  @DEFAULT_HOST:       'academical-api-staging.herokuapp.com'
   @DEFAULT_PROTOCOL:   'https'
   @DEFAULT_BASE_PATH:  '/'
   @DEFAULT_TIMEOUT:    120000
