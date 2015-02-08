@@ -16,8 +16,8 @@ describe 'Academical', ->
       api = new Academical(resMap)
       expect(Res1).toHaveBeenCalledWith api
       expect(Res2).toHaveBeenCalledWith api
-      expect(api.res1).toEqual jasmine.any(Res1)
-      expect(api.res2).toEqual jasmine.any(Res2)
+      expect(api.res1).toEqual H.any(Res1)
+      expect(api.res2).toEqual H.any(Res2)
 
     it 'assigns defaults correctly', ->
       api = new Academical {}

@@ -30,6 +30,6 @@ describe 'request', ->
 
   it 'calls the callback on failure', ->
     req = request "post", "https://host.com", @cb
-    H.ajax.fail success: false
+    H.ajax.fail()
     expect(@cb).toHaveBeenCalled()
 

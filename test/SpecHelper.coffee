@@ -18,16 +18,13 @@ class Ajax
   @mostRecent: ->
     jasmine.Ajax.requests.mostRecent()
 
-  @succeed: (data, req=@mostRecent(), {code}={})->
-    code ?= 200
+  @succeed: (data, code=200, req=@mostRecent())->
     req.respondWith
       status: code
       contentType: "application/json"
       responseText: JSON.stringify data: data
 
-  @fail: (data, req=@mostRecent(), {code, msg}={})->
-    code ?= 404
-    msg  ?= "Error"
+  @fail: (code=404, msg="Error", req=@mostRecent())->
     req.respondWith
       status: code
       contentType: "application/json"
@@ -49,11 +46,16 @@ class Ajax
     expect(url.pathname).toEqual   path
 
     if method == "get"
-      expect(url.query).toEqual $.param(data) if data?
-    else
       if data?
-        reqData = if req._data? then req._data else req.data()
-        expect(reqData).toEqual data
+        expect(url.query).toEqual $.param(data)
+      else
+        expect(url.query).toBeNull()
+    else
+      reqData = if req._data? then req._data else req.data()
+      if data?
+        expect(reqData).toEqual data: data
+      else
+        expect(reqData).toEqual {}
 
 
 class SpecHelper
@@ -79,6 +81,8 @@ class SpecHelper
     @spyObj "mockCurrentSchool", {currentSchool: currentSchool}
 
   @spyOn: spyOn
+
+  @any: jasmine.any
 
   @spy: (name, {retVal}={})->
     jasmine.createSpy(name).and.returnValue retVal
