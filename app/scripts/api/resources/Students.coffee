@@ -11,5 +11,10 @@ class Students extends Resource
     path: "{id}"
     requiredParams: ["id"]
 
+  listSchedules: Resource.createApiCall
+    method: "get"
+    path: "{id}/schedules"
+    requiredParams: ["id"]
+
 
 module.exports = Students
