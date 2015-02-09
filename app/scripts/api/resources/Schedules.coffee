@@ -7,7 +7,7 @@ class Schedules extends Resource
   path: "schedules"
 
   create: Resource.createApiCall
-    method: "get"
+    method: "post"
 
   update: Resource.createApiCall
     method: "put"

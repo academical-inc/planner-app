@@ -10,7 +10,6 @@ describe 'Students', ->
     @api      = new Academical {}
     @students = new Students @api
     @cb       = H.spy "cb"
-
     H.ajax.install()
 
   afterEach ->
@@ -35,4 +34,15 @@ describe 'Students', ->
         @api.get "protocol"
         "/students/12345"
         data: {count: true}
+      )
+
+  describe '#listSchedules', ->
+
+    it 'sends the correct request', ->
+      @students.listSchedules "12345", @cb
+      H.ajax.assertRequest(
+        "get"
+        @api.get "host"
+        @api.get "protocol"
+        "/students/12345/schedules"
       )
