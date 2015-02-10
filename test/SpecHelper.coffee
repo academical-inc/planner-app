@@ -2,6 +2,7 @@
 $         = require 'jquery'
 React     = require 'react/addons'
 NodeUrl   = require 'url'
+Humps     = require 'humps'
 I18n      = require '../app/scripts/utils/I18n'
 TestUtils = React.addons.TestUtils
 
@@ -47,13 +48,15 @@ class Ajax
 
     if method == "get"
       if data?
-        expect(url.query).toEqual $.param(data)
+        data = Humps.decamelizeKeys data
+        expect(url.query).toEqual $.param(data) + "&camelize=true"
       else
         expect(url.query).toBeNull()
     else
       reqData = if req._data? then req._data else req.data()
       if data?
-        expect(reqData).toEqual data: data
+        data = Humps.decamelizeKeys data
+        expect(reqData).toEqual data: data, camelize: true
       else
         expect(reqData).toEqual {}
 
