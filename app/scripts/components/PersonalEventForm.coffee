@@ -4,7 +4,7 @@ $           = require 'jquery'
 ModalMixin  = require '../mixins/ModalMixin'
 I18nMixin   = require '../mixins/I18nMixin'
 DateUtils   = require '../utils/DateUtils'
-UIConstants = require('../constants/PlannerConstants').ui
+UIConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 

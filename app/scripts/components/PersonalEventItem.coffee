@@ -1,7 +1,7 @@
 
 React        = require 'react'
 ItemMixin    = require '../mixins/ItemMixin'
-UIConstants  = require('../constants/PlannerConstants').ui
+UIConstants  = require('../constants/PlannerConstants').Ui
 ColorPicker  = React.createFactory require './ColorPicker'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM

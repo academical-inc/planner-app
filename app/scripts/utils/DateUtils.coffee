@@ -1,5 +1,5 @@
 
-UIConstants = require('../constants/PlannerConstants').ui
+UIConstants = require('../constants/PlannerConstants').Ui
 
 class DateUtils
 

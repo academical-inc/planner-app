@@ -1,6 +1,6 @@
 
 React       = require 'react'
-UIConstants = require('../constants/PlannerConstants').ui
+UIConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 
@@ -19,5 +19,6 @@ ColorPalette = React.createClass(
        ) for color in colors)
 
 )
+
 
 module.exports = ColorPalette

@@ -1,7 +1,7 @@
 
 React       = require 'react'
 $           = require 'jquery'
-UIConstants = require('../constants/PlannerConstants').ui
+UIConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 module.exports =

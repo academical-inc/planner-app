@@ -1,7 +1,7 @@
 
 React       = require 'react/addons'
 I18nMixin   = require '../mixins/I18nMixin'
-UIConstants = require('../constants/PlannerConstants').ui
+UIConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 MAX_INPUT_LENGTH = UIConstants.dropdown.MAX_INPUT_LENGTH

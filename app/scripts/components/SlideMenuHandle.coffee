@@ -1,7 +1,7 @@
 
 $           = require 'jquery'
 React       = require 'react/addons'
-UIConstants = require('../constants/PlannerConstants').ui
+UIConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 SlideMenuHandle = React.createClass(
