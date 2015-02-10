@@ -1,6 +1,6 @@
 
-H         = require '../../../SpecHelper'
-Schedules = require '../../../../app/scripts/api/resources/Schedules'
+H          = require '../../../SpecHelper'
+Schedules  = require '../../../../app/scripts/api/resources/Schedules'
 Academical = require '../../../../app/scripts/api/Academical'
 
 
@@ -14,6 +14,7 @@ describe 'Schedules', ->
 
   afterEach ->
     H.ajax.uninstall()
+
 
   describe 'create', ->
 
