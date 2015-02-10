@@ -2,7 +2,7 @@
 React             = require 'react'
 $                 = require 'jquery'
 MediaQueries      = require '../utils/MediaQueries.coffee'
-UIConstants       = require('../constants/PlannerConstants').ui
+UIConstants       = require('../constants/PlannerConstants').Ui
 I18nMixin         = require '../mixins/I18nMixin'
 ScheduleListStore = require '../stores/ScheduleListStore'
 Dropdown          = React.createFactory require './Dropdown'

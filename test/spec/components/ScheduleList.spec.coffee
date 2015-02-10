@@ -2,6 +2,7 @@
 H            = require '../../SpecHelper.coffee'
 ScheduleList = require '../../../app/scripts/components/ScheduleList'
 
+
 describe "ScheduleList", ->
 
   describe "#componentDidMount", ->
