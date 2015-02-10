@@ -1,4 +1,5 @@
 
+Humps    = require 'humps'
 Url      = require './Url'
 ApiError = require './ApiError'
 request  = require './request'
@@ -41,10 +42,12 @@ class Resource
         timeout: @_api.get("timeout")
 
   @_formatRequestData: (method, data)->
-    if method.toLowerCase() != "get"
+    formatted = if method.toLowerCase() != "get"
       data: data
     else
       data
+    formatted.camelize = true
+    Humps.decamelizeKeys formatted
 
   @_responseHandler: (cb)->
     (error, res)->

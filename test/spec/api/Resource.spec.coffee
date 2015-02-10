@@ -67,15 +67,16 @@ describe 'Resource', ->
   describe '._formatRequestData', ->
 
     beforeEach ->
-      @reqData = f1: 1, f2: 2
+      @reqData = fieldOne: 1, fieldTwo: 2
 
-    it 'wraps request data with "data" key when method is not "get"', ->
+    it 'returns correct request data when not "GETing"', ->
       result  = Resource._formatRequestData "post", @reqData
-      expect(result).toEqual data: @reqData
+      expect(result).toEqual data: {field_one: 1, field_two: 2}, camelize: true
 
-    it 'returns data as is when method is "get"', ->
+    it 'returns correct request data when  "GETing"', ->
       result  = Resource._formatRequestData "get", @reqData
-      expect(result).toEqual @reqData
+      @reqData.camelize = true
+      expect(result).toEqual {field_one: 1, field_two: 2, camelize: true}
 
 
   describe '@createApiCall', ->
@@ -114,8 +115,7 @@ describe 'Resource', ->
           @api.get "host"
           @api.get "protocol"
           "/call/path/param1"
-          data:
-            count: true
+          data: {count: true}
         )
         H.ajax.succeed f1: 1, f2: 2
         expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
@@ -146,8 +146,7 @@ describe 'Resource', ->
           @api.get "host"
           @api.get "protocol"
           "/call/path/param1"
-          data:
-            count: true
+          data: {count: true}
         )
         H.ajax.succeed f1: 1, f2: 2
         expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
