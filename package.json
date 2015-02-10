@@ -59,6 +59,7 @@
     "compression": "^1.4.0",
     "express": "^4.11.2",
     "flux": "^2.0.1",
+    "humps": "^0.4.2",
     "lscache": "^1.0.5",
     "mustache": "^1.0.0",
     "react": "^0.12.2",
