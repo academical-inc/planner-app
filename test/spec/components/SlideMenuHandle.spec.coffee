@@ -19,7 +19,7 @@ describe "SlideMenuHandle", ->
       [mock$, mock$El] = H.mock$()
       restore = H.rewire SlideMenuHandle,
         $: mock$
-        UIConstants:
+        UiConstants:
           selectors: SCHEDULE_LIST: "selector"
 
       slideMenu = H.render SlideMenuHandle

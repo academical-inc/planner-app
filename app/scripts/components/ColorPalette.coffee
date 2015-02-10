@@ -1,13 +1,13 @@
 
 React       = require 'react'
-UIConstants = require('../constants/PlannerConstants').Ui
+UiConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 
 ColorPalette = React.createClass(
 
   render: ->
-    colors = UIConstants.colors
+    colors = UiConstants.colors
 
     R.div className: "pla-color-palette collapse", id: @props.id,
       (R.div(

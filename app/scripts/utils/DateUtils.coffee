@@ -1,5 +1,5 @@
 
-UIConstants = require('../constants/PlannerConstants').Ui
+UiConstants = require('../constants/PlannerConstants').Ui
 
 class DateUtils
 
@@ -7,7 +7,7 @@ class DateUtils
     new Date()
 
   @getDayForDate: (date)->
-    days = UIConstants.days
+    days = UiConstants.days
 
     # Assumes days array starts with monday
     l = days.length

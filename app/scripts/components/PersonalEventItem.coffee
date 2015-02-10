@@ -1,7 +1,7 @@
 
 React        = require 'react'
 ItemMixin    = require '../mixins/ItemMixin'
-UIConstants  = require('../constants/PlannerConstants').Ui
+UiConstants  = require('../constants/PlannerConstants').Ui
 ColorPicker  = React.createFactory require './ColorPicker'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
@@ -14,7 +14,7 @@ PersonalEventItem = React.createClass(
     @props.item
 
   getColor: ->
-    colors = UIConstants.colors
+    colors = UiConstants.colors
     @state.color || colors[Math.floor(Math.random() * colors.length)]
 
   render: ->

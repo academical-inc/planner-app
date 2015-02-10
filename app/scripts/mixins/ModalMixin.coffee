@@ -1,7 +1,7 @@
 
 React       = require 'react'
 $           = require 'jquery'
-UIConstants = require('../constants/PlannerConstants').Ui
+UiConstants = require('../constants/PlannerConstants').Ui
 R           = React.DOM
 
 module.exports =
@@ -61,7 +61,7 @@ module.exports =
         R.div className: "modal-content",
           R.div className: "modal-header",
             R.button className: "close", "data-dismiss": "modal",
-              R.span "aria-hidden": true, UIConstants.htmlEntities.TIMES
+              R.span "aria-hidden": true, UiConstants.htmlEntities.TIMES
               R.span className: "sr-only", "Close"
             R.h4 className: "modal-title", id: labelId, header
           R.div className: "modal-body", body

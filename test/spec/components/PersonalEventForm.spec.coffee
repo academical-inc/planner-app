@@ -112,7 +112,7 @@ describe "PersonalEventForm", ->
       }
       @days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
       @restore = H.rewire PersonalEventForm,\
-        UIConstants:
+        UiConstants:
           days: @days
           ids: PERSONAL_EVENT_MODAL: "modal-id"
 
