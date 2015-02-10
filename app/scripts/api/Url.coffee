@@ -70,7 +70,9 @@ class Url
     (str) ->
       new Function('o', 'return "' + str.replace(/["\n\r\u2028\u2029]/g, ($0) ->
         rc[$0]
-      ).replace(/\{([\s\S]+?)\}/g, '" + encodeURIComponent(o["$1"]) + "') + '";')
+      ).replace(
+        /\{([\s\S]+?)\}/g, '" + encodeURIComponent(o["$1"]) + "') + '";'
+      )
 
 
 module.exports = Url
