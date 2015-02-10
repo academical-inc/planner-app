@@ -80,30 +80,31 @@ gulp.task 'scripts', ['lint'], ->
   bundle bundler()
 
 gulp.task 'styles', ->
-  gulp.src paths.main.style, cwd: base.app
-    .pipe $.rubySass(
-      style: 'expanded'
+  $.rubySass(base.app + "/" + paths.main.style[0],
+      style: 'compact'
       loadPath: ['bower_components']
       bundleExec: true
+      sourcemap: true
     )
     .on 'error', $.util.log.bind($.util, "Sass Error")
-    .pipe $.autoprefixer('last 2 version')
+    .pipe $.autoprefixer()
+    .pipe $.if((not config.production), $.sourcemaps.write())
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
 
 gulp.task 'vendor', ->
-  jsDeps = wiredep()
+  jsDeps = wiredep().js
 
   cssDeps = wiredep(
     exclude: ['bootstrap-sass-official', 'font-awesome']
-  )
+  ).css
 
-  jsStream = gulp.src jsDeps.js
+  jsStream = gulp.src jsDeps
     .pipe $.concat('vendor.js')
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
-  cssStream = gulp.src cssDeps.css
+  cssStream = gulp.src cssDeps
     .pipe $.concat('vendor.css')
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
@@ -112,7 +113,7 @@ gulp.task 'vendor', ->
 
 gulp.task 'fonts', ->
   gulp.src bowerFiles()
-    .pipe $.filter('**/*.{eot,svg,ttf,woff}')
+    .pipe $.filter('**/*.{eot,svg,ttf,woff,woff2}')
     .pipe $.flatten()
     .pipe gulp.dest("#{base.dist}/styles/fonts")
 
