@@ -16,6 +16,7 @@ describe 'Schools', ->
   afterEach ->
     H.ajax.uninstall()
 
+
   describe '#retrieve', ->
 
     it 'sends the correct request', ->

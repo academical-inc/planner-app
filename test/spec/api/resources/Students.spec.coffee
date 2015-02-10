@@ -15,6 +15,7 @@ describe 'Students', ->
   afterEach ->
     H.ajax.uninstall()
 
+
   describe '#retrieve', ->
 
     it 'sends the correct request', ->
@@ -35,6 +36,7 @@ describe 'Students', ->
         "/students/12345"
         data: {count: true}
       )
+
 
   describe '#listSchedules', ->
 
