@@ -145,6 +145,7 @@ gulp.task 'serve', ->
       livereload: true
       port: 9000
       host: "0.0.0.0"
+      fallback: 'index.html'
     )
 
 gulp.task 'watch', ['serve'], ->
