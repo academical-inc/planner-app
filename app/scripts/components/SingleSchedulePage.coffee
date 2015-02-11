@@ -6,7 +6,7 @@ R     = React.DOM
 SingleSchedulePage = React.createClass(
 
   render: ->
-    R.div null, "Single Schedule!"
+    R.div null, "Single Schedule #{@props.scheduleId}!!"
 
 )
 

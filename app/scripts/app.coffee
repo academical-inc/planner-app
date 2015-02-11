@@ -16,13 +16,13 @@ Page '/', ->
   )
 
 
-Page '/schedules/:schedule_id', ->
+Page '/schedules/:scheduleId', (ctx)->
   SingleSchedulePage = React.createFactory(
     require './components/SingleSchedulePage'
   )
 
   React.render(
-    SingleSchedulePage({})
+    SingleSchedulePage scheduleId: ctx.params.scheduleId
     document.body
   )
 
