@@ -20,5 +20,4 @@ ColorPalette = React.createClass(
 
 )
 
-
 module.exports = ColorPalette
