@@ -8,8 +8,9 @@ I18n.init()
 
 
 Page '/', ->
-  PlannerApp = React.createFactory require './components/PlannerApp'
+  ApiUtils.getAllSchedules()
 
+  PlannerApp = React.createFactory require './components/PlannerApp'
   React.render(
     PlannerApp({})
     document.body
