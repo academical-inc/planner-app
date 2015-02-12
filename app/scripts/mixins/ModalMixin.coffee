@@ -1,8 +1,8 @@
 
-React       = require 'react'
-$           = require 'jquery'
-UiConstants = require('../constants/PlannerConstants').Ui
-R           = React.DOM
+React         = require 'react'
+$             = require 'jquery'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 module.exports =
 

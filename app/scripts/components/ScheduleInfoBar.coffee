@@ -2,7 +2,7 @@
 React             = require 'react'
 $                 = require 'jquery'
 I18nMixin         = require '../mixins/I18nMixin'
-UiConstants       = require('../constants/PlannerConstants').Ui
+{UiConstants}     = require '../constants/PlannerConstants'
 PanelItemList     = React.createFactory require './PanelItemList'
 SectionItem       = React.createFactory require './SectionItem'
 PersonalEventItem = React.createFactory require './PersonalEventItem'

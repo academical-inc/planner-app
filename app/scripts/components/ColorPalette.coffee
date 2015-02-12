@@ -1,7 +1,7 @@
 
-React       = require 'react'
-UiConstants = require('../constants/PlannerConstants').Ui
-R           = React.DOM
+React         = require 'react'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 
 ColorPalette = React.createClass(

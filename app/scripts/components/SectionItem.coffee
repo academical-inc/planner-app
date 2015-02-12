@@ -1,11 +1,11 @@
 
-React        = require 'react'
-I18nMixin    = require '../mixins/I18nMixin'
-ItemMixin    = require '../mixins/ItemMixin'
-UiConstants  = require('../constants/PlannerConstants').Ui
-ColorPicker  = React.createFactory require './ColorPicker'
-ColorPalette = React.createFactory require './ColorPalette'
-R            = React.DOM
+React         = require 'react'
+I18nMixin     = require '../mixins/I18nMixin'
+ItemMixin     = require '../mixins/ItemMixin'
+{UiConstants} = require '../constants/PlannerConstants'
+ColorPicker   = React.createFactory require './ColorPicker'
+ColorPalette  = React.createFactory require './ColorPalette'
+R             = React.DOM
 
 
 SectionItem = React.createClass(

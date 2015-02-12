@@ -1,5 +1,5 @@
 
-UiConstants = require('../constants/PlannerConstants').Ui
+{UiConstants} = require '../constants/PlannerConstants'
 
 
 class MediaQueries

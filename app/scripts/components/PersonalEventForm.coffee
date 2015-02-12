@@ -1,11 +1,11 @@
 
-React       = require 'react'
-$           = require 'jquery'
-ModalMixin  = require '../mixins/ModalMixin'
-I18nMixin   = require '../mixins/I18nMixin'
-DateUtils   = require '../utils/DateUtils'
-UiConstants = require('../constants/PlannerConstants').Ui
-R           = React.DOM
+React         = require 'react'
+$             = require 'jquery'
+ModalMixin    = require '../mixins/ModalMixin'
+I18nMixin     = require '../mixins/I18nMixin'
+DateUtils     = require '../utils/DateUtils'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 
 PersonalEventForm = React.createClass(
