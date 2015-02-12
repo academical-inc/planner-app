@@ -66,6 +66,7 @@ bundle = (b)->
 
 # Tasks
 gulp.task 'set-development', ->
+  env.APP_ENV       = "development"
   config.production = false
 
 gulp.task 'clean', (cb)->
