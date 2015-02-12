@@ -4,6 +4,7 @@ resources =
   Students:  require './resources/Students'
   Schedules: require './resources/Schedules'
 
+
 class Academical
 
   @DEFAULT_HOST:       'academical-api-staging.herokuapp.com'

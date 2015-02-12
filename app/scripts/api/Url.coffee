@@ -14,8 +14,9 @@ class Url
     [urlArgs, data]
 
   @fullUrl: (protocol, paths..., urlParams)->
+    protocol = if protocol.length > 0 then "#{protocol}://" else "//"
     try
-      "#{protocol}://" + Path.join.apply(
+      protocol + Path.join.apply(
         Path,
         paths.map (path)->
           if typeof path == 'function'

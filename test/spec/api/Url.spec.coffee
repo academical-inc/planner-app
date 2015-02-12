@@ -46,6 +46,16 @@ describe 'Url', ->
       H.spyOn(Url, "makeUrlInterpolator").and.callFake (path)-> ->path
       @protocol = "https"
 
+    it 'returns correct url when protocol is empty', ->
+      p1 = "p1.com"
+      url = Url.fullUrl '', p1, {}
+      expect(url).toEqual "//p1.com"
+
+    it 'returns correct url when protocol is present', ->
+      p1 = "p1.com"
+      url = Url.fullUrl @protocol, p1, {}
+      expect(url).toEqual "https://p1.com"
+
     it 'returns fullUrl correctly when all paths are strings', ->
       [p1, p2, p3, p4] = ["p1.com", "/", "p2", "p3"]
       url = Url.fullUrl @protocol, p1, p2, p3, p4, {}

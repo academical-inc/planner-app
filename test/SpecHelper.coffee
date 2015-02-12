@@ -41,7 +41,12 @@ class Ajax
       reqHds = if req.requestHeaders? then req.requestHeaders else req.header
       expect(reqHds).toEqual headers
 
-    url = NodeUrl.parse req.url
+    url = req.url
+    if protocol.length == 0
+      protocol = "http"
+      url = url[2..] if url.indexOf "//" == 0
+      url = "#{protocol}://#{url}"
+    url = NodeUrl.parse url
     expect(url.host).toEqual       host
     expect(url.protocol).toEqual   protocol + ":"
     expect(url.pathname).toEqual   path
