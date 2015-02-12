@@ -1,21 +1,32 @@
 
-React             = require 'react'
-$                 = require 'jquery'
-MediaQueries      = require '../utils/MediaQueries.coffee'
-UiConstants       = require('../constants/PlannerConstants').Ui
-I18nMixin         = require '../mixins/I18nMixin'
-ScheduleListStore = require '../stores/ScheduleListStore'
-Dropdown          = React.createFactory require './Dropdown'
-ScheduleItem      = React.createFactory require './ScheduleItem'
-R                 = React.DOM
+React         = require 'react'
+$             = require 'jquery'
+{UiConstants} = require '../constants/PlannerConstants'
+MediaQueries  = require '../utils/MediaQueries.coffee'
+I18nMixin     = require '../mixins/I18nMixin'
+ScheduleStore = require '../stores/ScheduleStore'
+Dropdown      = React.createFactory require './Dropdown'
+ScheduleItem  = React.createFactory require './ScheduleItem'
+R             = React.DOM
 
 
 ScheduleList = React.createClass(
 
   mixins: [I18nMixin]
 
+  _getState: ->
+    current = ScheduleStore.getCurrent()
+
+    openSchedule: if current? then current.name else "..."
+    schedules: ScheduleStore.getAll().map (sch)->
+      id: sch.id, val: sch.name
+
+  _onChange: ->
+    console.log "changed!"
+    @setState @_getState()
+
   componentDidMount: ->
-    ScheduleListStore.addChangeListener @onChange
+    ScheduleStore.addChangeListener @_onChange
     if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
         dragOpen:
@@ -24,17 +35,16 @@ ScheduleList = React.createClass(
     return
 
   getInitialState: ->
-    data: [{id: "S1", val: "Schedule 1"}, {id: "S2", val: "Schedule 2"}]
+    @_getState()
 
   render: ->
     Dropdown(
       id: UiConstants.ids.SCHEDULE_LIST
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
-      title: @state.data[0].val
-      items: @state.data
+      title: @state.openSchedule
+      items: @state.schedules
       itemType: ScheduleItem
-      updateNameOnSelect: true
       handleItemAdd: ->
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
     )
