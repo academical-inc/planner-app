@@ -1,11 +1,10 @@
 
 React                = require 'react'
 Bloodhound           = require 'bloodhound'
-TypeaheadSectionItem = require './TypeaheadSectionItem'
+Env                  = require '../Env'
 I18nMixin            = require '../mixins/I18nMixin'
+TypeaheadSectionItem = require './TypeaheadSectionItem'
 R                    = React.DOM
-
-URLS = require('../config').urls
 
 
 SearchBar = React.createClass(
@@ -34,7 +33,7 @@ SearchBar = React.createClass(
     engine = new Bloodhound
       name: 'sections',
       prefetch:
-        url: URLS.SECTIONS_URI
+        url: Env.SECTIONS_URL
         ttl: 1
       limit: 30
       datumTokenizer: @datumTokenizer
