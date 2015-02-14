@@ -78,7 +78,8 @@ module.exports = (config) ->
       debug: true
       transform: [
         'coffeeify'
-        'browserify-shim',
+        'browserify-shim'
+        ['envify', require('./.env.json')]
         ['rewireify', {
             ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee"
           }
