@@ -8,7 +8,7 @@ CHANGE_EVENT = "change"
 class Store extends EventEmitter
 
   constructor: ->
-    PlannerDispatcher.register @dispatchCallback
+    @dispatchToken = PlannerDispatcher.register @dispatchCallback
 
   emitChange: ->
     @emit CHANGE_EVENT
