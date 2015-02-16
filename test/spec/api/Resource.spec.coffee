@@ -39,7 +39,7 @@ fdescribe 'Resource', ->
       expect(res.path).toEqual ""
 
 
-  fdescribe '._responseHandler', ->
+  describe '._responseHandler', ->
 
     beforeEach ->
       @cb       = H.spy "cb"
@@ -104,12 +104,11 @@ fdescribe 'Resource', ->
       expect(->@res.call()).toThrowError()
 
     it 'throws error when request fails', ->
-      try
-        @res.call "param1", @cb
-        H.ajax.fail 500, "Oops!"
-      catch e
-        expect(e).toEqual H.any(ApiError)
-        expect(e.apiMsg).toEqual "Oops!"
+      @res.call "param1", @cb
+      H.ajax.fail 500, "Oops!"
+      expect(@cb).toHaveBeenCalledWith H.any(ApiError), "Oops!"
+      e = @cb.calls.mostRecent().args[0]
+      expect(e.apiMsg).toEqual "Oops!"
 
     describe 'when sending a "get" request', ->
 
@@ -123,7 +122,7 @@ fdescribe 'Resource', ->
           data: {count: true}
         )
         H.ajax.succeed f1: 1, f2: 2
-        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+        expect(@cb).toHaveBeenCalledWith null, f1: 1, f2:2
 
       it 'sends correct request without data and calls callback', ->
         @res.call "param1", @cb
@@ -134,7 +133,7 @@ fdescribe 'Resource', ->
           "/call/path/param1"
         )
         H.ajax.succeed f1: 1, f2: 2
-        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+        expect(@cb).toHaveBeenCalledWith null, f1: 1, f2:2
 
     describe 'when sending a request different from "get"', ->
 
@@ -154,7 +153,7 @@ fdescribe 'Resource', ->
           data: {count: true}
         )
         H.ajax.succeed f1: 1, f2: 2
-        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+        expect(@cb).toHaveBeenCalledWith null, f1: 1, f2:2
 
       it 'sends correct request without data and calls callback', ->
         @res.call "param1", @cb
@@ -165,5 +164,5 @@ fdescribe 'Resource', ->
           "/call/path/param1"
         )
         H.ajax.succeed f1: 1, f2: 2
-        expect(@cb).toHaveBeenCalledWith f1: 1, f2:2
+        expect(@cb).toHaveBeenCalledWith null, f1: 1, f2:2
 
