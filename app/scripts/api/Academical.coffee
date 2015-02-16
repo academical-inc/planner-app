@@ -1,4 +1,6 @@
 
+DataHelpers = require './DataHelpers'
+
 resources =
   Schools:   require './resources/Schools'
   Students:  require './resources/Students'
@@ -30,6 +32,9 @@ class Academical
 
     # Prepping resources
     @_prepResources resMap
+
+    # Resource data helpers
+    @data = DataHelpers
 
   get: (field)->
     @_api[field]
