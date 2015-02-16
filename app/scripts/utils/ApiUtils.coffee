@@ -18,10 +18,21 @@ _currentSchool  =
 class ApiUtils
 
   @init: ->
-    # Should probably init current student and school here
+    # TODO Should probably init current student and school here
     _api.setHost Env.API_HOST, Env.API_PROTOCOL
 
-  @data: _api.data
+  @data:
+    newSchedule: (name, {studentId, schoolId, term}={})->
+      studentId ?= _currentStudent.id
+      schoolId  ?= _currentSchool.id
+      term      ?= _currentSchool.term
+
+      _api.data.newSchedule(
+        name
+        studentId
+        schoolId
+        term
+      )
 
   @api = _api
 
@@ -34,13 +45,8 @@ class ApiUtils
   @getSchedules: (cb, studentId=_currentStudent.id)->
     _api.students.listSchedules studentId, cb
 
-  @createSchedule: (name, cb, {studentId, schoolId, term}={})->
-    studentId ?= _currentStudent.id
-    schoolId  ?= _currentSchool.id
-    term      ?= _currentSchool.term
-
-    newSchedule = ApiUtils.data.newSchedule name, studentId, schoolId, term
-    _api.schedules.create newSchedule, cb
+  @createSchedule: (schedule, cb)->
+    _api.schedules.create schedule, cb
 
 
 module.exports = ApiUtils
