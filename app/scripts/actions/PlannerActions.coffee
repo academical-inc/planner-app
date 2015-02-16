@@ -22,7 +22,7 @@ class PlannerActions
       schedules: schedules
 
   @createSchedule: (scheduleName)->
-    newSchedule = ApiUtils.newSchedule scheduleName
+    newSchedule = ApiUtils.data.newSchedule scheduleName
     PlannerDispatcher.handleViewAction
       type: ActionTypes.CREATE_SCHEDULE
       schedule: newSchedule
