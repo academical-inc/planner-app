@@ -1,4 +1,5 @@
 
+$             = require 'jquery'
 React         = require 'react/addons'
 I18nMixin     = require '../mixins/I18nMixin'
 {UiConstants} = require '../constants/PlannerConstants'
@@ -19,6 +20,7 @@ Dropdown = React.createClass(
     itemName = @refs.itemName.getDOMNode().value.trim()
     @props.handleItemAdd itemName
     @refs.itemName.getDOMNode().value = ''
+    $(@refs.dropdownToggle.getDOMNode()).dropdown "toggle"
 
   handleItemSelected: (item)->
     @props.handleItemSelected item if @props.handleItemSelected?
@@ -91,6 +93,7 @@ Dropdown = React.createClass(
       R.a(
         {
           className: "dropdown-toggle"
+          ref: "dropdownToggle"
           role: "button"
           href: "#"
           "data-toggle": "dropdown"
