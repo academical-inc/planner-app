@@ -1,14 +1,16 @@
 
-Page       = require 'page'
-React      = require 'react'
-I18n       = require './utils/I18n'
-ApiUtils   = require './utils/ApiUtils'
+Page           = require 'page'
+React          = require 'react'
+I18n           = require './utils/I18n'
+ApiUtils       = require './utils/ApiUtils'
+PlannerActions = require './actions/PlannerActions'
 
 I18n.init()
+ApiUtils.init()
 
 
 Page '/', ->
-  ApiUtils.getAllSchedules()
+  PlannerActions.getSchedules()
 
   PlannerApp = React.createFactory require './components/PlannerApp'
   React.render(
