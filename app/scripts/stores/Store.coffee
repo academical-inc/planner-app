@@ -1,10 +1,14 @@
 
-{EventEmitter} = require 'events'
+{EventEmitter}    = require 'events'
+PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 CHANGE_EVENT = "change"
 
 
 class Store extends EventEmitter
+
+  constructor: ->
+    PlannerDispatcher.register @dispatchCallback
 
   emitChange: ->
     @emit CHANGE_EVENT

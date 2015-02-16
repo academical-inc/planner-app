@@ -1,7 +1,6 @@
 
 Store             = require './Store'
 {ActionTypes}     = require '../constants/PlannerConstants'
-PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 
 # Private
@@ -24,17 +23,19 @@ class ScheduleStore extends Store
   getCurrent: ->
     _current
 
+  dispatchCallback: (payload)=>
+    action = payload.action
 
-StoreInstance = new ScheduleStore
+    switch action.type
+      when ActionTypes.CREATE_SCHEDULE
+        _addSchedule action.schedule
+        @emitChange()
+      when ActionTypes.RECEIVE_CREATED_SCHEDULE
+        _updateAddedSchedule action.schedule
+        @emitChange()
+      when ActionTypes.RECEIVE_SCHEDULES
+        _setSchedules action.schedules
+        @emitChange()
 
-StoreInstance.dispatchToken = PlannerDispatcher.register (payload)->
-  action = payload.action
 
-  switch action.type
-    when ActionTypes.RECEIVE_SCHEDULES
-      _addSchedules action.schedules
-      StoreInstance.emitChange()
-    else
-
-
-module.exports = StoreInstance
+module.exports = new ScheduleStore
