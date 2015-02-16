@@ -5,7 +5,7 @@ ApiError   = require '../../../app/scripts/api/ApiError'
 Academical = require '../../../app/scripts/api/Academical'
 
 
-describe 'Resource', ->
+fdescribe 'Resource', ->
 
   describe "#constructor", ->
 
@@ -39,7 +39,7 @@ describe 'Resource', ->
       expect(res.path).toEqual ""
 
 
-  describe '._responseHandler', ->
+  fdescribe '._responseHandler', ->
 
     beforeEach ->
       @cb       = H.spy "cb"
@@ -48,11 +48,13 @@ describe 'Resource', ->
     it 'passes correct data to callback when request succeeds', ->
       response = body: {data: {f1: 1, f2: 2}, success: true}
       @handler null, response
-      expect(@cb).toHaveBeenCalledWith(f1: 1, f2: 2)
+      expect(@cb).toHaveBeenCalledWith null, f1: 1, f2: 2
 
     it 'throws correct error when a connection error occurs', ->
       err = message: "Some connection error"
-      expect(@handler.bind(null, err)).toThrowError ApiError, "Connection Error
+      @handler err, null
+      expect(@cb).toHaveBeenCalledWith H.any(ApiError), null
+      expect(@cb.calls.mostRecent().args[0].message).toEqual "Connection Error
       - Some connection error"
 
     it 'throws correct error when api error in response occurs', ->
@@ -60,8 +62,11 @@ describe 'Resource', ->
         error: message: "Incorrect!"
         status: 503
         body: {message: "Wrong", success: false}
-      expect(@handler.bind(null, null, response)).toThrowError ApiError,\
+      @handler null, response
+      expect(@cb).toHaveBeenCalledWith H.any(ApiError), "Wrong"
+      expect(@cb.calls.mostRecent().args[0].message).toEqual(
         "API Error - Incorrect!\nResponse Status: 503\nAPI Message: Wrong"
+      )
 
 
   describe '._formatRequestData', ->

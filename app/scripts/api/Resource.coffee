@@ -51,12 +51,17 @@ class Resource
 
   @_responseHandler: (cb)->
     (error, res)->
-      if error?
-        throw new ApiError error.message
+      result = null
+      e = if error?
+        new ApiError error.message
       else if res.error? and res.error # res.error is not null and not false
-        throw new ApiError res.error.message, res.status, res.body.message
+        result = res.body.message
+        new ApiError res.error.message, res.status, result
       else
-        cb res.body.data
+        result = res.body.data
+        null
+
+      cb e, result
 
 
 module.exports = Resource
