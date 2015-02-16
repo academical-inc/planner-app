@@ -1,18 +1,37 @@
 
 Store             = require './Store'
+_                 = require '../utils/HelperUtils'
 {ActionTypes}     = require '../constants/PlannerConstants'
 
 
 # Private
-_schedules = []
-_current   = null
+_schedules      = []
+_dirtySchedules = []
+_current        = null
 
 _setCurrent = (idx)->
   _current = _schedules[idx]
 
-_addSchedules = (schedules)->
+_setSchedule = (idx, schedule)->
+  _schedules[idx] = schedule
+
+_setSchedules = (schedules)->
   _schedules  = schedules
   _setCurrent 0
+
+_setDirtySchedule = (name, idx)->
+  _dirtySchedules.push name: name, idx: idx
+
+_addSchedule = (schedule)->
+  idx = _schedules.length
+  _setDirtySchedule schedule.name, idx
+  _schedules.push schedule
+  _setCurrent idx
+
+_updateAddedSchedule = (schedule)->
+  dirty = _.findAndRemove _dirtySchedules, (el)->
+    el.name is schedule.name
+  _setSchedule dirty.idx, schedule
 
 
 class ScheduleStore extends Store
