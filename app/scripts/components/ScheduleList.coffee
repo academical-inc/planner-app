@@ -1,13 +1,14 @@
 
-React         = require 'react'
-$             = require 'jquery'
-{UiConstants} = require '../constants/PlannerConstants'
-MediaQueries  = require '../utils/MediaQueries.coffee'
-I18nMixin     = require '../mixins/I18nMixin'
-ScheduleStore = require '../stores/ScheduleStore'
-Dropdown      = React.createFactory require './Dropdown'
-ScheduleItem  = React.createFactory require './ScheduleItem'
-R             = React.DOM
+React          = require 'react'
+$              = require 'jquery'
+{UiConstants}  = require '../constants/PlannerConstants'
+MediaQueries   = require '../utils/MediaQueries.coffee'
+I18nMixin      = require '../mixins/I18nMixin'
+ScheduleStore  = require '../stores/ScheduleStore'
+PlannerActions = require '../actions/PlannerActions'
+Dropdown       = React.createFactory require './Dropdown'
+ScheduleItem   = React.createFactory require './ScheduleItem'
+R              = React.DOM
 
 
 ScheduleList = React.createClass(
@@ -34,8 +35,14 @@ ScheduleList = React.createClass(
       )
     return
 
+  componentWillUnmount: ->
+    ScheduleStore.removeChangeListener @_onChange
+
   getInitialState: ->
     @_getState()
+
+  addSchedule: (name)->
+    PlannerActions.createSchedule name
 
   render: ->
     Dropdown(
@@ -45,7 +52,7 @@ ScheduleList = React.createClass(
       title: @state.openSchedule
       items: @state.schedules
       itemType: ScheduleItem
-      handleItemAdd: ->
+      handleItemAdd: @addSchedule
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
     )
 
