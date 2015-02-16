@@ -51,15 +51,13 @@ class Resource
 
   @_responseHandler: (cb)->
     (error, res)->
-      result = null
-      e = if error?
-        new ApiError error.message
+      [e, result] = if error?
+        [new ApiError(error.message), null]
       else if res.error? and res.error # res.error is not null and not false
-        result = res.body.message
-        new ApiError res.error.message, res.status, result
+        apiMessage = res.body.message
+        [new ApiError(res.error.message, res.status, apiMessage), apiMessage]
       else
-        result = res.body.data
-        null
+        [null, res.body.data]
 
       cb e, result
 
