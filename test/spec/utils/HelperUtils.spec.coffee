@@ -3,7 +3,7 @@ H = require '../../SpecHelper'
 _ = require '../../../app/scripts/utils/HelperUtils'
 
 
-fdescribe 'HelperUtils', ->
+describe 'HelperUtils', ->
 
   beforeEach ->
     @arr = ["some", 34, 5, {thing: "5"}, 34]
@@ -94,6 +94,5 @@ fdescribe 'HelperUtils', ->
       removed = _.findAndRemove @arr, (datum)-> datum is "poof"
       expect(removed).toBeNull()
       expect(@arr).toEqual ["some", 34, 5, {thing: "5"}, 34]
-
 
 

@@ -5,7 +5,7 @@ ApiError   = require '../../../app/scripts/api/ApiError'
 Academical = require '../../../app/scripts/api/Academical'
 
 
-fdescribe 'Resource', ->
+describe 'Resource', ->
 
   describe "#constructor", ->
 
