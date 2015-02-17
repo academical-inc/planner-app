@@ -4,7 +4,7 @@ ScheduleStore = require '../../../app/scripts/stores/ScheduleStore'
 {ActionTypes} = require '../../../app/scripts/constants/PlannerConstants'
 
 
-fdescribe 'ScheduleStore', ->
+describe 'ScheduleStore', ->
 
   beforeEach ->
     @schedules =
