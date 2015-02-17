@@ -28,6 +28,7 @@ describe 'ScheduleStore', ->
         action:
           type: ActionTypes.RECEIVE_SCHEDULES
 
+    H.spyOn ScheduleStore, "emitChange"
     @dispatch = ScheduleStore.dispatchCallback
     @all      = ScheduleStore.getAll
     @current  = ScheduleStore.getCurrent
