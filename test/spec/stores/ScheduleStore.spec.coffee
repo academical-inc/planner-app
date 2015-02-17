@@ -8,9 +8,13 @@ describe 'ScheduleStore', ->
 
   beforeEach ->
     @schedules =
-      dirty: [
+      toCreate: [
         {name: "Schedule 3"}
         {name: "Schedule 4"}
+      ]
+      dirty: [
+        {name: "Schedule 3", dirty: true}
+        {name: "Schedule 4", dirty: true}
       ]
       clean: [
         {name: "Schedule 1", id: "sch1"}
@@ -21,10 +25,13 @@ describe 'ScheduleStore', ->
       create:
         action:
           type: ActionTypes.CREATE_SCHEDULE
-      receiveSchedule:
+      createSuccess:
         action:
           type: ActionTypes.CREATE_SCHEDULE_SUCCESS
-      receiveAll:
+      createFail:
+        action:
+          type: ActionTypes.CREATE_SCHEDULE_FAIL
+      getAllSuccess:
         action:
           type: ActionTypes.GET_SCHEDULES_SUCCESS
 
@@ -33,10 +40,14 @@ describe 'ScheduleStore', ->
     @all      = ScheduleStore.getAll
     @current  = ScheduleStore.getCurrent
 
-  afterEach ->
     H.rewire ScheduleStore,
       _schedules: []
       _current: null
+
+
+  afterEach ->
+    @restore() if @restore?
+
 
   describe 'init', ->
 
@@ -50,68 +61,143 @@ describe 'ScheduleStore', ->
 
     it 'adds provided schedule to list and assigns current when schedules
     already present', ->
-      restore = H.rewire ScheduleStore, _schedules: @schedules.clean
-      @payloads.create.action.schedule = @schedules.dirty[0]
+      H.rewire ScheduleStore, _schedules: @schedules.clean
+      @payloads.create.action.schedule = @schedules.toCreate[0]
       expect(@all().length).toEqual 2
 
       @dispatch @payloads.create
       expect(@all().length).toEqual 3
-      expect(@all()[2].name).toEqual "Schedule 3"
-      expect(@current().name).toEqual "Schedule 3"
-      restore()
+      expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
+      expect(@current()).toEqual @all()[2]
 
     it 'adds provided schedule to list and assigns current when list empty', ->
-      @payloads.create.action.schedule = @schedules.dirty[0]
+      @payloads.create.action.schedule = @schedules.toCreate[0]
       expect(@all().length).toEqual 0
 
       @dispatch @payloads.create
       expect(@all().length).toEqual 1
-      expect(@all()[0].name).toEqual "Schedule 3"
-      expect(@current().name).toEqual "Schedule 3"
+      expect(@all()[0]).toEqual name: "Schedule 3", dirty: true
+      expect(@current()).toEqual @all()[0]
 
 
-  describe 'when RECEIVE_CREATED_SCHEDULE received', ->
-
-    beforeEach ->
-      @restore = H.rewire ScheduleStore,
-        _schedules: @schedules.clean.concat @schedules.dirty
-
-    afterEach ->
-      @restore()
+  describe 'when CREATE_SCHEDULE_SUCCESS received', ->
 
     it 'updates the schedule provided from the server given the name', ->
-      @payloads.receiveSchedule.action.schedule =
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat @schedules.dirty
+      @payloads.createSuccess.action.schedule =
         name: "Schedule 3"
         id: "sch3"
       expect(@all().length).toEqual 4
-      expect(@all()[2].name).toEqual "Schedule 3"
-      expect(@all()[2].id).toBeUndefined()
+      expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
 
-      @dispatch @payloads.receiveSchedule
+      @dispatch @payloads.createSuccess
       expect(@all().length).toEqual 4
-      expect(@all()[2].name).toEqual "Schedule 3"
-      expect(@all()[2].id).toEqual "sch3"
+      expect(@all()[2]).toEqual name: "Schedule 3", id: "sch3"
+
+    it 'updates the first found schedule with given name', ->
+      H.rewire ScheduleStore,
+        _schedules: [{name: "Same", dirty: true}, {name: "Same", dirty: true}]
+      @payloads.createSuccess.action.schedule =
+        name: "Same"
+        id: "sch1"
+      expect(@all().length).toEqual 2
+
+      @dispatch @payloads.createSuccess
+      expect(@all().length).toEqual 2
+      expect(@all()[0]).toEqual name: "Same", id: "sch1"
+      expect(@all()[1]).toEqual name: "Same", dirty: true
 
     it 'does nothing if schedule to update not found', ->
-      @payloads.receiveSchedule.action.schedule =
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat @schedules.dirty
+      @payloads.createSuccess.action.schedule =
         name: "Poof"
         id: "schpoof"
       expect(@all().length).toEqual 4
       tmp = @all().concat []
 
-      @dispatch @payloads.receiveSchedule
+      @dispatch @payloads.createSuccess
       expect(@all()).toEqual tmp
 
 
-  describe 'when RECEIVE_SCHEDULES received', ->
+  describe 'when CREATE_SCHEDULE_FAIL received', ->
+
+    it 'does nothing whe dirty schedule not found', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat []
+        _current: @schedules.clean[0]
+      @payloads.createSuccess.action.schedule = name: "Poof"
+      tmp = @all().concat []
+      @dispatch @payloads.createSuccess
+      expect(@all()).toEqual tmp
+
+    describe 'when created dirty schedule is current', ->
+
+      it 'removes dirty schedule and assigns current when not the first
+      schedule', ->
+        H.rewire ScheduleStore,
+          _schedules: @schedules.clean.concat @schedules.dirty
+          _current: @schedules.dirty[0]
+        @payloads.createFail.action.schedule = @schedules.toCreate[0]
+        expect(@all().length).toEqual 4
+
+        @dispatch @payloads.createFail
+        expect(@all().length).toEqual 3
+        expect(@all()).toEqual @schedules.clean.concat [@schedules.dirty[1]]
+        expect(@current()).toEqual @all()[1]
+
+      it 'removes dirty schedule and assigns current when first and only
+      schedule', ->
+        H.rewire ScheduleStore,
+          _schedules: [@schedules.dirty[0]]
+          _current: @schedules.dirty[0]
+        @payloads.createFail.action.schedule = @schedules.toCreate[0]
+        expect(@all().length).toEqual 1
+
+        @dispatch @payloads.createFail
+        expect(@all().length).toEqual 0
+        expect(@all()).toEqual []
+        expect(@current()).toBeNull()
+
+      it 'removes dirty schedule and assigns current when first schedule and
+      more than one schedule', ->
+        H.rewire ScheduleStore,
+          _schedules: @schedules.dirty.concat []
+          _current: @schedules.dirty[0]
+        @payloads.createFail.action.schedule = @schedules.dirty[0]
+        expect(@all().length).toEqual 2
+
+        @dispatch @payloads.createFail
+        expect(@all().length).toEqual 1
+        expect(@all()).toEqual [@schedules.dirty[1]]
+        expect(@current()).toEqual @schedules.dirty[1]
+
+
+    describe 'when created dirty schedule is not current', ->
+
+      it 'removes dirty schedule and mantains same current', ->
+        H.rewire ScheduleStore,
+          _schedules: @schedules.clean.concat @schedules.dirty
+          _current: @schedules.clean[0]
+        @payloads.createFail.action.schedule = @schedules.toCreate[0]
+        expect(@all().length).toEqual 4
+        expect(@current()).toEqual @all()[0]
+
+        @dispatch @payloads.createFail
+        expect(@all().length).toEqual 3
+        expect(@all()).toEqual @schedules.clean.concat [@schedules.dirty[1]]
+        expect(@current()).toEqual @all()[0]
+
+
+  describe 'when GET_SCHEDULES_SUCCESS received', ->
 
     it 'sets all schedules correctly and sets current schedule to first', ->
-      @payloads.receiveAll.action.schedules = @schedules.clean
+      @payloads.getAllSuccess.action.schedules = @schedules.clean.concat []
       expect(@all()).toEqual []
       expect(@current()).toBeNull()
-      @dispatch @payloads.receiveAll
+      @dispatch @payloads.getAllSuccess
       expect(@all()).toEqual @schedules.clean
       expect(@current()).toEqual @schedules.clean[0]
-
 
 

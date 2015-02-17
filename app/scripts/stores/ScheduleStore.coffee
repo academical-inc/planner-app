@@ -6,32 +6,48 @@ _                 = require '../utils/HelperUtils'
 
 # Private
 _schedules      = []
-_dirtySchedules = []
 _current        = null
 
-_setCurrent = (idx)->
-  _current = _schedules[idx]
+_setCurrent = (current)->
+  _current = current
 
 _setSchedule = (idx, schedule)->
   _schedules[idx] = schedule
 
 _setSchedules = (schedules)->
-  _schedules  = schedules
-  _setCurrent 0
-
-_addDirtySchedule = (name, idx)->
-  _dirtySchedules.push name: name, idx: idx
+  _schedules = schedules
+  _setCurrent _schedules[0]
 
 _addSchedule = (schedule)->
   idx = _schedules.length
-  _addDirtySchedule schedule.name, idx
+  schedule.dirty = true
   _schedules.push schedule
-  _setCurrent idx
+  _setCurrent _schedules[idx]
 
-_updateAddedSchedule = (schedule)->
-  dirty = _.findAndRemove _dirtySchedules, (el)->
-    el.name is schedule.name
-  _setSchedule dirty.idx, schedule if dirty?
+_removeScheduleAt = (idx)->
+  shouldPass = _schedules.length is 0 or idx >= _schedules.length or idx < 0
+  return if shouldPass
+
+  if _schedules[idx] is _current
+    _current = if _schedules.length is 1   # idx must be 0
+      null
+    else                                   # length > 1
+      if idx is 0
+        _schedules[idx+1]
+      else
+        _schedules[idx-1]
+
+  _.removeAt _schedules, idx
+
+_updateDirtySchedule = (schedule)->
+  [dirty, idx] = _.findWithIdx _schedules, (el)->
+    el.name is schedule.name and el.dirty is true
+  _setSchedule idx, schedule if dirty?
+
+_removeDirtySchedule = (schedule)->
+  [dirty, idx] = _.findWithIdx _schedules, (el)->
+    el.name is schedule.name and el.dirty is true
+  _removeScheduleAt idx if dirty?
 
 
 class ScheduleStore extends Store
@@ -50,7 +66,10 @@ class ScheduleStore extends Store
         _addSchedule action.schedule
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
-        _updateAddedSchedule action.schedule
+        _updateDirtySchedule action.schedule
+        @emitChange()
+      when ActionTypes.CREATE_SCHEDULE_FAIL
+        _removeDirtySchedule action.schedule
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         _setSchedules action.schedules
