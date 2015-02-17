@@ -23,10 +23,10 @@ describe 'ScheduleStore', ->
           type: ActionTypes.CREATE_SCHEDULE
       receiveSchedule:
         action:
-          type: ActionTypes.RECEIVE_CREATED_SCHEDULE
+          type: ActionTypes.CREATE_SCHEDULE_SUCCESS
       receiveAll:
         action:
-          type: ActionTypes.RECEIVE_SCHEDULES
+          type: ActionTypes.GET_SCHEDULES_SUCCESS
 
     H.spyOn ScheduleStore, "emitChange"
     @dispatch = ScheduleStore.dispatchCallback

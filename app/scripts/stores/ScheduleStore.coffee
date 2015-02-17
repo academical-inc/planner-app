@@ -49,10 +49,10 @@ class ScheduleStore extends Store
       when ActionTypes.CREATE_SCHEDULE
         _addSchedule action.schedule
         @emitChange()
-      when ActionTypes.RECEIVE_CREATED_SCHEDULE
+      when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _updateAddedSchedule action.schedule
         @emitChange()
-      when ActionTypes.RECEIVE_SCHEDULES
+      when ActionTypes.GET_SCHEDULES_SUCCESS
         _setSchedules action.schedules
         @emitChange()
 

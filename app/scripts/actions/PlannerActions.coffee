@@ -18,7 +18,7 @@ class PlannerActions
 
   @receiveSchedules: (schedules)->
     PlannerDispatcher.handleServerAction
-      type: ActionTypes.RECEIVE_SCHEDULES
+      type: ActionTypes.GET_SCHEDULES_SUCCESS
       schedules: schedules
 
   @createSchedule: (scheduleName)->
@@ -35,7 +35,7 @@ class PlannerActions
 
   @receiveCreatedSchedule: (schedule)->
     PlannerDispatcher.handleServerAction
-      type: ActionTypes.RECEIVE_CREATED_SCHEDULE
+      type: ActionTypes.CREATE_SCHEDULE_SUCCESS
       schedule: schedule
 
 

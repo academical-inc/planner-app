@@ -8,7 +8,7 @@ module.exports =
   }
   ActionTypes: {
     "GET_SCHEDULES"
+    "GET_SCHEDULES_SUCCESS"
     "CREATE_SCHEDULE"
-    "RECEIVE_CREATED_SCHEDULE"
-    "RECEIVE_SCHEDULES"
+    "CREATE_SCHEDULE_SUCCESS"
   }
