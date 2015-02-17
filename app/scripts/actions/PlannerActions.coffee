@@ -14,12 +14,9 @@ class PlannerActions
       if err?
         # TODO Dispatch something relevant
       else
-        PlannerActions.receiveSchedules schedules
-
-  @receiveSchedules: (schedules)->
-    PlannerDispatcher.handleServerAction
-      type: ActionTypes.GET_SCHEDULES_SUCCESS
-      schedules: schedules
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.GET_SCHEDULES_SUCCESS
+          schedules: schedules
 
   @createSchedule: (scheduleName)->
     newSchedule = ApiUtils.data.newSchedule scheduleName
@@ -29,14 +26,14 @@ class PlannerActions
 
     ApiUtils.createSchedule newSchedule, (err, schedule)->
       if err?
-        # TODO Dispatch something relevant
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.CREATE_SCHEDULE_FAIL
+          schedule: newSchedule
+          error: err
       else
-        PlannerActions.receiveCreatedSchedule schedule
-
-  @receiveCreatedSchedule: (schedule)->
-    PlannerDispatcher.handleServerAction
-      type: ActionTypes.CREATE_SCHEDULE_SUCCESS
-      schedule: schedule
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.CREATE_SCHEDULE_SUCCESS
+          schedule: schedule
 
 
 module.exports = PlannerActions
