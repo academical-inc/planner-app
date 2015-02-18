@@ -40,9 +40,10 @@ _removeScheduleAt = (idx)->
   _.removeAt _schedules, idx
 
 _updateDirtySchedule = (schedule)->
-  [dirty, idx] = _.findWithIdx _schedules, (el)->
-    el.name is schedule.name and el.dirty is true
-  _setSchedule idx, schedule if dirty?
+  [dirty, idx] = _findDirty schedule
+  if dirty?
+    _setCurrent schedule if dirty is _current
+    _setSchedule idx, schedule
 
 _removeDirtySchedule = (schedule)->
   [dirty, idx] = _.findWithIdx _schedules, (el)->

@@ -1,4 +1,5 @@
 
+$             = require 'jquery'
 H             = require '../../SpecHelper'
 ScheduleStore = require '../../../app/scripts/stores/ScheduleStore'
 {ActionTypes} = require '../../../app/scripts/constants/PlannerConstants'
@@ -119,31 +120,56 @@ describe 'ScheduleStore', ->
 
   describe 'when CREATE_SCHEDULE_SUCCESS received', ->
 
-    it 'updates the schedule provided from the server given the name', ->
+    it 'updates the schedule provided from the server given the name, and
+    updates current if schedule to update is current', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat @schedules.dirty
+        _current: @schedules.dirty[0]
       @payloads.createSuccess.action.schedule =
         name: "Schedule 3"
         id: "sch3"
       expect(@all().length).toEqual 4
       expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
+      expect(@current()).toEqual @all()[2]
 
       @dispatch @payloads.createSuccess
       expect(@all().length).toEqual 4
       expect(@all()[2]).toEqual name: "Schedule 3", id: "sch3"
+      expect(@current()).toEqual @all()[2]
+
+    it 'updates the schedule provided from the server given the name, does
+    not update current if schedule to update is not current', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat @schedules.dirty
+        _current: @schedules.clean[0]
+      @payloads.createSuccess.action.schedule =
+        name: "Schedule 3"
+        id: "sch3"
+      expect(@all().length).toEqual 4
+      expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
+      expect(@current()).toEqual @all()[0]
+
+      @dispatch @payloads.createSuccess
+      expect(@all().length).toEqual 4
+      expect(@all()[2]).toEqual name: "Schedule 3", id: "sch3"
+      expect(@current()).toEqual @all()[0]
 
     it 'updates the first found schedule with given name', ->
+      same = name: "Same", dirty: true
       H.rewire ScheduleStore,
-        _schedules: [{name: "Same", dirty: true}, {name: "Same", dirty: true}]
+        _schedules: [same, $.extend(true, {}, same)]
+        _current: same
       @payloads.createSuccess.action.schedule =
         name: "Same"
         id: "sch1"
       expect(@all().length).toEqual 2
+      expect(@current()).toEqual @all()[0]
 
       @dispatch @payloads.createSuccess
       expect(@all().length).toEqual 2
       expect(@all()[0]).toEqual name: "Same", id: "sch1"
       expect(@all()[1]).toEqual name: "Same", dirty: true
+      expect(@current()).toEqual @all()[0]
 
     it 'does nothing if schedule to update not found', ->
       H.rewire ScheduleStore,
