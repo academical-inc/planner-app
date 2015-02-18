@@ -41,5 +41,21 @@ class PlannerActions
           type: ActionTypes.CREATE_SCHEDULE_SUCCESS
           schedule: schedule
 
+  @deleteSchedule: (scheduleId)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.DELETE_SCHEDULE
+      scheduleId: scheduleId
+
+    ApiUtils.deleteSchedule scheduleId, (err, schedule)->
+      if err?
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.DELETE_SCHEDULE_FAIL
+          error: err
+          scheduleId: scheduleId
+      else
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.DELETE_SCHEDULE_SUCCESS
+          scheduleId: scheduleId
+
 
 module.exports = PlannerActions

@@ -48,5 +48,8 @@ class ApiUtils
   @createSchedule: (schedule, cb)->
     _api.schedules.create schedule, cb
 
+  @deleteSchedule: (scheduleId, cb)->
+    _api.schedules.del scheduleId, cb
+
 
 module.exports = ApiUtils
