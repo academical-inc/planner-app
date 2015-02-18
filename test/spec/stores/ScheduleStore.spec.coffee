@@ -22,6 +22,9 @@ describe 'ScheduleStore', ->
       ]
 
     @payloads =
+      open:
+        action:
+          type: ActionTypes.OPEN_SCHEDULE
       create:
         action:
           type: ActionTypes.CREATE_SCHEDULE
@@ -55,6 +58,40 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual []
       expect(@current()).toBeNull()
       expect(ScheduleStore.dispatchToken).toBeDefined()
+
+
+  describe 'when OPEN_SCHEDULE received', ->
+
+    it 'sets current schedule correctly when opening a dirty schedule', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat [@schedules.dirty[0]]
+        _current: @schedules.clean[0]
+      @payloads.open.action.schedule = name: "Schedule 3"
+      expect(@current()).toEqual @all()[0]
+      @dispatch @payloads.open
+      expect(@current()).toEqual @all()[2]
+
+    it 'sets current schedule correctly when dirty and repeated name', ->
+      H.rewire ScheduleStore,
+        _schedules: [
+          @schedules.clean[0]
+          {name: "Same", x: 1}
+          {name: "Same", x: 5}
+        ]
+        _current: @schedules.clean[0]
+      @payloads.open.action.schedule = name: "Same"
+      expect(@current()).toEqual @all()[0]
+      @dispatch @payloads.open
+      expect(@current()).toEqual @all()[1]
+
+    it 'sets current schedule correctly when opening a clean schedule', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat []
+        _current: @schedules.clean[0]
+      @payloads.open.action.schedule = id: "sch2", name: "Schedule 2"
+      expect(@current()).toEqual @all()[0]
+      @dispatch @payloads.open
+      expect(@current()).toEqual @all()[1]
 
 
   describe 'when CREATE_SCHEDULE received', ->
