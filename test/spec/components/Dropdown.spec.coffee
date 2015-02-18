@@ -29,8 +29,9 @@ describe 'Dropdown', ->
   describe '#handleItemSelected', ->
 
     beforeEach ->
-      @item = val: "data"
+      @item    = val: "data"
       @handler = H.spy "handler"
+      @e       = H.spyObj "e", ["preventDefault"]
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
         handleItemSelected: @handler
@@ -39,12 +40,14 @@ describe 'Dropdown', ->
         itemType: H.mockComponent()
 
     it 'calls handler set by parent in the props', ->
-      @dd.handleItemSelected @item
+      @dd.handleItemSelected @e, @item
+      expect(@e.preventDefault).toHaveBeenCalled()
       expect(@handler).toHaveBeenCalledWith @item
 
     it 'does not call handler if not provided', ->
       @dd.props.handleItemSelected = undefined
-      @dd.handleItemSelected @item
+      @dd.handleItemSelected @e, @item
+      expect(@e.preventDefault).toHaveBeenCalled()
       expect(@handler).not.toHaveBeenCalled()
 
 
@@ -85,7 +88,7 @@ describe 'Dropdown', ->
   describe '#getItem', ->
 
     beforeEach ->
-      @factory = H.spy "factory"
+      @factory = H.mockComponent()
       @bindRet = ->
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
@@ -96,14 +99,10 @@ describe 'Dropdown', ->
       @item = {id: "k1", val: "v1"}
 
     it 'returns the correct item component', ->
-      @dd.getItem @item
-      expect(@factory).toHaveBeenCalledWith(
-        key: @item.id
-        item: @item
-        onClick: @bindRet
-        handleItemDelete: @dd.props.handleItemDelete
-      )
-      expect(@dd.handleItemSelected.bind).toHaveBeenCalledWith @dd, @item
+      div = @dd.getItem @item
+      expect(div.key).toEqual @item.id
+      expect(div.props.item).toEqual @item
+      expect(div.props.handleItemDelete).toEqual @dd.props.handleItemDelete
 
 
   describe '#renderItems', ->
