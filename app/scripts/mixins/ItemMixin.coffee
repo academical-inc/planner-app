@@ -6,6 +6,7 @@ R     = React.DOM
 module.exports =
 
   handleItemDelete: (e)->
+    e.preventDefault()
     e.stopPropagation()
     @props.handleItemDelete @props.item
 
