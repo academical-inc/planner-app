@@ -1,4 +1,5 @@
 
+$                 = require 'jquery'
 ApiUtils          = require '../utils/ApiUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
@@ -22,7 +23,7 @@ class PlannerActions
     newSchedule = ApiUtils.data.newSchedule scheduleName
     PlannerDispatcher.handleViewAction
       type: ActionTypes.CREATE_SCHEDULE
-      schedule: newSchedule
+      schedule: $.extend(true, {}, newSchedule)
 
     ApiUtils.createSchedule newSchedule, (err, schedule)->
       if err?
