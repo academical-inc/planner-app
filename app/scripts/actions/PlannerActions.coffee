@@ -7,6 +7,11 @@ PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 class PlannerActions
 
+  @openSchedule: (schedule)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.OPEN_SCHEDULE
+      schedule: schedule
+
   @getSchedules: ->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.GET_SCHEDULES
