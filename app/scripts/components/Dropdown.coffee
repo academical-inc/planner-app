@@ -22,7 +22,8 @@ Dropdown = React.createClass(
     @refs.itemName.getDOMNode().value = ''
     $(@refs.dropdownToggle.getDOMNode()).dropdown "toggle"
 
-  handleItemSelected: (item)->
+  handleItemSelected: (e, item)->
+    e.preventDefault()
     @props.handleItemSelected item if @props.handleItemSelected?
 
   handleInputChange: (e)->
@@ -36,7 +37,8 @@ Dropdown = React.createClass(
     @props.itemType
       key: item.id
       item: item
-      onClick: @handleItemSelected.bind this, item
+      onClick: (e)=>
+        @handleItemSelected e, item
       handleItemDelete: @props.handleItemDelete
 
   renderAddInput: ->

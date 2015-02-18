@@ -17,7 +17,6 @@ ScheduleList = React.createClass(
 
   _getState: ->
     current = ScheduleStore.getCurrent()
-
     openSchedule: if current? then current.name else "..."
     schedules: ScheduleStore.getAll().map (sch)->
       id: sch.id, val: sch.name
@@ -44,6 +43,12 @@ ScheduleList = React.createClass(
   addSchedule: (name)->
     PlannerActions.createSchedule name
 
+  openSchedule: (dropdownItem)->
+    schedule =
+      id: dropdownItem.id
+      name: dropdownItem.val
+    PlannerActions.openSchedule schedule
+
   render: ->
     Dropdown(
       id: UiConstants.ids.SCHEDULE_LIST
@@ -53,6 +58,7 @@ ScheduleList = React.createClass(
       items: @state.schedules
       itemType: ScheduleItem
       handleItemAdd: @addSchedule
+      handleItemSelected: @openSchedule
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
     )
 
