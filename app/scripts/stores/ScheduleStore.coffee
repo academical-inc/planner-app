@@ -49,6 +49,12 @@ _removeDirtySchedule = (schedule)->
     el.name is schedule.name and el.dirty is true
   _removeScheduleAt idx if dirty?
 
+_openSchedule = (schedule)->
+  toOpen = if schedule.id?
+    _.find _schedules, (el)-> el.id is schedule.id
+  else if schedule.name?
+    _.find _schedules, (el)-> el.name is schedule.name
+  _setCurrent toOpen if toOpen?
 
 class ScheduleStore extends Store
 
@@ -62,6 +68,9 @@ class ScheduleStore extends Store
     action = payload.action
 
     switch action.type
+      when ActionTypes.OPEN_SCHEDULE
+        _openSchedule action.schedule
+        @emitChange()
       when ActionTypes.CREATE_SCHEDULE
         _addSchedule action.schedule
         @emitChange()
