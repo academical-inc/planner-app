@@ -15,18 +15,30 @@ ScheduleList = React.createClass(
 
   mixins: [I18nMixin]
 
-  _getState: ->
+  getState: ->
     current = ScheduleStore.getCurrent()
     openSchedule: if current? then current.name else "..."
     schedules: ScheduleStore.getAll().map (sch)->
       id: sch.id, val: sch.name
 
-  _onChange: ->
+  onChange: ->
     console.log "changed!"
-    @setState @_getState()
+    @setState @getState()
+
+  addSchedule: (name)->
+    PlannerActions.createSchedule name
+
+  openSchedule: (scheduleItem)->
+    schedule =
+      id: scheduleItem.id
+      name: scheduleItem.val
+    PlannerActions.openSchedule schedule
+
+  deleteSchedule: (scheduleItem)->
+    PlannerActions.deleteSchedule scheduleItem.id if scheduleItem.id?
 
   componentDidMount: ->
-    ScheduleStore.addChangeListener @_onChange
+    ScheduleStore.addChangeListener @onChange
     if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
         dragOpen:
@@ -35,19 +47,10 @@ ScheduleList = React.createClass(
     return
 
   componentWillUnmount: ->
-    ScheduleStore.removeChangeListener @_onChange
+    ScheduleStore.removeChangeListener @onChange
 
   getInitialState: ->
-    @_getState()
-
-  addSchedule: (name)->
-    PlannerActions.createSchedule name
-
-  openSchedule: (dropdownItem)->
-    schedule =
-      id: dropdownItem.id
-      name: dropdownItem.val
-    PlannerActions.openSchedule schedule
+    @getState()
 
   render: ->
     Dropdown(
@@ -59,6 +62,7 @@ ScheduleList = React.createClass(
       itemType: ScheduleItem
       handleItemAdd: @addSchedule
       handleItemSelected: @openSchedule
+      handleItemDelete: @deleteSchedule
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
     )
 
