@@ -47,6 +47,15 @@ describe 'ScheduleStore', ->
       createFail:
         action:
           type: ActionTypes.CREATE_SCHEDULE_FAIL
+      delete:
+        action:
+          type: ActionTypes.DELETE_SCHEDULE
+      deleteSuccess:
+        action:
+          type: ActionTypes.DELETE_SCHEDULE_SUCCESS
+      deleteFail:
+        action:
+          type: ActionTypes.DELETE_SCHEDULE_FAIL
       getAllSuccess:
         action:
           type: ActionTypes.GET_SCHEDULES_SUCCESS
@@ -247,6 +256,15 @@ describe 'ScheduleStore', ->
         @dispatch @payloads.createFail
         assertAll 3, @all(), @current(),
           @schedules.clean.concat([@schedules.dirty[1]]), @all()[0]
+
+
+  describe 'when DELETE_SCHEDULE received', ->
+
+
+  describe 'when DELETE_SCHEDULE_SUCCESS received', ->
+
+
+  describe 'when DELETE_SCHEDULE_FAIL received', ->
 
 
   describe 'when GET_SCHEDULES_SUCCESS received', ->
