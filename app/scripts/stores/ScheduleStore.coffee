@@ -18,16 +18,13 @@ _setSchedules = (schedules)->
   _schedules = schedules
   _setCurrent _schedules[0]
 
-_addSchedule = (schedule)->
-  idx = _schedules.length
-  schedule.dirty = true
-  _schedules.push schedule
-  _setCurrent _schedules[idx]
+_findDirty = (schedule)->
+  _.findWithIdx _schedules, (el)-> el.name is schedule.name and el.dirty is true
 
-_removeScheduleAt = (idx)->
-  shouldPass = _schedules.length is 0 or idx >= _schedules.length or idx < 0
-  return if shouldPass
+_findToRemove = (id)->
+  _.findWithIdx _schedules, (el)-> el.id is id and el.del is true
 
+_reassignCurrent = (idx)->
   if _schedules[idx] is _current
     _current = if _schedules.length is 1   # idx must be 0
       null
@@ -37,6 +34,16 @@ _removeScheduleAt = (idx)->
       else
         _schedules[idx-1]
 
+_addSchedule = (schedule)->
+  idx = _schedules.length
+  schedule.dirty = true
+  _schedules.push schedule
+  _setCurrent _schedules[idx]
+
+_removeScheduleAt = (idx)->
+  shouldPass = _schedules.length is 0 or idx >= _schedules.length or idx < 0
+  return if shouldPass
+  _reassignCurrent idx
   _.removeAt _schedules, idx
 
 _updateDirtySchedule = (schedule)->
@@ -46,8 +53,7 @@ _updateDirtySchedule = (schedule)->
     _setSchedule idx, schedule
 
 _removeDirtySchedule = (schedule)->
-  [dirty, idx] = _.findWithIdx _schedules, (el)->
-    el.name is schedule.name and el.dirty is true
+  [dirty, idx] = _findDirty schedule
   _removeScheduleAt idx if dirty?
 
 _openSchedule = (schedule)->
@@ -57,10 +63,25 @@ _openSchedule = (schedule)->
     _.find _schedules, (el)-> el.name is schedule.name
   _setCurrent toOpen if toOpen?
 
+_removeSchedule = (id)->
+  [toRemove, idx] = _.findWithIdx _schedules, (el)-> el.id is id
+  if toRemove? and not toRemove.dirty is true
+    _reassignCurrent idx
+    toRemove.del = true
+
+_finallyRemoveSchedule = (id)->
+  [toRemove, idx] = _findToRemove id
+  _removeScheduleAt idx if toRemove?
+
+_revertRemovedSchedule = (id)->
+  [toRemove, idx] = _findToRemove id
+  toRemove.del = undefined if toRemove?
+
+
 class ScheduleStore extends Store
 
   getAll: ->
-    _schedules
+    _.filter _schedules, (schedule)-> not schedule.del is true
 
   getCurrent: ->
     _current
@@ -80,6 +101,15 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_FAIL
         _removeDirtySchedule action.schedule
+        @emitChange()
+      when ActionTypes.DELETE_SCHEDULE
+        _removeSchedule action.scheduleId
+        @emitChange()
+      when ActionTypes.DELETE_SCHEDULE_SUCCESS
+        _finallyRemoveSchedule action.scheduleId
+        @emitChange()
+      when ActionTypes.DELETE_SCHEDULE_FAIL
+        _revertRemovedSchedule action.scheduleId
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         _setSchedules action.schedules
