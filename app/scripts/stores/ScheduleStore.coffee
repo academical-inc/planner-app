@@ -8,23 +8,23 @@ _                 = require '../utils/HelperUtils'
 _schedules      = []
 _current        = null
 
-_setCurrent = (current)->
+setCurrent = (current)->
   _current = current
 
-_setSchedule = (idx, schedule)->
+setSchedule = (idx, schedule)->
   _schedules[idx] = schedule
 
-_setSchedules = (schedules)->
+setSchedules = (schedules)->
   _schedules = schedules
-  _setCurrent _schedules[0]
+  setCurrent _schedules[0]
 
-_findDirty = (schedule)->
+findDirty = (schedule)->
   _.findWithIdx _schedules, (el)-> el.name is schedule.name and el.dirty is true
 
-_findToRemove = (id)->
+findToRemove = (id)->
   _.findWithIdx _schedules, (el)-> el.id is id and el.del is true
 
-_reassignCurrent = (idx)->
+reassignCurrent = (idx)->
   if _schedules[idx] is _current
     _current = if _schedules.length is 1   # idx must be 0
       null
@@ -34,48 +34,49 @@ _reassignCurrent = (idx)->
       else
         _schedules[idx-1]
 
-_addSchedule = (schedule)->
+addSchedule = (schedule)->
   idx = _schedules.length
   schedule.dirty = true
   _schedules.push schedule
-  _setCurrent _schedules[idx]
+  setCurrent _schedules[idx]
 
-_removeScheduleAt = (idx)->
+removeScheduleAt = (idx)->
   shouldPass = _schedules.length is 0 or idx >= _schedules.length or idx < 0
   return if shouldPass
-  _reassignCurrent idx
+  reassignCurrent idx
   _.removeAt _schedules, idx
 
-_updateDirtySchedule = (schedule)->
-  [dirty, idx] = _findDirty schedule
+updateDirtySchedule = (schedule)->
+  [dirty, idx] = findDirty schedule
   if dirty?
-    _setCurrent schedule if dirty is _current
-    _setSchedule idx, schedule
+    setCurrent schedule if dirty is _current
+    setSchedule idx, schedule
 
-_removeDirtySchedule = (schedule)->
-  [dirty, idx] = _findDirty schedule
-  _removeScheduleAt idx if dirty?
+removeDirtySchedule = (schedule)->
+  [dirty, idx] = findDirty schedule
+  removeScheduleAt idx if dirty?
 
-_openSchedule = (schedule)->
+openSchedule = (schedule)->
   toOpen = if schedule.id?
     _.find _schedules, (el)-> el.id is schedule.id
   else if schedule.name?
     _.find _schedules, (el)-> el.name is schedule.name
-  _setCurrent toOpen if toOpen?
+  setCurrent toOpen if toOpen?
 
-_removeSchedule = (id)->
-  [toRemove, idx] = _.findWithIdx _schedules, (el)-> el.id is id
-  if toRemove? and not toRemove.dirty is true
-    _reassignCurrent idx
-    toRemove.del = true
+removeSchedule = (id)->
+  if id?
+    [toRemove, idx] = _.findWithIdx _schedules, (el)-> el.id is id
+    if toRemove? and not toRemove.dirty is true
+      reassignCurrent idx
+      toRemove.del = true
 
-_finallyRemoveSchedule = (id)->
-  [toRemove, idx] = _findToRemove id
-  _removeScheduleAt idx if toRemove?
+finallyRemoveSchedule = (id)->
+  [toRemove, idx] = findToRemove id
+  removeScheduleAt idx if toRemove?
 
-_revertRemovedSchedule = (id)->
-  [toRemove, idx] = _findToRemove id
-  toRemove.del = undefined if toRemove?
+revertRemovedSchedule = (id)->
+  [toRemove, idx] = findToRemove id
+  delete toRemove.del if toRemove?
 
 
 class ScheduleStore extends Store
@@ -91,28 +92,28 @@ class ScheduleStore extends Store
 
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
-        _openSchedule action.schedule
+        openSchedule action.schedule
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE
-        _addSchedule action.schedule
+        addSchedule action.schedule
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
-        _updateDirtySchedule action.schedule
+        updateDirtySchedule action.schedule
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_FAIL
-        _removeDirtySchedule action.schedule
+        removeDirtySchedule action.schedule
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE
-        _removeSchedule action.scheduleId
+        removeSchedule action.scheduleId
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
-        _finallyRemoveSchedule action.scheduleId
+        finallyRemoveSchedule action.scheduleId
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_FAIL
-        _revertRemovedSchedule action.scheduleId
+        revertRemovedSchedule action.scheduleId
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
-        _setSchedules action.schedules
+        setSchedules action.schedules
         @emitChange()
 
 
