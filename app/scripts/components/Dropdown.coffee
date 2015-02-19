@@ -12,6 +12,9 @@ Dropdown = React.createClass(
 
   mixins: [I18nMixin]
 
+  toggleDropdown: ->
+    $(@refs.dropdownToggle.getDOMNode()).dropdown "toggle"
+
   getInitialState: ->
     buttonDisabled: false
 
@@ -20,7 +23,7 @@ Dropdown = React.createClass(
     itemName = @refs.itemName.getDOMNode().value.trim()
     @props.handleItemAdd itemName
     @refs.itemName.getDOMNode().value = ''
-    $(@refs.dropdownToggle.getDOMNode()).dropdown "toggle"
+    @toggleDropdown()
 
   handleItemSelected: (e, item)->
     e.preventDefault()
