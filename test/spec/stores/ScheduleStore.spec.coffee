@@ -5,6 +5,18 @@ ScheduleStore = require '../../../app/scripts/stores/ScheduleStore'
 {ActionTypes} = require '../../../app/scripts/constants/PlannerConstants'
 
 
+assertSingle = (length, schedules, current, actual, expected, expectedCurrent)->
+  expectedCurrent ?= actual
+  expect(schedules.length).toEqual length
+  expect(actual).toEqual expected
+  expect(current).toEqual expectedCurrent
+
+assertAll = (length, schedules, current, expectedAll, expectedCurrent)->
+  expect(schedules.length).toEqual length
+  expect(schedules).toEqual expectedAll
+  expect(current).toEqual expectedCurrent
+
+
 describe 'ScheduleStore', ->
 
   beforeEach ->
@@ -104,18 +116,14 @@ describe 'ScheduleStore', ->
       expect(@all().length).toEqual 2
 
       @dispatch @payloads.create
-      expect(@all().length).toEqual 3
-      expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
-      expect(@current()).toEqual @all()[2]
+      assertSingle 3, @all(), @current(), @all()[2], {name: "Schedule 3", dirty: true}
 
     it 'adds provided schedule to list and assigns current when list empty', ->
       @payloads.create.action.schedule = @schedules.toCreate[0]
       expect(@all().length).toEqual 0
 
       @dispatch @payloads.create
-      expect(@all().length).toEqual 1
-      expect(@all()[0]).toEqual name: "Schedule 3", dirty: true
-      expect(@current()).toEqual @all()[0]
+      assertSingle 1, @all(), @current(), @all()[0], {name: "Schedule 3", dirty: true}
 
 
   describe 'when CREATE_SCHEDULE_SUCCESS received', ->
@@ -128,14 +136,10 @@ describe 'ScheduleStore', ->
       @payloads.createSuccess.action.schedule =
         name: "Schedule 3"
         id: "sch3"
-      expect(@all().length).toEqual 4
-      expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
-      expect(@current()).toEqual @all()[2]
+      assertSingle 4, @all(), @current(), @all()[2], {name: "Schedule 3", dirty: true}
 
       @dispatch @payloads.createSuccess
-      expect(@all().length).toEqual 4
-      expect(@all()[2]).toEqual name: "Schedule 3", id: "sch3"
-      expect(@current()).toEqual @all()[2]
+      assertSingle 4, @all(), @current(), @all()[2], {name: "Schedule 3", id: "sch3"}
 
     it 'updates the schedule provided from the server given the name, does
     not update current if schedule to update is not current', ->
@@ -145,14 +149,12 @@ describe 'ScheduleStore', ->
       @payloads.createSuccess.action.schedule =
         name: "Schedule 3"
         id: "sch3"
-      expect(@all().length).toEqual 4
-      expect(@all()[2]).toEqual name: "Schedule 3", dirty: true
-      expect(@current()).toEqual @all()[0]
+      assertSingle 4, @all(), @current(), @all()[2],
+        {name: "Schedule 3", dirty: true}, @all()[0]
 
       @dispatch @payloads.createSuccess
-      expect(@all().length).toEqual 4
-      expect(@all()[2]).toEqual name: "Schedule 3", id: "sch3"
-      expect(@current()).toEqual @all()[0]
+      assertSingle 4, @all(), @current(), @all()[2],
+        {name: "Schedule 3", id: "sch3"}, @all()[0]
 
     it 'updates the first found schedule with given name', ->
       same = name: "Same", dirty: true
@@ -206,9 +208,8 @@ describe 'ScheduleStore', ->
         expect(@all().length).toEqual 4
 
         @dispatch @payloads.createFail
-        expect(@all().length).toEqual 3
-        expect(@all()).toEqual @schedules.clean.concat [@schedules.dirty[1]]
-        expect(@current()).toEqual @all()[1]
+        assertAll 3, @all(), @current(),
+          @schedules.clean.concat([@schedules.dirty[1]]), @all()[1]
 
       it 'removes dirty schedule and assigns current when first and only
       schedule', ->
@@ -219,9 +220,7 @@ describe 'ScheduleStore', ->
         expect(@all().length).toEqual 1
 
         @dispatch @payloads.createFail
-        expect(@all().length).toEqual 0
-        expect(@all()).toEqual []
-        expect(@current()).toBeNull()
+        assertAll 0, @all(), @current(), [], null
 
       it 'removes dirty schedule and assigns current when first schedule and
       more than one schedule', ->
@@ -232,9 +231,7 @@ describe 'ScheduleStore', ->
         expect(@all().length).toEqual 2
 
         @dispatch @payloads.createFail
-        expect(@all().length).toEqual 1
-        expect(@all()).toEqual [@schedules.dirty[1]]
-        expect(@current()).toEqual @schedules.dirty[1]
+        assertAll 1, @all(), @current(), [@schedules.dirty[1]], @all()[0]
 
 
     describe 'when created dirty schedule is not current', ->
@@ -248,9 +245,8 @@ describe 'ScheduleStore', ->
         expect(@current()).toEqual @all()[0]
 
         @dispatch @payloads.createFail
-        expect(@all().length).toEqual 3
-        expect(@all()).toEqual @schedules.clean.concat [@schedules.dirty[1]]
-        expect(@current()).toEqual @all()[0]
+        assertAll 3, @all(), @current(),
+          @schedules.clean.concat([@schedules.dirty[1]]), @all()[0]
 
 
   describe 'when GET_SCHEDULES_SUCCESS received', ->
