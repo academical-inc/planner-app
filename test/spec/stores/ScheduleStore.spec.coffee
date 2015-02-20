@@ -64,15 +64,14 @@ describe 'ScheduleStore', ->
         action:
           type: ActionTypes.GET_SCHEDULES_SUCCESS
 
-    H.spyOn ScheduleStore, "emitChange"
     @dispatch = ScheduleStore.dispatchCallback
     @all      = ScheduleStore.getAll
     @current  = ScheduleStore.getCurrent
+    H.spyOn ScheduleStore, "emitChange"
 
     H.rewire ScheduleStore,
       _schedules: []
       _current: null
-
 
   afterEach ->
     @restore() if @restore?
