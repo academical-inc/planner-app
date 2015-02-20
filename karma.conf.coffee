@@ -81,7 +81,7 @@ module.exports = (config) ->
         'browserify-shim'
         ['envify', require('./.env.json')]
         ['rewireify', {
-            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee"
+            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee,SpinnerMixin.coffee"
           }
         ]
       ]
