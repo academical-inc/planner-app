@@ -22,7 +22,6 @@ ScheduleList = React.createClass(
       id: sch.id, val: sch.name
 
   onChange: ->
-    console.log "changed!"
     @setState @getState()
 
   addSchedule: (name)->
