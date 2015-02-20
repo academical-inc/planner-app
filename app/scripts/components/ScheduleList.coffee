@@ -3,6 +3,7 @@ React          = require 'react'
 $              = require 'jquery'
 {UiConstants}  = require '../constants/PlannerConstants'
 MediaQueries   = require '../utils/MediaQueries.coffee'
+SpinnerMixin   = require '../mixins/SpinnerMixin'
 I18nMixin      = require '../mixins/I18nMixin'
 ScheduleStore  = require '../stores/ScheduleStore'
 PlannerActions = require '../actions/PlannerActions'
@@ -13,11 +14,11 @@ R              = React.DOM
 
 ScheduleList = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [SpinnerMixin, I18nMixin]
 
   getState: ->
     current = ScheduleStore.getCurrent()
-    openSchedule: if current? then current.name else "..."
+    openSchedule: if current? then current.name else @renderSpinner()
     schedules: ScheduleStore.getAll().map (sch)->
       id: sch.id, val: sch.name
 
@@ -36,6 +37,9 @@ ScheduleList = React.createClass(
   deleteSchedule: (scheduleItem)->
     PlannerActions.deleteSchedule scheduleItem.id if scheduleItem.id?
 
+  getInitialState: ->
+    @getState()
+
   componentDidMount: ->
     ScheduleStore.addChangeListener @onChange
     if not MediaQueries.matchesMDAndUp()
@@ -47,9 +51,6 @@ ScheduleList = React.createClass(
 
   componentWillUnmount: ->
     ScheduleStore.removeChangeListener @onChange
-
-  getInitialState: ->
-    @getState()
 
   render: ->
     Dropdown(
