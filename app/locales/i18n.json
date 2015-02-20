@@ -1,5 +1,13 @@
 {
   "en": {
+    "errors": {
+      "connError": "There was a problem connecting to the web.\nPlease check your connection and try again.",
+      "apiError": "Oops! Something is wrong with our servers.\nPlease give us a moment and try again.",
+      "clientError": "Looks like there is something wrong with the request to our servers.\nPlease email support@academical.co with the details of your situation and the following message: {{errMsg}}"
+    },
+    "errorDialog": {
+      "header": "Error!"
+    },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
       "addBtn": "Add"
@@ -44,6 +52,14 @@
     }
   },
   "es": {
+    "errors": {
+      "connError": "Hubo un problema conectándose a la web.\nPor favor revisa tu conexión e intenta de nuevo.",
+      "apiError": "Oops! Parece que hay un problema con nuestros servidores.\nPor favor danos un momento e intenta de nuevo.",
+      "clientError": "Parece que hay un problema con el pedido al servidor.\nPor favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje: {{errMsg}}"
+    },
+    "errorDialog": {
+      "header": "Error!"
+    },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
       "addBtn": "Agregar"
