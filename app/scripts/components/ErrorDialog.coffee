@@ -26,13 +26,20 @@ ErrorDialog = React.createClass(
     ErrorStore.removeChangeListener @onChange
 
   renderBody: ->
-    R.div className: "pla-error-dialog", @state.error
+    R.div className: "pla-error-dialog",
+      R.div className: "row",
+        R.div className: "col-md-4",
+          R.img src: "images/error_icon.png"
+        R.div className: "col-md-8",
+          R.p null, @state.error
 
   render: ->
     @renderModal(
       UiConstants.ids.ERROR_MODAL
       @t "errorDialog.header"
       @renderBody()
+      accept: show: false
+      cancel: text: "OK"
     )
 
 )
