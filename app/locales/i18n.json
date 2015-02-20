@@ -6,7 +6,8 @@
       "clientError": "Looks like there is something wrong with the request to our servers.\nPlease email support@academical.co with the details of your situation and the following message: {{errMsg}}"
     },
     "errorDialog": {
-      "header": "Error!"
+      "header": "Error!",
+      "ok": "OK"
     },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
@@ -58,7 +59,8 @@
       "clientError": "Parece que hay un problema con el pedido al servidor.\nPor favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje: {{errMsg}}"
     },
     "errorDialog": {
-      "header": "Error!"
+      "header": "Error!",
+      "ok": "OK"
     },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
