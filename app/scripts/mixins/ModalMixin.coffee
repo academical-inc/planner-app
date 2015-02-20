@@ -9,9 +9,11 @@ module.exports =
   renderButtons: (btns)->
     defaults =
       accept:
+        show: true
         type: "success"
         text: "Save"
       cancel:
+        show: true
         type: "danger"
         text: "Cancel"
     btns = $.extend true, {}, defaults, btns
@@ -33,10 +35,13 @@ module.exports =
       onClick: btns.cancel.handler
       "data-dismiss": "modal"
 
-    [
-      R.button btnCancelProps, btns.cancel.text
-      R.button btnAcceptProps, btns.accept.text
-    ]
+    btnsRes = []
+    if btns.cancel.show is true
+      btnsRes.push R.button(btnCancelProps, btns.cancel.text)
+    if btns.accept.show is true
+      btnsRes.push R.button(btnAcceptProps, btns.accept.text)
+
+    btnsRes
 
   show: ->
     $(@getDOMNode()).modal "show"

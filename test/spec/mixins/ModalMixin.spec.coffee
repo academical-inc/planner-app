@@ -22,9 +22,11 @@ describe "ModalMixin", ->
     @acceptHandler = H.spy "acceptHandler"
     @defaultData =
         cancel:
+          show: true
           type: "danger"
           text: "Cancel"
         accept:
+          show: true
           type: "success"
           text: "Save"
     @customData =
@@ -36,7 +38,9 @@ describe "ModalMixin", ->
         type:    "accept-type"
         text:    "On"
         handler: @acceptHandler
-    @formData = H.$.extend {}, @customData, form: "form-id"
+    @formData = H.$.extend true, {}, @customData, accept: form: "form-id"
+    @onlyAccept = H.$.extend true, {}, @defaultData, cancel: show: false
+    @onlyCancel = H.$.extend true, {}, @defaultData, accept: show: false
 
   assertRenderedButtons = (buttons, data)->
     cancelBtn = buttons[0]
@@ -60,7 +64,7 @@ describe "ModalMixin", ->
       expect(acceptBtn.props.form).not.toBeDefined()
 
 
-  describe "#renderButtons", ->
+  fdescribe "#renderButtons", ->
 
     beforeEach ->
       @modal = H.render Modal
@@ -76,6 +80,14 @@ describe "ModalMixin", ->
     it 'renders accept button with form attribute when provided', ->
       buttons = @modal.renderButtons @formData
       assertRenderedButtons buttons, @formData
+
+    it 'renders only specified buttons', ->
+      buttons = @modal.renderButtons @onlyAccept
+      expect(buttons.length).toEqual 1
+      expect(buttons[0].props.children).toEqual "Save"
+      buttons = @modal.renderButtons @onlyCancel
+      expect(buttons.length).toEqual 1
+      expect(buttons[0].props.children).toEqual "Cancel"
 
 
   describe "#renderModal", ->
