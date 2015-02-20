@@ -64,7 +64,7 @@ describe "ModalMixin", ->
       expect(acceptBtn.props.form).not.toBeDefined()
 
 
-  fdescribe "#renderButtons", ->
+  describe "#renderButtons", ->
 
     beforeEach ->
       @modal = H.render Modal
