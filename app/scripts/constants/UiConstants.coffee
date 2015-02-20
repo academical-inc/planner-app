@@ -2,6 +2,7 @@
 ids =
   SCHEDULE_LIST: 'pla-schedule-list'
   PERSONAL_EVENT_MODAL: 'pla-personal-event-modal'
+  ERROR_MODAL: 'pla-error-modal'
 
 module.exports =
   media:
@@ -13,6 +14,7 @@ module.exports =
   selectors:
     SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
     PERSONAL_EVENT_MODAL: "##{ids.PERSONAL_EVENT_MODAL}"
+    ERROR_MODAL: "##{ids.ERROR_MODAL}"
   htmlEntities:
     TIMES: "\u00d7"
   sectionSeatsMap:
