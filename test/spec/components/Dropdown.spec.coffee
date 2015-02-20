@@ -12,18 +12,38 @@ describe 'Dropdown', ->
       @handler = H.spy "handler"
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
-        items: [{id: "i1", val: "v1"}]
+        items: []
         itemType: H.mockComponent()
         handleItemAdd: @handler
-      @input = @dd.refs.itemName
-      @input.getDOMNode().value = "  Value!  "
-      @dd.handleItemAdd preventDefault: ->
 
-    it 'calls provided handler with correct value', ->
-      expect(@handler).toHaveBeenCalledWith "Value!"
+    describe 'when item name value provided', ->
 
-    it 'clears input after adding', ->
-      expect(@input.getDOMNode().value).toEqual ""
+      beforeEach ->
+        @input = @dd.refs.itemName.getDOMNode()
+        @input.value = "  Value!  "
+        @dd.handleItemAdd preventDefault: ->
+
+      it 'calls provided handler with correct value', ->
+        expect(@handler).toHaveBeenCalledWith "Value!"
+
+      it 'clears input after adding', ->
+        expect(@input.value).toEqual ""
+
+      it 'input form group does not have error class', ->
+        expect(@dd.refs.inputFormGroup.getDOMNode().className).not.toContain \
+          "has-error"
+
+    describe 'when item name value provided', ->
+
+      beforeEach ->
+        @dd.handleItemAdd preventDefault: ->
+
+      it 'does not call callback', ->
+        expect(@handler).not.toHaveBeenCalled()
+
+      it 'adds error class to form group', ->
+        expect(@dd.refs.inputFormGroup.getDOMNode().className).toContain \
+          "has-error"
 
 
   describe '#handleItemSelected', ->
@@ -207,6 +227,7 @@ describe 'Dropdown', ->
 
       it 'calls handleItemAdd when form submitted', ->
         form = H.findWithTag @dd, "form"
+        @dd.refs.itemName.getDOMNode().value = "My schedule"
         H.sim.submit form.getDOMNode()
         expect(@handler).toHaveBeenCalled()
 
