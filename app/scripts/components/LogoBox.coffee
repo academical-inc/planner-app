@@ -12,5 +12,4 @@ LogoBox = React.createClass(
 
 )
 
-
 module.exports = LogoBox
