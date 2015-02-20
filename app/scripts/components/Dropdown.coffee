@@ -20,10 +20,14 @@ Dropdown = React.createClass(
 
   handleItemAdd: (e)->
     e.preventDefault()
+    $(@refs.inputFormGroup.getDOMNode()).removeClass 'has-error'
     itemName = @refs.itemName.getDOMNode().value.trim()
-    @props.handleItemAdd itemName
-    @refs.itemName.getDOMNode().value = ''
-    @toggleDropdown()
+    if !!itemName
+      @props.handleItemAdd itemName
+      @refs.itemName.getDOMNode().value = ''
+      @toggleDropdown()
+    else
+      $(@refs.inputFormGroup.getDOMNode()).addClass 'has-error'
 
   handleItemSelected: (e, item)->
     e.preventDefault()
@@ -47,8 +51,9 @@ Dropdown = React.createClass(
   renderAddInput: ->
     R.li key: "add-input",
       R.form className: 'navbar-form', onSubmit: @handleItemAdd,
-        R.div className: 'form-group',
+        R.div className: 'form-group', ref: "inputFormGroup",
           R.input
+            className: "form-control"
             ref: "itemName"
             type: "text"
             placeholder: @props.addItemPlaceholder
