@@ -38,7 +38,7 @@ describe '{{{moduleName}}}', ->
     @payloads = {}  # Add the action types
     @dispatch = {{{moduleName}}}.dispatchCallback
     H.spyOn {{{moduleName}}}, "emitChange"
-    H.rewire ScheduleStore, {}  # Rewire any private state
+    H.rewire {{{moduleName}}}, {}  # Rewire any private state
 
   afterEach ->
     @restore() if @restore?
