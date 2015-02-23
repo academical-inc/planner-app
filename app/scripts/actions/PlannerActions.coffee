@@ -12,13 +12,15 @@ class PlannerActions
       type: ActionTypes.OPEN_SCHEDULE
       schedule: schedule
 
-  @getSchedules: ->
+  @initSchedules: ->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.GET_SCHEDULES
 
     ApiUtils.getSchedules (err, schedules)->
       if err?
-        # TODO Dispatch something relevant
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.GET_SCHEDULES_FAIL
+          error: err
       else
         PlannerDispatcher.handleServerAction
           type: ActionTypes.GET_SCHEDULES_SUCCESS

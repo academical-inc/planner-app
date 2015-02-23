@@ -10,7 +10,7 @@ ApiUtils.init()
 
 
 Page '/', ->
-  PlannerActions.getSchedules()
+  PlannerActions.initSchedules()
 
   PlannerApp = React.createFactory require './components/PlannerApp'
   React.render(
