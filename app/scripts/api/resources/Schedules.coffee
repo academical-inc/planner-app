@@ -11,12 +11,17 @@ class Schedules extends Resource
 
   update: Resource.createApiCall
     method: "put"
-    path: "{id}"
+    path:   "{id}"
     requiredParams: ["id"]
 
   del: Resource.createApiCall
     method: "delete"
-    path: "{id}"
+    path:   "{id}"
+    requiredParams: ["id"]
+
+  listSections: Resource.createApiCall
+    method: "get"
+    path:   "{id}/sections"
     requiredParams: ["id"]
 
 
