@@ -5,8 +5,8 @@ _                 = require '../utils/HelperUtils'
 
 
 # Private
-_schedules      = []
-_current        = null
+_schedules = []
+_current   = null
 
 setCurrent = (current)->
   _current = current
@@ -78,6 +78,12 @@ revertRemovedSchedule = (id)->
   [toRemove, idx] = findToRemove id
   delete toRemove.del if toRemove?
 
+addSection = (sectionId)->
+  _current.sectionIds.push sectionId
+
+removeSection = (sectionId)->
+  _.findAndRemove _current.sectionIds, (id)-> id == sectionId
+
 
 class ScheduleStore extends Store
 
@@ -114,6 +120,12 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         setSchedules action.schedules
+        @emitChange()
+      when ActionTypes.ADD_SECTION
+        addSection action.section.id
+        @emitChange()
+      when ActionTypes.REMOVE_SECTION
+        removeSection action.sectionId
         @emitChange()
 
 

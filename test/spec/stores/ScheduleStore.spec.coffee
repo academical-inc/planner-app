@@ -1,5 +1,4 @@
 
-$             = require 'jquery'
 H             = require '../../SpecHelper'
 ScheduleStore = require '../../../app/scripts/stores/ScheduleStore'
 {ActionTypes} = require '../../../app/scripts/constants/PlannerConstants'
@@ -22,8 +21,8 @@ describe 'ScheduleStore', ->
   beforeEach ->
     @schedules =
       toDelete: [
-        {name: "Schedule 1", id: "sch1"}
-        {name: "Schedule 2", id: "sch2", del: true}
+        {name: "Schedule 1", id: "sch1", sectionIds: ["sec1", "sec2"]}
+        {name: "Schedule 2", id: "sch2", del: true,sectionIds: ["sec2", "sec3"]}
       ]
       toCreate: [
         {name: "Schedule 3"}
@@ -34,8 +33,8 @@ describe 'ScheduleStore', ->
         {name: "Schedule 4", dirty: true}
       ]
       clean: [
-        {name: "Schedule 1", id: "sch1"}
-        {name: "Schedule 2", id: "sch2"}
+        {name: "Schedule 1", id: "sch1", sectionIds: ["sec1", "sec2"]}
+        {name: "Schedule 2", id: "sch2", sectionIds: ["sec2", "sec3"]}
       ]
 
     @payloads =
@@ -63,6 +62,12 @@ describe 'ScheduleStore', ->
       getAllSuccess:
         action:
           type: ActionTypes.GET_SCHEDULES_SUCCESS
+      addSection:
+        action:
+          type: ActionTypes.ADD_SECTION
+      removeSection:
+        action:
+          type: ActionTypes.REMOVE_SECTION
 
     @dispatch = ScheduleStore.dispatchCallback
     @all      = ScheduleStore.getAll
@@ -171,7 +176,7 @@ describe 'ScheduleStore', ->
     it 'updates the first found schedule with given name', ->
       same = name: "Same", dirty: true
       H.rewire ScheduleStore,
-        _schedules: [same, $.extend(true, {}, same)]
+        _schedules: [same, H.$.extend(true, {}, same)]
         _current: same
       @payloads.createSuccess.action.schedule =
         name: "Same"
@@ -357,3 +362,24 @@ describe 'ScheduleStore', ->
       expect(@current()).toEqual @schedules.clean[0]
 
 
+  describe 'when ADD_SECTION received', ->
+
+    it 'adds section id correctly', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat []
+        _current: @schedules.clean[1]
+      expect(@current().sectionIds).toEqual @schedules.clean[1].sectionIds
+      @payloads.addSection.action.section = id: "sec100"
+      @dispatch @payloads.addSection
+      expect(@current().sectionIds).toEqual ["sec2", "sec3", "sec100"]
+
+  describe 'when REMOVE_SECTION received', ->
+
+    it 'adds section id correctly', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat []
+        _current: @schedules.clean[1]
+      expect(@current().sectionIds).toEqual @schedules.clean[1].sectionIds
+      @payloads.removeSection.action.sectionId = "sec3"
+      @dispatch @payloads.removeSection
+      expect(@current().sectionIds).toEqual ["sec2"]
