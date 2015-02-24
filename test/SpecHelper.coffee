@@ -121,6 +121,9 @@ class SpecHelper
     factory = React.createFactory(reactComponent)
     TestUtils.renderIntoDocument factory(props, children)
 
+  @unmount: (reactComponent)->
+    React.unmountComponentAtNode reactComponent
+
   @rewireAndRender: (reactComponent, props={}, stubs={})->
     restore = @rewire(reactComponent, stubs)
     rendered = @render(reactComponent, props)
