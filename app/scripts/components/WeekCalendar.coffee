@@ -1,15 +1,55 @@
 
-React     = require 'react'
-$         = require 'jquery'
-I18nMixin = require '../mixins/I18nMixin'
-R         = React.DOM
+$             = require 'jquery'
+React         = require 'react'
+SectionStore  = require '../stores/SectionStore'
+I18nMixin     = require '../mixins/I18nMixin'
+R             = React.DOM
 
 WeekCalendar = React.createClass(
 
   mixins: [I18nMixin]
 
+  sections: ->
+    SectionStore.getCurrentSections()
+
+  getSectionEvents: (sections=@sections())->
+    sections.reduce(
+      (prevArr, curSec)->
+        allSectionEvents = curSec.events.reduce(
+          (prevEvArr, ev)->
+            prevEvArr.concat ev.expanded.map (e)->
+              section: curSec, event: e
+          , []
+        )
+        prevArr.concat allSectionEvents
+      , []
+    )
+
+  sectionEventDataTransform: (sectionEventData)->
+    id:        sectionEventData.section.id
+    title:     sectionEventData.section.courseName
+    start:     sectionEventData.event.startDt
+    end:       sectionEventData.event.endDt
+    editable:  false
+    allDay:    false
+
+  onSectionsChange: ->
+    @cal.fullCalendar "removeEventSource", @sources.sections
+    @sources.sections.events = @getSectionEvents()
+    @cal.fullCalendar "addEventSource", @sources.sections
+
+    # TODO temporal
+    @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
+
   componentDidMount: ->
-    $(@getDOMNode()).fullCalendar(
+    SectionStore.addChangeListener @onSectionsChange
+    @cal = $(@getDOMNode())
+    @sources =
+      sections:
+        events: []
+        eventDataTransform: @sectionEventDataTransform
+
+    @cal.fullCalendar(
       defaultView: "agendaWeek"
       allDaySlot: false
       allDayText: false
@@ -24,6 +64,9 @@ WeekCalendar = React.createClass(
         center: @t "calendar.today"
         right: "next"
     )
+
+  componentWillUnmount: ->
+    SectionStore.removeChangeListener @onSectionsChange
 
   render: ->
     R.div className: 'pla-week-calendar'
