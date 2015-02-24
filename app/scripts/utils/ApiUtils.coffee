@@ -43,7 +43,10 @@ class ApiUtils
   @currentStudent: _currentStudent
 
   @getSchedules: (cb, studentId=_currentStudent.id)->
-    _api.students.listSchedules studentId, cb
+    _api.students.listSchedules studentId,
+      includeSections: true,
+      expandSectionEvents: true,
+      cb
 
   @createSchedule: (schedule, cb)->
     _api.schedules.create schedule, cb
