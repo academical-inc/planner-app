@@ -26,12 +26,14 @@ WeekCalendar = React.createClass(
     )
 
   sectionEventDataTransform: (sectionEventData)->
-    id:        sectionEventData.section.id
-    title:     sectionEventData.section.courseName
-    start:     sectionEventData.event.startDt
-    end:       sectionEventData.event.endDt
-    editable:  false
-    allDay:    false
+    id:           sectionEventData.section.id
+    title:        sectionEventData.section.courseName
+    description:  sectionEventData.section.courseDescription
+    start:        sectionEventData.event.startDt
+    end:          sectionEventData.event.endDt
+    location:     sectionEventData.event.location
+    editable:     false
+    allDay:       false
 
   onSectionsChange: ->
     @cal.fullCalendar "removeEventSource", @sources.sections
