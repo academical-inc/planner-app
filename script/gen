@@ -69,7 +69,7 @@ Store         = require './Store'
 class {{{moduleName}}} extends Store
 
 
-  disptachCallback: (payload)=>
+  dispatchCallback: (payload)=>
     action = payload.action
 
     switch action.type
