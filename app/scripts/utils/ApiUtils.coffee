@@ -2,30 +2,28 @@
 Env            = require '../Env'
 Academical     = require '../api/Academical'
 
-_api = new Academical
+_api                   = null
+_currentSchoolNickname = null
+_currentSchool         = null
 
 # TODO Implement properly from login
-_currentStudent = id: "54dc48196d616337d5000000"
-_currentSchool  =
-  id: "5480f2ed3334370008000000"
-  nickname: window.location.hostname.split(".")[1]
-  term:
-    name:      "first"
-    startDate: Date.parse "2015-01-01"
-    endDate:   Date.parse "2015-05-01"
+_currentStudent = id: "54e4f2386d61635e22050000"
+# _currentStudent = id: "54dc48196d616337d5000000"
 
 
 class ApiUtils
 
   @init: ->
     # TODO Should probably init current student and school here
+    _api = new Academical
     _api.setHost Env.API_HOST, Env.API_PROTOCOL
+    _currentSchoolNickname = window.location.hostname.split(".")[0]
 
   @data:
     newSchedule: (name, {studentId, schoolId, term}={})->
       studentId ?= _currentStudent.id
       schoolId  ?= _currentSchool.id
-      term      ?= _currentSchool.term
+      term      ?= _currentSchool.terms[0]
 
       _api.data.newSchedule(
         name
@@ -41,6 +39,11 @@ class ApiUtils
 
   # TODO Implement properly from login
   @currentStudent: _currentStudent
+
+  @initSchool: (cb, nickname=_currentSchoolNickname)->
+    _api.schools.retrieve nickname, (error, school)->
+      _currentSchool = school if not error?
+      cb error, school
 
   @getSchedules: (cb, studentId=_currentStudent.id)->
     _api.students.listSchedules studentId,
