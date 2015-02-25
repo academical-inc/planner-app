@@ -72,11 +72,13 @@ describe 'ScheduleStore', ->
     @dispatch = ScheduleStore.dispatchCallback
     @all      = ScheduleStore.getAll
     @current  = ScheduleStore.getCurrent
+    @_get     = ScheduleStore.__get__
     H.spyOn ScheduleStore, "emitChange"
 
     H.rewire ScheduleStore,
       _schedules: []
       _current: null
+      _lastCurrent: null
 
   afterEach ->
     @restore() if @restore?
@@ -96,10 +98,12 @@ describe 'ScheduleStore', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat [@schedules.dirty[0]]
         _current: @schedules.clean[0]
+        _lastCurrent: @schedules.clean[1]
       @payloads.open.action.schedule = name: "Schedule 3"
       expect(@current()).toEqual @all()[0]
       @dispatch @payloads.open
       expect(@current()).toEqual @all()[2]
+      expect(@_get("_lastCurrent")).toBeNull()
 
     it 'sets current schedule correctly when dirty and repeated name', ->
       H.rewire ScheduleStore,
@@ -113,6 +117,7 @@ describe 'ScheduleStore', ->
       expect(@current()).toEqual @all()[0]
       @dispatch @payloads.open
       expect(@current()).toEqual @all()[1]
+      expect(@_get("_lastCurrent")).toBeNull()
 
     it 'sets current schedule correctly when opening a clean schedule', ->
       H.rewire ScheduleStore,
@@ -122,34 +127,44 @@ describe 'ScheduleStore', ->
       expect(@current()).toEqual @all()[0]
       @dispatch @payloads.open
       expect(@current()).toEqual @all()[1]
+      expect(@_get("_lastCurrent")).toBeNull()
 
 
   describe 'when CREATE_SCHEDULE received', ->
 
-    it 'adds provided schedule to list and assigns current when schedules
-    already present', ->
-      H.rewire ScheduleStore, _schedules: @schedules.clean
+    it 'adds provided schedule to list and assigns current and last current when
+    schedules already present', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean
+        _current: @schedules.clean[1]
       @payloads.create.action.schedule = @schedules.toCreate[0]
       expect(@all().length).toEqual 2
+      expect(@_get("_lastCurrent")).toBeNull()
 
       @dispatch @payloads.create
       assertSingle 3, @all(), @current(), @all()[2], {name: "Schedule 3", dirty: true}
+      expect(@_get("_lastCurrent")).toEqual @schedules.clean[1]
 
-    it 'adds provided schedule to list and assigns current when list empty', ->
+    it 'adds provided schedule to list and assigns current when list empty and
+    does not assign last current', ->
       @payloads.create.action.schedule = @schedules.toCreate[0]
       expect(@all().length).toEqual 0
+      expect(@current()).toBeNull()
+      expect(@_get("_lastCurrent")).toBeNull()
 
       @dispatch @payloads.create
       assertSingle 1, @all(), @current(), @all()[0], {name: "Schedule 3", dirty: true}
+      expect(@_get("_lastCurrent")).toBeNull()
 
 
   describe 'when CREATE_SCHEDULE_SUCCESS received', ->
 
-    it 'updates the schedule provided from the server given the name, and
-    updates current if schedule to update is current', ->
+    it 'updates the schedule provided from the server given the name, updates
+    current if schedule to update is current, and nulls last current', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat @schedules.dirty
         _current: @schedules.dirty[0]
+        _lastCurrent: @schedules.clean[0]
       @payloads.createSuccess.action.schedule =
         name: "Schedule 3"
         id: "sch3"
@@ -157,12 +172,14 @@ describe 'ScheduleStore', ->
 
       @dispatch @payloads.createSuccess
       assertSingle 4, @all(), @current(), @all()[2], {name: "Schedule 3", id: "sch3"}
+      expect(@_get("_lastCurrent")).toBeNull()
 
-    it 'updates the schedule provided from the server given the name, does
-    not update current if schedule to update is not current', ->
+    it 'updates the schedule provided from the server given the name, does not
+    update current if schedule to update is not current, nulls last current', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat @schedules.dirty
         _current: @schedules.clean[0]
+        _lastCurrent: @schedules.clean[0]
       @payloads.createSuccess.action.schedule =
         name: "Schedule 3"
         id: "sch3"
@@ -172,23 +189,26 @@ describe 'ScheduleStore', ->
       @dispatch @payloads.createSuccess
       assertSingle 4, @all(), @current(), @all()[2],
         {name: "Schedule 3", id: "sch3"}, @all()[0]
+      expect(@_get("_lastCurrent")).toBeNull()
 
     it 'updates the first found schedule with given name', ->
       same = name: "Same", dirty: true
       H.rewire ScheduleStore,
-        _schedules: [same, H.$.extend(true, {}, same)]
+        _schedules: [@schedules.clean[0]].concat [same, H.$.extend(true, {}, same)]
         _current: same
+        _lastCurrent: @schedules.clean[0]
       @payloads.createSuccess.action.schedule =
         name: "Same"
         id: "sch1"
-      expect(@all().length).toEqual 2
-      expect(@current()).toEqual @all()[0]
+      expect(@all().length).toEqual 3
+      expect(@current()).toEqual @all()[1]
 
       @dispatch @payloads.createSuccess
-      expect(@all().length).toEqual 2
-      expect(@all()[0]).toEqual name: "Same", id: "sch1"
-      expect(@all()[1]).toEqual name: "Same", dirty: true
-      expect(@current()).toEqual @all()[0]
+      expect(@all().length).toEqual 3
+      expect(@all()[1]).toEqual name: "Same", id: "sch1"
+      expect(@all()[2]).toEqual name: "Same", dirty: true
+      expect(@current()).toEqual @all()[1]
+      expect(@_get("_lastCurrent")).toBeNull()
 
     it 'does nothing if schedule to update not found', ->
       H.rewire ScheduleStore,
@@ -205,7 +225,7 @@ describe 'ScheduleStore', ->
 
   describe 'when CREATE_SCHEDULE_FAIL received', ->
 
-    it 'does nothing whe dirty schedule not found', ->
+    it 'does nothing when dirty schedule not found', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat []
         _current: @schedules.clean[0]
@@ -214,30 +234,35 @@ describe 'ScheduleStore', ->
       @dispatch @payloads.createSuccess
       expect(@all()).toEqual tmp
 
+
     describe 'when created dirty schedule is current', ->
 
-      it 'removes dirty schedule and assigns current when not the first
-      schedule', ->
+      it 'removes dirty schedule and assigns current to last current when not
+      the first schedule', ->
         H.rewire ScheduleStore,
           _schedules: @schedules.clean.concat @schedules.dirty
           _current: @schedules.dirty[0]
+          _lastCurrent: @schedules.clean[0]
         @payloads.createFail.action.schedule = @schedules.toCreate[0]
         expect(@all().length).toEqual 4
 
         @dispatch @payloads.createFail
         assertAll 3, @all(), @current(),
-          @schedules.clean.concat([@schedules.dirty[1]]), @all()[1]
+          @schedules.clean.concat([@schedules.dirty[1]]), @all()[0]
+        expect(@_get("_lastCurrent")).toBeNull()
 
       it 'removes dirty schedule and assigns current when first and only
       schedule', ->
         H.rewire ScheduleStore,
           _schedules: [@schedules.dirty[0]]
           _current: @schedules.dirty[0]
+          _lastCurrent: null
         @payloads.createFail.action.schedule = @schedules.toCreate[0]
         expect(@all().length).toEqual 1
 
         @dispatch @payloads.createFail
         assertAll 0, @all(), @current(), [], null
+        expect(@_get("_lastCurrent")).toBeNull()
 
       it 'removes dirty schedule and assigns current when first schedule and
       more than one schedule', ->
@@ -249,6 +274,7 @@ describe 'ScheduleStore', ->
 
         @dispatch @payloads.createFail
         assertAll 1, @all(), @current(), [@schedules.dirty[1]], @all()[0]
+        expect(@_get("_lastCurrent")).toBeNull()
 
 
     describe 'when created dirty schedule is not current', ->
@@ -264,6 +290,7 @@ describe 'ScheduleStore', ->
         @dispatch @payloads.createFail
         assertAll 3, @all(), @current(),
           @schedules.clean.concat([@schedules.dirty[1]]), @all()[0]
+        expect(@_get("_lastCurrent")).toBeNull()
 
 
   describe 'when DELETE_SCHEDULE received', ->
@@ -321,7 +348,7 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual [@schedules.toDelete[0]]
       @dispatch @payloads.deleteSuccess
       expect(@all()).toEqual [@schedules.toDelete[0]]
-      expect(ScheduleStore.__get__("_schedules")).toEqual\
+      expect(@_get("_schedules")).toEqual\
         [@schedules.toDelete[0]]
 
     it 'does nothing if id is not found', ->
@@ -330,7 +357,7 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual [@schedules.toDelete[0]]
       @dispatch @payloads.deleteSuccess
       expect(@all()).toEqual [@schedules.toDelete[0]]
-      expect(ScheduleStore.__get__("_schedules")).toEqual @schedules.toDelete
+      expect(@_get("_schedules")).toEqual @schedules.toDelete
 
     it 'does nothing if schedule is not marked for deletion', ->
       H.rewire ScheduleStore, _schedules: @schedules.clean.concat []
@@ -338,7 +365,7 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual @schedules.clean
       @dispatch @payloads.deleteSuccess
       expect(@all()).toEqual @schedules.clean
-      expect(ScheduleStore.__get__("_schedules")).toEqual @schedules.clean
+      expect(@_get("_schedules")).toEqual @schedules.clean
 
 
   describe 'when DELETE_SCHEDULE_FAIL received', ->

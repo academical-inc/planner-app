@@ -5,18 +5,22 @@ _                 = require '../utils/HelperUtils'
 
 
 # Private
-_schedules = []
-_current   = null
-
-setCurrent = (current)->
-  _current = current
-
-setSchedule = (idx, schedule)->
-  _schedules[idx] = schedule
+_schedules   = []
+_current     = null
+_lastCurrent = null
 
 setSchedules = (schedules)->
   _schedules = schedules
   setCurrent _schedules[0]
+
+setCurrent = (current)->
+  _current = current
+
+setLastCurrent = (lastCurrent)->
+  _lastCurrent = lastCurrent
+
+setSchedule = (idx, schedule)->
+  _schedules[idx] = schedule
 
 findDirty = (schedule)->
   _.findWithIdx _schedules, (el)-> el.name is schedule.name and el.dirty is true
@@ -26,18 +30,22 @@ findToRemove = (id)->
 
 reassignCurrent = (idx)->
   if _schedules[idx] is _current
-    _current = if _schedules.length is 1   # idx must be 0
-      null
-    else                                   # length > 1
-      if idx is 0
-        _schedules[idx+1]
-      else
-        _schedules[idx-1]
+    if _lastCurrent?
+      _current = _lastCurrent
+    else
+      _current = if _schedules.length is 1   # idx must be 0
+        null
+      else                                   # length > 1
+        if idx is 0
+          _schedules[idx+1]
+        else
+          _schedules[idx-1]
 
 addSchedule = (schedule)->
   idx = _schedules.length
   schedule.dirty = true
   _schedules.push schedule
+  setLastCurrent _current
   setCurrent _schedules[idx]
 
 removeScheduleAt = (idx)->
@@ -51,12 +59,15 @@ updateDirtySchedule = (schedule)->
   if dirty?
     setCurrent schedule if dirty is _current
     setSchedule idx, schedule
+  setLastCurrent null
 
 removeDirtySchedule = (schedule)->
   [dirty, idx] = findDirty schedule
   removeScheduleAt idx if dirty?
+  setLastCurrent null
 
 openSchedule = (schedule)->
+  setLastCurrent null
   toOpen = if schedule.id?
     _.find _schedules, (el)-> el.id is schedule.id
   else if schedule.name?
