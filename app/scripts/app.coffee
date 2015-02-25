@@ -22,7 +22,7 @@ Page '/', ->
 
       PlannerApp = React.createFactory require './components/PlannerApp'
       React.render(
-        PlannerApp({})
+        PlannerApp ui: school.appUi
         document.body
       )
 
