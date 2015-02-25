@@ -402,7 +402,7 @@ describe 'ScheduleStore', ->
 
   describe 'when REMOVE_SECTION received', ->
 
-    it 'adds section id correctly', ->
+    it 'removes section id correctly', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat []
         _current: @schedules.clean[1]
