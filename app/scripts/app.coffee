@@ -4,19 +4,27 @@ React          = require 'react'
 I18n           = require './utils/I18n'
 ApiUtils       = require './utils/ApiUtils'
 PlannerActions = require './actions/PlannerActions'
+ErrorPage  = React.createFactory require './components/ErrorPage'
 
 I18n.init()
 ApiUtils.init()
 
 
 Page '/', ->
-  PlannerActions.initSchedules()
+  ApiUtils.initSchool (err, school)->
+    if err?
+      React.render(
+        ErrorPage error: err
+        document.body
+      )
+    else
+      PlannerActions.initSchedules()
 
-  PlannerApp = React.createFactory require './components/PlannerApp'
-  React.render(
-    PlannerApp({})
-    document.body
-  )
+      PlannerApp = React.createFactory require './components/PlannerApp'
+      React.render(
+        PlannerApp({})
+        document.body
+      )
 
 
 Page '/schedules/:scheduleId', (ctx)->
@@ -31,8 +39,6 @@ Page '/schedules/:scheduleId', (ctx)->
 
 
 Page '*', ->
-  ErrorPage  = React.createFactory require './components/ErrorPage'
-
   React.render(
     ErrorPage({})
     document.body
