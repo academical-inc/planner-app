@@ -69,10 +69,11 @@ describe 'ScheduleStore', ->
         action:
           type: ActionTypes.REMOVE_SECTION
 
-    @dispatch = ScheduleStore.dispatchCallback
-    @all      = ScheduleStore.getAll
-    @current  = ScheduleStore.getCurrent
-    @_get     = ScheduleStore.__get__
+    @dispatch    = ScheduleStore.dispatchCallback
+    @all         = ScheduleStore.getAll
+    @current     = ScheduleStore.getCurrent
+    @deletedLast = ScheduleStore.didDeleteLast
+    @_get        = ScheduleStore.__get__
     H.spyOn ScheduleStore, "emitChange"
 
     H.rewire ScheduleStore,
@@ -90,6 +91,12 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual []
       expect(@current()).toBeNull()
       expect(ScheduleStore.dispatchToken).toBeDefined()
+
+  describe 'when any action received', ->
+
+    it 'always sets did delete action as false, unless it actually happened', ->
+      @dispatch action: type: "ANY"
+      expect(@deletedLast()).toBe false
 
 
   describe 'when OPEN_SCHEDULE received', ->
@@ -360,6 +367,16 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual [@schedules.toDelete[0]]
       expect(@_get("_schedules")).toEqual\
         [@schedules.toDelete[0]]
+
+    it 'completely removes dirty delete schedule and sets didDeleteLast if its
+    the last schedule', ->
+      H.rewire ScheduleStore, _schedules: [@schedules.toDelete[1]]
+      @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
+      expect(@all()).toEqual []
+      @dispatch @payloads.deleteSuccess
+      expect(@all()).toEqual []
+      expect(@deletedLast()).toBe true
+      expect(@_get("_schedules")).toEqual []
 
     it 'does nothing if id is not found', ->
       H.rewire ScheduleStore, _schedules: @schedules.toDelete.concat []
