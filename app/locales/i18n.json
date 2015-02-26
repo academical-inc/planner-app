@@ -1,9 +1,19 @@
 {
   "en": {
     "errors": {
-      "connError": "There was a problem connecting to the web.\nPlease check your connection and try again.",
-      "apiError": "Oops! Something is wrong with our servers.\nPlease give us a moment and try again.",
-      "clientError": "Looks like there is something wrong with the request to our servers.\nPlease email support@academical.co with the details of your situation and the following message: {{errMsg}}"
+      "connError": [
+        "There was a problem connecting to the web.",
+        "Please check your connection and try again."
+      ],
+      "apiError": [
+        "Oops! Something is wrong with our servers.",
+        "Please give us a moment and try again."
+      ],
+      "clientError": [
+        "Looks like there is something wrong with the request to our servers.",
+        "Please email support@academical.co with the details of your situation and the following message:",
+        "{{errMsg}}"
+      ]
     },
     "errorDialog": {
       "header": "Error!",
@@ -14,6 +24,7 @@
       "addBtn": "Add"
     },
     "scheduleList": {
+      "defaultName": "Schedule 1",
       "namePlaceholder": "Add a new schedule"
     },
     "options": {
@@ -54,9 +65,19 @@
   },
   "es": {
     "errors": {
-      "connError": "Hubo un problema conectándose a la web.\nPor favor revisa tu conexión e intenta de nuevo.",
-      "apiError": "Oops! Parece que hay un problema con nuestros servidores.\nPor favor danos un momento e intenta de nuevo.",
-      "clientError": "Parece que hay un problema con el pedido al servidor.\nPor favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje: {{errMsg}}"
+      "connError": [
+        "Hubo un problema conectándose a la web.",
+        "Por favor revisa tu conexión e intenta de nuevo."
+      ],
+      "apiError": [
+        "Oops! Parece que hay un problema con nuestros servidores.",
+        "Por favor danos un momento e intenta de nuevo."
+      ],
+      "clientError": [
+        "Parece que hay un problema con el pedido al servidor.",
+        "Por favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje:",
+        "{{errMsg}}"
+      ]
     },
     "errorDialog": {
       "header": "Error!",
@@ -67,6 +88,7 @@
       "addBtn": "Agregar"
     },
     "scheduleList": {
+      "defaultName": "Horario 1",
       "namePlaceholder": "Crea un nuevo horario"
     },
     "options": {
