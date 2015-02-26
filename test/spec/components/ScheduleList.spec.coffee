@@ -78,7 +78,7 @@ describe "ScheduleList", ->
       expect(state).toEqual
         current: "sch1"
         didDeleteLast: false
-        schedules: [{id: "sch1", val: "sch1"}, {id: "sch2", val: "sch2"}]
+        schedules: @store.getAll
 
     it 'creates state correctly when no schedules and no current', ->
       @store.getCurrent = null

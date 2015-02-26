@@ -20,8 +20,7 @@ ScheduleList = React.createClass(
     current = ScheduleStore.getCurrent()
     current: if current? then current.name else @renderSpinner()
     didDeleteLast: ScheduleStore.didDeleteLast()
-    schedules: ScheduleStore.getAll().map (sch)->
-      id: sch.id, val: sch.name
+    schedules: ScheduleStore.getAll()
 
   onChange: (state=@getState())->
     @addSchedule @t("scheduleList.defaultName") if state.didDeleteLast
