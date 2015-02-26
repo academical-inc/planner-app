@@ -41,7 +41,8 @@ WeekCalendar = React.createClass(
     @cal.fullCalendar "addEventSource", @sources.sections
 
     # TODO temporal
-    @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
+    if @sources.sections.events.length > 0
+      @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
 
   componentDidMount: ->
     SectionStore.addChangeListener @onSectionsChange
