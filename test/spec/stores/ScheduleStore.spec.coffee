@@ -327,6 +327,16 @@ describe 'ScheduleStore', ->
         expect(@current()).toEqual @all()[0]
         expect(@schedules.clean[1].del).toBe true
 
+      it 'reassigns current correctly when deleting the only schedule', ->
+        H.rewire ScheduleStore,
+          _schedules: [@schedules.clean[0]]
+          _current: @schedules.clean[0]
+        @payloads.delete.action.scheduleId = @schedules.clean[0].id
+        @dispatch @payloads.delete
+        expect(@all()).toEqual []
+        expect(@current()).toEqual null
+        expect(@schedules.clean[0].del).toBe true
+
     describe 'when not deleting current', ->
 
       it 'marks schedule as dirty delete and removes from schedules', ->
