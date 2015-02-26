@@ -1,6 +1,7 @@
 
 $             = require 'jquery'
 React         = require 'react/addons'
+ClickOutside  = require 'react-onclickoutside'
 I18nMixin     = require '../mixins/I18nMixin'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
@@ -10,10 +11,14 @@ MAX_INPUT_LENGTH = UiConstants.dropdown.MAX_INPUT_LENGTH
 
 Dropdown = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, ClickOutside]
 
-  toggleDropdown: ->
-    $(@refs.dropdownToggle.getDOMNode()).dropdown "toggle"
+  toggleDropdown: (e)->
+    e.preventDefault() if e?
+    $(@getDOMNode()).toggleClass "open"
+
+  closeDropdown: ->
+    $(@getDOMNode()).removeClass "open"
 
   getInitialState: ->
     buttonDisabled: false
@@ -25,13 +30,14 @@ Dropdown = React.createClass(
     if !!itemName
       @props.handleItemAdd itemName
       @refs.itemName.getDOMNode().value = ''
-      @toggleDropdown()
+      @closeDropdown()
     else
       $(@refs.inputFormGroup.getDOMNode()).addClass 'has-error'
 
   handleItemSelected: (e, item)->
     e.preventDefault()
     @props.handleItemSelected item if @props.handleItemSelected?
+    @closeDropdown()
 
   handleInputChange: (e)->
     val = @refs.itemName.getDOMNode().value.trim()
@@ -39,6 +45,9 @@ Dropdown = React.createClass(
       @setState buttonDisabled: true
     else
       @setState buttonDisabled: false
+
+  handleClickOutside: (e)->
+    @closeDropdown()
 
   getItem: (item)->
     @props.itemType
@@ -103,10 +112,9 @@ Dropdown = React.createClass(
       R.a(
         {
           className: "dropdown-toggle"
-          ref: "dropdownToggle"
           role: "button"
           href: "#"
-          "data-toggle": "dropdown"
+          onClick: @toggleDropdown
           "aria-expanded": false
         }
         @props.title
