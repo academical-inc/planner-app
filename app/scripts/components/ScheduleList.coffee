@@ -18,11 +18,13 @@ ScheduleList = React.createClass(
 
   getState: ->
     current = ScheduleStore.getCurrent()
-    openSchedule: if current? then current.name else @renderSpinner()
+    current: if current? then current.name else @renderSpinner()
+    didDeleteLast: ScheduleStore.didDeleteLast()
     schedules: ScheduleStore.getAll().map (sch)->
       id: sch.id, val: sch.name
 
-  onChange: ->
+  onChange: (state=@getState())->
+    @addSchedule @t("scheduleList.defaultName") if state.didDeleteLast
     @setState @getState()
 
   addSchedule: (name)->
@@ -57,7 +59,7 @@ ScheduleList = React.createClass(
       id: UiConstants.ids.SCHEDULE_LIST
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
-      title: @state.openSchedule
+      title: @state.current
       items: @state.schedules
       itemType: ScheduleItem
       handleItemAdd: @addSchedule

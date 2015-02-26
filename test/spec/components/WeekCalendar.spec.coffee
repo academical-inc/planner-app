@@ -8,12 +8,15 @@ sections     = require '../../fixtures/sections.json'
 
 describe 'WeekCalendar', ->
 
+  beforeEach ->
+    @mockSectionStore = H.spyObj "SectionStore",
+      ["addChangeListener", "removeChangeListener"]
+
+
   describe '#componentDidMount', ->
 
     beforeEach ->
       [@mock$, @mock$El] = H.mock$()
-      @mockSectionStore = H.spyObj "SectionStore",
-        ["addChangeListener", "removeChangeListener"]
       @restore = H.rewire WeekCalendar,
         $: @mock$
         SectionStore: @mockSectionStore
@@ -30,22 +33,21 @@ describe 'WeekCalendar', ->
       expect(@mockSectionStore.addChangeListener).toHaveBeenCalledWith \
         @cal.onSectionsChange
 
+
   describe '#componentWillUnmount', ->
 
     beforeEach ->
-      @mockSectionStore = H.spyObj "SectionStore",
-        ["addChangeListener", "removeChangeListener"]
       @restore = H.rewire WeekCalendar,
         SectionStore: @mockSectionStore
-      @cal = H.render WeekCalendar
 
     afterEach ->
       @restore
 
     it 'unsubscribes from stores', ->
-      @cal.componentWillUnmount()
+      cal = H.render WeekCalendar
+      cal.componentWillUnmount()
       expect(@mockSectionStore.removeChangeListener).toHaveBeenCalledWith \
-        @cal.onSectionsChange
+        cal.onSectionsChange
 
 
   describe '#getSectionEvents', ->
