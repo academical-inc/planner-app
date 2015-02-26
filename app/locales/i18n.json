@@ -1,6 +1,7 @@
 {
   "en": {
     "errors": {
+      "header": "Could not complete your request :(",
       "connError": [
         "There was a problem connecting to the web.",
         "Please check your connection and try again."
@@ -65,6 +66,7 @@
   },
   "es": {
     "errors": {
+      "header": "No se pudo completar tu acción :(",
       "connError": [
         "Hubo un problema conectándose a la web.",
         "Por favor revisa tu conexión e intenta de nuevo."
