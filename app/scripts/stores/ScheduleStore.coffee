@@ -100,7 +100,7 @@ removeSection = (sectionId)->
 class ScheduleStore extends Store
 
   getAll: ->
-    _.filter _schedules, (schedule)-> not schedule.del is true
+    _schedules
 
   getCurrent: ->
     _current

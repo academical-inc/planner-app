@@ -311,80 +311,67 @@ describe 'ScheduleStore', ->
       @dispatch @payloads.delete
       expect(@all()).toEqual tmp
 
-
-    describe 'when deleting current', ->
-
-      it 'reassigns current correctly when deleting first schedule', ->
-        H.rewire ScheduleStore,
-          _schedules: @schedules.clean.concat []
-          _current: @schedules.clean[0]
-        @payloads.delete.action.scheduleId = @schedules.clean[0].id
-        @dispatch @payloads.delete
-        expect(@all()).toEqual [@schedules.clean[1]]
-        expect(@current()).toEqual @all()[0]
-        expect(@schedules.clean[0].del).toBe true
-
-      it 'reassigns current correctly when not deleting first schedule', ->
-        H.rewire ScheduleStore,
-          _schedules: @schedules.clean.concat []
-          _current: @schedules.clean[1]
-        @payloads.delete.action.scheduleId = @schedules.clean[1].id
-        @dispatch @payloads.delete
-        expect(@all()).toEqual [@schedules.clean[0]]
-        expect(@current()).toEqual @all()[0]
-        expect(@schedules.clean[1].del).toBe true
-
-      it 'reassigns current correctly when deleting the only schedule', ->
-        H.rewire ScheduleStore,
-          _schedules: [@schedules.clean[0]]
-          _current: @schedules.clean[0]
-        @payloads.delete.action.scheduleId = @schedules.clean[0].id
-        @dispatch @payloads.delete
-        expect(@all()).toEqual []
-        expect(@current()).toEqual null
-        expect(@schedules.clean[0].del).toBe true
-
-    describe 'when not deleting current', ->
-
-      it 'marks schedule as dirty delete and removes from schedules', ->
-        H.rewire ScheduleStore,
-          _schedules: @schedules.clean.concat []
-          _current: @schedules.clean[0]
-        @payloads.delete.action.scheduleId = @schedules.clean[1].id
-        @dispatch @payloads.delete
-        expect(@all()).toEqual [@schedules.clean[0]]
-        expect(@current()).toEqual @all()[0]
-        expect(@schedules.clean[1].del).toBe true
+    it 'marks schedule as dirty delete', ->
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat []
+        _current: @schedules.clean[0]
+      @payloads.delete.action.scheduleId = @schedules.clean[1].id
+      @dispatch @payloads.delete
+      expect(@all()).toEqual [@schedules.clean[0], @schedules.toDelete[1]]
+      expect(@current()).toEqual @all()[0]
+      expect(@schedules.clean[1].del).toBe true
 
 
   describe 'when DELETE_SCHEDULE_SUCCESS received', ->
 
-    it 'completely removes dirty delete schedule', ->
-      H.rewire ScheduleStore, _schedules: @schedules.toDelete.concat []
-      @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
-      expect(@all()).toEqual [@schedules.toDelete[0]]
-      @dispatch @payloads.deleteSuccess
-      expect(@all()).toEqual [@schedules.toDelete[0]]
-      expect(@_get("_schedules")).toEqual\
-        [@schedules.toDelete[0]]
+    describe 'when deleting current', ->
 
-    it 'completely removes dirty delete schedule and sets didDeleteLast if its
-    the last schedule', ->
-      H.rewire ScheduleStore, _schedules: [@schedules.toDelete[1]]
-      @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
-      expect(@all()).toEqual []
-      @dispatch @payloads.deleteSuccess
-      expect(@all()).toEqual []
-      expect(@deletedLast()).toBe true
-      expect(@_get("_schedules")).toEqual []
+      it 'removes and reassigns current correctly when deleting first schedule', ->
+        H.rewire ScheduleStore,
+          _schedules: [@schedules.toDelete[1], @schedules.toDelete[0]]
+          _current: @schedules.toDelete[1]
+        @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
+        @dispatch @payloads.deleteSuccess
+        expect(@all()).toEqual [@schedules.toDelete[0]]
+        expect(@current()).toEqual @all()[0]
+
+      it 'removes reassigns current correctly when not deleting first schedule', ->
+        H.rewire ScheduleStore,
+          _schedules: @schedules.toDelete.concat []
+          _current: @schedules.toDelete[1]
+        @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
+        @dispatch @payloads.deleteSuccess
+        expect(@all()).toEqual [@schedules.toDelete[0]]
+        expect(@current()).toEqual @all()[0]
+
+      it 'removes and reassigns current correctly when deleting the only
+      schedule, and sets didDeleteLast', ->
+        H.rewire ScheduleStore,
+          _schedules: [@schedules.toDelete[1]]
+          _current: @schedules.toDelete[1]
+        @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
+        @dispatch @payloads.deleteSuccess
+        expect(@all()).toEqual []
+        expect(@current()).toEqual null
+        expect(@deletedLast()).toBe true
+
+    describe 'when not deleting current', ->
+
+      it 'removes from schedules', ->
+        H.rewire ScheduleStore,
+          _schedules: @schedules.toDelete.concat []
+          _current: @schedules.toDelete[0]
+        @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
+        @dispatch @payloads.deleteSuccess
+        expect(@all()).toEqual [@schedules.toDelete[0]]
+        expect(@current()).toEqual @all()[0]
 
     it 'does nothing if id is not found', ->
       H.rewire ScheduleStore, _schedules: @schedules.toDelete.concat []
       @payloads.deleteSuccess.action.scheduleId = "poof"
-      expect(@all()).toEqual [@schedules.toDelete[0]]
+      expect(@all()).toEqual @schedules.toDelete
       @dispatch @payloads.deleteSuccess
-      expect(@all()).toEqual [@schedules.toDelete[0]]
-      expect(@_get("_schedules")).toEqual @schedules.toDelete
+      expect(@all()).toEqual @schedules.toDelete
 
     it 'does nothing if schedule is not marked for deletion', ->
       H.rewire ScheduleStore, _schedules: @schedules.clean.concat []
@@ -392,7 +379,6 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual @schedules.clean
       @dispatch @payloads.deleteSuccess
       expect(@all()).toEqual @schedules.clean
-      expect(@_get("_schedules")).toEqual @schedules.clean
 
 
   describe 'when DELETE_SCHEDULE_FAIL received', ->
@@ -400,7 +386,7 @@ describe 'ScheduleStore', ->
     it 'unmarks schedule for deletion', ->
       H.rewire ScheduleStore, _schedules: @schedules.toDelete.concat []
       @payloads.deleteFail.action.scheduleId = @schedules.toDelete[1].id
-      expect(@all()).toEqual [@schedules.toDelete[0]]
+      expect(@all()).toEqual @schedules.toDelete
       @dispatch @payloads.deleteFail
       expect(@all()).toEqual @schedules.clean
 
