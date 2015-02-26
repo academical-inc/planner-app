@@ -17,7 +17,7 @@ ErrorDialog = React.createClass(
     $(UiConstants.selectors.ERROR_MODAL).modal "show"
 
   getInitialState: ->
-    error: "Error"
+    error: "Error!"
 
   componentDidMount: ->
     ErrorStore.addChangeListener @onChange
@@ -31,7 +31,11 @@ ErrorDialog = React.createClass(
         R.div className: "col-md-4",
           R.img src: "images/error_icon.png"
         R.div className: "col-md-8",
-          R.p null, @state.error
+          if Array.isArray @state.error
+            @state.error.map (er, i)->
+              R.p key: "errLine-#{i}", er
+          else
+            R.p null, @state.error
 
   render: ->
     @renderModal(
