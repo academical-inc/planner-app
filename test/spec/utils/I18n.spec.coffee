@@ -53,6 +53,14 @@ describe 'I18n', ->
       expect(I18n._template(@t, first: "John")).toEqual "Hey John, John"
 
 
+  describe '._templateAll', ->
+
+    it 'replaces correct values in the array of strings', ->
+      t = ["Some", "t {{x}}", "{{x}} - {{y}}"]
+      res = I18n._templateAll t, x: 5, y: 7
+      expect(res).toEqual ["Some", "t 5", "5 - 7"]
+
+
   describe '.init', ->
 
     beforeEach ->
@@ -98,15 +106,18 @@ describe 'I18n', ->
 
     beforeEach ->
       I18n.localeMessages = {s1: {m1: "{{val}}", m2: "m2"},\
-        s2: {m1: "m1"}, m1: "m1"}
+        s2: {m1: "m1"}, m1: "m1", a1: ["a1", "{{valA1}}"]}
 
     it 'returns correct translation for given key', ->
       expect(I18n.t("m1")).toEqual "m1"
       expect(I18n.t("s2.m1")).toEqual "m1"
       expect(I18n.t("s1.m2")).toEqual "m2"
 
-    it 'resturns translation with correct values when values are given', ->
+    it 'returns translation with correct values when values are given', ->
       expect(I18n.t("s1.m1", val: 5)).toEqual "5"
+
+    it 'returns translation with correct values when array present', ->
+      expect(I18n.t("a1", valA1: 5)).toEqual ["a1", "5"]
 
     it 'throws error when key not present', ->
       expect(-> I18n.t("m2")).toThrowError()
