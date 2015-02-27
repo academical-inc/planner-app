@@ -99,7 +99,8 @@ removeSection = (sectionId)->
 
 createSchedule = ->
   name = I18n.t "scheduleList.defaultName"
-  PlannerActions.createSchedule name, dispatchInitial: false
+  newSchedule = PlannerActions.createSchedule name, dispatchInitial: false
+  addSchedule newSchedule
 
 
 class ScheduleStore extends Store

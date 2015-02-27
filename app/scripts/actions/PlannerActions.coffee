@@ -45,6 +45,7 @@ class PlannerActions
         PlannerDispatcher.handleServerAction
           type: ActionTypes.CREATE_SCHEDULE_SUCCESS
           schedule: schedule
+    newSchedule
 
   @deleteSchedule: (scheduleId)->
     PlannerDispatcher.handleViewAction
