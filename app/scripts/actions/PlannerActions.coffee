@@ -26,11 +26,14 @@ class PlannerActions
           type: ActionTypes.GET_SCHEDULES_SUCCESS
           schedules: schedules
 
-  @createSchedule: (scheduleName)->
+  @createSchedule: (scheduleName, {dispatchInitial}={})->
+    dispatchInitial ?= true
+
     newSchedule = ApiUtils.data.newSchedule scheduleName
-    PlannerDispatcher.handleViewAction
-      type: ActionTypes.CREATE_SCHEDULE
-      schedule: $.extend(true, {}, newSchedule)
+    if dispatchInitial
+      PlannerDispatcher.handleViewAction
+        type: ActionTypes.CREATE_SCHEDULE
+        schedule: $.extend(true, {}, newSchedule)
 
     ApiUtils.createSchedule newSchedule, (err, schedule)->
       if err?
