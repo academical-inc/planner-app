@@ -1,7 +1,9 @@
 
-Store             = require './Store'
-_                 = require '../utils/HelperUtils'
-{ActionTypes}     = require '../constants/PlannerConstants'
+Store          = require './Store'
+I18n           = require '../utils/I18n'
+_              = require '../utils/HelperUtils'
+PlannerActions = require '../actions/PlannerActions'
+{ActionTypes}  = require '../constants/PlannerConstants'
 
 
 # Private
@@ -95,6 +97,10 @@ addSection = (sectionId)->
 removeSection = (sectionId)->
   _.findAndRemove _current.sectionIds, (id)-> id == sectionId
 
+createSchedule = ->
+  name = I18n.t "scheduleList.defaultName"
+  PlannerActions.createSchedule name, dispatchInitial: false
+
 
 class ScheduleStore extends Store
 
@@ -125,6 +131,7 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         finallyRemoveSchedule action.scheduleId
+        createSchedule() if _schedules.length is 0
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_FAIL
         revertRemovedSchedule action.scheduleId
