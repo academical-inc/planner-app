@@ -19,11 +19,9 @@ ScheduleList = React.createClass(
   getState: ->
     current = ScheduleStore.getCurrent()
     current: if current? then current.name else @renderSpinner()
-    didDeleteLast: ScheduleStore.didDeleteLast()
     schedules: ScheduleStore.getAll()
 
   onChange: (state=@getState())->
-    @addSchedule @t("scheduleList.defaultName") if state.didDeleteLast
     @setState @getState()
 
   addSchedule: (name)->

@@ -10,7 +10,6 @@ describe "ScheduleList", ->
       addChangeListener: undefined
       removeChangeListener: undefined
       getCurrent: null
-      didDeleteLast: false
       getAll: []
     }
     @topRestore = H.rewire ScheduleList,
@@ -65,7 +64,6 @@ describe "ScheduleList", ->
     beforeEach ->
       @store = {
         getCurrent: {id: "sch1", name: "sch1"}
-        didDeleteLast: false
         getAll: [{id: "sch1", name: "sch1"}, {id: "sch2", name: "sch2"}]
         addChangeListener: undefined
         removeChangeListener: undefined
@@ -77,7 +75,6 @@ describe "ScheduleList", ->
       state = list.getState()
       expect(state).toEqual
         current: "sch1"
-        didDeleteLast: false
         schedules: @store.getAll
 
     it 'creates state correctly when no schedules and no current', ->
@@ -89,15 +86,5 @@ describe "ScheduleList", ->
       state = list.getState()
       expect(state).toEqual
         current: "spinner"
-        didDeleteLast: false
         schedules: []
 
-
-  describe '#onChange', ->
-
-    it 'adds a new schedule if state indicates that the last schedule was
-    deleted', ->
-      scheduleList = H.render ScheduleList
-      H.spyOn scheduleList, "addSchedule"
-      scheduleList.onChange didDeleteLast: true
-      expect(scheduleList.addSchedule).toHaveBeenCalled()
