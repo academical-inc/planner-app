@@ -8,7 +8,6 @@ _                 = require '../utils/HelperUtils'
 _schedules     = []
 _current       = null
 _lastCurrent   = null
-_didDeleteLast = false
 
 setSchedules = (schedules)->
   _schedules = schedules
@@ -105,12 +104,8 @@ class ScheduleStore extends Store
   getCurrent: ->
     _current
 
-  didDeleteLast: ->
-    _didDeleteLast
-
   dispatchCallback: (payload)=>
     action = payload.action
-    _didDeleteLast = false
 
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
@@ -130,7 +125,6 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         finallyRemoveSchedule action.scheduleId
-        _didDeleteLast = true if _schedules.length is 0
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_FAIL
         revertRemovedSchedule action.scheduleId

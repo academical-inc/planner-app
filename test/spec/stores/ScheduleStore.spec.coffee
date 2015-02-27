@@ -72,7 +72,6 @@ describe 'ScheduleStore', ->
     @dispatch    = ScheduleStore.dispatchCallback
     @all         = ScheduleStore.getAll
     @current     = ScheduleStore.getCurrent
-    @deletedLast = ScheduleStore.didDeleteLast
     @_get        = ScheduleStore.__get__
     H.spyOn ScheduleStore, "emitChange"
 
@@ -91,12 +90,6 @@ describe 'ScheduleStore', ->
       expect(@all()).toEqual []
       expect(@current()).toBeNull()
       expect(ScheduleStore.dispatchToken).toBeDefined()
-
-  describe 'when any action received', ->
-
-    it 'always sets did delete action as false, unless it actually happened', ->
-      @dispatch action: type: "ANY"
-      expect(@deletedLast()).toBe false
 
 
   describe 'when OPEN_SCHEDULE received', ->
@@ -345,7 +338,7 @@ describe 'ScheduleStore', ->
         expect(@current()).toEqual @all()[0]
 
       it 'removes and reassigns current correctly when deleting the only
-      schedule, and sets didDeleteLast', ->
+      schedule', ->
         H.rewire ScheduleStore,
           _schedules: [@schedules.toDelete[1]]
           _current: @schedules.toDelete[1]
@@ -353,7 +346,6 @@ describe 'ScheduleStore', ->
         @dispatch @payloads.deleteSuccess
         expect(@all()).toEqual []
         expect(@current()).toEqual null
-        expect(@deletedLast()).toBe true
 
     describe 'when not deleting current', ->
 
