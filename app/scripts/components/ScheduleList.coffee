@@ -59,10 +59,11 @@ ScheduleList = React.createClass(
       title: @state.current
       items: @state.schedules
       itemType: ScheduleItem
+      addItemPlaceholder: @t "scheduleList.namePlaceholder"
+      closeOnAdd: false
       handleItemAdd: @addSchedule
       handleItemSelected: @openSchedule
       handleItemDelete: @deleteSchedule
-      addItemPlaceholder: @t "scheduleList.namePlaceholder"
     )
 
 )

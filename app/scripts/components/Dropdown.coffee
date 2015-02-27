@@ -13,6 +13,9 @@ Dropdown = React.createClass(
 
   mixins: [I18nMixin, ClickOutside]
 
+  getDefaultProps: ->
+    closeOnAdd: true
+
   toggleDropdown: (e)->
     e.preventDefault() if e?
     $(@getDOMNode()).toggleClass "open"
@@ -30,7 +33,7 @@ Dropdown = React.createClass(
     if !!itemName
       @props.handleItemAdd itemName
       @refs.itemName.getDOMNode().value = ''
-      @closeDropdown()
+      @closeDropdown() if @props.closeOnAdd
     else
       $(@refs.inputFormGroup.getDOMNode()).addClass 'has-error'
 
