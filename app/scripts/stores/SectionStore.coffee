@@ -18,6 +18,12 @@ setSectionsMap = (schedules)->
 setCurrent = (scheduleId)->
   _currentSections = _sectionsMap[scheduleId]
 
+addSchedule = (scheduleId)->
+  _sectionsMap[scheduleId] = []
+
+removeSchedule = (scheduleId)->
+  delete _sectionsMap[scheduleId]
+
 addSection = (section)->
   _currentSections.push section
 
@@ -41,6 +47,16 @@ class SectionStore extends Store
       when ActionTypes.GET_SCHEDULES_SUCCESS
         PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
         setSectionsMap action.schedules
+        setCurrent ScheduleStore.getCurrent().id
+        @emitChange()
+      when ActionTypes.CREATE_SCHEDULE_SUCCESS
+        PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
+        addSchedule action.schedule.id
+        setCurrent ScheduleStore.getCurrent().id
+        @emitChange()
+      when ActionTypes.DELETE_SCHEDULE_SUCCESS
+        PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
+        removeSchedule action.scheduleId
         setCurrent ScheduleStore.getCurrent().id
         @emitChange()
       when ActionTypes.ADD_SECTION

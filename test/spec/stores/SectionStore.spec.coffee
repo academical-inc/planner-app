@@ -37,13 +37,19 @@ describe 'SectionStore', ->
       remove:
         action:
           type: ActionTypes.REMOVE_SECTION
+      createSched:
+        action:
+          type: ActionTypes.CREATE_SCHEDULE_SUCCESS
+      delSched:
+        action:
+          type: ActionTypes.DELETE_SCHEDULE_SUCCESS
 
     @dispatch = SectionStore.dispatchCallback
     @current  = SectionStore.getCurrentSections
     H.spyOn SectionStore, "emitChange"
     @restore = H.rewire SectionStore,
       "PlannerDispatcher.waitFor": H.spy "waitFor"
-      ScheduleStore: H.spyObj "ScheduleStore", getCurrent: id: @currentSchedId
+      "ScheduleStore.getCurrent": H.spy "current", retVal: id: @currentSchedId
       _sectionsMap: {}
       _currentSections: []
 
@@ -118,3 +124,25 @@ describe 'SectionStore', ->
       expect(@current().length).toEqual 2
       expect(@current()).toEqual [{id: "sec2"}, {id: "sec3"}]
 
+
+  describe 'when CREATE_SCHEDULE_SUCCESS received', ->
+
+    it 'adds new empty sections from added schedule', ->
+      H.rewire SectionStore,
+        "ScheduleStore.getCurrent": H.spy "getCurrent", retVal: id: "sch3"
+      @payloads.createSched.action.schedule = id: "sch3"
+      @dispatch @payloads.createSched
+      expect(@current()).toEqual []
+
+
+  describe 'when DELETE_SCHEDULE_SUCCESS received', ->
+
+    it 'adds removes sections from removed schedule', ->
+      H.rewire SectionStore,
+        _sectionsMap: sch1: @schedules[0].sections, sch2: @schedules[1].sections
+        _currentSections: @schedules[1].sections
+      @payloads.delSched.action.scheduleId = @schedules[1].id
+      expect(@current()).toEqual @schedules[1].sections
+      @dispatch @payloads.delSched
+      expect(SectionStore.__get__("_sectionsMap")[@schedules[1].id]).toBeUndefined()
+      expect(@current()).toEqual @schedules[0].sections
