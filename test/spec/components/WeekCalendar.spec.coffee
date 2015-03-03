@@ -72,7 +72,6 @@ describe 'WeekCalendar', ->
       expect(res).toEqual(
         id: @sec.id
         title: @sec.courseName
-        description: @sec.courseDescription
         start: @ev.startDt
         end: @ev.endDt
         location: @ev.location

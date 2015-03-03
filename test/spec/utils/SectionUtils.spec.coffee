@@ -7,7 +7,6 @@ sections     = require '../../fixtures/sections.json'
 
 describe 'SectionUtils', ->
 
-
   describe '#getSectionEvents', ->
 
     beforeEach ->

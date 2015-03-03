@@ -4,7 +4,7 @@ PreviewStore = require '../../../app/scripts/stores/PreviewStore'
 {ActionTypes} = require '../../../app/scripts/constants/PlannerConstants'
 
 
-fdescribe 'PreviewStore', ->
+describe 'PreviewStore', ->
 
   beforeEach ->
     @assertPreview = (prev, res1, res2, overlap)=>
@@ -58,7 +58,7 @@ fdescribe 'PreviewStore', ->
     @overlap  = PreviewStore.isOverlapping
 
     H.spyOn PreviewStore, "emitChange"
-    H.rewire PreviewStore,
+    @restore = H.rewire PreviewStore,
       _preview: null
       _previewEvents: []
       _isOverlapping: false
