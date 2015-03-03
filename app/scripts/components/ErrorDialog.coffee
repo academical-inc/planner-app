@@ -14,7 +14,7 @@ ErrorDialog = React.createClass(
 
   onChange: ->
     @setState error: ErrorStore.getError()
-    $(UiConstants.selectors.ERROR_MODAL).modal "show"
+    @show()
 
   getInitialState: ->
     error: "Error!"
