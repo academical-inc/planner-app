@@ -1,11 +1,13 @@
 
-$             = require 'jquery'
-React         = require 'react'
-SectionStore  = require '../stores/SectionStore'
-PreviewStore  = require '../stores/PreviewStore'
-SectionUtils  = require '../utils/SectionUtils'
-I18nMixin     = require '../mixins/I18nMixin'
-R             = React.DOM
+$              = require 'jquery'
+React          = require 'react'
+SectionStore   = require '../stores/SectionStore'
+PreviewStore   = require '../stores/PreviewStore'
+SectionUtils   = require '../utils/SectionUtils'
+I18nMixin      = require '../mixins/I18nMixin'
+IconMixin      = require '../mixins/IconMixin'
+PlannerActions = require '../actions/PlannerActions'
+R              = React.DOM
 
 # Private
 sectionEvents = -> SectionStore.getCurrentSectionEvents()
@@ -14,11 +16,12 @@ previewEvents = -> PreviewStore.getPreviewEvents()
 
 WeekCalendar = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, IconMixin]
 
   sectionEventDataTransform: (sectionEvent)->
     id:          sectionEvent.section.id
     title:       sectionEvent.section.courseName
+    description: sectionEvent.section.courseDescription
     start:       sectionEvent.event.startDt
     end:         sectionEvent.event.endDt
     location:    sectionEvent.event.location
@@ -36,6 +39,11 @@ WeekCalendar = React.createClass(
     allDay:          false
     isPreview:       true
 
+  updateEventSource: (source, events)->
+    @cal.fullCalendar "removeEventSource", source
+    source.events = events
+    @cal.fullCalendar "addEventSource", source
+
   onSectionsChange: ->
     @updateEventSource @sources.sections, sectionEvents()
 
@@ -46,10 +54,8 @@ WeekCalendar = React.createClass(
   onPreviewChange: ->
     @updateEventSource @sources.preview, previewEvents()
 
-  updateEventSource: (source, events)->
-    @cal.fullCalendar "removeEventSource", source
-    source.events = events
-    @cal.fullCalendar "addEventSource", source
+  removeSection: (sectionId)->
+    PlannerActions.removeSection sectionId
 
   componentDidMount: ->
     SectionStore.addChangeListener @onSectionsChange
@@ -77,11 +83,21 @@ WeekCalendar = React.createClass(
         left: "prev"
         center: @t "calendar.today"
         right: "next"
+      eventRender: @renderEvent
     )
 
   componentWillUnmount: ->
     SectionStore.removeChangeListener @onSectionsChange
     PreviewStore.removeChangeListener @onPreviewChange
+
+  renderEvent: (event, jqElement)->
+    icon = $(
+      @iconMarkup "times", fw: false, inverse: true, classNames: ['pull-right']
+    )
+    if event.isSection
+      icon.on "click", @removeSection.bind(@, event.id)
+    jqElement.find('.fc-time').append icon
+    jqElement
 
   render: ->
     R.div className: 'pla-week-calendar'
