@@ -23,6 +23,8 @@ module.exports =
     ZERO:  className: "danger"
   dropdown:
     MAX_INPUT_LENGTH: 28
+  defaultSectionColor: "#2daae1"
+  defaultPevColor: "#6db533"
   days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
   colors: [
     "#f27979"
