@@ -82,5 +82,15 @@ class PlannerActions
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_SECTION_PREVIEW
 
+  @addPersonalEvent: (personalEvent)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.ADD_PERSONAL_EVENT
+      personalEvent: personalEvent
+
+  @removePersonalEvent: (personalEvent)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.REMOVE_PERSONAL_EVENT
+      personalEvent: personalEvent
+
 
 module.exports = PlannerActions
