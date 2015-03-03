@@ -2,6 +2,7 @@
 Store             = require './Store'
 ScheduleStore     = require './ScheduleStore'
 _                 = require '../utils/HelperUtils'
+SectionUtils      = require '../utils/SectionUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
 
@@ -35,6 +36,9 @@ class SectionStore extends Store
 
   getCurrentSections: ->
     _currentSections
+
+  getCurrentSectionEvents: ->
+    SectionUtils.getSectionEvents _currentSections
 
   dispatchCallback: (payload)=>
     action = payload.action
