@@ -11,6 +11,7 @@ _schedules     = []
 _current       = null
 _lastCurrent   = null
 
+
 setSchedules = (schedules)->
   _schedules = schedules
   setCurrent _schedules[0]
@@ -95,7 +96,13 @@ addSection = (sectionId)->
   _current.sectionIds.push sectionId
 
 removeSection = (sectionId)->
-  _.findAndRemove _current.sectionIds, (id)-> id == sectionId
+  _.findAndRemove _current.sectionIds, (id)-> id is sectionId
+
+addPev = (personalEvent)->
+  _current.personalEvents.push personalEvent
+
+removePev = (personalEvent)->
+  _.findAndRemove _current.personalEvents, (pev)-> pev is personalEvent
 
 createSchedule = ->
   name = I18n.t "scheduleList.defaultName"
@@ -142,10 +149,12 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.ADD_SECTION
         addSection action.section.id
-        @emitChange()
       when ActionTypes.REMOVE_SECTION
         removeSection action.sectionId
-        @emitChange()
+      when ActionTypes.ADD_PERSONAL_EVENT
+        addPev action.personalEvent
+      when ActionTypes.REMOVE_PERSONAL_EVENT
+        removePev action.personalEvent
 
 
 module.exports = new ScheduleStore
