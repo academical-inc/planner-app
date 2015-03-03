@@ -63,5 +63,24 @@ class PlannerActions
           type: ActionTypes.DELETE_SCHEDULE_SUCCESS
           scheduleId: scheduleId
 
+  @addSection: (section)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.ADD_SECTION
+      section: section
+
+  @removeSection: (sectionId)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.REMOVE_SECTION
+      sectionId: sectionId
+
+  @addSectionPreview: (section)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.ADD_SECTION_PREVIEW
+      section: section
+
+  @removeSectionPreview: ->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.REMOVE_SECTION_PREVIEW
+
 
 module.exports = PlannerActions
