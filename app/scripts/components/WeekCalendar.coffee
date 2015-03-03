@@ -8,44 +8,43 @@ I18nMixin     = require '../mixins/I18nMixin'
 R             = React.DOM
 
 # Private
-sections = -> SectionStore.getCurrentSections()
-preview  = -> PreviewStore.getPreview()
-events   = (sections)-> SectionUtils.getSectionEvents(sections)
+sectionEvents = -> SectionStore.getCurrentSectionEvents()
+previewEvents = -> PreviewStore.getPreviewEvents()
+
 
 WeekCalendar = React.createClass(
 
   mixins: [I18nMixin]
 
-  sectionEventDataTransform: (sectionEventData)->
-    id:          sectionEventData.section.id
-    title:       sectionEventData.section.courseName
-    description: sectionEventData.section.courseDescription
-    start:       sectionEventData.event.startDt
-    end:         sectionEventData.event.endDt
-    location:    sectionEventData.event.location
+  sectionEventDataTransform: (sectionEvent)->
+    id:          sectionEvent.section.id
+    title:       sectionEvent.section.courseName
+    start:       sectionEvent.event.startDt
+    end:         sectionEvent.event.endDt
+    location:    sectionEvent.event.location
     editable:    false
     allDay:      false
     isSection:   true
 
-  previewEventDataTransform: (sectionEventData)->
-    id:              sectionEventData.section.id
-    start:           sectionEventData.event.startDt
-    end:             sectionEventData.event.endDt
-    backgroundColor: 'red' if sectionEventData.event.isOverlapping
+  previewEventDataTransform: (sectionEvent)->
+    id:              sectionEvent.section.id
+    start:           sectionEvent.event.startDt
+    end:             sectionEvent.event.endDt
+    backgroundColor: 'red' if sectionEvent.event.isOverlapping
     rendering:       'background'
     editable:        false
     allDay:          false
     isPreview:       true
 
   onSectionsChange: ->
-    @updateEventSource @sources.sections, events sections()
+    @updateEventSource @sources.sections, sectionEvents()
 
     # TODO temporal
     if @sources.sections.events.length > 0
       @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
 
   onPreviewChange: ->
-    @updateEventSource @sources.preview, events preview()
+    @updateEventSource @sources.preview, previewEvents()
 
   updateEventSource: (source, events)->
     @cal.fullCalendar "removeEventSource", source
