@@ -107,7 +107,10 @@ class SpecHelper
     else if typeof spyFuncs == 'object'
       spy = jasmine.createSpyObj name, Object.keys(spyFuncs)
       for key of spyFuncs
-        spy[key].and.returnValue spyFuncs[key]
+        if $.isFunction spyFuncs[key]
+          spy[key].and.callFake spyFuncs[key]
+        else
+          spy[key].and.returnValue spyFuncs[key]
       spy
     else
       console.error "'spyFuncs' must be an array or an object"
