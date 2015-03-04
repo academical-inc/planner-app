@@ -70,6 +70,7 @@
   },
   "browserify-shim": {
     "jquery": "global:$",
+    "moment": "global:moment",
     "bloodhound": "global:Bloodhound"
   }
 }
