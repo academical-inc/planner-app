@@ -6,6 +6,7 @@ Academical = require '../api/Academical'
 _api                   = null
 _currentSchoolNickname = null
 _currentSchool         = null
+_hostname              = window.location.hostname
 
 # TODO Implement properly from login
 _currentStudent = id: "54e4f2386d61635e22050000"
@@ -18,7 +19,7 @@ class ApiUtils
     # TODO Should probably init current student and school here
     _api = new Academical
     _api.setHost Env.API_HOST, Env.API_PROTOCOL
-    _currentSchoolNickname = window.location.hostname.split(".")[0]
+    _currentSchoolNickname = _hostname.split(".")[0]
 
   @data:
     newSchedule: (name, {studentId, schoolId, term}={})->
@@ -38,7 +39,7 @@ class ApiUtils
         to = _.setTime _currentSchool.terms[0].endDate, startDt
         to = _.format to
       timezone ?= _currentSchool.timezone
-      _api.data.newSchedule(
+      _api.data.newPersonalEvent(
         name
         startDt
         endDt

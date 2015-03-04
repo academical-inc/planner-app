@@ -3,7 +3,7 @@ H           = require '../../SpecHelper'
 DataHelpers = require '../../../app/scripts/api/DataHelpers'
 
 
-fdescribe 'DataHelpers', ->
+describe 'DataHelpers', ->
 
   describe '.newPersonalEvent', ->
 
