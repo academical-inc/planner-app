@@ -3,7 +3,7 @@ H        = require '../../SpecHelper'
 ApiUtils = require '../../../app/scripts/utils/ApiUtils'
 
 
-fdescribe 'ApiUtils', ->
+describe 'ApiUtils', ->
 
   beforeEach ->
     @api = H.spyObj "s2", ["setHost", "data"]
