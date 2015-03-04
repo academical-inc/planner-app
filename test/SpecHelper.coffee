@@ -66,6 +66,12 @@ class Ajax
         expect(reqData).toEqual {}
 
 
+# Private
+_divContainer = document.createElement 'div'
+
+afterEach ->
+  SpecHelper.unmount()
+
 class SpecHelper
 
   @React:     React
@@ -119,10 +125,10 @@ class SpecHelper
 
   @render: (reactComponent, props={}, children)->
     factory = React.createFactory(reactComponent)
-    TestUtils.renderIntoDocument factory(props, children)
+    React.render factory(props, children), _divContainer
 
-  @unmount: (reactComponent)->
-    React.unmountComponentAtNode reactComponent
+  @unmount: ->
+    React.unmountComponentAtNode _divContainer
 
   @rewireAndRender: (reactComponent, props={}, stubs={})->
     restore = @rewire(reactComponent, stubs)
