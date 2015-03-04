@@ -1,23 +1,34 @@
 
-React         = require 'react'
-$             = require 'jquery'
-ModalMixin    = require '../mixins/ModalMixin'
-I18nMixin     = require '../mixins/I18nMixin'
-DateUtils     = require '../utils/DateUtils'
-{UiConstants} = require '../constants/PlannerConstants'
-R             = React.DOM
+React                  = require 'react'
+$                      = require 'jquery'
+ModalMixin             = require '../mixins/ModalMixin'
+I18nMixin              = require '../mixins/I18nMixin'
+DateUtils              = require '../utils/DateUtils'
+PersonalEventFormStore = require '../stores/PersonalEventFormStore'
+{UiConstants}          = require '../constants/PlannerConstants'
+R                      = React.DOM
 
 
 PersonalEventForm = React.createClass(
 
   mixins: [I18nMixin, ModalMixin]
 
+  getState: ->
+    [startDate, endDate] = PersonalEventFormStore.getDateTimes()
+    date = startDate || endDate || DateUtils.now()
+    checkedDays: [DateUtils.getDayForDate date]
+    startTime: DateUtils.getTimeStr startDate if startDate?
+    endTime: DateUtils.getTimeStr endDate if endDate?
+
   getInitialState: ->
-    @props.initialState || {
-      checkedDays: [DateUtils.getDayForDate DateUtils.now()]
-    }
+    @props.initialState || @getState()
+
+  onChange: ->
+    @setState @getState()
+    @show()
 
   componentDidMount: ->
+    PersonalEventFormStore.addChangeListener @onChange
     opts =
       step: 15
       selectOnBlur: true
@@ -26,6 +37,9 @@ PersonalEventForm = React.createClass(
     $(@refs.startTime.getDOMNode()).timepicker opts
     $(@refs.endTime.getDOMNode()).timepicker opts
     return
+
+  componentWillUnmount: ->
+    PersonalEventFormStore.removeChangeListener @onChange
 
   handleStartTimeChange: (e)->
     @setState startTime: e.target.value

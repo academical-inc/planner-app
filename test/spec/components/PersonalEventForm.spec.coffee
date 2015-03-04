@@ -5,6 +5,13 @@ PersonalEventForm = require '../../../app/scripts/components/PersonalEventForm'
 
 describe "PersonalEventForm", ->
 
+  beforeEach ->
+    @global = H.rewire PersonalEventForm,
+      DateUtils: H.spyObj "s1", ["now", "getDayForDate", "getTimeStr"]
+
+  afterEach ->
+    @global()
+
   describe "#componentDidMount", ->
 
     beforeEach ->
