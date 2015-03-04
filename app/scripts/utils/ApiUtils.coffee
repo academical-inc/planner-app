@@ -43,6 +43,8 @@ class ApiUtils
         startDt
         endDt
         timezone
+        days
+        to
         location: location
         description: description
         color: color

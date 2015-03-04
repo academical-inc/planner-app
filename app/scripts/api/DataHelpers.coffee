@@ -9,12 +9,12 @@ class DataHelpers
     schoolId:   schoolId
     term:       term
 
-  @newPersonalEvent: (name, startDt, endDt, timezone, days, {location, \
+  @newPersonalEvent: (name, startDt, endDt, timezone, days, to, {location, \
       description, color}={})->
 
     days = days.map (day)->
       d = day.toUpperCase()
-      if not d in DAYS
+      if not (d in DAYS)
         throw new Error "Academical: Event days must be one of #{DAYS}"
       d
 
