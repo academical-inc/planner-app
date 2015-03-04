@@ -82,6 +82,12 @@ class PlannerActions
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_SECTION_PREVIEW
 
+  @openPersonalEventForm: (startDate, endDate)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.OPEN_PERSONAL_EVENT_FORM
+      startDate: startDate
+      endDate: endDate
+
   @addPersonalEvent: (personalEvent)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_PERSONAL_EVENT
