@@ -1,6 +1,8 @@
 
+Moment    = require 'moment'
 H         = require '../../SpecHelper'
 DateUtils = require '../../../app/scripts/utils/DateUtils'
+
 
 describe "DateUtils", ->
 
@@ -12,14 +14,82 @@ describe "DateUtils", ->
   afterEach ->
     @restore()
 
+
   describe '.getDayForDate', ->
 
     it 'returns the correct day string for the given date', ->
       date = new Date 2015, 1, 1 # Sunday
+      date = Moment date
       expect(DateUtils.getDayForDate(date)).toEqual "Su"
 
       date = new Date 2015, 1, 2 # Monday
+      date = Moment date
       expect(DateUtils.getDayForDate(date)).toEqual "Mo"
 
       date = new Date 2015, 1, 6 # Friday
+      date = Moment date
       expect(DateUtils.getDayForDate(date)).toEqual "Fr"
+
+    it 'fails if a moment object not provided', ->
+      expect(DateUtils.getDayForDate.bind(null, new Date)).toThrowError()
+
+
+  describe '.getTimeStr', ->
+
+    beforeEach ->
+      @t1 = Moment().hours(11).minutes(30).seconds(20)
+      @t2 = Moment().hours(15).minutes(50).seconds(20)
+
+    it 'returns the time in the correct format', ->
+      res = DateUtils.getTimeStr @t1
+      expect(res).toEqual "11:30am"
+      res = DateUtils.getTimeStr @t2
+      expect(res).toEqual "3:50pm"
+
+    it 'returns the time with provided format', ->
+      res = DateUtils.getTimeStr @t1, "HH:mm"
+      expect(res).toEqual "11:30"
+      res = DateUtils.getTimeStr @t2, "HH:mm"
+      expect(res).toEqual "15:50"
+
+
+  describe '.setTime', ->
+
+    it 'sets the time to the moment object correctly when using strings', ->
+      time = "2014-01-20T10:30:00.000-05:00"
+      date = "2015-05-09"
+
+      expect(DateUtils.setTime(date, time).hours()).toEqual 10
+      expect(DateUtils.setTime(date, time).minutes()).toEqual 30
+
+    it 'sets the time to the moment object correctly when using moments', ->
+      time = Moment "2014-01-20T10:30:00.000-05:00"
+      date = Moment "2015-05-09"
+
+      expect(DateUtils.setTime(date, time).hours()).toEqual 10
+      expect(DateUtils.setTime(date, time).minutes()).toEqual 30
+
+    it 'sets the time to the moment object correctly when using combination', ->
+      time = "2014-01-20T10:30:00.000-05:00"
+      date = Moment "2015-05-09"
+
+      expect(DateUtils.setTime(date, time).hours()).toEqual 10
+      expect(DateUtils.setTime(date, time).minutes()).toEqual 30
+
+
+  describe '.format', ->
+
+    it 'uses default iso format when no format provided', ->
+      str = "2014-01-20T10:30:00-05:00"
+      date = Moment str
+
+      expect(DateUtils.format(str)).toEqual str
+      expect(DateUtils.format(date)).toEqual str
+
+    it 'uses default iso format when no format', ->
+      str = "2014-01-20T10:30:00.000-05:00"
+      date = Moment str
+      expected = "2014-01-20"
+
+      expect(DateUtils.format(str, "YYYY-MM-DD")).toEqual expected
+      expect(DateUtils.format(date, "YYYY-MM-DD")).toEqual expected
