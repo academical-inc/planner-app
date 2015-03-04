@@ -1,6 +1,7 @@
 
-Env            = require '../Env'
-Academical     = require '../api/Academical'
+Env        = require '../Env'
+_          = require '../utils/DateUtils'
+Academical = require '../api/Academical'
 
 _api                   = null
 _currentSchoolNickname = null
@@ -31,6 +32,22 @@ class ApiUtils
         schoolId
         term
       )
+    newPersonalEvent: (name, startDt, endDt, days, {to ,timezone, location, \
+        description, color}={})->
+      if not to?
+        to = _.setTime _currentSchool.terms[0].endDate, startDt
+        to = _.format to
+      timezone ?= _currentSchool.timezone
+      _api.data.newSchedule(
+        name
+        startDt
+        endDt
+        timezone
+        location: location
+        description: description
+        color: color
+      )
+
 
   @api = _api
 
