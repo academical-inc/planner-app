@@ -79,6 +79,10 @@ WeekCalendar = React.createClass(
   removePersonalEvent: (pev)->
     PlannerActions.removePersonalEvent pev
 
+  handleEventSelect: (start, end)->
+    @cal.fullCalendar 'unselect'
+    PlannerActions.openPersonalEventForm start, end
+
   componentDidMount: ->
     SectionStore.addChangeListener @onSectionsChange
     PreviewStore.addChangeListener @onPreviewChange
@@ -114,6 +118,7 @@ WeekCalendar = React.createClass(
         center: @t "calendar.today"
         right: "next"
       eventRender: @renderEvent
+      select: @handleEventSelect
     )
 
   componentWillUnmount: ->
