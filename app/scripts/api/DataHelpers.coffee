@@ -12,11 +12,9 @@ class DataHelpers
   @newPersonalEvent: (name, startDt, endDt, timezone, days, to, {location, \
       description, color}={})->
 
-    days = days.map (day)->
-      d = day.toUpperCase()
-      if not (d in DAYS)
+    days.forEach (day)->
+      if not (day in DAYS)
         throw new Error "Academical: Event days must be one of #{DAYS}"
-      d
 
     ev =
       name:      name

@@ -13,7 +13,7 @@ describe 'DataHelpers', ->
         "2015-01-01T10:35:00-05:00"
         "2015-01-01T10:55:00-05:00"
         "America/Bogota"
-        ["Mo", "Tu"]
+        ["MO", "TU"]
         "2015-05-01T10:35:00-05:00"
       )
       expect(ev).toEqual
