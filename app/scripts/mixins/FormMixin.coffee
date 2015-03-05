@@ -5,7 +5,7 @@ R     = React.DOM
 
 
 # Private
-errorElements = []
+_errorElements     = []
 
 module.exports =
 
@@ -16,13 +16,18 @@ module.exports =
       throw new Error "FormMixin: Must set list of formFields to validate"
 
   clearFormErrors: ->
-    for el in errorElements
+    for el in _errorElements
       el.removeClass 'has-error'
+    _errorElements = []
 
   clearFields: ->
     @_formFieldsPresent =>
       for field in @formFields()
         @refs[field].getDOMNode().value = ''
+
+  addError: (el)->
+    el.addClass 'has-error'
+    _errorElements.push el
 
   validateForm: (cb)->
     @_formFieldsPresent =>
@@ -34,8 +39,13 @@ module.exports =
         if !!val
           res[field] = val
         else
-          el.parent().addClass 'has-error'
-          errorElements.push el.parent()
+          @addError el.parent()
           valid = false
+      if @customValidations?
+        for validation in @customValidations()
+          el = validation()
+          if el?
+            @addError $(el)
+            valid = false
       cb res if valid
 
