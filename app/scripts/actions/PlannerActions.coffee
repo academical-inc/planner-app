@@ -88,7 +88,7 @@ class PlannerActions
       startDate: startDate
       endDate: endDate
 
-  @addPersonalEvent: (personalEvent)->
+  @addPersonalEvent: (name, startDate, endDate, days)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_PERSONAL_EVENT
       personalEvent: personalEvent
