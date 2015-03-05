@@ -20,8 +20,8 @@ class HelperUtils
     arr.splice(idx, 1)[0]
 
   @findAndRemove: (arr, test)->
-    [el, idx] = HelperUtils.findWithIdx arr, test
-    HelperUtils.removeAt arr, idx
+    [el, idx] = @findWithIdx arr, test
+    @removeAt arr, idx
     el
 
 
