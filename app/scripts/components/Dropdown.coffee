@@ -3,6 +3,7 @@ $             = require 'jquery'
 React         = require 'react/addons'
 ClickOutside  = require 'react-onclickoutside'
 I18nMixin     = require '../mixins/I18nMixin'
+FormMixin     = require '../mixins/FormMixin'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
@@ -11,7 +12,7 @@ MAX_INPUT_LENGTH = UiConstants.dropdown.MAX_INPUT_LENGTH
 
 Dropdown = React.createClass(
 
-  mixins: [I18nMixin, ClickOutside]
+  mixins: [I18nMixin, ClickOutside, FormMixin]
 
   getDefaultProps: ->
     closeOnAdd: true
@@ -26,16 +27,16 @@ Dropdown = React.createClass(
   getInitialState: ->
     buttonDisabled: false
 
+  formFields: ->
+    ["itemName"]
+
   handleItemAdd: (e)->
     e.preventDefault()
-    $(@refs.inputFormGroup.getDOMNode()).removeClass 'has-error'
-    itemName = @refs.itemName.getDOMNode().value.trim()
-    if !!itemName
-      @props.handleItemAdd itemName
-      @refs.itemName.getDOMNode().value = ''
+    @clearFormErrors()
+    @validateForm (fields)=>
+      @props.handleItemAdd fields.itemName
+      @clearFields()
       @closeDropdown() if @props.closeOnAdd
-    else
-      $(@refs.inputFormGroup.getDOMNode()).addClass 'has-error'
 
   handleItemSelected: (e, item)->
     e.preventDefault()
@@ -63,7 +64,7 @@ Dropdown = React.createClass(
   renderAddInput: ->
     R.li key: "add-input",
       R.form className: 'navbar-form', onSubmit: @handleItemAdd,
-        R.div className: 'form-group', ref: "inputFormGroup",
+        R.div className: 'form-group',
           R.input
             className: "form-control"
             ref: "itemName"

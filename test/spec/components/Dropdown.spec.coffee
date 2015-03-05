@@ -15,11 +15,11 @@ describe 'Dropdown', ->
         items: []
         itemType: H.mockComponent()
         handleItemAdd: @handler
+      @input = @dd.refs.itemName.getDOMNode()
 
     describe 'when item name value provided', ->
 
       beforeEach ->
-        @input = @dd.refs.itemName.getDOMNode()
         @input.value = "  Value!  "
         @dd.handleItemAdd preventDefault: ->
 
@@ -30,8 +30,7 @@ describe 'Dropdown', ->
         expect(@input.value).toEqual ""
 
       it 'input form group does not have error class', ->
-        expect(@dd.refs.inputFormGroup.getDOMNode().className).not.toContain \
-          "has-error"
+        expect(@input.parentElement.className).not.toContain "has-error"
 
     describe 'when item name value provided', ->
 
@@ -42,8 +41,7 @@ describe 'Dropdown', ->
         expect(@handler).not.toHaveBeenCalled()
 
       it 'adds error class to form group', ->
-        expect(@dd.refs.inputFormGroup.getDOMNode().className).toContain \
-          "has-error"
+        expect(@input.parentElement.className).toContain "has-error"
 
 
   describe '#handleItemSelected', ->
