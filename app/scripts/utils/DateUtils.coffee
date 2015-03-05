@@ -16,7 +16,7 @@ class DateUtils
     @format date, format
 
   @getTimeFromStr: (str, format="h:mma")->
-    Moment(str, format)
+    Moment.utc(str, format)
 
   @setTime: (date, time)->
     time = Moment time

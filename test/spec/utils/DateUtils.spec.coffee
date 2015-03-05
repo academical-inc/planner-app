@@ -42,6 +42,28 @@ describe "DateUtils", ->
       expect(res).toEqual "15:50"
 
 
+  describe '.getTimeFromStr', ->
+
+    it 'returns correct utc moment obj from time str in default format', ->
+      res = DateUtils.getTimeFromStr "11:30am"
+      expect(res.hours()).toEqual 11
+      expect(res.minutes()).toEqual 30
+      expect(res.isUTC()).toBe true
+      res = DateUtils.getTimeFromStr "3:50pm"
+      expect(res.hours()).toEqual 15
+      expect(res.minutes()).toEqual 50
+      expect(res.isUTC()).toBe true
+
+    it 'returns correct utc moment obj from time str in provided format', ->
+      res = DateUtils.getTimeFromStr "11:30", "HH:mm"
+      expect(res.hours()).toEqual 11
+      expect(res.minutes()).toEqual 30
+      expect(res.isUTC()).toBe true
+      res = DateUtils.getTimeFromStr "15:50", "HH:mm"
+      expect(res.hours()).toEqual 15
+      expect(res.minutes()).toEqual 50
+      expect(res.isUTC()).toBe true
+
   describe '.setTime', ->
 
     it 'sets the time to the moment object correctly when using strings', ->
