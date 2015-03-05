@@ -113,8 +113,7 @@ describe "PersonalEventForm", ->
       H.spyOn @form, "getStartEnd", retVal: ["start", "end"]
       H.spyOn @form, "getState", retVal: checkedDays: [1]
 
-
-    it 'grabs form data correctly', ->
+    it 'grabs and submits form data correctly', ->
       @form.setState checkedDays: [3,1], =>
         @form.refs.name.getDOMNode().value = "Name"
         @form.refs.startTime.getDOMNode().value = "10:00am"
@@ -132,6 +131,21 @@ describe "PersonalEventForm", ->
       expect(@form.refs.startTime.getDOMNode().value).toEqual ''
       expect(@form.refs.endTime.getDOMNode().value).toEqual ''
       expect(@form.state.checkedDays.length).toEqual 1
+
+    it 'does not submit data when missing fields', ->
+      name      = @form.refs.name.getDOMNode()
+      startTime = @form.refs.startTime.getDOMNode()
+      endTime   = @form.refs.endTime.getDOMNode()
+      @form.setState checkedDays: [], =>
+        name.value = ""
+        startTime.value = ""
+        endTime.value = ""
+        @form.handleSubmit preventDefault: ->
+        expect(name.parentElement.className).toContain 'has-error'
+        expect(startTime.parentElement.className).toContain 'has-error'
+        expect(endTime.parentElement.className).toContain 'has-error'
+        expect(@form.refs.daysGroup.getDOMNode().className).toContain 'has-error'
+
 
   describe "#renderInput", ->
 

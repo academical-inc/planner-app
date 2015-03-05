@@ -3,6 +3,7 @@ React                  = require 'react'
 $                      = require 'jquery'
 ModalMixin             = require '../mixins/ModalMixin'
 I18nMixin              = require '../mixins/I18nMixin'
+FormMixin              = require '../mixins/FormMixin'
 DateUtils              = require '../utils/DateUtils'
 HelperUtils            = require '../utils/HelperUtils'
 PersonalEventFormStore = require '../stores/PersonalEventFormStore'
@@ -16,7 +17,7 @@ _ = $.extend true, {}, HelperUtils, DateUtils
 # TODO add repeat until option. Do not force to school period
 PersonalEventForm = React.createClass(
 
-  mixins: [I18nMixin, ModalMixin]
+  mixins: [I18nMixin, ModalMixin, FormMixin]
 
   getState: ->
     [@startDate, @endDate] = PersonalEventFormStore.getStartEnd()
@@ -77,23 +78,33 @@ PersonalEventForm = React.createClass(
       _.removeAt checkedDays, checkedDays.indexOf(day)
     @setState checkedDays: checkedDays
 
+  formFields: ->
+    ["name", "startTime", "endTime"]
+
+  validateDays: ->
+    @refs.daysGroup.getDOMNode() if @state.checkedDays.length == 0
+
+  customValidations: ->
+    [@validateDays]
+
   handleSubmit: (e)->
     e.preventDefault()
+    @clearFormErrors()
+    @validateForm (fields)=>
+      name        = fields.name
+      startTime   = fields.startTime
+      endTime     = fields.endTime
+      days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
+      earliestDay = Math.min @state.checkedDays...
 
-    name        = @refs.name.getDOMNode().value
-    startTime   = @refs.startTime.getDOMNode().value
-    endTime     = @refs.endTime.getDOMNode().value
-    days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
-    earliestDay = Math.min @state.checkedDays...
+      [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
+      PlannerActions.addPersonalEvent name, startDate, endDate, days
 
-    [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
-    PlannerActions.addPersonalEvent name, startDate, endDate, days
-
-    # Clean up inputs
-    name.value = ''
-    @setState @getState()
-    # Close
-    @hide()
+      # Clean up inputs
+      @clearFields()
+      @setState @getState()
+      # Close
+      @hide()
 
   renderInput: (id, label, {ref, type, placeholder, inputGroup,\
       val, onChange}={})->
@@ -147,7 +158,7 @@ PersonalEventForm = React.createClass(
       R.div className: "row",
         R.div className: "col-md-6", startInput
         R.div className: "col-md-6", endInput
-      R.div className: "form-group",
+      R.div className: "form-group", ref: "daysGroup",
         R.label null, @t("eventForm.days")
         R.div className: "days",
           [1,2,3,4,5,6,0].map (dayNo)=>
