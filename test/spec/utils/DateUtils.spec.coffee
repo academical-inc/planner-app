@@ -9,29 +9,18 @@ describe "DateUtils", ->
   beforeEach ->
     @restore = H.rewire DateUtils,\
       UiConstants:
-        days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+        days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 
   afterEach ->
     @restore()
 
 
-  describe '.getDayForDate', ->
+  describe '.getDayStr', ->
 
-    it 'returns the correct day string for the given date', ->
-      date = new Date 2015, 1, 1 # Sunday
-      date = Moment date
-      expect(DateUtils.getDayForDate(date)).toEqual "Su"
-
-      date = new Date 2015, 1, 2 # Monday
-      date = Moment date
-      expect(DateUtils.getDayForDate(date)).toEqual "Mo"
-
-      date = new Date 2015, 1, 6 # Friday
-      date = Moment date
-      expect(DateUtils.getDayForDate(date)).toEqual "Fr"
-
-    it 'fails if a moment object not provided', ->
-      expect(DateUtils.getDayForDate.bind(null, new Date)).toThrowError()
+    it 'returns the correct day string for the given day', ->
+      expect(DateUtils.getDayStr(0)).toEqual "SU"
+      expect(DateUtils.getDayStr(1)).toEqual "MO"
+      expect(DateUtils.getDayStr(5)).toEqual "FR"
 
 
   describe '.getTimeStr', ->
