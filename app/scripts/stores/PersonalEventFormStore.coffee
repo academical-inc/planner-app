@@ -10,7 +10,7 @@ _end   = null
 
 class PersonalEventFormStore extends Store
 
-  getDateTimes: ->
+  getStartEnd: ->
     [_start, _end]
 
   dispatchCallback: (payload)=>

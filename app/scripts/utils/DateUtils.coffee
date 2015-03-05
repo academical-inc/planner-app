@@ -7,16 +7,16 @@ class DateUtils
   @now: ->
     Moment()
 
-  @getDayForDate: (date)->
-    days = UiConstants.days
-
+  @getDayStr: (dayNo)->
     # Assumes days array starts with monday
-    l = days.length
-    i = (date.day()-1+l) % l
-    days[i]
+    days = UiConstants.days
+    if dayNo != 0 then days[dayNo-1] else days[6]
 
   @getTimeStr: (date, format="h:mma")->
     @format date, format
+
+  @getTimeFromStr: (str, format="h:mma")->
+    Moment(str, format)
 
   @setTime: (date, time)->
     time = Moment time
@@ -25,6 +25,11 @@ class DateUtils
     res.minutes time.minutes()
     res.seconds time.seconds()
     res
+
+  @setDay: (date, day)->
+    date = Moment date
+    date.day day
+    date
 
   @format: (date, format)->
     Moment(date).format format

@@ -25,7 +25,7 @@ module.exports =
     MAX_INPUT_LENGTH: 28
   defaultSectionColor: "#2daae1"
   defaultPevColor: "#6db533"
-  days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+  days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   colors: [
     "#f27979"
     "#f2a979"

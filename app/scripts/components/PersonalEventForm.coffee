@@ -4,28 +4,48 @@ $                      = require 'jquery'
 ModalMixin             = require '../mixins/ModalMixin'
 I18nMixin              = require '../mixins/I18nMixin'
 DateUtils              = require '../utils/DateUtils'
+HelperUtils            = require '../utils/HelperUtils'
 PersonalEventFormStore = require '../stores/PersonalEventFormStore'
+PlannerActions         = require '../actions/PlannerActions'
 {UiConstants}          = require '../constants/PlannerConstants'
 R                      = React.DOM
 
+# Private
+_ = $.extend true, {}, HelperUtils, DateUtils
 
+# TODO add repeat until option. Do not force to school period
 PersonalEventForm = React.createClass(
 
   mixins: [I18nMixin, ModalMixin]
 
   getState: ->
-    [startDate, endDate] = PersonalEventFormStore.getDateTimes()
-    date = startDate || endDate || DateUtils.now()
-    checkedDays: [DateUtils.getDayForDate date]
-    startTime: DateUtils.getTimeStr startDate if startDate?
-    endTime: DateUtils.getTimeStr endDate if endDate?
+    [@startDate, @endDate] = PersonalEventForm.getStartEnd()
+    date = @startDate or @endDate or _.now()
+    checkedDays: [date.day()]
+    startTime: _.getTimeStr @startDate if @startDate?
+    endTime: _.getTimeStr @endDate if @endDate?
 
   getInitialState: ->
-    @props.initialState || @getState()
+    @props.initialState or @getState()
 
   onChange: ->
     @setState @getState()
     @show()
+
+  getStartEnd: (startTime, endTime, day)->
+    if @startDate? and @endDate?
+      if @startDate.day() != day
+        @startDate = _.setDay @startDate, day
+        @endDate   = _.setDay @endDate, day
+      [@startDate, @endDate]
+    else
+      # TODO use current date being viewed in calendar instead of now
+      # related to repeat until option
+      startDate = _.getTimeFromStr startTime
+      endDate   = _.getTimeFromStr endTime
+      startDate = _.setDay startDate, day
+      endDate   = _.setDay endDate, day
+      [startDate, endDate]
 
   componentDidMount: ->
     PersonalEventFormStore.addChangeListener @onChange
@@ -48,31 +68,30 @@ PersonalEventForm = React.createClass(
     @setState endTime: e.target.value
 
   handleDayChecked: (e)->
-    day     = e.target.value
+    day     = parseInt e.target.value, 10
     checked = e.target.checked
     checkedDays = @state.checkedDays.slice 0
     if checked == true
       checkedDays = checkedDays.concat [day]
     else
-      checkedDays.splice checkedDays.indexOf(day)
+      _.removeAt checkedDays, checkedDays.indexOf(day)
     @setState checkedDays: checkedDays
 
   handleSubmit: (e)->
     e.preventDefault()
 
-    name = @refs.name.getDOMNode()
-    startTime = @refs.startTime.getDOMNode()
-    endTime = @refs.endTime.getDOMNode()
-    # @state.checkedDays
+    name        = @refs.name.getDOMNode().value
+    startTime   = @refs.startTime.getDOMNode().value
+    endTime     = @refs.endTime.getDOMNode().value
+    days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
+    earliestDay = Math.min @state.checkedDays...
 
-    # TODO grab data and perform action
+    [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
+    PlannerActions.addPersonalEvent name, startDate, endDate, days
 
     # Clean up inputs
     name.value = ''
-    @setState
-      startTime: ''
-      endTime: ''
-      checkedDays: [DateUtils.getDayForDate DateUtils.now()]
+    @setState @getState()
     # Close
     @hide()
 
@@ -131,22 +150,21 @@ PersonalEventForm = React.createClass(
       R.div className: "form-group",
         R.label null, @t("eventForm.days")
         R.div className: "days",
-          days.map (day)=>
+          [1,2,3,4,5,6,0].map (dayNo)=>
+            day = _.getDayStr dayNo
             R.label className: "checkbox-inline", key: day,
               R.input(
                 type: "checkbox"
-                value: day
-                checked: @state.checkedDays.indexOf(day) != -1
+                value: dayNo
+                checked: @state.checkedDays.indexOf(dayNo) != -1
                 onChange: @handleDayChecked
               )
-              day
+              "#{day[0]}#{day[1].toLowerCase()}"
 
   render: ->
-    ids = UiConstants.ids
-
     formId = "pla-personal-event-form"
     @renderModal(
-      ids.PERSONAL_EVENT_MODAL
+      UiConstants.ids.PERSONAL_EVENT_MODAL
       @t("eventForm.header")
       @renderBody(formId)
       {accept: {form: formId}}
