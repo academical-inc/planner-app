@@ -19,7 +19,7 @@ PersonalEventForm = React.createClass(
   mixins: [I18nMixin, ModalMixin]
 
   getState: ->
-    [@startDate, @endDate] = PersonalEventForm.getStartEnd()
+    [@startDate, @endDate] = PersonalEventFormStore.getStartEnd()
     date = @startDate or @endDate or _.now()
     checkedDays: [date.day()]
     startTime: _.getTimeStr @startDate if @startDate?
