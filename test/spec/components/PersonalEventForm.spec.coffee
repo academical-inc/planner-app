@@ -70,6 +70,7 @@ describe "PersonalEventForm", ->
   describe '#getStartEnd', ->
 
     assertDates = (date, expected)->
+      expect(date.isUTC()).toBe true
       expect(date.date()).toEqual expected.date()
       expect(date.day()).toEqual expected.day()
       expect(date.hours()).toEqual expected.hours()
@@ -82,26 +83,24 @@ describe "PersonalEventForm", ->
       @day   = 2
 
     it 'computes correctly if start and end already present and same day', ->
-      @form.startDate = Moment().day(@day).hours(10).minutes(0)
-      @form.endDate   = Moment().day(@day).hours(15).minutes(15)
+      @form.startDate = Moment.utc().day(@day).hours(10).minutes(0)
+      @form.endDate   = Moment.utc().day(@day).hours(15).minutes(15)
       [resStart, resEnd] = @form.getStartEnd(@st, @et, @day)
       expect(resStart).toBe @form.startDate
       expect(resEnd).toBe @form.endDate
 
     it 'computes correctly if start and end already present and diff day', ->
-      @form.startDate = Moment().day(5).hours(10).minutes(0)
-      @form.endDate   = Moment().day(5).hours(15).minutes(15)
+      @form.startDate = Moment.utc().day(5).hours(10).minutes(0)
+      @form.endDate   = Moment.utc().day(5).hours(15).minutes(15)
       sd = Moment(@form.startDate).day(@day)
       ed = Moment(@form.endDate).day(@day)
       [resStart, resEnd] = @form.getStartEnd(@st, @et, @day)
       assertDates resStart, sd
       assertDates resEnd, ed
-      expected = [sd, ed]
-      expect(@form.getStartEnd(@st, @et, @day)).toEqual expected
 
     it 'computes correctly if start and end not present', ->
-      sd = Moment().day(@day).hours(10).minutes(0)
-      ed = Moment().day(@day).hours(15).minutes(15)
+      sd = Moment.utc().day(@day).hours(10).minutes(0)
+      ed = Moment.utc().day(@day).hours(15).minutes(15)
       [resStart, resEnd] = @form.getStartEnd(@st, @et, @day)
       assertDates resStart, sd
       assertDates resEnd, ed
