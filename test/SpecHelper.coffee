@@ -94,9 +94,10 @@ class SpecHelper
   @mockCurrentSchool: (currentSchool)->
     @spyObj "mockCurrentSchool", {currentSchool: currentSchool}
 
-  @spyOn: spyOn
-
   @any: jasmine.any
+
+  @spyOn: (obj, key, {retVal}={})->
+    spyOn(obj, key).and.returnValue retVal
 
   @spy: (name, {retVal}={})->
     jasmine.createSpy(name).and.returnValue retVal
