@@ -63,7 +63,7 @@ describe 'PreviewStore', ->
       _previewEvents: []
       _isOverlapping: false
       "SectionStore.getCurrentSectionEvents": H.spy "s1", retVal: @sectionEvents
-      "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+      "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
 
   afterEach ->
     @restore() if @restore?
@@ -87,7 +87,7 @@ describe 'PreviewStore', ->
       @previewEvents[0].event.startDt = "2015-01-06T10:00:00-05:00"
       @previewEvents[0].event.endDt   = "2015-01-06T11:20:00-05:00"
       H.rewire PreviewStore,
-        "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.add
       @assertPreview @preview, true, undefined, true
 
@@ -97,7 +97,7 @@ describe 'PreviewStore', ->
       @previewEvents[1].event.startDt = "2015-01-06T10:00:00-05:00"
       @previewEvents[1].event.endDt   = "2015-01-06T11:20:00-05:00"
       H.rewire PreviewStore,
-        "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.add
       @assertPreview @preview, true, true, true
 
@@ -105,7 +105,7 @@ describe 'PreviewStore', ->
       @previewEvents[0].event.startDt = "2015-01-06T09:00:00-05:00"
       @previewEvents[0].event.endDt   = "2015-01-06T10:20:00-05:00"
       H.rewire PreviewStore,
-        "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.add
       @assertPreview @preview, true, undefined, true
 
@@ -113,7 +113,7 @@ describe 'PreviewStore', ->
       @previewEvents[0].event.startDt = "2015-01-06T11:00:00-05:00"
       @previewEvents[0].event.endDt   = "2015-01-06T12:20:00-05:00"
       H.rewire PreviewStore,
-        "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.add
       @assertPreview @preview, true, undefined, true
 
@@ -121,7 +121,7 @@ describe 'PreviewStore', ->
       @previewEvents[0].event.startDt = "2015-01-06T10:10:00-05:00"
       @previewEvents[0].event.endDt   = "2015-01-06T11:00:00-05:00"
       H.rewire PreviewStore,
-        "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.add
       @assertPreview @preview, true, undefined, true
 
@@ -129,7 +129,7 @@ describe 'PreviewStore', ->
       @previewEvents[0].event.startDt = "2015-01-06T09:50:00-05:00"
       @previewEvents[0].event.endDt   = "2015-01-06T11:30:00-05:00"
       H.rewire PreviewStore,
-        "SectionUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.add
       @assertPreview @preview, true, undefined, true
 

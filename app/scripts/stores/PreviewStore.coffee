@@ -1,7 +1,7 @@
 
 Store         = require './Store'
 SectionStore  = require './SectionStore'
-SectionUtils  = require '../utils/SectionUtils'
+EventUtils    = require '../utils/EventUtils'
 {ActionTypes} = require '../constants/PlannerConstants'
 
 
@@ -27,7 +27,7 @@ anyOverlapping = (previewEvents, allSectionEvents)->
 
 addPreview = (section)->
   _preview = section
-  prevEvents = SectionUtils.getSectionEvents [_preview]
+  prevEvents = EventUtils.getSectionEvents [_preview]
   sectionEvents = SectionStore.getCurrentSectionEvents()
   _previewEvents = anyOverlapping prevEvents, sectionEvents
 
