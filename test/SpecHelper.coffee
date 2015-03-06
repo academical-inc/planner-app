@@ -97,10 +97,16 @@ class SpecHelper
   @any: jasmine.any
 
   @spyOn: (obj, key, {retVal}={})->
-    spyOn(obj, key).and.returnValue retVal
+    if $.isFunction retVal
+      spyOn(obj, key).and.callFake retVal
+    else
+      spyOn(obj, key).and.returnValue retVal
 
   @spy: (name, {retVal}={})->
-    jasmine.createSpy(name).and.returnValue retVal
+    if $.isFunction retVal
+      jasmine.createSpy(name).and.callFake retVal
+    else
+      jasmine.createSpy(name).and.returnValue retVal
 
   @spyObj: (name, spyFuncs)->
     if Array.isArray spyFuncs
