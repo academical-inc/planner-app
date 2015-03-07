@@ -98,6 +98,8 @@ PersonalEventForm = React.createClass(
       earliestDay = Math.min @state.checkedDays...
 
       [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
+      startDate = startDate.format()
+      endDate = endDate.format()
       PlannerActions.addPersonalEvent name, startDate, endDate, days
 
       # Clean up inputs
