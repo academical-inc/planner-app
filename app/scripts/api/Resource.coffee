@@ -1,4 +1,6 @@
 
+# TODO change jquery for another lib
+$        = require 'jquery'
 Humps    = require 'humps'
 Url      = require './Url'
 ApiError = require './ApiError'
@@ -34,19 +36,23 @@ class Resource
         urlParams
       )
 
-      data = Resource._formatRequestData method, data if data?
+      data = Resource._formatRequestData method, data
 
       request method, fullUrl, Resource._responseHandler(cb),
         data: data
         headers: @_api.get("headers")
         timeout: @_api.get("timeout")
 
-  @_formatRequestData: (method, data)->
+  @_formatRequestData: (method, data={})->
     formatted = if method.toLowerCase() != "get"
-      data: data
+      if data.data?
+        data: data.data
+      else
+        data: data
     else
       data
     formatted.camelize = true
+    formatted = $.extend {}, formatted, data.params if data.params?
     Humps.decamelizeKeys formatted
 
   @_responseHandler: (cb)->
