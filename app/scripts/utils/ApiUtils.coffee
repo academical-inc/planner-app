@@ -36,7 +36,9 @@ class ApiUtils
     newPersonalEvent: (name, startDt, endDt, days, {to ,timezone, location, \
         description, color}={})->
       if not to?
-        to = _.setTime _currentSchool.terms[0].endDate, startDt
+        to = _.setTime(
+          _.utc(_currentSchool.terms[0].endDate, "YYYY-MM-DD"), startDt
+        )
         to = _.format to
       timezone ?= _currentSchool.timezone
       _api.data.newPersonalEvent(
