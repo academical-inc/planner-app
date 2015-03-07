@@ -43,16 +43,20 @@ class Resource
         headers: @_api.get("headers")
         timeout: @_api.get("timeout")
 
-  @_formatRequestData: (method, data={})->
-    formatted = if method.toLowerCase() != "get"
-      if data.data?
-        data: data.data
+  @_formatRequestData: (method, data)->
+    formatted = if data?
+      if method.toLowerCase() != "get"
+        res = if data.data? then data: data.data else data: data
+        $.extend res, data.params if data.params?
+        res
       else
-        data: data
+        if data.params?
+          $.extend data, data.params
+          delete data.params
+        data
     else
-      data
+      {}
     formatted.camelize = true
-    formatted = $.extend {}, formatted, data.params if data.params?
     Humps.decamelizeKeys formatted
 
   @_responseHandler: (cb)->
