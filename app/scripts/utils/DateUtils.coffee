@@ -7,6 +7,9 @@ class DateUtils
   @now: ->
     Moment()
 
+  @utc: (str, format)->
+    Moment.utc str, format
+
   @getDayStr: (dayNo)->
     # Assumes days array starts with monday
     days = UiConstants.days
