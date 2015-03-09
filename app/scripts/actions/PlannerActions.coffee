@@ -1,5 +1,8 @@
 
 $                 = require 'jquery'
+ScheduleStore     = require '../stores/ScheduleStore'
+SectionStore      = require '../stores/SectionStore'
+EventStore        = require '../stores/EventStore'
 ApiUtils          = require '../utils/ApiUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
@@ -82,21 +85,47 @@ class PlannerActions
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_SECTION_PREVIEW
 
-  @openPersonalEventForm: (startDate, endDate)->
+  @openEventForm: (startDate, endDate)->
     PlannerDispatcher.handleViewAction
-      type: ActionTypes.OPEN_PERSONAL_EVENT_FORM
+      type: ActionTypes.OPEN_EVENT_FORM
       startDate: startDate
       endDate: endDate
 
-  @addPersonalEvent: (name, startDate, endDate, days)->
+  @addEvent: (name, startDate, endDate, days)->
+    event = ApiUtils.data.newPersonalEvent name, startDate, endDate, days
     PlannerDispatcher.handleViewAction
-      type: ActionTypes.ADD_PERSONAL_EVENT
-      personalEvent: personalEvent
+      type: ActionTypes.ADD_EVENT
+      event: event
+    @saveSchedule()
 
-  @removePersonalEvent: (personalEvent)->
+  @removeEvent: (event)->
     PlannerDispatcher.handleViewAction
-      type: ActionTypes.REMOVE_PERSONAL_EVENT
-      personalEvent: personalEvent
+      type: ActionTypes.REMOVE_EVENT
+      event: event
+
+  @saveSchedule: ->
+    schedule = ScheduleStore.current()
+
+    toSave = ApiUtils.data.scheduleToUpdate(
+      schedule.name
+      SectionStore.credits()
+      SectionStore.sections()
+      EventStore.events()
+    )
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.SAVE_SCHEDULE
+      schedule: toSave
+
+    ApiUtils.saveSchedule schedule.id, toSave, (err, saved)->
+      if err?
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.SAVE_SCHEDULE_FAIL
+          schedule: toSave
+          error: err
+      else
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.SAVE_SCHEDULE_SUCCESS
+          schedule: saved
 
 
 module.exports = PlannerActions

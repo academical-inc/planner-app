@@ -1,7 +1,7 @@
 
 ids =
   SCHEDULE_LIST: 'pla-schedule-list'
-  PERSONAL_EVENT_MODAL: 'pla-personal-event-modal'
+  EVENT_MODAL: 'pla-event-modal'
   ERROR_MODAL: 'pla-error-modal'
 
 module.exports =
@@ -13,7 +13,7 @@ module.exports =
   ids: ids
   selectors:
     SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
-    PERSONAL_EVENT_MODAL: "##{ids.PERSONAL_EVENT_MODAL}"
+    EVENT_MODAL: "##{ids.EVENT_MODAL}"
     ERROR_MODAL: "##{ids.ERROR_MODAL}"
   htmlEntities:
     TIMES: "\u00d7"
