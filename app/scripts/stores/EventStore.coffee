@@ -1,56 +1,87 @@
 
+$                 = require 'jquery'
 Store             = require './Store'
 ScheduleStore     = require './ScheduleStore'
+HelperUtils       = require '../utils/HelperUtils'
+EventUtils        = require '../utils/EventUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
 
 
 # Private
-_pevsMap     = {}
-_currentPevs = []
+_              = $.extend true, {}, HelperUtils, EventUtils
+_eventsMap     = {}
+_currentEvents = []
 
 
-setPevsMap = (schedules)->
+initEventsMap = (schedules)->
   schedules.forEach (schedule)->
-    _pevsMap[schedule.id] = schedule.personalEvents
+    updateSchedule schedule
 
 setCurrent = (scheduleId)->
-  _currentPevs = _pevsMap[scheduleId]
+  _currentEvents = _eventsMap[scheduleId]
 
-update = ->
+addEvent = (event)->
+  # TODO should expand here if thats how I'm gonna do it
+  _currentEvents.push event
+
+removeEvent = (event)->
+  _.findAndRemove _currentEvents, (ev)-> ev.id is event.id
+
+addSchedule = (scheduleId)->
+  _eventsMap[scheduleId] = []
+
+removeSchedule = (scheduleId)->
+  delete _eventsMap[scheduleId]
+
+updateSchedule = (schedule)->
+  _eventsMap[schedule.id] = schedule.events or []
+
+wait = ->
   PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
-  setPevsMap ScheduleStore.getAll()
-  setCurrent ScheduleStore.getCurrent().id
 
+class EventStore extends Store
 
-class PersonalEventStore extends Store
+  events: ->
+    _currentEvents
 
-  getPersonalEvents: ->
-    _currentPevs
+  expandedEvents: ->
+    _.concatExpandedEvents _currentEvents
 
   dispatchCallback: (payload)=>
     action = payload.action
 
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
-        PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
-        setCurrent ScheduleStore.getCurrent().id
+        wait()
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
-        update()
+        wait()
+        initEventsMap action.schedules
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
-        update()
+        wait()
+        addSchedule action.schedule.id
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
-        update()
+        wait()
+        removeSchedule action.schedule.id
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.ADD_PERSONAL_EVENT
-        update()
+        addEvent action.event
+      when ActionTypes.UPDATE_PERSONAL_EVENT
         @emitChange()
       when ActionTypes.REMOVE_PERSONAL_EVENT
-        update()
-        @emitChange()
+        removeEvent action.event
+      when ActionTypes.SAVE_SCHEDULE_SUCCESS
+        wait()
+        updateSchedule action.schedule
+        if ScheduleStore.current().id == action.schedule.id
+          @emitChange()
 
 
-module.exports = new PersonalEventStore
+module.exports = new EventStore
