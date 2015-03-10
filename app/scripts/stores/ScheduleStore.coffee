@@ -151,9 +151,9 @@ class ScheduleStore extends Store
       #   addSection action.section.id
       # when ActionTypes.REMOVE_SECTION
       #   removeSection action.sectionId
-      # when ActionTypes.ADD_PERSONAL_EVENT
+      # when ActionTypes.ADD_EVENT
       #   addEvent action.event
-      # when ActionTypes.REMOVE_PERSONAL_EVENT
+      # when ActionTypes.REMOVE_EVENT
       #   removeEvent action.event
 
 

@@ -71,11 +71,11 @@ class EventStore extends Store
         removeSchedule action.schedule.id
         setCurrent ScheduleStore.current().id
         @emitChange()
-      when ActionTypes.ADD_PERSONAL_EVENT
+      when ActionTypes.ADD_EVENT
         addEvent action.event
-      when ActionTypes.UPDATE_PERSONAL_EVENT
+      when ActionTypes.UPDATE_EVENT
         @emitChange()
-      when ActionTypes.REMOVE_PERSONAL_EVENT
+      when ActionTypes.REMOVE_EVENT
         removeEvent action.event
       when ActionTypes.SAVE_SCHEDULE_SUCCESS
         wait()

@@ -66,7 +66,7 @@ ScheduleInfoBar = React.createClass(
       ]
     }
 
-  handlePersonalEventAdd: ->
+  handleEventAdd: ->
     PlannerActions.openEventForm()
 
   render: ->
@@ -79,7 +79,7 @@ ScheduleInfoBar = React.createClass(
       PanelItemList
         itemType: EventItem
         header: @t "sidebar.eventsHeader"
-        handleItemAdd: @handlePersonalEventAdd
+        handleItemAdd: @handleEventAdd
         items: @state.events
 
 )

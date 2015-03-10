@@ -92,7 +92,7 @@ class PlannerActions
       endDate: endDate
 
   @addEvent: (name, startDate, endDate, days)->
-    event = ApiUtils.data.newPersonalEvent name, startDate, endDate, days
+    event = ApiUtils.data.newEvent name, startDate, endDate, days
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_EVENT
       event: event
