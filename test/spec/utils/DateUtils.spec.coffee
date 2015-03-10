@@ -67,21 +67,21 @@ describe "DateUtils", ->
   describe '.setTime', ->
 
     it 'sets the time to the moment object correctly when using strings', ->
-      time = "2014-01-20T10:30:00.000-05:00"
+      time = "2014-01-20T10:30:00.000-00:00"
       date = "2015-05-09"
 
       expect(DateUtils.setTime(date, time).hours()).toEqual 10
       expect(DateUtils.setTime(date, time).minutes()).toEqual 30
 
     it 'sets the time to the moment object correctly when using moments', ->
-      time = Moment "2014-01-20T10:30:00.000-05:00"
+      time = Moment "2014-01-20T10:30:00.000-00:00"
       date = Moment "2015-05-09"
 
       expect(DateUtils.setTime(date, time).hours()).toEqual 10
       expect(DateUtils.setTime(date, time).minutes()).toEqual 30
 
     it 'sets the time to the moment object correctly when using combination', ->
-      time = "2014-01-20T10:30:00.000-05:00"
+      time = "2014-01-20T10:30:00.000-00:00"
       date = Moment "2015-05-09"
 
       expect(DateUtils.setTime(date, time).hours()).toEqual 10

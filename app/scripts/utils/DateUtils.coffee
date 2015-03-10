@@ -22,15 +22,15 @@ class DateUtils
     Moment.utc(str, format)
 
   @setTime: (date, time)->
-    time = Moment time
-    res  = Moment date
+    time = Moment.utc time
+    res  = Moment.utc date
     res.hours time.hours()
     res.minutes time.minutes()
     res.seconds time.seconds()
     res
 
   @setDay: (date, day)->
-    date = Moment date
+    date = Moment.utc date
     date.day day
     date
 
