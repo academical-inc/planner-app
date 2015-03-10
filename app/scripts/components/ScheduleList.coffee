@@ -17,9 +17,9 @@ ScheduleList = React.createClass(
   mixins: [SpinnerMixin, I18nMixin]
 
   getState: ->
-    current = ScheduleStore.getCurrent()
+    current = ScheduleStore.current()
     current: if current? then current.name else @renderSpinner()
-    schedules: ScheduleStore.getAll()
+    schedules: ScheduleStore.all()
 
   onChange: (state=@getState())->
     @setState @getState()

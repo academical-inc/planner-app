@@ -9,8 +9,8 @@ describe "ScheduleList", ->
     @mockScheduleStore = H.spyObj "ScheduleStore", {
       addChangeListener: undefined
       removeChangeListener: undefined
-      getCurrent: null
-      getAll: []
+      current: null
+      all: []
     }
     @topRestore = H.rewire ScheduleList,
       ScheduleStore: @mockScheduleStore
@@ -63,8 +63,8 @@ describe "ScheduleList", ->
 
     beforeEach ->
       @store = {
-        getCurrent: {id: "sch1", name: "sch1"}
-        getAll: [{id: "sch1", name: "sch1"}, {id: "sch2", name: "sch2"}]
+        current: {id: "sch1", name: "sch1"}
+        all: [{id: "sch1", name: "sch1"}, {id: "sch2", name: "sch2"}]
         addChangeListener: undefined
         removeChangeListener: undefined
       }
@@ -75,11 +75,11 @@ describe "ScheduleList", ->
       state = list.getState()
       expect(state).toEqual
         current: "sch1"
-        schedules: @store.getAll
+        schedules: @store.all
 
     it 'creates state correctly when no schedules and no current', ->
-      @store.getCurrent = null
-      @store.getAll = []
+      @store.current = null
+      @store.all = []
       H.rewire ScheduleList, ScheduleStore: H.spyObj "ScheduleStore", @store
       list = H.render ScheduleList
       H.spyOn(list, "renderSpinner").and.returnValue "spinner"
