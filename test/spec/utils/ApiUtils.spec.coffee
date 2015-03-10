@@ -10,6 +10,7 @@ describe 'ApiUtils', ->
     @_   = H.spyObj "_",
       setTime: (a1,a2)->a1
       format: (a1)->a1
+      utc: (a1)->a1
     @terms = [{startDate: "2015-01-01", endDate: "2015-05-01"}]
     @global = H.rewire ApiUtils,
       "Env.API_HOST": "API_HOST"
@@ -48,12 +49,12 @@ describe 'ApiUtils', ->
       )
 
 
-  describe '.data.newPersonalEvent', ->
+  describe '.data.newEvent', ->
 
-    it 'creates new personal event correctly', ->
-      @api.data.newPersonalEvent = H.spy "s3"
-      ApiUtils.data.newPersonalEvent "Name", "2015", "2016", ["Mo"]
-      expect(@api.data.newPersonalEvent).toHaveBeenCalledWith(
+    it 'creates new event correctly', ->
+      @api.data.newEvent = H.spy "s3"
+      ApiUtils.data.newEvent "Name", "2015", "2016", ["Mo"]
+      expect(@api.data.newEvent).toHaveBeenCalledWith(
         "Name"
         "2015"
         "2016"

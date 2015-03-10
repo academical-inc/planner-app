@@ -1,12 +1,12 @@
 
-React             = require 'react'
-$                 = require 'jquery'
-I18nMixin         = require '../mixins/I18nMixin'
-PlannerActions    = require '../actions/PlannerActions'
-PanelItemList     = React.createFactory require './PanelItemList'
-SectionItem       = React.createFactory require './SectionItem'
-PersonalEventItem = React.createFactory require './PersonalEventItem'
-R                 = React.DOM
+React          = require 'react'
+$              = require 'jquery'
+I18nMixin      = require '../mixins/I18nMixin'
+PlannerActions = require '../actions/PlannerActions'
+PanelItemList  = React.createFactory require './PanelItemList'
+SectionItem    = React.createFactory require './SectionItem'
+EventItem      = React.createFactory require './EventItem'
+R              = React.DOM
 
 ScheduleInfoBar = React.createClass(
 
@@ -54,7 +54,7 @@ ScheduleInfoBar = React.createClass(
           departments: [{name: "Physics"}]
         }
       ]
-      personalEvents: [
+      events: [
         {
           id: "1"
           name: "Gym"
@@ -67,7 +67,7 @@ ScheduleInfoBar = React.createClass(
     }
 
   handlePersonalEventAdd: ->
-    PlannerActions.openPersonalEventForm()
+    PlannerActions.openEventForm()
 
   render: ->
     R.div className: "pla-schedule-info-bar",
@@ -77,10 +77,10 @@ ScheduleInfoBar = React.createClass(
           credits: @state.totalCredits
         items: @state.sections
       PanelItemList
-        itemType: PersonalEventItem
+        itemType: EventItem
         header: @t "sidebar.eventsHeader"
         handleItemAdd: @handlePersonalEventAdd
-        items: @state.personalEvents
+        items: @state.events
 
 )
 

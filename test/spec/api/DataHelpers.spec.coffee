@@ -5,10 +5,10 @@ DataHelpers = require '../../../app/scripts/api/DataHelpers'
 
 describe 'DataHelpers', ->
 
-  describe '.newPersonalEvent', ->
+  describe '.newEvent', ->
 
-    it 'returns correct personal event', ->
-      ev = DataHelpers.newPersonalEvent(
+    it 'returns correct event', ->
+      ev = DataHelpers.newEvent(
         "Ev"
         "2015-01-01T10:35:00-05:00"
         "2015-01-01T10:55:00-05:00"
@@ -28,7 +28,7 @@ describe 'DataHelpers', ->
 
     it 'throws error if provided days are not valid', ->
       f = ->
-        DataHelpers.newPersonalEvent(
+        DataHelpers.newEvent(
           "Ev"
           "2015-01-01T10:35:00-05:00"
           "2015-01-01T10:55:00-05:00"

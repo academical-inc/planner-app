@@ -13,13 +13,13 @@ describe 'ScheduleInfoBar', ->
       @eventItem     = ->
       @restore = H.rewire ScheduleInfoBar,
         SectionItem: @sectionItem
-        PersonalEventItem: @eventItem
+        EventItem: @eventItem
 
       @data =
         totalCredits: 6
         totalSections: 2
         sections: [ {id: "s1"}, {id: "s2"} ]
-        personalEvents: [ {id: "p1"}, {id: "p2"} ]
+        events: [ {id: "p1"}, {id: "p2"} ]
 
 
     afterEach ->
@@ -36,7 +36,7 @@ describe 'ScheduleInfoBar', ->
 
       events = lists[1]
       expect(events.props.itemType).toEqual eventItem
-      expect(events.props.items).toEqual data.personalEvents
+      expect(events.props.items).toEqual data.events
 
     it 'renders correctly based on initial state', ->
       bar   = H.render ScheduleInfoBar, initialState: @data
