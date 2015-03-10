@@ -1,20 +1,20 @@
 
-$                  = require 'jquery'
-React              = require 'react'
-SectionStore       = require '../stores/SectionStore'
-PreviewStore       = require '../stores/PreviewStore'
-PersonalEventStore = require '../stores/PersonalEventStore'
-EventUtils         = require '../utils/EventUtils'
-I18nMixin          = require '../mixins/I18nMixin'
-IconMixin          = require '../mixins/IconMixin'
-PlannerActions     = require '../actions/PlannerActions'
-{UiConstants}      = require '../constants/PlannerConstants'
-R                  = React.DOM
+$              = require 'jquery'
+React          = require 'react'
+SectionStore   = require '../stores/SectionStore'
+PreviewStore   = require '../stores/PreviewStore'
+EventStore     = require '../stores/EventStore'
+EventUtils     = require '../utils/EventUtils'
+I18nMixin      = require '../mixins/I18nMixin'
+IconMixin      = require '../mixins/IconMixin'
+PlannerActions = require '../actions/PlannerActions'
+{UiConstants}  = require '../constants/PlannerConstants'
+R              = React.DOM
 
 # Private
-sectionEvents  = -> SectionStore.getCurrentSectionEvents()
-previewEvents  = -> PreviewStore.getPreviewEvents()
-personalEvents = -> PersonalEventStore.getPersonalEvents()
+sectionEvents = -> SectionStore.sectionEvents()
+previewEvents = -> PreviewStore.previewEvents()
+events        = -> EventStore.expandedEvents()
 
 
 WeekCalendar = React.createClass(
@@ -42,18 +42,18 @@ WeekCalendar = React.createClass(
     allDay:          false
     isPreview:       true
 
-  personalEventDataTransform: (personalEvent)->
-    title:           personalEvent.name
-    description:     personalEvent.description
-    start:           personalEvent.startDt
-    end:             personalEvent.endDt
-    location:        personalEvent.location
-    backgroundColor: personalEvent.color
-    borderColor:     personalEvent.color
-    pev:             personalEvent
+  eventDataTransform: (event)->
+    id:              event.id
+    title:           event.name
+    description:     event.description
+    start:           event.startDt
+    end:             event.endDt
+    location:        event.location
+    backgroundColor: event.color
+    borderColor:     event.color
     editable:        true
     allDay:          false
-    isPev:           true
+    isEvent:         true
 
   updateEventSource: (source, events)->
     @cal.fullCalendar "removeEventSource", source
@@ -64,29 +64,29 @@ WeekCalendar = React.createClass(
     @updateEventSource @sources.sections, sectionEvents()
 
     # TODO temporal
-    if @sources.sections.events.length > 0
-      @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
+    # if @sources.sections.events.length > 0
+    #   @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
 
   onPreviewChange: ->
     @updateEventSource @sources.preview, previewEvents()
 
-  onPersonalEventsChange: ->
-    @updateEventSource @sources.personalEvents, personalEvents()
+  onEventsChange: ->
+    @updateEventSource @sources.events, events()
 
   removeSection: (sectionId)->
     PlannerActions.removeSection sectionId
 
-  removePersonalEvent: (pev)->
-    PlannerActions.removePersonalEvent pev
+  removeEvent: (eventId)->
+    PlannerActions.removeEvent eventId
 
   handleEventSelect: (start, end)->
     @cal.fullCalendar 'unselect'
-    PlannerActions.openPersonalEventForm start, end
+    PlannerActions.openEventForm start, end
 
   componentDidMount: ->
     SectionStore.addChangeListener @onSectionsChange
     PreviewStore.addChangeListener @onPreviewChange
-    PersonalEventStore.addChangeListener @onPersonalEventsChange
+    EventStore.addChangeListener @onEventsChange
     @cal = $(@getDOMNode())
     @sources =
       sections:
@@ -97,9 +97,9 @@ WeekCalendar = React.createClass(
       preview:
         events: []
         eventDataTransform: @previewEventDataTransform
-      personalEvents:
+      events:
         events: []
-        eventDataTransform: @personalEventDataTransform
+        eventDataTransform: @eventDataTransform
         backgroundColor: UiConstants.defaultPevColor
         borderColor: UiConstants.defaultPevColor
 
@@ -124,7 +124,7 @@ WeekCalendar = React.createClass(
   componentWillUnmount: ->
     SectionStore.removeChangeListener @onSectionsChange
     PreviewStore.removeChangeListener @onPreviewChange
-    PersonalEventStore.removeChangeListener @onPersonalEventsChange
+    EventStore.removeChangeListener @onEventsChange
 
   renderEvent: (event, jqElement)->
     icon = $(
@@ -132,8 +132,8 @@ WeekCalendar = React.createClass(
     )
     if event.isSection
       icon.on "click", @removeSection.bind(@, event.id)
-    else if event.isPev
-      icon.on "click", @removePersonalEvent.bind(@, event.pev)
+    else if event.isEvent
+      icon.on "click", @removeEvent.bind(@, event.id)
     jqElement.find('.fc-time').append icon
     jqElement
 
