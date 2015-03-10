@@ -17,7 +17,7 @@ class EventFormStore extends Store
     action = payload.action
 
     switch action.type
-      when ActionTypes.OPEN_PERSONAL_EVENT_FORM
+      when ActionTypes.OPEN_EVENT_FORM
         _start = action.startDate
         _end   = action.endDate
         @emitChange()
