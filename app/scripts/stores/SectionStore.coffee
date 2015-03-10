@@ -12,16 +12,14 @@ PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 _                = $.extend true, {}, HelperUtils, EventUtils
 _sectionsMap     = {}
 _currentSections = []
-_credits         = 0.0
 
 
 setSectionsMap = (schedules)->
   schedules.forEach (schedule)->
     _sectionsMap[schedule.id] = schedule.sections
 
-setCurrent = (schedule)->
-  _currentSections = _sectionsMap[schedule.id]
-  _credits = schedule.totalCredits
+setCurrent = (scheduleId)->
+  _currentSections = _sectionsMap[scheduleId]
 
 addSchedule = (scheduleId)->
   _sectionsMap[scheduleId] = []
@@ -31,11 +29,10 @@ removeSchedule = (scheduleId)->
 
 addSection = (section)->
   _currentSections.push section
-  _credits += section.credits
 
 removeSection = (sectionId)->
-  sec = _.findAndRemove _currentSections, (section)-> section.id == sectionId
-  _credits -= sec.credits
+  section = _.findAndRemove _currentSections, (section)->
+    section.id == sectionId
 
 
 class SectionStore extends Store
@@ -47,9 +44,9 @@ class SectionStore extends Store
     _.getSectionEvents _currentSections
 
   credits: ->
-    _credits
+    _currentSections.reduce ((acum, section)-> acum + section.credits), 0.0
 
-  sectionCount: ->
+  count: ->
     _currentSections.length
 
   dispatchCallback: (payload)=>
@@ -58,22 +55,22 @@ class SectionStore extends Store
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
         PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
-        setCurrent ScheduleStore.getCurrent().id
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
         setSectionsMap action.schedules
-        setCurrent ScheduleStore.getCurrent().id
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
         addSchedule action.schedule.id
-        setCurrent ScheduleStore.getCurrent().id
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
         removeSchedule action.scheduleId
-        setCurrent ScheduleStore.getCurrent().id
+        setCurrent ScheduleStore.current().id
         @emitChange()
       when ActionTypes.ADD_SECTION
         addSection action.section
