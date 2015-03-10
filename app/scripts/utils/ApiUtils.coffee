@@ -22,6 +22,8 @@ class ApiUtils
     _currentSchoolNickname = _hostname.split(".")[0]
 
   @data:
+    scheduleToUpdate: ->
+      _api.data.scheduleToUpdate arguments...
     newSchedule: (name, {studentId, schoolId, term}={})->
       studentId ?= _currentStudent.id
       schoolId  ?= _currentSchool.id
@@ -79,5 +81,12 @@ class ApiUtils
   @deleteSchedule: (scheduleId, cb)->
     _api.schedules.del scheduleId, cb
 
+  @saveSchedule: (scheduleId, toSave, cb)->
+    _api.schedules.update scheduleId,
+      data: toSave,
+      params:
+        includeSections: true
+        expandEvents: true
+      cb
 
 module.exports = ApiUtils
