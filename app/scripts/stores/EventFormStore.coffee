@@ -8,7 +8,7 @@ _start = null
 _end   = null
 
 
-class PersonalEventFormStore extends Store
+class EventFormStore extends Store
 
   getStartEnd: ->
     [_start, _end]
@@ -23,4 +23,4 @@ class PersonalEventFormStore extends Store
         @emitChange()
 
 
-module.exports = new PersonalEventFormStore
+module.exports = new EventFormStore

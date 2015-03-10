@@ -1,26 +1,26 @@
 
-React                  = require 'react'
-$                      = require 'jquery'
-ModalMixin             = require '../mixins/ModalMixin'
-I18nMixin              = require '../mixins/I18nMixin'
-FormMixin              = require '../mixins/FormMixin'
-DateUtils              = require '../utils/DateUtils'
-HelperUtils            = require '../utils/HelperUtils'
-PersonalEventFormStore = require '../stores/PersonalEventFormStore'
-PlannerActions         = require '../actions/PlannerActions'
-{UiConstants}          = require '../constants/PlannerConstants'
-R                      = React.DOM
+React          = require 'react'
+$              = require 'jquery'
+ModalMixin     = require '../mixins/ModalMixin'
+I18nMixin      = require '../mixins/I18nMixin'
+FormMixin      = require '../mixins/FormMixin'
+DateUtils      = require '../utils/DateUtils'
+HelperUtils    = require '../utils/HelperUtils'
+EventFormStore = require '../stores/EventFormStore'
+PlannerActions = require '../actions/PlannerActions'
+{UiConstants}  = require '../constants/PlannerConstants'
+R              = React.DOM
 
 # Private
 _ = $.extend true, {}, HelperUtils, DateUtils
 
 # TODO add repeat until option. Do not force to school period
-PersonalEventForm = React.createClass(
+EventForm = React.createClass(
 
   mixins: [I18nMixin, ModalMixin, FormMixin]
 
   getState: ->
-    [@startDate, @endDate] = PersonalEventFormStore.getStartEnd()
+    [@startDate, @endDate] = EventFormStore.getStartEnd()
     date = @startDate or @endDate or _.now()
     checkedDays: [date.day()]
     startTime: _.getTimeStr @startDate if @startDate?
@@ -49,7 +49,7 @@ PersonalEventForm = React.createClass(
       [startDate, endDate]
 
   componentDidMount: ->
-    PersonalEventFormStore.addChangeListener @onChange
+    EventFormStore.addChangeListener @onChange
     opts =
       step: 15
       selectOnBlur: true
@@ -60,7 +60,7 @@ PersonalEventForm = React.createClass(
     return
 
   componentWillUnmount: ->
-    PersonalEventFormStore.removeChangeListener @onChange
+    EventFormStore.removeChangeListener @onChange
 
   handleStartTimeChange: (e)->
     @setState startTime: e.target.value
@@ -98,9 +98,9 @@ PersonalEventForm = React.createClass(
       earliestDay = Math.min @state.checkedDays...
 
       [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
-      startDate = startDate.format()
-      endDate = endDate.format()
-      PlannerActions.addPersonalEvent name, startDate, endDate, days
+      startDate = _.format startDate
+      endDate = _.format endDate
+      PlannerActions.addEvent name, startDate, endDate, days
 
       # Clean up inputs
       @clearFields()
@@ -134,9 +134,9 @@ PersonalEventForm = React.createClass(
         R.input inputProps
 
   renderBody: (formId)->
-    nameId  = "personal-event-name-input"
-    startId = "personal-event-start-time-input"
-    endId   = "personal-event-end-time-input"
+    nameId  = "event-name-input"
+    startId = "event-start-time-input"
+    endId   = "event-end-time-input"
 
     days = UiConstants.days
 
@@ -175,9 +175,9 @@ PersonalEventForm = React.createClass(
               "#{day[0]}#{day[1].toLowerCase()}"
 
   render: ->
-    formId = "pla-personal-event-form"
+    formId = "pla-event-form"
     @renderModal(
-      UiConstants.ids.PERSONAL_EVENT_MODAL
+      UiConstants.ids.EVENT_MODAL
       @t("eventForm.header")
       @renderBody(formId)
       {accept: {form: formId}}
@@ -185,5 +185,5 @@ PersonalEventForm = React.createClass(
 
 )
 
-module.exports = PersonalEventForm
+module.exports = EventForm
 
