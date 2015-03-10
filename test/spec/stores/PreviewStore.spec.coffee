@@ -53,8 +53,8 @@ describe 'PreviewStore', ->
           type: ActionTypes.REMOVE_SECTION_PREVIEW
 
     @dispatch = PreviewStore.dispatchCallback
-    @prev     = PreviewStore.getPreview
-    @prevEvs  = PreviewStore.getPreviewEvents
+    @prev     = PreviewStore.preview
+    @prevEvs  = PreviewStore.previewEvents
     @overlap  = PreviewStore.isOverlapping
 
     H.spyOn PreviewStore, "emitChange"
@@ -62,7 +62,7 @@ describe 'PreviewStore', ->
       _preview: null
       _previewEvents: []
       _isOverlapping: false
-      "SectionStore.getCurrentSectionEvents": H.spy "s1", retVal: @sectionEvents
+      "SectionStore.sectionEvents": H.spy "s1", retVal: @sectionEvents
       "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
 
   afterEach ->

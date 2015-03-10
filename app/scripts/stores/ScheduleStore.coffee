@@ -12,7 +12,7 @@ _current       = null
 _lastCurrent   = null
 
 
-setSchedules = (schedules)->
+initSchedules = (schedules)->
   _schedules = schedules
   setCurrent _schedules[0]
 
@@ -98,11 +98,11 @@ addSection = (sectionId)->
 removeSection = (sectionId)->
   _.findAndRemove _current.sectionIds, (id)-> id is sectionId
 
-addPev = (personalEvent)->
-  _current.personalEvents.push personalEvent
+addEvent = (event)->
+  _current.events.push event
 
-removePev = (personalEvent)->
-  _.findAndRemove _current.personalEvents, (pev)-> pev is personalEvent
+removeEvent = (event)->
+  _.findAndRemove _current.events, (ev)-> ev.id is event.id
 
 createSchedule = ->
   name = I18n.t "scheduleList.defaultName"
@@ -112,10 +112,10 @@ createSchedule = ->
 
 class ScheduleStore extends Store
 
-  getAll: ->
+  all: ->
     _schedules
 
-  getCurrent: ->
+  current: ->
     _current
 
   dispatchCallback: (payload)=>
@@ -145,16 +145,16 @@ class ScheduleStore extends Store
         revertRemovedSchedule action.scheduleId
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
-        setSchedules action.schedules
+        initSchedules action.schedules
         @emitChange()
-      when ActionTypes.ADD_SECTION
-        addSection action.section.id
-      when ActionTypes.REMOVE_SECTION
-        removeSection action.sectionId
-      when ActionTypes.ADD_PERSONAL_EVENT
-        addPev action.personalEvent
-      when ActionTypes.REMOVE_PERSONAL_EVENT
-        removePev action.personalEvent
+      # when ActionTypes.ADD_SECTION
+      #   addSection action.section.id
+      # when ActionTypes.REMOVE_SECTION
+      #   removeSection action.sectionId
+      # when ActionTypes.ADD_PERSONAL_EVENT
+      #   addEvent action.event
+      # when ActionTypes.REMOVE_PERSONAL_EVENT
+      #   removeEvent action.event
 
 
 module.exports = new ScheduleStore

@@ -28,7 +28,7 @@ anyOverlapping = (previewEvents, allSectionEvents)->
 addPreview = (section)->
   _preview = section
   prevEvents = EventUtils.getSectionEvents [_preview]
-  sectionEvents = SectionStore.getCurrentSectionEvents()
+  sectionEvents = SectionStore.sectionEvents()
   _previewEvents = anyOverlapping prevEvents, sectionEvents
 
 removePreview = ->
@@ -39,10 +39,10 @@ removePreview = ->
 
 class PreviewStore extends Store
 
-  getPreview: ->
+  preview: ->
     _preview
 
-  getPreviewEvents: ->
+  previewEvents: ->
     _previewEvents
 
   isOverlapping: ->
