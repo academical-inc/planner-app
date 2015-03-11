@@ -6,6 +6,7 @@ I18nMixin      = require '../mixins/I18nMixin'
 FormMixin      = require '../mixins/FormMixin'
 DateUtils      = require '../utils/DateUtils'
 HelperUtils    = require '../utils/HelperUtils'
+ApiUtils       = require '../utils/ApiUtils'
 EventFormStore = require '../stores/EventFormStore'
 PlannerActions = require '../actions/PlannerActions'
 {UiConstants}  = require '../constants/PlannerConstants'
@@ -20,11 +21,11 @@ EventForm = React.createClass(
   mixins: [I18nMixin, ModalMixin, FormMixin]
 
   getState: ->
-    [@startDate, @endDate] = EventFormStore.getStartEnd()
-    date = @startDate or @endDate or _.now()
+    [startDate, endDate] = EventFormStore.getStartEnd()
+    date = startDate or endDate or _.now()
     checkedDays: [date.day()]
-    startTime: _.getTimeStr @startDate if @startDate?
-    endTime: _.getTimeStr @endDate if @endDate?
+    startTime: _.getTimeStr startDate if startDate?
+    endTime: _.getTimeStr endDate if endDate?
 
   getInitialState: ->
     @props.initialState or @getState()
@@ -34,19 +35,15 @@ EventForm = React.createClass(
     @show()
 
   getStartEnd: (startTime, endTime, day)->
-    if @startDate? and @endDate?
-      if @startDate.day() != day
-        @startDate = _.setDay @startDate, day
-        @endDate   = _.setDay @endDate, day
-      [@startDate, @endDate]
-    else
-      # TODO use current date being viewed in calendar instead of now
-      # related to repeat until option
-      startDate = _.getTimeFromStr startTime
-      endDate   = _.getTimeFromStr endTime
-      startDate = _.setDay startDate, day
-      endDate   = _.setDay endDate, day
-      [startDate, endDate]
+    # TODO use current date being viewed in calendar instead of now
+    # related to repeat until option
+    startDate = _.getTimeFromStr startTime
+    endDate   = _.getTimeFromStr endTime
+    startDate = _.setDay startDate, day
+    endDate   = _.setDay endDate, day
+    startDate = _.inUtcOffset startDate, ApiUtils.currentSchool.utcOffset
+    endDate   = _.inUtcOffset endDate, ApiUtils.currentSchool.utcOffset
+    [startDate, endDate]
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange
