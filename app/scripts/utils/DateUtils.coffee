@@ -5,10 +5,21 @@ Moment        = require 'moment'
 class DateUtils
 
   @now: ->
-    Moment()
+    Moment.utc()
 
   @utc: (str, format)->
     Moment.utc str, format
+
+  @inUtcOffset: (date, utcOffset)->
+    res = Moment().utcOffset utcOffset
+    res.year          date.year()
+    res.month         date.month()
+    res.date          date.date()
+    res.hours         date.hours()
+    res.minutes       date.minutes()
+    res.seconds       date.seconds()
+    res.milliseconds  date.milliseconds()
+    res
 
   @getDayStr: (dayNo)->
     # Assumes days array starts with monday

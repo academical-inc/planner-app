@@ -14,6 +14,22 @@ describe "DateUtils", ->
   afterEach ->
     @restore()
 
+  describe 'inUtcOffset', ->
+
+    it 'returns date in specified utcOffset', ->
+      date = Moment([2015, 1, 1, 11, 30, 30, 2])
+      offset = -400
+
+      res = DateUtils.inUtcOffset date, offset
+      expect(res.utcOffset()).toEqual offset
+      expect(res.year()).toEqual 2015
+      expect(res.month()).toEqual 1
+      expect(res.date()).toEqual 1
+      expect(res.hours()).toEqual 11
+      expect(res.minutes()).toEqual 30
+      expect(res.seconds()).toEqual 30
+      expect(res.milliseconds()).toEqual 2
+
 
   describe '.getDayStr', ->
 
