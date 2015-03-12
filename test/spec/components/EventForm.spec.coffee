@@ -78,7 +78,7 @@ describe "EventForm", ->
 
     beforeEach ->
       @restore = H.rewire EventForm,
-        "ApiUtils.currentSchool": utcOffset: -300
+        "ApiUtils.currentSchool": -> utcOffset: -240
       @form = H.render EventForm, initialState: checkedDays: []
       @st   = "10:00am"
       @et   = "3:15pm"
@@ -91,8 +91,8 @@ describe "EventForm", ->
       sd = Moment.utc().day(@day).hours(10).minutes(0)
       ed = Moment.utc().day(@day).hours(15).minutes(15)
       [resStart, resEnd] = @form.getStartEnd(@st, @et, @day)
-      assertDates resStart,-300, sd
-      assertDates resEnd, -300, ed
+      assertDates resStart,-240, sd
+      assertDates resEnd, -240, ed
 
 
   describe "#handleSubmit", ->
@@ -113,7 +113,7 @@ describe "EventForm", ->
         @form.handleSubmit preventDefault: ->
         expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
         expect(@actions.addEvent).toHaveBeenCalledWith(
-          "Name", @start.format(), @end.format(), ["WE", "MO"]
+          "Name", @start, @end, ["WE", "MO"]
         )
 
     it 'clears the inputs', ->

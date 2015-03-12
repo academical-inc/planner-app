@@ -41,8 +41,8 @@ EventForm = React.createClass(
     endDate   = _.getTimeFromStr endTime
     startDate = _.setDay startDate, day
     endDate   = _.setDay endDate, day
-    startDate = _.inUtcOffset startDate, ApiUtils.currentSchool.utcOffset
-    endDate   = _.inUtcOffset endDate, ApiUtils.currentSchool.utcOffset
+    startDate = _.inUtcOffset startDate, ApiUtils.currentSchool().utcOffset
+    endDate   = _.inUtcOffset endDate, ApiUtils.currentSchool().utcOffset
     [startDate, endDate]
 
   componentDidMount: ->
@@ -95,8 +95,6 @@ EventForm = React.createClass(
       earliestDay = Math.min @state.checkedDays...
 
       [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
-      startDate = _.format startDate
-      endDate = _.format endDate
       PlannerActions.addEvent name, startDate, endDate, days
 
       # Clean up inputs
