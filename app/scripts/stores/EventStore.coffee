@@ -81,6 +81,7 @@ class EventStore extends Store
         wait()
         updateSchedule action.schedule
         if ScheduleStore.current().id == action.schedule.id
+          setCurrent ScheduleStore.current().id
           @emitChange()
 
 
