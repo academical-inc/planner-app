@@ -7,19 +7,18 @@ class DateUtils
   @now: ->
     Moment.utc()
 
-  @utc: (str, format)->
+  @utcFromStr: (str, format)->
     Moment.utc str, format
 
+  @toUtc: (date)->
+    date.utc()
+
   @inUtcOffset: (date, utcOffset)->
-    res = Moment().utcOffset utcOffset
-    res.year          date.year()
-    res.month         date.month()
-    res.date          date.date()
-    res.hours         date.hours()
-    res.minutes       date.minutes()
-    res.seconds       date.seconds()
-    res.milliseconds  date.milliseconds()
-    res
+    res = if typeof date == 'string'
+      Moment.parseZone date
+    else
+      Moment date
+    res.utcOffset utcOffset, true
 
   @getDayStr: (dayNo)->
     # Assumes days array starts with monday
@@ -30,11 +29,11 @@ class DateUtils
     @format date, format
 
   @getTimeFromStr: (str, format="h:mma")->
-    Moment.utc(str, format)
+    @utcFromStr str, format
 
-  @setTime: (date, time)->
-    time = Moment.utc time
-    res  = Moment.utc date
+  @setTime: (date, time, offset=0)->
+    time = @inUtcOffset time, offset
+    res  = @inUtcOffset date, offset
     res.hours time.hours()
     res.minutes time.minutes()
     res.seconds time.seconds()

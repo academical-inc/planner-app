@@ -16,19 +16,33 @@ describe "DateUtils", ->
 
   describe 'inUtcOffset', ->
 
-    it 'returns date in specified utcOffset', ->
-      date = Moment([2015, 1, 1, 11, 30, 30, 2])
-      offset = -400
+    it 'returns date in specified utcOffset when specifying a moment', ->
+      date = Moment.parseZone "2015-03-10T08:00:00-05:00"
+      offset = -60
 
       res = DateUtils.inUtcOffset date, offset
       expect(res.utcOffset()).toEqual offset
       expect(res.year()).toEqual 2015
-      expect(res.month()).toEqual 1
-      expect(res.date()).toEqual 1
-      expect(res.hours()).toEqual 11
-      expect(res.minutes()).toEqual 30
-      expect(res.seconds()).toEqual 30
-      expect(res.milliseconds()).toEqual 2
+      expect(res.month()).toEqual 2
+      expect(res.date()).toEqual 10
+      expect(res.hours()).toEqual 8
+      expect(res.minutes()).toEqual 0
+      expect(res.seconds()).toEqual 0
+      expect(res.milliseconds()).toEqual 0
+
+    it 'returns date in specified utcOffset when specifying an iso string', ->
+      date = "2015-03-10T08:00:00-04:00"
+      offset = -60
+
+      res = DateUtils.inUtcOffset date, offset
+      expect(res.utcOffset()).toEqual offset
+      expect(res.year()).toEqual 2015
+      expect(res.month()).toEqual 2
+      expect(res.date()).toEqual 10
+      expect(res.hours()).toEqual 8
+      expect(res.minutes()).toEqual 0
+      expect(res.seconds()).toEqual 0
+      expect(res.milliseconds()).toEqual 0
 
 
   describe '.getDayStr', ->
@@ -82,26 +96,34 @@ describe "DateUtils", ->
 
   describe '.setTime', ->
 
+    assertDate = (res, year, month, date, hours, minutes, offset)->
+      expect(res.year()).toEqual year
+      expect(res.month()).toEqual month
+      expect(res.date()).toEqual date
+      expect(res.hours()).toEqual hours
+      expect(res.minutes()).toEqual minutes
+      expect(res.utcOffset()).toEqual offset
+
     it 'sets the time to the moment object correctly when using strings', ->
-      time = "2014-01-20T10:30:00.000-00:00"
+      time = "2014-01-20T10:30:00.000-04:00"
       date = "2015-05-09"
 
-      expect(DateUtils.setTime(date, time).hours()).toEqual 10
-      expect(DateUtils.setTime(date, time).minutes()).toEqual 30
+      res = DateUtils.setTime(date, time, -300)
+      assertDate res, 2015, 4, 9, 10, 30, -300
 
     it 'sets the time to the moment object correctly when using moments', ->
-      time = Moment "2014-01-20T10:30:00.000-00:00"
-      date = Moment "2015-05-09"
+      time = Moment.parseZone "2014-01-20T10:30:00.000-05:00"
+      date = Moment.utc "2015-05-09", "YYYY-MM-DD"
 
-      expect(DateUtils.setTime(date, time).hours()).toEqual 10
-      expect(DateUtils.setTime(date, time).minutes()).toEqual 30
+      res = DateUtils.setTime(date, time, -300)
+      assertDate res, 2015, 4, 9, 10, 30, -300
 
     it 'sets the time to the moment object correctly when using combination', ->
-      time = "2014-01-20T10:30:00.000-00:00"
-      date = Moment "2015-05-09"
+      time = "2014-01-20T10:30:00.000-04:00"
+      date = Moment.utc "2015-05-09", "YYYY-MM-DD"
 
-      expect(DateUtils.setTime(date, time).hours()).toEqual 10
-      expect(DateUtils.setTime(date, time).minutes()).toEqual 30
+      res = DateUtils.setTime(date, time, -240)
+      assertDate res, 2015, 4, 9, 10, 30, -240
 
 
   describe '.format', ->
