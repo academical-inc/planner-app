@@ -1,4 +1,5 @@
 
+Moment   = require 'moment'
 H        = require '../../SpecHelper'
 ApiUtils = require '../../../app/scripts/utils/ApiUtils'
 
@@ -15,7 +16,6 @@ describe 'ApiUtils', ->
     @global = H.rewire ApiUtils,
       "Env.API_HOST": "API_HOST"
       "Env.API_PROTOCOL": "API_PROTOCOL"
-      _: @_
       Academical: H.spy "s1", retVal: @api
       "_api": @api
       "_hostname": "school.host.com"
@@ -24,6 +24,7 @@ describe 'ApiUtils', ->
         id: "school1"
         terms: @terms
         timezone: "America/Bogota"
+        utcOffset: -300
 
   afterEach ->
     @global()
@@ -53,14 +54,16 @@ describe 'ApiUtils', ->
 
     it 'creates new event correctly', ->
       @api.data.newEvent = H.spy "s3"
-      ApiUtils.data.newEvent "Name", "2015", "2016", ["Mo"]
+      start = Moment.parseZone "2015-03-10T10:00:00-05:00"
+      end = Moment.parseZone "2015-03-10T11:00:00-05:00"
+      ApiUtils.data.newEvent "Name", start, end, ["Mo"]
       expect(@api.data.newEvent).toHaveBeenCalledWith(
         "Name"
-        "2015"
-        "2016"
+        "2015-03-10T15:00:00+00:00"
+        "2015-03-10T16:00:00+00:00"
         "America/Bogota"
-        ["Mo"]
-        @terms[0].endDate
+        days: ["Mo"]
+        to: "2015-05-01T15:00:00+00:00"
         location: undefined
         description: undefined
         color: undefined

@@ -38,18 +38,18 @@ class ApiUtils
     newEvent: (name, startDt, endDt, days, {to ,timezone, location, \
         description, color}={})->
       if not to?
-        to = _.setTime(
-          _.utc(_currentSchool.terms[0].endDate, "YYYY-MM-DD"), startDt
-        )
-        to = _.format to
+        termEnd = _.utcFromStr _currentSchool.terms[0].endDate, "YYYY-MM-DD"
+        to = _.setTime termEnd, startDt, _currentSchool.utcOffset
+        to = _.format _.toUtc(to)
+
       timezone ?= _currentSchool.timezone
       _api.data.newEvent(
         name
-        startDt
-        endDt
+        _.format _.toUtc(startDt)
+        _.format _.toUtc(endDt)
         timezone
-        days
-        to
+        days: days
+        to: to
         location: location
         description: description
         color: color
@@ -59,10 +59,10 @@ class ApiUtils
   @api = _api
 
   # TODO Implement properly from login
-  @currentSchool: _currentSchool
+  @currentSchool: -> _currentSchool
 
   # TODO Implement properly from login
-  @currentStudent: _currentStudent
+  @currentStudent: -> _currentStudent
 
   @initSchool: (cb, nickname=_currentSchoolNickname)->
     _api.schools.retrieve nickname, (error, school)->
