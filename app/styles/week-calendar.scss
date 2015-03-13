@@ -16,6 +16,10 @@
     cursor: pointer;
   }
 
+  .dirty-event {
+    opacity: 0.7;
+  }
+
   /* Only small and extra small devices (tablets, phones) */
   @media (max-width: ($screen-md-min - 1)) {
     .fc-toolbar {

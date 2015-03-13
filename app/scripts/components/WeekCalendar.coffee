@@ -44,11 +44,12 @@ WeekCalendar = React.createClass(
 
   eventDataTransform: (event)->
     id:              event.id
-    title:           event.name
+    title:           if event.dirty then "Saving: #{event.name}" else event.name
     description:     event.description
     start:           event.startDt
     end:             event.endDt
     location:        event.location
+    className:       'dirty-event' if event.dirty
     backgroundColor: event.color
     borderColor:     event.color
     editable:        true
