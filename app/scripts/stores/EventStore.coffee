@@ -1,87 +1,63 @@
 
-$                 = require 'jquery'
-Store             = require './Store'
-ScheduleStore     = require './ScheduleStore'
-HelperUtils       = require '../utils/HelperUtils'
-EventUtils        = require '../utils/EventUtils'
-PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
-{ActionTypes}     = require '../constants/PlannerConstants'
+Store            = require './Store'
+ScheduleStore    = require './ScheduleStore'
+ChildStoreHelper = require '../utils/ChildStoreHelper'
+ApiUtils         = require '../utils/ApiUtils'
+EventUtils       = require '../utils/EventUtils'
+{ActionTypes}    = require '../constants/PlannerConstants'
 
 
 # Private
-_              = $.extend true, {}, HelperUtils, EventUtils
-_eventsMap     = {}
-_currentEvents = []
+_              = new ChildStoreHelper(ScheduleStore, 'events')
+_currentSchool = ApiUtils.currentSchool
 
-
-initEventsMap = (schedules)->
-  schedules.forEach (schedule)->
-    updateSchedule schedule
-
-setCurrent = (scheduleId)->
-  _currentEvents = _eventsMap[scheduleId]
-
-addEvent = (event)->
-  # TODO should expand here if thats how I'm gonna do it
-  _currentEvents.push event
-
-removeEvent = (event)->
-  _.findAndRemove _currentEvents, (ev)-> ev.id is event.id
-
-addSchedule = (scheduleId)->
-  _eventsMap[scheduleId] = []
-
-removeSchedule = (scheduleId)->
-  delete _eventsMap[scheduleId]
-
-updateSchedule = (schedule)->
-  _eventsMap[schedule.id] = schedule.events or []
-
-wait = ->
-  PlannerDispatcher.waitFor [ScheduleStore.dispatchToken]
 
 class EventStore extends Store
 
   events: ->
-    _currentEvents
+    _.currentElements
 
   expandedEvents: ->
-    _.concatExpandedEvents _currentEvents
+    EventUtils.concatExpandedEvents _.currentElements
 
   dispatchCallback: (payload)=>
     action = payload.action
 
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
-        wait()
-        setCurrent ScheduleStore.current().id
+        _.wait()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
-        wait()
-        initEventsMap action.schedules
-        setCurrent ScheduleStore.current().id
+        _.wait()
+        _.initElementsMap action.schedules
+        _.setCurrent()
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
-        wait()
-        addSchedule action.schedule.id
-        setCurrent ScheduleStore.current().id
+        _.wait()
+        _.addSchedule action.schedule.id
+        _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
-        wait()
-        removeSchedule action.schedule.id
-        setCurrent ScheduleStore.current().id
+        _.wait()
+        _.removeSchedule action.scheduleId
+        _.setCurrent()
         @emitChange()
       when ActionTypes.ADD_EVENT
-        addEvent action.event
+        # TODO should expand here if thats how I'm gonna do it
+        action.event.dirty = true
+        EventUtils.expandEventThruWeek action.event, _currentSchool().utcOffset
+        _.addElement action.event
+        @emitChange()
       when ActionTypes.UPDATE_EVENT
         @emitChange()
       when ActionTypes.REMOVE_EVENT
-        removeEvent action.event
+        _.removeElement action.eventId
       when ActionTypes.SAVE_SCHEDULE_SUCCESS
-        wait()
-        updateSchedule action.schedule
+        _.wait()
+        _.updateSchedule action.schedule
         if ScheduleStore.current().id == action.schedule.id
-          setCurrent ScheduleStore.current().id
+          _.setCurrent()
           @emitChange()
 
 
