@@ -105,3 +105,31 @@ describe 'EventUtils', ->
         else
           expect(event.event).toEqual sections[1].events[2].expanded[i-4]
         expect(event.section).toEqual sections[1]
+
+
+  describe '.expandEventThruWeek', ->
+
+    it 'expands event and transforms utc', ->
+      ev =
+        name: "Event 1"
+        startDt: "2015-01-01T13:00:00+00:00"
+        endDt:   "2015-01-01T14:00:00+00:00"
+        recurrence:
+          daysOfWeek: ["MO", "TH"]
+      @util.expandEventThruWeek(ev, -300)
+      expect(ev.expanded.length).toEqual 2
+      expect(ev.expanded[0].name).toEqual "Event 1"
+      expect(ev.expanded[0].startDt).toEqual "2014-12-29T08:00:00-05:00"
+      expect(ev.expanded[0].endDt).toEqual "2014-12-29T09:00:00-05:00"
+      expect(ev.expanded[1].name).toEqual "Event 1"
+      expect(ev.expanded[1].startDt).toEqual "2015-01-01T08:00:00-05:00"
+      expect(ev.expanded[1].endDt).toEqual "2015-01-01T09:00:00-05:00"
+
+    it 'does nothing if event does not have recurrence', ->
+      ev =
+        name: "Event2"
+        startDt: "2015-01-01T13:00:00+00:00"
+        endDt:   "2015-01-01T14:00:00+00:00"
+
+      @util.expandEventThruWeek(ev, -300)
+      expect(ev.expanded).toBeUndefined()
