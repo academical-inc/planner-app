@@ -8,7 +8,8 @@ class DataHelpers
     totalCredits: credits
     totalSections: sections.length
     events: events.map (event)->
-      delete event.expanded if event.expanded
+      delete event.expanded if event.expanded?
+      delete event.dirty if event.dirty?
       event
     sectionIds: sections.map (sec)-> sec.id
 
