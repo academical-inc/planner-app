@@ -109,8 +109,8 @@ class PlannerActions
     toSave = ApiUtils.data.scheduleToUpdate(
       schedule.name
       SectionStore.credits()
-      SectionStore.sections()
-      EventStore.events()
+      SectionStore.sections().concat []  # Make a copy
+      EventStore.events().concat []      # Make a copy
     )
     PlannerDispatcher.handleViewAction
       type: ActionTypes.SAVE_SCHEDULE
