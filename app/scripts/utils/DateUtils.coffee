@@ -4,6 +4,14 @@ Moment        = require 'moment'
 
 class DateUtils
 
+  @getDayStr: (dayNo)->
+    # Assumes days array starts with monday
+    days = UiConstants.days
+    if dayNo != 0 then days[dayNo-1] else days[6]
+
+  @getDayNo: (dayStr)->
+    (UiConstants.days.indexOf(dayStr) + 1) % UiConstants.days.length
+
   @now: ->
     Moment.utc()
 
@@ -22,11 +30,6 @@ class DateUtils
 
   @inUtcOffset: (date, offset)->
     @toUtcOffset date, offset, true
-
-  @getDayStr: (dayNo)->
-    # Assumes days array starts with monday
-    days = UiConstants.days
-    if dayNo != 0 then days[dayNo-1] else days[6]
 
   @getTimeStr: (date, format="h:mma")->
     @format date, format
