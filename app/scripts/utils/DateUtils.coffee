@@ -13,12 +13,15 @@ class DateUtils
   @toUtc: (date)->
     date.utc()
 
-  @inUtcOffset: (date, utcOffset)->
+  @toUtcOffset: (date, offset, keepTime=false)->
     res = if typeof date == 'string'
       Moment.parseZone date
     else
       Moment date
-    res.utcOffset utcOffset, true
+    res.utcOffset offset, keepTime
+
+  @inUtcOffset: (date, offset)->
+    @toUtcOffset date, offset, true
 
   @getDayStr: (dayNo)->
     # Assumes days array starts with monday

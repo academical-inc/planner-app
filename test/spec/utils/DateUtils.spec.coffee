@@ -14,9 +14,42 @@ describe "DateUtils", ->
   afterEach ->
     @restore()
 
+  describe 'toUtcOffset', ->
+
+    it 'returns date in specified utcOffset also changing time when
+    specifying a moment', ->
+      date = Moment.parseZone "2015-03-10T08:00:00-05:00"
+      offset = -240
+
+      res = DateUtils.toUtcOffset date, offset
+      expect(res.utcOffset()).toEqual offset
+      expect(res.year()).toEqual 2015
+      expect(res.month()).toEqual 2
+      expect(res.date()).toEqual 10
+      expect(res.hours()).toEqual 9
+      expect(res.minutes()).toEqual 0
+      expect(res.seconds()).toEqual 0
+      expect(res.milliseconds()).toEqual 0
+
+    it 'returns date in specified utcOffset also changing time when
+    specifying an iso string', ->
+      date = "2015-03-10T08:00:00-05:00"
+      offset = -240
+
+      res = DateUtils.toUtcOffset date, offset
+      expect(res.utcOffset()).toEqual offset
+      expect(res.year()).toEqual 2015
+      expect(res.month()).toEqual 2
+      expect(res.date()).toEqual 10
+      expect(res.hours()).toEqual 9
+      expect(res.minutes()).toEqual 0
+      expect(res.seconds()).toEqual 0
+      expect(res.milliseconds()).toEqual 0
+
   describe 'inUtcOffset', ->
 
-    it 'returns date in specified utcOffset when specifying a moment', ->
+    it 'returns date in specified utcOffset whtout changing time when
+    specifying a moment', ->
       date = Moment.parseZone "2015-03-10T08:00:00-05:00"
       offset = -60
 
@@ -30,7 +63,8 @@ describe "DateUtils", ->
       expect(res.seconds()).toEqual 0
       expect(res.milliseconds()).toEqual 0
 
-    it 'returns date in specified utcOffset when specifying an iso string', ->
+    it 'returns date in specified utcOffset without changing time when
+    specifying an iso string', ->
       date = "2015-03-10T08:00:00-04:00"
       offset = -60
 
