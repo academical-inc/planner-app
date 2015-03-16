@@ -46,9 +46,12 @@ describe 'EventStore', ->
       delSched:
         action:
           type: ActionTypes.DELETE_SCHEDULE_SUCCESS
-      saveSched:
+      saveSuccess:
         action:
           type: ActionTypes.SAVE_SCHEDULE_SUCCESS
+      saveFail:
+        action:
+          type: ActionTypes.SAVE_SCHEDULE_FAIL
       add:
         action:
           type: ActionTypes.ADD_EVENT
@@ -157,3 +160,86 @@ describe 'EventStore', ->
       expect(@current().length).toEqual 3
       expect(@current()[0]).toEqual id: "ev1", del: true
 
+
+  describe 'when SAVE_SCHEDULE_SUCCESS received', ->
+
+    beforeEach ->
+      @events.sch1 = [
+        {id: "ev1"}, {id: "ev2", del: true}, {dirty: true}
+      ]
+      @response = id: "sch1", events: [
+        {id: "ev1"}, {id: "ev3"}
+      ]
+
+    it 'updates saved schedule and current events when saved schedule is
+    current', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+        "ScheduleStore.current": -> id: "sch1"
+      @payloads.saveSuccess.action.schedule = @response
+      @dispatch @payloads.saveSuccess
+      expect(@current()).toEqual @response.events
+      expect(EventStore.__get__("_").elementsMap.sch1).toEqual @response.events
+
+    it 'updates saved schedule and not current events when saved schedule is not
+    current', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch2
+        "ScheduleStore.current": -> id: "sch2"
+      @payloads.saveSuccess.action.schedule = @response
+      @dispatch @payloads.saveSuccess
+      expect(@current()).toEqual @events.sch2
+      expect(EventStore.__get__("_").elementsMap.sch1).toEqual @response.events
+
+
+  describe 'when SAVE_SCHEDULE_FAIL', ->
+
+    describe 'when failed saved schedule is current', ->
+
+      it 'removes all dirty added events from saved schedule and sets
+      current', ->
+        @events.sch1 = [ {id: "ev1"}, {dirty: true} ]
+        H.rewire EventStore,
+          _: @childStoreHelper @events, @events.sch1
+          "ScheduleStore.current": -> id: "sch1"
+        @payloads.saveFail.action.scheduleId = "sch1"
+        @dispatch @payloads.saveFail
+        expect(@current()).toEqual [{id: "ev1"}]
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual [{id: "ev1"}]
+
+      it 'undeletes all dirty deleted events from saved schedule and sets
+      current', ->
+        @events.sch1 = [ {id: "ev1"}, {id: "ev2", del: true} ]
+        H.rewire EventStore,
+          _: @childStoreHelper @events, @events.sch1
+          "ScheduleStore.current": -> id: "sch1"
+        @payloads.saveFail.action.scheduleId = "sch1"
+        @dispatch @payloads.saveFail
+        expected = [{id: "ev1"}, {id: "ev2"}]
+        expect(@current()).toEqual expected
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
+
+
+    describe 'when failed saved schedule is not current', ->
+
+      it 'removes all dirty added events from saved schedule and sets current', ->
+        @events.sch1 = [ {id: "ev1"}, {dirty: true} ]
+        H.rewire EventStore,
+          _: @childStoreHelper @events, @events.sch2
+          "ScheduleStore.current": -> id: "sch2"
+        @payloads.saveFail.action.scheduleId = "sch1"
+        @dispatch @payloads.saveFail
+        expect(@current()).toEqual @events.sch2
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual [{id: "ev1"}]
+
+      it 'undeletes all dirty deleted events from saved schedule and sets
+      current', ->
+        @events.sch1 = [ {id: "ev1"}, {id: "ev2", del: true} ]
+        H.rewire EventStore,
+          _: @childStoreHelper @events, @events.sch2
+          "ScheduleStore.current": -> id: "sch2"
+        @payloads.saveFail.action.scheduleId = "sch1"
+        @dispatch @payloads.saveFail
+        expected = [{id: "ev1"}, {id: "ev2"}]
+        expect(@current()).toEqual @events.sch2
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
