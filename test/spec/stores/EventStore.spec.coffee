@@ -71,6 +71,7 @@ describe 'EventStore', ->
       _: @childStoreHelper()
       _currentSchool: -> utcOffset: -300
       "EventUtils.expandEventThruWeek": @expandSpy
+      "ScheduleStore.current": -> id: null
 
   afterEach ->
     @restore() if @restore?
