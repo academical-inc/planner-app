@@ -15,8 +15,8 @@ describe 'EventUtils', ->
     beforeEach ->
       @events =
         expanded: [
-          {id: "e1", expanded: ["ex1", "ex2"]}
-          {id: "e2", expanded: ["ex3", "ex4"]}
+          {id: "e1", expanded: [{id: "ex1", n:"ex1"}, {id: "ex2", n:"ex2"}]}
+          {id: "e2", expanded: [{id: "ex3", n:"ex3"}]}
         ]
         notEx: [
           {id: "e1"}
@@ -27,48 +27,53 @@ describe 'EventUtils', ->
         @events.notEx[1]
       ]
       @evFactory = H.spy "evFactory", retVal: (e)->e
-      @expandExp = ["ex1", "ex2", "ex3", "ex4" ]
+      @expandExp = [{id:"e1",n:"ex1"},{id:"e1",n:"ex2"},{id:"e2",n:"ex3"}]
 
     describe 'when event factory provided', ->
 
-      it 'returns correct concated events when they are all expanded', ->
+      it 'returns correct concated events with correct ids when they are all
+      expanded', ->
         res = @util.concatExpandedEvents @events.expanded, @evFactory
         expect(res).toEqual @expandExp
         for e, idx in @expandExp
           expect(@evFactory.calls.argsFor(idx)).toContain e
 
-      it 'returns correct concated events when they are not expanded', ->
+      it 'returns correct concated events with correct ids when they are not
+      expanded', ->
         res = @util.concatExpandedEvents @events.notEx, @evFactory
         expect(res).toEqual @events.notEx
         expected = @events.notEx.map (e)-> [e]
         expect(@evFactory.calls.allArgs()).toEqual expected
 
-      it 'returns correct concated events when some expanded and some not', ->
+      it 'returns correct concated events with correct ids when some expanded
+      and some not', ->
         res = @util.concatExpandedEvents @events.mixed, @evFactory
-        expect(res).toEqual ["ex1", "ex2", {id: "e2"}]
+        expect(res).toEqual @expandExp[0..1].concat [{id: "e2"}]
         expect(@evFactory.calls.count()).toEqual 3
-        expect(@evFactory.calls.argsFor(0)).toContain "ex1"
-        expect(@evFactory.calls.argsFor(1)).toContain "ex2"
+        expect(@evFactory.calls.argsFor(0)).toContain @expandExp[0]
+        expect(@evFactory.calls.argsFor(1)).toContain @expandExp[1]
         expect(@evFactory.calls.argsFor(2)).toEqual [{id: "e2"}]
 
 
     describe 'when event factory not provided', ->
 
-      it 'returns correct concated events when they are all expanded', ->
+      it 'returns correct concated events with correct ids when they are all
+      expanded', ->
         res = @util.concatExpandedEvents @events.expanded
         expect(res).toEqual @expandExp
 
-      it 'returns correct concated events when they are not expanded', ->
+      it 'returns correct concated events with correct ids when they are not
+      expanded', ->
         res = @util.concatExpandedEvents @events.notEx
         expect(res).toEqual @events.notEx
 
-      it 'returns correct concated events when some expanded and some not', ->
+      it 'returns correct concated events with correct ids when some expanded
+      and some not', ->
         res = @util.concatExpandedEvents @events.mixed
-        expect(res).toEqual ["ex1", "ex2", {id: "e2"}]
+        expect(res).toEqual @expandExp[0..1].concat [{id: "e2"}]
 
 
   describe '.getSectionEvents', ->
-
 
     it 'returns correct events when 1 section with only 1 recurring event', ->
       events = @util.getSectionEvents [sections[0]]

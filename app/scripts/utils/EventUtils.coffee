@@ -9,10 +9,12 @@ class EventUtils
     events.reduce(
       (prevArr, event)->
         if event.expanded?
-          if eventFactory?
-            prevArr.concat event.expanded.map eventFactory
-          else
-            prevArr.concat event.expanded
+          prevArr.concat event.expanded.map ->
+            arguments[0].id = event.id
+            if eventFactory?
+              eventFactory arguments...
+            else
+              arguments[0]
         else
           event = eventFactory event if eventFactory?
           prevArr.concat [event]
