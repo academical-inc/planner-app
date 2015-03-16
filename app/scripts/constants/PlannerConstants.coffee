@@ -28,4 +28,5 @@ module.exports =
     "ADD_EVENT"
     "UPDATE_EVENT"
     "REMOVE_EVENT"
+    "CHANGE_WEEK"
   }

@@ -1,16 +1,17 @@
 
-React          = require 'react'
-$              = require 'jquery'
-ModalMixin     = require '../mixins/ModalMixin'
-I18nMixin      = require '../mixins/I18nMixin'
-FormMixin      = require '../mixins/FormMixin'
-DateUtils      = require '../utils/DateUtils'
-HelperUtils    = require '../utils/HelperUtils'
-ApiUtils       = require '../utils/ApiUtils'
-EventFormStore = require '../stores/EventFormStore'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-R              = React.DOM
+React            = require 'react'
+$                = require 'jquery'
+ModalMixin       = require '../mixins/ModalMixin'
+I18nMixin        = require '../mixins/I18nMixin'
+FormMixin        = require '../mixins/FormMixin'
+DateUtils        = require '../utils/DateUtils'
+HelperUtils      = require '../utils/HelperUtils'
+ApiUtils         = require '../utils/ApiUtils'
+EventFormStore   = require '../stores/EventFormStore'
+CurrentWeekStore = require '../stores/CurrentWeekStore'
+PlannerActions   = require '../actions/PlannerActions'
+{UiConstants}    = require '../constants/PlannerConstants'
+R                = React.DOM
 
 # Private
 _ = $.extend true, {}, HelperUtils, DateUtils
@@ -36,15 +37,18 @@ EventForm = React.createClass(
     @setState @getState()
     @show()
 
-  getStartEnd: (startTime, endTime, day)->
+  buildDate: (time, day)->
     # TODO use current date being viewed in calendar instead of now
     # related to repeat until option
-    startDate = _.getTimeFromStr startTime
-    endDate   = _.getTimeFromStr endTime
-    startDate = _.setDay startDate, day
-    endDate   = _.setDay endDate, day
-    startDate = _.inUtcOffset startDate, ApiUtils.currentSchool().utcOffset
-    endDate   = _.inUtcOffset endDate, ApiUtils.currentSchool().utcOffset
+    date = _.getUtcTimeFromStr time
+    date.week CurrentWeekStore.week()
+    date = _.setDay date, day
+    date = _.inUtcOffset date, ApiUtils.currentSchool().utcOffset
+    date
+
+  getStartEnd: (startTime, endTime, day)->
+    startDate = @buildDate startTime, day
+    endDate   = @buildDate endTime, day
     [startDate, endDate]
 
   componentDidMount: ->
@@ -70,7 +74,7 @@ EventForm = React.createClass(
   handleDayChecked: (e)->
     day     = parseInt e.target.value, 10
     checked = e.target.checked
-    checkedDays = @state.checkedDays.slice 0
+    checkedDays = @state.checkedDays.concat []
     if checked == true
       checkedDays = checkedDays.concat [day]
     else

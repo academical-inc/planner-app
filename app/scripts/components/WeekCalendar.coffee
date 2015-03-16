@@ -87,6 +87,9 @@ WeekCalendar = React.createClass(
     @cal.fullCalendar 'unselect'
     PlannerActions.openEventForm start, end
 
+  handleWeekChange: (fcView)->
+    PlannerActions.changeWeek fcView.start
+
   componentDidMount: ->
     SectionStore.addChangeListener @onSectionsChange
     PreviewStore.addChangeListener @onPreviewChange
@@ -123,6 +126,7 @@ WeekCalendar = React.createClass(
         right: "next"
       eventRender: @renderEvent
       select: @handleEventSelect
+      viewRender: @handleWeekChange
     )
 
   componentWillUnmount: ->

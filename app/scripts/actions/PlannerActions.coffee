@@ -128,5 +128,10 @@ class PlannerActions
           type: ActionTypes.SAVE_SCHEDULE_SUCCESS
           schedule: saved
 
+  @changeWeek: (weekStart)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.CHANGE_WEEK
+      weekStart: weekStart
+
 
 module.exports = PlannerActions

@@ -34,7 +34,7 @@ class DateUtils
   @getTimeStr: (date, format="h:mma")->
     @format date, format
 
-  @getTimeFromStr: (str, format="h:mma")->
+  @getUtcTimeFromStr: (str, format="h:mma")->
     @utcFromStr str, format
 
   @setTime: (date, time, offset=0)->
