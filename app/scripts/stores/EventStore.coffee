@@ -30,6 +30,9 @@ class EventStore extends Store
   events: ->
     _.currentElements
 
+  eventsExceptDeleted: ->
+    HelperUtils.filter _.currentElements, (ev)-> not(ev.del is true)
+
   expandedEvents: ->
     EventUtils.getScheduleEvents _.currentElements
 
