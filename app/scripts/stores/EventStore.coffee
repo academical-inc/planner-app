@@ -11,6 +11,10 @@ EventUtils       = require '../utils/EventUtils'
 _              = new ChildStoreHelper(ScheduleStore, 'events')
 _currentSchool = ApiUtils.currentSchool
 
+removeEvent = (eventId)->
+  [ev, i] = _.findElement eventId
+  ev.del = true if ev?
+
 
 class EventStore extends Store
 
@@ -18,7 +22,7 @@ class EventStore extends Store
     _.currentElements
 
   expandedEvents: ->
-    EventUtils.concatExpandedEvents _.currentElements
+    EventUtils.getScheduleEvents _.currentElements
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -44,7 +48,6 @@ class EventStore extends Store
         _.setCurrent()
         @emitChange()
       when ActionTypes.ADD_EVENT
-        # TODO should expand here if thats how I'm gonna do it
         action.event.dirty = true
         EventUtils.expandEventThruWeek action.event, _currentSchool().utcOffset
         _.addElement action.event
@@ -52,7 +55,8 @@ class EventStore extends Store
       when ActionTypes.UPDATE_EVENT
         @emitChange()
       when ActionTypes.REMOVE_EVENT
-        _.removeElement action.eventId
+        removeEvent action.eventId
+        @emitChange()
       when ActionTypes.SAVE_SCHEDULE_SUCCESS
         _.wait()
         _.updateSchedule action.schedule
