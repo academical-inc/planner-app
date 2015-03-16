@@ -98,10 +98,11 @@ class PlannerActions
       event: event
     @saveSchedule()
 
-  @removeEvent: (event)->
+  @removeEvent: (eventId)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_EVENT
-      event: event
+      eventId: eventId
+    @saveSchedule()
 
   @saveSchedule: ->
     schedule = ScheduleStore.current()
