@@ -1,13 +1,13 @@
 
-React        = require 'react'
-ItemMixin    = require '../mixins/ItemMixin'
-SpinnerMixin = require '../mixins/SpinnerMixin'
-R            = React.DOM
+React     = require 'react'
+ItemMixin = require '../mixins/ItemMixin'
+IconMixin = require '../mixins/IconMixin'
+R         = React.DOM
 
 
 ScheduleItem = React.createClass(
 
-  mixins: [ItemMixin, SpinnerMixin]
+  mixins: [ItemMixin, IconMixin]
 
   render: ->
     nameClass = if @props.item.dirty then " dirty" else ""

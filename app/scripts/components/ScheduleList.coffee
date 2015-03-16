@@ -3,7 +3,7 @@ React          = require 'react'
 $              = require 'jquery'
 {UiConstants}  = require '../constants/PlannerConstants'
 MediaQueries   = require '../utils/MediaQueries.coffee'
-SpinnerMixin   = require '../mixins/SpinnerMixin'
+IconMixin      = require '../mixins/IconMixin'
 I18nMixin      = require '../mixins/I18nMixin'
 ScheduleStore  = require '../stores/ScheduleStore'
 PlannerActions = require '../actions/PlannerActions'
@@ -14,7 +14,7 @@ R              = React.DOM
 
 ScheduleList = React.createClass(
 
-  mixins: [SpinnerMixin, I18nMixin]
+  mixins: [IconMixin, I18nMixin]
 
   getState: ->
     current = ScheduleStore.current()
