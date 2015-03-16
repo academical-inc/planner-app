@@ -111,6 +111,29 @@ describe 'SectionStore', ->
       expect(@current()).toEqual @sections.sch1
 
 
+  describe 'when CREATE_SCHEDULE_SUCCESS received', ->
+
+    it 'adds new empty sections from added schedule', ->
+      H.rewire SectionStore,
+        _: childStoreHelper "sch3", @sections, @sections.sch1
+      @payloads.createSched.action.schedule = id: "sch3"
+      @dispatch @payloads.createSched
+      expect(SectionStore.__get__("_").elementsMap.sch3).toBeDefined()
+      expect(@current()).toEqual []
+
+
+  describe 'when DELETE_SCHEDULE_SUCCESS received', ->
+
+    it 'removes sections from removed schedule', ->
+      H.rewire SectionStore,
+        _: @childStoreHelper @sections, @schedules[1].sections
+      @payloads.delSched.action.scheduleId = @schedules[1].id
+      expect(@current()).toEqual @schedules[1].sections
+      @dispatch @payloads.delSched
+      expect(SectionStore.__get__("_").elementsMap[@schedules[1].id]).toBeUndefined()
+      expect(@current()).toEqual @schedules[0].sections
+
+
   describe 'when ADD_SECTION received', ->
 
     it 'adds section to current sections', ->
@@ -140,27 +163,3 @@ describe 'SectionStore', ->
       expect(@credits()).toEqual 5
       expect(@count()).toEqual 2
       expect(@current()).toEqual [{id: "sec2", credits: 2}, {id: "sec3", credits: 3}]
-
-
-  describe 'when CREATE_SCHEDULE_SUCCESS received', ->
-
-    it 'adds new empty sections from added schedule', ->
-      H.rewire SectionStore,
-        _: childStoreHelper "sch3", @sections, @sections.sch1
-      @payloads.createSched.action.schedule = id: "sch3"
-      @dispatch @payloads.createSched
-      expect(SectionStore.__get__("_").elementsMap.sch3).toBeDefined()
-      expect(@current()).toEqual []
-
-
-  describe 'when DELETE_SCHEDULE_SUCCESS received', ->
-
-    it 'adds removes sections from removed schedule', ->
-      map = sch1: @schedules[0].sections, sch2: @schedules[1].sections
-      H.rewire SectionStore,
-        _: @childStoreHelper map, @schedules[1].sections
-      @payloads.delSched.action.scheduleId = @schedules[1].id
-      expect(@current()).toEqual @schedules[1].sections
-      @dispatch @payloads.delSched
-      expect(SectionStore.__get__("_").elementsMap[@schedules[1].id]).toBeUndefined()
-      expect(@current()).toEqual @schedules[0].sections
