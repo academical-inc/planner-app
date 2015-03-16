@@ -79,18 +79,25 @@ describe "EventForm", ->
     beforeEach ->
       @restore = H.rewire EventForm,
         "ApiUtils.currentSchool": -> utcOffset: -240
+        "CurrentWeekStore.week": -> 12  # Week of march 16/2015
       @form = H.render EventForm, initialState: checkedDays: []
       @st   = "10:00am"
       @et   = "3:15pm"
-      @day  = 2
 
     afterEach ->
       @restore()
 
     it 'computes correctly given start and end time strs and day', ->
-      sd = Moment.utc().day(@day).hours(10).minutes(0)
-      ed = Moment.utc().day(@day).hours(15).minutes(15)
-      [resStart, resEnd] = @form.getStartEnd(@st, @et, @day)
+      sd = Moment.utc [2015, 2, 17, 10, 0]  # Tuesday
+      ed = Moment.utc [2015, 2, 17, 15, 15]
+      [resStart, resEnd] = @form.getStartEnd(@st, @et, 2)
+      assertDates resStart,-240, sd
+      assertDates resEnd, -240, ed
+
+    it 'computes correctly when day is sunday', ->
+      sd = Moment.utc [2015, 2, 22, 10, 0]  # Sunday
+      ed = Moment.utc [2015, 2, 22, 15, 15]
+      [resStart, resEnd] = @form.getStartEnd(@st, @et, 7)
       assertDates resStart,-240, sd
       assertDates resEnd, -240, ed
 

@@ -53,6 +53,11 @@ class DateUtils
     date.day day
     date
 
+  @setWeek: (date, week)->
+    date = Moment date
+    date.week week
+    date
+
   @format: (date, format)->
     Moment(date).format format
 

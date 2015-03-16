@@ -38,10 +38,8 @@ EventForm = React.createClass(
     @show()
 
   buildDate: (time, day)->
-    # TODO use current date being viewed in calendar instead of now
-    # related to repeat until option
     date = _.getUtcTimeFromStr time
-    date.week CurrentWeekStore.week()
+    date = _.setWeek date, CurrentWeekStore.week()
     date = _.setDay date, day
     date = _.inUtcOffset date, ApiUtils.currentSchool().utcOffset
     date
