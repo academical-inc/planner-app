@@ -42,8 +42,8 @@ class EventUtils
       utcEvent.expanded = utcEvent.recurrence.daysOfWeek.map (day)->
         dayNo     = DateUtils.getDayNo day
         e         = $.extend {}, true, utcEvent
-        e.startDt = DateUtils.format start.day(dayNo)
-        e.endDt   = DateUtils.format end.day(dayNo)
+        e.startDt = DateUtils.format DateUtils.setDay(start, dayNo)
+        e.endDt   = DateUtils.format DateUtils.setDay(end, dayNo)
         e
 
 

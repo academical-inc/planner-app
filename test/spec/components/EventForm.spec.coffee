@@ -105,7 +105,7 @@ describe "EventForm", ->
       H.spyOn @form, "getState", retVal: checkedDays: [1]
 
     it 'grabs and submits form data correctly', ->
-      @form.setState checkedDays: [3,1], =>
+      @form.setState checkedDays: [3,1, 7], =>
         @form.refs.name.getDOMNode().value = "Name"
         @form.refs.startTime.getDOMNode().value = "10:00am"
         @form.refs.endTime.getDOMNode().value = "3:00pm"
@@ -113,7 +113,7 @@ describe "EventForm", ->
         @form.handleSubmit preventDefault: ->
         expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
         expect(@actions.addEvent).toHaveBeenCalledWith(
-          "Name", @start, @end, ["WE", "MO"]
+          "Name", @start, @end, ["WE", "MO", "SU"]
         )
 
     it 'clears the inputs', ->
@@ -228,7 +228,7 @@ describe "EventForm", ->
         expect(day.props.children[1]).toEqual @expected[i]
 
         dayInput = day.props.children[0]
-        expect(dayInput.props.value).toEqual (i+1) % days.length
+        expect(dayInput.props.value).toEqual i+1
 
     it 'renders the form correctly based on initial state', ->
       form = H.render EventForm, initialState: @state

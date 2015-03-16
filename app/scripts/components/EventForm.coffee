@@ -23,7 +23,9 @@ EventForm = React.createClass(
   getState: ->
     [startDate, endDate] = EventFormStore.getStartEnd()
     date = startDate or endDate or _.now()
-    checkedDays: [date.day()]
+    # Transform momentjs SU as 0 to 7
+    day = if date.day() == 0 then 7 else date.day()
+    checkedDays: [day]
     startTime: _.getTimeStr startDate if startDate?
     endTime: _.getTimeStr endDate if endDate?
 
@@ -158,7 +160,7 @@ EventForm = React.createClass(
       R.div className: "form-group", ref: "daysGroup",
         R.label null, @t("eventForm.days")
         R.div className: "days",
-          [1,2,3,4,5,6,0].map (dayNo)=>
+          [1,2,3,4,5,6,7].map (dayNo)=>
             day = _.getDayStr dayNo
             R.label className: "checkbox-inline", key: day,
               R.input(

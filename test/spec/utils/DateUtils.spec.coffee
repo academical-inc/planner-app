@@ -10,6 +10,7 @@ describe "DateUtils", ->
     @restore = H.rewire DateUtils,\
       UiConstants:
         days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+    @utils = DateUtils
 
   afterEach ->
     @restore()
@@ -21,7 +22,7 @@ describe "DateUtils", ->
       date = Moment.parseZone "2015-03-10T08:00:00-05:00"
       offset = -240
 
-      res = DateUtils.toUtcOffset date, offset
+      res = @utils.toUtcOffset date, offset
       expect(res.utcOffset()).toEqual offset
       expect(res.year()).toEqual 2015
       expect(res.month()).toEqual 2
@@ -36,7 +37,7 @@ describe "DateUtils", ->
       date = "2015-03-10T08:00:00-05:00"
       offset = -240
 
-      res = DateUtils.toUtcOffset date, offset
+      res = @utils.toUtcOffset date, offset
       expect(res.utcOffset()).toEqual offset
       expect(res.year()).toEqual 2015
       expect(res.month()).toEqual 2
@@ -53,7 +54,7 @@ describe "DateUtils", ->
       date = Moment.parseZone "2015-03-10T08:00:00-05:00"
       offset = -60
 
-      res = DateUtils.inUtcOffset date, offset
+      res = @utils.inUtcOffset date, offset
       expect(res.utcOffset()).toEqual offset
       expect(res.year()).toEqual 2015
       expect(res.month()).toEqual 2
@@ -68,7 +69,7 @@ describe "DateUtils", ->
       date = "2015-03-10T08:00:00-04:00"
       offset = -60
 
-      res = DateUtils.inUtcOffset date, offset
+      res = @utils.inUtcOffset date, offset
       expect(res.utcOffset()).toEqual offset
       expect(res.year()).toEqual 2015
       expect(res.month()).toEqual 2
@@ -82,9 +83,10 @@ describe "DateUtils", ->
   describe '.getDayStr', ->
 
     it 'returns the correct day string for the given day', ->
-      expect(DateUtils.getDayStr(0)).toEqual "SU"
-      expect(DateUtils.getDayStr(1)).toEqual "MO"
-      expect(DateUtils.getDayStr(5)).toEqual "FR"
+      expect(@utils.getDayStr(0)).toEqual undefined
+      expect(@utils.getDayStr(1)).toEqual "MO"
+      expect(@utils.getDayStr(5)).toEqual "FR"
+      expect(@utils.getDayStr(7)).toEqual "SU"
 
 
   describe '.getTimeStr', ->
@@ -94,36 +96,36 @@ describe "DateUtils", ->
       @t2 = Moment().hours(15).minutes(50).seconds(20)
 
     it 'returns the time in the correct format', ->
-      res = DateUtils.getTimeStr @t1
+      res = @utils.getTimeStr @t1
       expect(res).toEqual "11:30am"
-      res = DateUtils.getTimeStr @t2
+      res = @utils.getTimeStr @t2
       expect(res).toEqual "3:50pm"
 
     it 'returns the time with provided format', ->
-      res = DateUtils.getTimeStr @t1, "HH:mm"
+      res = @utils.getTimeStr @t1, "HH:mm"
       expect(res).toEqual "11:30"
-      res = DateUtils.getTimeStr @t2, "HH:mm"
+      res = @utils.getTimeStr @t2, "HH:mm"
       expect(res).toEqual "15:50"
 
 
-  describe '.getTimeFromStr', ->
+  describe '.getUtcTimeFromStr', ->
 
     it 'returns correct utc moment obj from time str in default format', ->
-      res = DateUtils.getTimeFromStr "11:30am"
+      res = @utils.getUtcTimeFromStr "11:30am"
       expect(res.hours()).toEqual 11
       expect(res.minutes()).toEqual 30
       expect(res.isUTC()).toBe true
-      res = DateUtils.getTimeFromStr "3:50pm"
+      res = @utils.getUtcTimeFromStr "3:50pm"
       expect(res.hours()).toEqual 15
       expect(res.minutes()).toEqual 50
       expect(res.isUTC()).toBe true
 
     it 'returns correct utc moment obj from time str in provided format', ->
-      res = DateUtils.getTimeFromStr "11:30", "HH:mm"
+      res = @utils.getUtcTimeFromStr "11:30", "HH:mm"
       expect(res.hours()).toEqual 11
       expect(res.minutes()).toEqual 30
       expect(res.isUTC()).toBe true
-      res = DateUtils.getTimeFromStr "15:50", "HH:mm"
+      res = @utils.getUtcTimeFromStr "15:50", "HH:mm"
       expect(res.hours()).toEqual 15
       expect(res.minutes()).toEqual 50
       expect(res.isUTC()).toBe true
@@ -142,22 +144,52 @@ describe "DateUtils", ->
       time = "2014-01-20T10:30:00.000-04:00"
       date = "2015-05-09"
 
-      res = DateUtils.setTime(date, time, -300)
+      res = @utils.setTime(date, time, -300)
       assertDate res, 2015, 4, 9, 10, 30, -300
 
     it 'sets the time to the moment object correctly when using moments', ->
       time = Moment.parseZone "2014-01-20T10:30:00.000-05:00"
       date = Moment.utc "2015-05-09", "YYYY-MM-DD"
 
-      res = DateUtils.setTime(date, time, -300)
+      res = @utils.setTime(date, time, -300)
       assertDate res, 2015, 4, 9, 10, 30, -300
 
     it 'sets the time to the moment object correctly when using combination', ->
       time = "2014-01-20T10:30:00.000-04:00"
       date = Moment.utc "2015-05-09", "YYYY-MM-DD"
 
-      res = DateUtils.setTime(date, time, -240)
+      res = @utils.setTime(date, time, -240)
       assertDate res, 2015, 4, 9, 10, 30, -240
+
+
+  describe '.setDay', ->
+
+    it 'throws error if day not between 1-7', ->
+      expect(@utils.setDay.bind(null, Moment(), 0)).toThrowError()
+
+    it 'does nothing when setting to same day and not sunday', ->
+      d = Moment().day(1)  # Monday
+      res = @utils.setDay d, 1
+      expect(res.week()).toEqual d.week()
+      expect(res.day()).toEqual 1
+
+    it 'does nothing when setting to same day and is sunday', ->
+      d = Moment().day(0)  # Sunday
+      res = @utils.setDay d, 7
+      expect(res.week()).toEqual d.week()
+      expect(res.day()).toEqual 0
+
+    it 'sets day correctly when not setting a sunday', ->
+      d = Moment().day(1)  # Monday
+      res = @utils.setDay d, 5  # Friday
+      expect(res.week()).toEqual d.week()
+      expect(res.day()).toEqual 5
+
+    it 'sets day correctly when setting a sunday', ->
+      d = Moment().day(1)  # Monday
+      res = @utils.setDay d, 7  # Sunday
+      expect(res.week()).toEqual d.week() + 1
+      expect(res.day()).toEqual 0
 
 
   describe '.format', ->
@@ -166,13 +198,13 @@ describe "DateUtils", ->
       str = "2014-01-20T10:30:00-05:00"
       date = Moment str
 
-      expect(DateUtils.format(str)).toEqual str
-      expect(DateUtils.format(date)).toEqual str
+      expect(@utils.format(str)).toEqual str
+      expect(@utils.format(date)).toEqual str
 
     it 'uses default iso format when no format', ->
       str = "2014-01-20T10:30:00.000-05:00"
       date = Moment str
       expected = "2014-01-20"
 
-      expect(DateUtils.format(str, "YYYY-MM-DD")).toEqual expected
-      expect(DateUtils.format(date, "YYYY-MM-DD")).toEqual expected
+      expect(@utils.format(str, "YYYY-MM-DD")).toEqual expected
+      expect(@utils.format(date, "YYYY-MM-DD")).toEqual expected
