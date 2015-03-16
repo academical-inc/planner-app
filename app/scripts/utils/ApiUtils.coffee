@@ -1,4 +1,5 @@
 
+$          = require 'jquery'
 Env        = require '../Env'
 _          = require '../utils/DateUtils'
 Academical = require '../api/Academical'
@@ -22,8 +23,13 @@ class ApiUtils
     _currentSchoolNickname = _hostname.split(".")[0]
 
   @data:
-    scheduleToUpdate: ->
-      _api.data.scheduleToUpdate arguments...
+    scheduleToUpdate: (name, credits, sections, events)->
+      events = events.map (event)->
+        ev = $.extend {}, true, event
+        delete ev.expanded if ev.expanded?
+        delete ev.dirty if ev.dirty?
+        ev
+      _api.data.scheduleToUpdate name, credits, sections, events
     newSchedule: (name, {studentId, schoolId, term}={})->
       studentId ?= _currentStudent.id
       schoolId  ?= _currentSchool.id

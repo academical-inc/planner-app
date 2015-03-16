@@ -7,10 +7,7 @@ class DataHelpers
     name: name
     totalCredits: credits
     totalSections: sections.length
-    events: events.map (event)->
-      delete event.expanded if event.expanded?
-      delete event.dirty if event.dirty?
-      event
+    events: events
     sectionIds: sections.map (sec)-> sec.id
 
   @newSchedule: (name, studentId, schoolId, term)->
