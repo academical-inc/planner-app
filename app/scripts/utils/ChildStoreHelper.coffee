@@ -26,8 +26,13 @@ class ChildStoreHelper
   addElement: (element)->
     @currentElements.push element
 
-  removeElement: (elementId)->
-    _.findAndRemove @currentElements, (el)-> el.id == elementId
+  removeElement: (elementId, test=->true)->
+    [el, i] = @findElement elementId
+    if test el, i
+      _.removeAt @currentElements, i
+
+  findElement: (elementId)->
+    _.findWithIdx @currentElements, (el)-> el.id == elementId
 
   wait: ->
     PlannerDispatcher.waitFor [@store.dispatchToken]
