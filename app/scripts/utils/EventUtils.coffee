@@ -12,19 +12,23 @@ class EventUtils
           prevArr.concat event.expanded.map ->
             arguments[0].id = event.id
             if eventFactory?
-              eventFactory arguments...
+              eventFactory event, arguments...
             else
               arguments[0]
         else
-          event = eventFactory event if eventFactory?
+          event = eventFactory null, event if eventFactory?
           prevArr.concat [event]
       , []
     )
 
+  @getScheduleEvents: (events)->
+    @concatExpandedEvents events, (parent, ev)->
+      parent: parent, ev: ev
+
   @getSectionEvents: (sections)->
     sections.reduce(
       (prevArr, curSec)=>
-        allSectionEvents = @concatExpandedEvents curSec.events, (ev)->
+        allSectionEvents = @concatExpandedEvents curSec.events, (parent, ev)->
           section: curSec, event: ev
         prevArr.concat allSectionEvents
       , []

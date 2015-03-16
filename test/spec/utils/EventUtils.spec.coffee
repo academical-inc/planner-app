@@ -9,25 +9,25 @@ describe 'EventUtils', ->
 
   beforeEach ->
     @util = EventUtils
+    @events =
+      expanded: [
+        {id: "e1", expanded: [{id: "ex1", n:"ex1"}, {id: "ex2", n:"ex2"}]}
+        {id: "e2", expanded: [{id: "ex3", n:"ex3"}]}
+      ]
+      notEx: [
+        {id: "e1"}
+        {id: "e2"}
+      ]
+    @events.mixed = [
+      @events.expanded[0]
+      @events.notEx[1]
+    ]
+    @expandExp = [{id:"e1",n:"ex1"},{id:"e1",n:"ex2"},{id:"e2",n:"ex3"}]
 
   describe '.concatExpandedEvents', ->
 
     beforeEach ->
-      @events =
-        expanded: [
-          {id: "e1", expanded: [{id: "ex1", n:"ex1"}, {id: "ex2", n:"ex2"}]}
-          {id: "e2", expanded: [{id: "ex3", n:"ex3"}]}
-        ]
-        notEx: [
-          {id: "e1"}
-          {id: "e2"}
-        ]
-      @events.mixed = [
-        @events.expanded[0]
-        @events.notEx[1]
-      ]
-      @evFactory = H.spy "evFactory", retVal: (e)->e
-      @expandExp = [{id:"e1",n:"ex1"},{id:"e1",n:"ex2"},{id:"e2",n:"ex3"}]
+      @evFactory = H.spy "evFactory", retVal: (parent,e)->e
 
     describe 'when event factory provided', ->
 
@@ -42,7 +42,7 @@ describe 'EventUtils', ->
       expanded', ->
         res = @util.concatExpandedEvents @events.notEx, @evFactory
         expect(res).toEqual @events.notEx
-        expected = @events.notEx.map (e)-> [e]
+        expected = @events.notEx.map (e)-> [null, e]
         expect(@evFactory.calls.allArgs()).toEqual expected
 
       it 'returns correct concated events with correct ids when some expanded
@@ -52,7 +52,7 @@ describe 'EventUtils', ->
         expect(@evFactory.calls.count()).toEqual 3
         expect(@evFactory.calls.argsFor(0)).toContain @expandExp[0]
         expect(@evFactory.calls.argsFor(1)).toContain @expandExp[1]
-        expect(@evFactory.calls.argsFor(2)).toEqual [{id: "e2"}]
+        expect(@evFactory.calls.argsFor(2)).toEqual [null, {id: "e2"}]
 
 
     describe 'when event factory not provided', ->
@@ -71,6 +71,18 @@ describe 'EventUtils', ->
       and some not', ->
         res = @util.concatExpandedEvents @events.mixed
         expect(res).toEqual @expandExp[0..1].concat [{id: "e2"}]
+
+
+  describe '.getScheduleEvents', ->
+
+    it 'returns correct expanded events with ref to parent', ->
+      events = @util.getScheduleEvents @events.expanded
+      expect(events.length).toEqual 3
+      events[0..1].forEach (ev, idx)=>
+        expect(ev.parent).toEqual @events.expanded[0]
+        expect(ev.ev).toEqual @expandExp[idx]
+      expect(events[2].parent).toEqual @events.expanded[1]
+      expect(events[2].ev).toEqual @expandExp[2]
 
 
   describe '.getSectionEvents', ->
