@@ -43,15 +43,18 @@ WeekCalendar = React.createClass(
     isPreview:       true
 
   eventDataTransform: (event)->
-    id:              event.id
-    title:           if event.dirty then "Saving: #{event.name}" else event.name
-    description:     event.description
-    start:           event.startDt
-    end:             event.endDt
-    location:        event.location
-    className:       'dirty-event' if event.dirty
-    backgroundColor: event.color
-    borderColor:     event.color
+    parent = event.parent
+    ev     = event.ev
+    id:              parent.id
+    title:           if parent.dirty then "Saving..." else parent.name
+    description:     parent.description
+    start:           ev.startDt
+    end:             ev.endDt
+    location:        parent.location
+    className:       'dirty-event' if parent.dirty
+    backgroundColor: parent.color
+    borderColor:     parent.color
+    del:             parent.del
     editable:        true
     allDay:          false
     isEvent:         true
@@ -128,13 +131,16 @@ WeekCalendar = React.createClass(
     EventStore.removeChangeListener @onEventsChange
 
   renderEvent: (event, jqElement)->
-    icon = $(
+    icon = if event.del is true
+      @spinnerMarkup classNames: ['pull-right']
+    else
       @iconMarkup "times", fw: false, inverse: true, classNames: ['pull-right']
-    )
+
+    icon = $(icon)
     if event.isSection
       icon.on "click", @removeSection.bind(@, event.id)
     else if event.isEvent
-      icon.on "click", @removeEvent.bind(@, event.id)
+      icon.on "click", @removeEvent.bind(@, event.id) if not(event.del is true)
     jqElement.find('.fc-time').append icon
     jqElement
 
