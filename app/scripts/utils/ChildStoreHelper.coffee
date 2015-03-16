@@ -18,7 +18,7 @@ class ChildStoreHelper
     @elementsMap[scheduleId] = []
 
   updateSchedule: (schedule)->
-    @elementsMap[schedule.id] = schedule[@collection] or []
+    @setElements schedule.id, schedule[@collection]
 
   removeSchedule: (scheduleId)->
     delete @elementsMap[scheduleId]
@@ -33,6 +33,12 @@ class ChildStoreHelper
 
   findElement: (elementId)->
     _.findWithIdx @currentElements, (el)-> el.id == elementId
+
+  setElements: (scheduleId, elements)->
+    @elementsMap[scheduleId] = elements or []
+
+  elementsFor: (scheduleId)->
+    @elementsMap[scheduleId]
 
   wait: ->
     PlannerDispatcher.waitFor [@store.dispatchToken]

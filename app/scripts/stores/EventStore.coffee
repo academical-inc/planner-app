@@ -4,6 +4,7 @@ ScheduleStore    = require './ScheduleStore'
 ChildStoreHelper = require '../utils/ChildStoreHelper'
 ApiUtils         = require '../utils/ApiUtils'
 EventUtils       = require '../utils/EventUtils'
+HelperUtils      = require '../utils/HelperUtils'
 {ActionTypes}    = require '../constants/PlannerConstants'
 
 
@@ -14,6 +15,14 @@ _currentSchool = ApiUtils.currentSchool
 removeEvent = (eventId)->
   [ev, i] = _.findElement eventId
   ev.del = true if ev?
+
+cleanScheduleEvents = (scheduleId)->
+  events = _.elementsFor scheduleId
+  events = HelperUtils.filter events, (ev)-> not(ev.dirty is true)
+  events = events.map (ev)->
+    delete ev.del if ev.del is true
+    ev
+  _.setElements scheduleId, events
 
 
 class EventStore extends Store
@@ -61,6 +70,12 @@ class EventStore extends Store
         _.wait()
         _.updateSchedule action.schedule
         if ScheduleStore.current().id == action.schedule.id
+          _.setCurrent()
+          @emitChange()
+      when ActionTypes.SAVE_SCHEDULE_FAIL
+        _.wait()
+        cleanScheduleEvents action.scheduleId
+        if ScheduleStore.current().id == action.scheduleId
           _.setCurrent()
           @emitChange()
 

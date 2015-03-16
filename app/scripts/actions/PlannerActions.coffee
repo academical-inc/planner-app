@@ -121,7 +121,7 @@ class PlannerActions
       if err?
         PlannerDispatcher.handleServerAction
           type: ActionTypes.SAVE_SCHEDULE_FAIL
-          schedule: toSave
+          scheduleId: schedule.id
           error: err
       else
         PlannerDispatcher.handleServerAction
