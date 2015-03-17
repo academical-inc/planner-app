@@ -12,13 +12,17 @@ DateUtils        = require '../utils/DateUtils'
 # Private
 _          = new ChildStoreHelper(ScheduleStore, 'events')
 _utcOffset = -> ApiUtils.currentSchool().utcOffset
+_expanded  = {}
 
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
-  events = HelperUtils.filter events, (ev)->
-    not(ev.dirtyAdd is true) and not(ev.dirtyUpdate is true)
+  events = HelperUtils.filter events, (ev)-> not(ev.dirtyAdd is true)
   events = events.map (ev)->
     delete ev.del if ev.del is true
+    if ev.dirtyUpdate is true
+      ev.expanded = _expanded[ev.id]
+      delete ev.dirtyUpdate
+      delete _expanded[ev.id]
     ev
   _.setElements scheduleId, events
 
@@ -39,12 +43,13 @@ addEvent = (event)->
 updateEvent = (event)->
   [old, idx] = _.findElement event.id
   if old?
+    old.dirtyUpdate = true
     old.startDt = updateTime old.startDt, event.startDate
     old.endDt   = updateTime old.endDt, event.endDate
     repeatUntil = updateTime old.recurrence.repeatUntil, event.startDate
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta
-    old.dirtyUpdate = true
+    _expanded[old.id] = old.expanded.concat []
     EventUtils.expandEventThruWeek old,
       startDt: event.startDate
       endDt: event.endDate
