@@ -70,11 +70,13 @@ class PlannerActions
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_SECTION
       section: section
+    @saveSchedule()
 
   @removeSection: (sectionId)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_SECTION
       sectionId: sectionId
+    @saveSchedule()
 
   @addSectionPreview: (section)->
     PlannerDispatcher.handleViewAction
