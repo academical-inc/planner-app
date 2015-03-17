@@ -26,8 +26,9 @@ class ApiUtils
     scheduleToUpdate: (name, credits, sections, events)->
       events = events.map (event)->
         ev = $.extend {}, true, event
-        delete ev.expanded if ev.expanded?
-        delete ev.dirty    if ev.dirty?
+        delete ev.expanded    if ev.expanded?
+        delete ev.dirtyAdd    if ev.dirtyAdd?
+        delete ev.dirtyUpdate if ev.dirtyUpdate?
         ev
       _api.data.scheduleToUpdate name, credits, sections, events
     newSchedule: (name, {studentId, schoolId, term}={})->

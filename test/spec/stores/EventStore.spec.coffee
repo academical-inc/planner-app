@@ -69,7 +69,7 @@ describe 'EventStore', ->
     H.spyOn EventStore, "emitChange"
     @restore = H.rewire EventStore,
       _: @childStoreHelper()
-      _currentSchool: -> utcOffset: -300
+      _utcOffset: -> -300
       "EventUtils.expandEventThruWeek": @expandSpy
       "ScheduleStore.current": -> id: null
 
@@ -139,9 +139,9 @@ describe 'EventStore', ->
       expect(@current()).toEqual []
       @payloads.add.action.event = id: "ev100"
       @dispatch @payloads.add
-      expected = id: "ev100", dirty: true
+      expected = id: "ev100", dirtyAdd: true
       expect(@current()[0]).toEqual expected
-      expect(@expandSpy).toHaveBeenCalledWith expected, -300
+      expect(@expandSpy).toHaveBeenCalledWith expected
 
 
   describe 'when REMOVE_EVENT received', ->
@@ -166,7 +166,7 @@ describe 'EventStore', ->
 
     beforeEach ->
       @events.sch1 = [
-        {id: "ev1"}, {id: "ev2", del: true}, {dirty: true}
+        {id: "ev1"}, {id: "ev2", del: true}, {dirtyAdd: true}
       ]
       @response = id: "sch1", events: [
         {id: "ev1"}, {id: "ev3"}
@@ -199,7 +199,7 @@ describe 'EventStore', ->
 
       it 'removes all dirty added events from saved schedule and sets
       current', ->
-        @events.sch1 = [ {id: "ev1"}, {dirty: true} ]
+        @events.sch1 = [ {id: "ev1"}, {dirtyAdd: true} ]
         H.rewire EventStore,
           _: @childStoreHelper @events, @events.sch1
           "ScheduleStore.current": -> id: "sch1"
@@ -224,7 +224,7 @@ describe 'EventStore', ->
     describe 'when failed saved schedule is not current', ->
 
       it 'removes all dirty added events from saved schedule and sets current', ->
-        @events.sch1 = [ {id: "ev1"}, {dirty: true} ]
+        @events.sch1 = [ {id: "ev1"}, {dirtyAdd: true} ]
         H.rewire EventStore,
           _: @childStoreHelper @events, @events.sch2
           "ScheduleStore.current": -> id: "sch2"

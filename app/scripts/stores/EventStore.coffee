@@ -5,24 +5,53 @@ ChildStoreHelper = require '../utils/ChildStoreHelper'
 ApiUtils         = require '../utils/ApiUtils'
 EventUtils       = require '../utils/EventUtils'
 HelperUtils      = require '../utils/HelperUtils'
+DateUtils        = require '../utils/DateUtils'
 {ActionTypes}    = require '../constants/PlannerConstants'
 
 
 # Private
-_              = new ChildStoreHelper(ScheduleStore, 'events')
-_currentSchool = ApiUtils.currentSchool
-
-removeEvent = (eventId)->
-  [ev, i] = _.findElement eventId
-  ev.del = true if ev?
+_          = new ChildStoreHelper(ScheduleStore, 'events')
+_utcOffset = -> ApiUtils.currentSchool().utcOffset
 
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
-  events = HelperUtils.filter events, (ev)-> not(ev.dirty is true)
+  events = HelperUtils.filter events, (ev)->
+    not(ev.dirtyAdd is true) and not(ev.dirtyUpdate is true)
   events = events.map (ev)->
     delete ev.del if ev.del is true
     ev
   _.setElements scheduleId, events
+
+updateTime = (date, time)->
+  DateUtils.setTimeAndFormat date, time, _utcOffset()
+
+updateDays = (event, dayDelta)->
+  event.recurrence.daysOfWeek = event.recurrence.daysOfWeek.map (day)->
+    dayNo = DateUtils.getDayNo day
+    dayNo += dayDelta
+    DateUtils.getDayStr dayNo
+
+addEvent = (event)->
+  event.dirtyAdd = true
+  EventUtils.expandEventThruWeek event
+  _.addElement event
+
+updateEvent = (event)->
+  [old, idx] = _.findElement event.id
+  if old?
+    old.startDt = updateTime old.startDt, event.startDate
+    old.endDt   = updateTime old.endDt, event.endDate
+    repeatUntil = updateTime old.recurrence.repeatUntil, event.startDate
+    old.recurrence.repeatUntil = repeatUntil
+    updateDays old, event.dayDelta
+    old.dirtyUpdate = true
+    EventUtils.expandEventThruWeek old,
+      startDt: event.startDate
+      endDt: event.endDate
+
+removeEvent = (eventId)->
+  [ev, i] = _.findElement eventId
+  ev.del = true if ev?
 
 
 class EventStore extends Store
@@ -60,11 +89,10 @@ class EventStore extends Store
         _.setCurrent()
         @emitChange()
       when ActionTypes.ADD_EVENT
-        action.event.dirty = true
-        EventUtils.expandEventThruWeek action.event, _currentSchool().utcOffset
-        _.addElement action.event
+        addEvent action.event
         @emitChange()
       when ActionTypes.UPDATE_EVENT
+        updateEvent action.event
         @emitChange()
       when ActionTypes.REMOVE_EVENT
         removeEvent action.eventId
