@@ -1,4 +1,5 @@
 
+Moment           = require 'moment'
 H                = require '../../SpecHelper'
 EventStore       = require '../../../app/scripts/stores/EventStore'
 ChildStoreHelper = require '../../../app/scripts/utils/ChildStoreHelper'
@@ -144,6 +145,100 @@ describe 'EventStore', ->
       expect(@expandSpy).toHaveBeenCalledWith expected
 
 
+  describe 'when UPDATE_EVENT received', ->
+
+    beforeEach ->
+      @events.sch1[1] =
+        id: "ev2"
+        startDt: "2015-01-12T10:00:00-05:00"
+        endDt: "2015-01-12T11:00:00-05:00"
+        recurrence:
+          daysOfWeek: ["TU", "FR"]
+          repeatUntil: "2015-05-19T10:00:00-05:00"
+      @evPayload =
+        id: "ev2"
+        startDt: Moment.parseZone "2015-01-19T14:00:00-05:00"
+        endDt: Moment.parseZone "2015-01-19T15:00:00-05:00"
+        dayDelta: 0
+
+    it 'stores temporary copy of event before updating to revert later', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @payloads.update.action.event = @evPayload
+      original = H.$.extend true, {}, @events.sch1[1]
+      @dispatch @payloads.update
+      expect(EventStore.__get__("_toRevert")["ev2"]).toEqual original
+
+    it 'marks event as dirtyUpdate', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].dirtyUpdate).toBe true
+
+    it 'it updates event times but keeps start and end dates', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].startDt).toEqual "2015-01-12T14:00:00-05:00"
+      expect(@current()[1].endDt).toEqual "2015-01-12T15:00:00-05:00"
+
+    it 'it updates repeatUntil time, but keeps date', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].recurrence.repeatUntil).toEqual "2015-05-19T14:00:00-05:00"
+
+    it 'it expands temporary events in current week', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@expandSpy.calls.mostRecent().args[1]).toEqual \
+        startDt: @evPayload.startDt, endDt: @evPayload.endDt
+
+    it 'does not change days if dayDelta is 0', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].recurrence.daysOfWeek).toEqual ["TU", "FR"]
+
+    it 'updates days correctly if incrementing days within the week', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @evPayload.dayDelta = 2
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].recurrence.daysOfWeek).toEqual ["TH", "SU"]
+
+    it 'updates days correctly if decreasing days within the week', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @evPayload.dayDelta = -1
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].recurrence.daysOfWeek).toEqual ["MO", "TH"]
+
+    it 'updates days correctly if incrementing and overflowing current week', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @evPayload.dayDelta = 4
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].recurrence.daysOfWeek).toEqual ["SA", "TU"]
+
+    it 'updates days correctly if decreasing and overflowing current week', ->
+      H.rewire EventStore,
+        _: @childStoreHelper @events, @events.sch1
+      @evPayload.dayDelta = -2
+      @payloads.update.action.event = @evPayload
+      @dispatch @payloads.update
+      expect(@current()[1].recurrence.daysOfWeek).toEqual ["SU", "WE"]
+
+
   describe 'when REMOVE_EVENT received', ->
 
     it 'does nothing when no events present', ->
@@ -166,10 +261,11 @@ describe 'EventStore', ->
 
     beforeEach ->
       @events.sch1 = [
-        {id: "ev1"}, {id: "ev2", del: true}, {dirtyAdd: true}
+        {id: "ev1"}, {id: "ev2", del: true}, {id: "ev3", s:5, dirtyUpdate: true},
+        {dirtyAdd: true}
       ]
       @response = id: "sch1", events: [
-        {id: "ev1"}, {id: "ev3"}
+        {id: "ev1"}, {id: "ev3", s: 5}, {id: "ev4"}
       ]
 
     it 'updates saved schedule and current events when saved schedule is
@@ -220,6 +316,18 @@ describe 'EventStore', ->
         expect(@current()).toEqual expected
         expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
 
+      it 'reverts dirty updated events which could not be updated', ->
+        original = id: "ev2", s: 1
+        @events.sch1 = [ {id: "ev1"}, {id: "ev2", s: 5, dirtyUpdate: true} ]
+        H.rewire EventStore,
+          _: @childStoreHelper @events, @events.sch1
+          _toRevert: ev2: original
+          "ScheduleStore.current": -> id: "sch1"
+        @payloads.saveFail.action.scheduleId = "sch1"
+        @dispatch @payloads.saveFail
+        expected = [{id: "ev1"}, original]
+        expect(@current()).toEqual expected
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
 
     describe 'when failed saved schedule is not current', ->
 
@@ -242,5 +350,18 @@ describe 'EventStore', ->
         @payloads.saveFail.action.scheduleId = "sch1"
         @dispatch @payloads.saveFail
         expected = [{id: "ev1"}, {id: "ev2"}]
+        expect(@current()).toEqual @events.sch2
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
+
+      it 'reverts dirty updated events which could not be updated', ->
+        original = id: "ev2", s: 1
+        @events.sch1 = [ {id: "ev1"}, {id: "ev2", s: 5, dirtyUpdate: true} ]
+        H.rewire EventStore,
+          _: @childStoreHelper @events, @events.sch2
+          _toRevert: ev2: original
+          "ScheduleStore.current": -> id: "sch2"
+        @payloads.saveFail.action.scheduleId = "sch1"
+        @dispatch @payloads.saveFail
+        expected = [{id: "ev1"}, original]
         expect(@current()).toEqual @events.sch2
         expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
