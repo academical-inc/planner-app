@@ -58,6 +58,10 @@ class DateUtils
     date.week week
     date
 
+  @setTimeAndFormat: (date, time, offset, format)->
+    date = @setTime date, time, offset
+    @format date, format
+
   @format: (date, format)->
     Moment(date).format format
 

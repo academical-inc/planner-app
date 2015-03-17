@@ -45,14 +45,13 @@ class ApiUtils
         description, color}={})->
       if not to?
         termEnd = _.utcFromStr _currentSchool.terms[0].endDate, "YYYY-MM-DD"
-        to = _.setTime termEnd, startDt, _currentSchool.utcOffset
-        to = _.format _.toUtc(to)
+        to = _.setTimeAndFormat termEnd, startDt, _currentSchool.utcOffset
 
       timezone ?= _currentSchool.timezone
       _api.data.newEvent(
         name
-        _.format _.toUtc(startDt)
-        _.format _.toUtc(endDt)
+        _.format startDt
+        _.format endDt
         timezone
         days: days
         to: to

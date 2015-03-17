@@ -34,17 +34,14 @@ class EventUtils
       , []
     )
 
-  # Event start and end dates must be UTC
-  @expandEventThruWeek: (utcEvent, offset)->
-    start = DateUtils.toUtcOffset utcEvent.startDt, offset
-    end   = DateUtils.toUtcOffset utcEvent.endDt, offset
-    if utcEvent.recurrence?
-      utcEvent.expanded = utcEvent.recurrence.daysOfWeek.map (day)->
-        dayNo     = DateUtils.getDayNo day
-        e         = $.extend {}, true, utcEvent
-        e.startDt = DateUtils.format DateUtils.setDay(start, dayNo)
-        e.endDt   = DateUtils.format DateUtils.setDay(end, dayNo)
-        e
+  @expandEventThruWeek: (event, {startDt, endDt}={})->
+    startDt ?= event.startDt
+    endDt   ?= event.endDt
+    if event.recurrence?
+      event.expanded = event.recurrence.daysOfWeek.map (day)->
+        dayNo = DateUtils.getDayNo day
+        startDt: DateUtils.format DateUtils.setDay(startDt, dayNo)
+        endDt: DateUtils.format DateUtils.setDay(endDt, dayNo)
 
 
 module.exports = EventUtils

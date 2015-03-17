@@ -59,11 +59,11 @@ describe 'ApiUtils', ->
       ApiUtils.data.newEvent "Name", start, end, ["Mo"]
       expect(@api.data.newEvent).toHaveBeenCalledWith(
         "Name"
-        "2015-03-10T15:00:00+00:00"
-        "2015-03-10T16:00:00+00:00"
+        "2015-03-10T10:00:00-05:00"
+        "2015-03-10T11:00:00-05:00"
         "America/Bogota"
         days: ["Mo"]
-        to: "2015-05-01T15:00:00+00:00"
+        to: "2015-05-01T10:00:00-05:00"
         location: undefined
         description: undefined
         color: undefined
