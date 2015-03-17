@@ -98,6 +98,16 @@ class PlannerActions
       event: event
     @saveSchedule()
 
+  @updateEvent: (id, startDate, endDate, dayDelta)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.UPDATE_EVENT
+      event:
+        id: id
+        startDate: startDate
+        endDate: endDate
+        dayDelta: dayDelta
+    @saveSchedule()
+
   @removeEvent: (eventId)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_EVENT

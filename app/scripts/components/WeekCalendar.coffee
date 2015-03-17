@@ -4,7 +4,8 @@ React          = require 'react'
 SectionStore   = require '../stores/SectionStore'
 PreviewStore   = require '../stores/PreviewStore'
 EventStore     = require '../stores/EventStore'
-EventUtils     = require '../utils/EventUtils'
+DateUtils      = require '../utils/DateUtils'
+ApiUtils       = require '../utils/ApiUtils'
 I18nMixin      = require '../mixins/I18nMixin'
 IconMixin      = require '../mixins/IconMixin'
 PlannerActions = require '../actions/PlannerActions'
@@ -12,9 +13,10 @@ PlannerActions = require '../actions/PlannerActions'
 R              = React.DOM
 
 # Private
-sectionEvents = -> SectionStore.sectionEvents()
-previewEvents = -> PreviewStore.previewEvents()
-events        = -> EventStore.expandedEvents()
+_utcOffset     = -> ApiUtils.currentSchool().utcOffset
+_sectionEvents = -> SectionStore.sectionEvents()
+_previewEvents = -> PreviewStore.previewEvents()
+_events        = -> EventStore.expandedEvents()
 
 
 WeekCalendar = React.createClass(
@@ -43,15 +45,16 @@ WeekCalendar = React.createClass(
     isPreview:       true
 
   eventDataTransform: (event)->
-    parent = event.parent
-    ev     = event.ev
+    parent  = event.parent
+    ev      = event.ev
+    isDirty = parent.dirtyAdd or parent.dirtyUpdate
     id:              parent.id
-    title:           if parent.dirty then "Saving..." else parent.name
+    title:           if isDirty then "Saving..." else parent.name
     description:     parent.description
     start:           ev.startDt
     end:             ev.endDt
     location:        parent.location
-    className:       'dirty-event' if parent.dirty
+    className:       'dirty-event' if isDirty
     backgroundColor: parent.color
     borderColor:     parent.color
     del:             parent.del
@@ -65,17 +68,13 @@ WeekCalendar = React.createClass(
     @cal.fullCalendar "addEventSource", source
 
   onSectionsChange: ->
-    @updateEventSource @sources.sections, sectionEvents()
-
-    # TODO temporal
-    # if @sources.sections.events.length > 0
-    #   @cal.fullCalendar "gotoDate", @sources.sections.events[0].event.startDt
+    @updateEventSource @sources.sections, _sectionEvents()
 
   onPreviewChange: ->
-    @updateEventSource @sources.preview, previewEvents()
+    @updateEventSource @sources.preview, _previewEvents()
 
   onEventsChange: ->
-    @updateEventSource @sources.events, events()
+    @updateEventSource @sources.events, _events()
 
   removeSection: (sectionId)->
     PlannerActions.removeSection sectionId
@@ -83,9 +82,14 @@ WeekCalendar = React.createClass(
   removeEvent: (eventId)->
     PlannerActions.removeEvent eventId
 
-  handleEventSelect: (start, end)->
+  handleSelect: (start, end)->
     @cal.fullCalendar 'unselect'
     PlannerActions.openEventForm start, end
+
+  handleEventUpdate: (event, delta)->
+    start = DateUtils.inUtcOffset event.start, _utcOffset()
+    end   = DateUtils.inUtcOffset event.end, _utcOffset()
+    PlannerActions.updateEvent event.id, start, end, delta.days()
 
   handleWeekChange: (fcView)->
     PlannerActions.changeWeek fcView.start
@@ -125,7 +129,8 @@ WeekCalendar = React.createClass(
         center: @t "calendar.today"
         right: "next"
       eventRender: @renderEvent
-      select: @handleEventSelect
+      select: @handleSelect
+      eventDrop: @handleEventUpdate
       viewRender: @handleWeekChange
     )
 
