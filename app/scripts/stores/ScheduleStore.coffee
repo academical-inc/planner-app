@@ -92,18 +92,6 @@ revertRemovedSchedule = (id)->
   [toRemove, idx] = findToRemove id
   delete toRemove.del if toRemove?
 
-addSection = (sectionId)->
-  _current.sectionIds.push sectionId
-
-removeSection = (sectionId)->
-  _.findAndRemove _current.sectionIds, (id)-> id is sectionId
-
-addEvent = (event)->
-  _current.events.push event
-
-removeEvent = (event)->
-  _.findAndRemove _current.events, (ev)-> ev.id is event.id
-
 createSchedule = ->
   name = I18n.t "scheduleList.defaultName"
   newSchedule = PlannerActions.createSchedule name, dispatchInitial: false
@@ -147,14 +135,6 @@ class ScheduleStore extends Store
       when ActionTypes.GET_SCHEDULES_SUCCESS
         initSchedules action.schedules
         @emitChange()
-      # when ActionTypes.ADD_SECTION
-      #   addSection action.section.id
-      # when ActionTypes.REMOVE_SECTION
-      #   removeSection action.sectionId
-      # when ActionTypes.ADD_EVENT
-      #   addEvent action.event
-      # when ActionTypes.REMOVE_EVENT
-      #   removeEvent action.event
 
 
 module.exports = new ScheduleStore
