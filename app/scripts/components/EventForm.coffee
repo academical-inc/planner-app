@@ -22,13 +22,13 @@ EventForm = React.createClass(
   mixins: [I18nMixin, ModalMixin, FormMixin]
 
   getState: ->
-    [startDate, endDate] = EventFormStore.getStartEnd()
-    date = startDate or endDate or _.now()
+    [startDt, endDt] = EventFormStore.getStartEnd()
+    date = startDt or endDt or _.now()
     # Transform momentjs SU as 0 to 7
     day = if date.day() == 0 then 7 else date.day()
     checkedDays: [day]
-    startTime: _.getTimeStr startDate if startDate?
-    endTime: _.getTimeStr endDate if endDate?
+    startTime: _.getTimeStr startDt if startDt?
+    endTime: _.getTimeStr endDt if endDt?
 
   getInitialState: ->
     @props.initialState or @getState()
@@ -45,9 +45,9 @@ EventForm = React.createClass(
     date
 
   getStartEnd: (startTime, endTime, day)->
-    startDate = @buildDate startTime, day
-    endDate   = @buildDate endTime, day
-    [startDate, endDate]
+    startDt = @buildDate startTime, day
+    endDt   = @buildDate endTime, day
+    [startDt, endDt]
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange
@@ -98,8 +98,8 @@ EventForm = React.createClass(
       days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
       earliestDay = Math.min @state.checkedDays...
 
-      [startDate, endDate] = @getStartEnd startTime, endTime, earliestDay
-      PlannerActions.addEvent name, startDate, endDate, days
+      [startDt, endDt] = @getStartEnd startTime, endTime, earliestDay
+      PlannerActions.addEvent name, startDt, endDt, days
 
       # Clean up inputs
       @clearFields()

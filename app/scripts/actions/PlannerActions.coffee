@@ -87,26 +87,26 @@ class PlannerActions
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_SECTION_PREVIEW
 
-  @openEventForm: (startDate, endDate)->
+  @openEventForm: (startDt, endDt)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.OPEN_EVENT_FORM
-      startDate: startDate
-      endDate: endDate
+      startDt: startDt
+      endDt: endDt
 
-  @addEvent: (name, startDate, endDate, days)->
-    event = ApiUtils.data.newEvent name, startDate, endDate, days
+  @addEvent: (name, startDt, endDt, days)->
+    event = ApiUtils.data.newEvent name, startDt, endDt, days
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_EVENT
       event: event
     @saveSchedule()
 
-  @updateEvent: (id, startDate, endDate, dayDelta)->
+  @updateEvent: (id, startDt, endDt, dayDelta)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.UPDATE_EVENT
       event:
         id: id
-        startDate: startDate
-        endDate: endDate
+        startDt: startDt
+        endDt: endDt
         dayDelta: dayDelta
     @saveSchedule()
 

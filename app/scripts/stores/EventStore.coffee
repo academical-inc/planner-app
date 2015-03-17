@@ -51,14 +51,14 @@ updateEvent = (event)->
   if old?
     _toRevert[old.id] = $.extend true, {}, old
     old.dirtyUpdate = true
-    old.startDt = updateTime old.startDt, event.startDate
-    old.endDt   = updateTime old.endDt, event.endDate
-    repeatUntil = updateTime old.recurrence.repeatUntil, event.startDate
+    old.startDt = updateTime old.startDt, event.startDt
+    old.endDt   = updateTime old.endDt, event.endDt
+    repeatUntil = updateTime old.recurrence.repeatUntil, event.startDt
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta
     EventUtils.expandEventThruWeek old,
-      startDt: event.startDate
-      endDt: event.endDate
+      startDt: event.startDt
+      endDt: event.endDt
 
 removeEvent = (eventId)->
   [ev, i] = _.findElement eventId

@@ -18,8 +18,8 @@ class EventFormStore extends Store
 
     switch action.type
       when ActionTypes.OPEN_EVENT_FORM
-        _start = action.startDate
-        _end   = action.endDate
+        _start = action.startDt
+        _end   = action.endDt
         @emitChange()
 
 
