@@ -1,4 +1,5 @@
 
+$                = require 'jquery'
 Store            = require './Store'
 ScheduleStore    = require './ScheduleStore'
 ChildStoreHelper = require '../utils/ChildStoreHelper'
@@ -12,7 +13,7 @@ DateUtils        = require '../utils/DateUtils'
 # Private
 _          = new ChildStoreHelper(ScheduleStore, 'events')
 _utcOffset = -> ApiUtils.currentSchool().utcOffset
-_expanded  = {}
+_toRevert  = {}
 
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
@@ -20,9 +21,8 @@ cleanScheduleEvents = (scheduleId)->
   events = events.map (ev)->
     delete ev.del if ev.del is true
     if ev.dirtyUpdate is true
-      ev.expanded = _expanded[ev.id]
-      delete ev.dirtyUpdate
-      delete _expanded[ev.id]
+      ev = _toRevert[ev.id]
+      delete _toRevert[ev.id]
     ev
   _.setElements scheduleId, events
 
@@ -43,13 +43,13 @@ addEvent = (event)->
 updateEvent = (event)->
   [old, idx] = _.findElement event.id
   if old?
+    _toRevert[old.id] = $.extend true, {}, old
     old.dirtyUpdate = true
     old.startDt = updateTime old.startDt, event.startDate
     old.endDt   = updateTime old.endDt, event.endDate
     repeatUntil = updateTime old.recurrence.repeatUntil, event.startDate
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta
-    _expanded[old.id] = old.expanded.concat []
     EventUtils.expandEventThruWeek old,
       startDt: event.startDate
       endDt: event.endDate
