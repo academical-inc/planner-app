@@ -33,6 +33,12 @@ updateDays = (event, dayDelta)->
   event.recurrence.daysOfWeek = event.recurrence.daysOfWeek.map (day)->
     dayNo = DateUtils.getDayNo day
     dayNo += dayDelta
+    dayNo = if dayNo > 7
+      dayNo % 7
+    else if dayNo <= 0
+      dayNo + 7
+    else
+      dayNo
     DateUtils.getDayStr dayNo
 
 addEvent = (event)->
