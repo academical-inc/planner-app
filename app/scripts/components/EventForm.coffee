@@ -16,8 +16,9 @@ R                = React.DOM
 
 # Private
 _ = $.extend true, {}, HelperUtils, DateUtils
+_utcOffset = -> ApiUtils.currentSchool().utcOffset
 
-# TODO add repeat until option. Do not force to school period
+
 EventForm = React.createClass(
 
   mixins: [I18nMixin, ModalMixin, FormMixin, IconMixin]
@@ -43,7 +44,7 @@ EventForm = React.createClass(
     date = _.getUtcTimeFromStr time
     date = _.setWeek date, CurrentWeekStore.week()
     date = _.setDay date, day
-    date = _.inUtcOffset date, ApiUtils.currentSchool().utcOffset
+    date = _.inUtcOffset date, _utcOffset()
     date
 
   getStartEnd: (startTime, endTime, day)->
@@ -104,9 +105,14 @@ EventForm = React.createClass(
       endTime     = fields.endTime
       days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
       earliestDay = Math.min @state.checkedDays...
+      repUntilVal = @refs.repeatUntil.getDOMNode().value
 
       [startDt, endDt] = @getStartEnd startTime, endTime, earliestDay
-      PlannerActions.addEvent name, startDt, endDt, days
+      repeatUntil = if @state.defUntil is false and repUntilVal
+        dt = _.utcFromStr repUntilVal, "YYYY-MM-DD"
+        _.setTimeAndFormat dt, startDt, _utcOffset()
+
+      PlannerActions.addEvent name, startDt, endDt, days, repeatUntil
 
       # Clean up inputs
       @clearFields()
