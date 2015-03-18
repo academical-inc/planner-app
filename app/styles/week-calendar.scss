@@ -20,7 +20,7 @@
     opacity: 0.7;
   }
 
-  /* Only small and extra small devices (tablets, phones) */
+  /* Only small and extra small devices (phones, less than 768px) */
   @media (max-width: ($screen-md-min - 1)) {
     .fc-toolbar {
       padding-left: 46px;
