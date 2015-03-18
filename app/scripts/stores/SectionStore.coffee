@@ -53,6 +53,11 @@ class SectionStore extends Store
       when ActionTypes.REMOVE_SECTION
         _.removeElement action.sectionId
         @emitChange()
-
+      when ActionTypes.SAVE_SCHEDULE_SUCCESS
+        # TODO
+        _.wait()
+      when ActionTypes.SAVE_SCHEDULE_FAIL
+        # TODO
+        _.wait()
 
 module.exports = new SectionStore
