@@ -1,9 +1,26 @@
 
 .pla-event-form {
 
-  .days label.checkbox-inline {
+  .label-font {
     font-size: 15px;
     font-weight: 200;
+  }
+
+  label.checkbox-inline {
+    @extend .label-font;
     padding-left: 50px;
+  }
+
+  .repeat-until label {
+    @extend .label-font;
+  }
+
+  /* Medium devices (desktops, 992px and up) */
+  @media (min-width: $screen-md-min) {
+    .col-vertical-align {
+      display: inline-block;
+      vertical-align: middle;
+      float: none;
+    }
   }
 }

@@ -4,6 +4,7 @@ $                = require 'jquery'
 ModalMixin       = require '../mixins/ModalMixin'
 I18nMixin        = require '../mixins/I18nMixin'
 FormMixin        = require '../mixins/FormMixin'
+IconMixin        = require '../mixins/IconMixin'
 DateUtils        = require '../utils/DateUtils'
 HelperUtils      = require '../utils/HelperUtils'
 ApiUtils         = require '../utils/ApiUtils'
@@ -19,7 +20,7 @@ _ = $.extend true, {}, HelperUtils, DateUtils
 # TODO add repeat until option. Do not force to school period
 EventForm = React.createClass(
 
-  mixins: [I18nMixin, ModalMixin, FormMixin]
+  mixins: [I18nMixin, ModalMixin, FormMixin, IconMixin]
 
   getState: ->
     [startDt, endDt] = EventFormStore.getStartEnd()
@@ -29,6 +30,7 @@ EventForm = React.createClass(
     checkedDays: [day]
     startTime: _.getTimeStr startDt if startDt?
     endTime: _.getTimeStr endDt if endDt?
+    defUntil: true
 
   getInitialState: ->
     @props.initialState or @getState()
@@ -51,13 +53,19 @@ EventForm = React.createClass(
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange
-    opts =
+    tpOpts =
       step: 15
       selectOnBlur: true
       scrollDefault: 'now'
+    dpOpts =
+      autoclose: true
+      startDate: _.now().toDate()
+      container: UiConstants.selectors.EVENT_MODAL
+      format: "yyyy-mm-dd"
 
-    $(@refs.startTime.getDOMNode()).timepicker opts
-    $(@refs.endTime.getDOMNode()).timepicker opts
+    $(@refs.startTime.getDOMNode()).timepicker tpOpts
+    $(@refs.endTime.getDOMNode()).timepicker tpOpts
+    $(@refs.repeatUntil.getDOMNode()).datepicker dpOpts
     return
 
   componentWillUnmount: ->
@@ -79,14 +87,13 @@ EventForm = React.createClass(
       _.removeAt checkedDays, checkedDays.indexOf(day)
     @setState checkedDays: checkedDays
 
-  formFields: ->
-    ["name", "startTime", "endTime"]
+  handleDefUntilChecked: (e)->
+    checked = not @state.defUntil
+    @refs.repeatUntil.getDOMNode().value = '' if checked
+    @setState defUntil: checked
 
-  validateDays: ->
-    @refs.daysGroup.getDOMNode() if @state.checkedDays.length == 0
-
-  customValidations: ->
-    [@validateDays]
+  handleRepeatUntilFocus: (e)->
+    @setState defUntil: false if @state.defUntil is true
 
   handleSubmit: (e)->
     e.preventDefault()
@@ -107,7 +114,20 @@ EventForm = React.createClass(
       # Close
       @hide()
 
-  renderInput: (id, label, {ref, type, placeholder, inputGroup,\
+  formFields: ->
+    ["name", "startTime", "endTime"]
+
+  validateDays: ->
+    @refs.daysGroup.getDOMNode() if @state.checkedDays.length == 0
+
+  validateRepeatUntil: ->
+    if (not @state.defUntil) and (not @refs.repeatUntil.getDOMNode().value)
+      @refs.repeatUntilGroup.getDOMNode()
+
+  customValidations: ->
+    [@validateDays, @validateRepeatUntil]
+
+  renderInput: (id, label, {ref, type, placeholder, inputGroup, onFocus,\
       val, onChange}={})->
     type ?= "text"
 
@@ -120,6 +140,7 @@ EventForm = React.createClass(
       defaultValue: val if not onChange?
       value: val if onChange?
       onChange: onChange
+      onFocus: onFocus
 
     if inputGroup?
       R.div className: "form-group",
@@ -133,13 +154,13 @@ EventForm = React.createClass(
         R.input inputProps
 
   renderBody: (formId)->
-    nameId  = "event-name-input"
-    startId = "event-start-time-input"
-    endId   = "event-end-time-input"
+    nameId        = "event-name-input"
+    startId       = "event-start-time-input"
+    endId         = "event-end-time-input"
+    repeatUntilId = 'event-repeat-until'
 
-    days = UiConstants.days
-
-    clockIcon = R.i className: "fa fa-clock-o fa-fw"
+    clockIcon = @icon "clock-o"
+    calIcon   = @icon "calendar"
     startInput = @renderInput startId, @t("eventForm.start"),
       val: @state.startTime
       onChange: @handleStartTimeChange
@@ -152,6 +173,10 @@ EventForm = React.createClass(
       inputGroup: clockIcon
       placeholder: "11:30am"
       ref: "endTime"
+    repeatUntil = @renderInput repeatUntilId, 'Pick a date',
+      inputGroup: calIcon
+      onFocus: @handleRepeatUntilFocus
+      ref: 'repeatUntil'
 
     R.form className: formId, role: "form", id: formId, onSubmit: @handleSubmit,
       @renderInput nameId, @t("eventForm.name"), ref: "name",\
@@ -172,6 +197,20 @@ EventForm = React.createClass(
                 onChange: @handleDayChecked
               )
               "#{day[0]}#{day[1].toLowerCase()}"
+      R.div className: "form-group", ref: "repeatUntilGroup",
+        R.label null, "Repeat Until"
+        R.div className: "row",
+          R.div className: "col-md-5 col-vertical-align",
+            R.label className: "checkbox-inline",
+              R.input
+                type: "checkbox",
+                checked: @state.defUntil
+                onChange: @handleDefUntilChecked
+              "The end of this school period"
+          R.div className: "col-md-2 col-vertical-align",
+            R.label null, "-- or --"
+          R.div className: "col-md-5 col-vertical-align repeat-until",
+            repeatUntil
 
   render: ->
     formId = "pla-event-form"
@@ -179,7 +218,7 @@ EventForm = React.createClass(
       UiConstants.ids.EVENT_MODAL
       @t("eventForm.header")
       @renderBody(formId)
-      {accept: {form: formId}}
+      accept: form: formId
     )
 
 )
