@@ -36,7 +36,7 @@ module.exports =
       for field in @formFields()
         el = $(@refs[field].getDOMNode())
         val = el.val().trim()
-        if !!val
+        if val
           res[field] = val
         else
           @addError el.parent()
