@@ -16,16 +16,16 @@ class DataHelpers
     schoolId:   schoolId
     term:       term
 
-  @newEvent: (name, startDt, endDt, timezone, {days, to, location, \
+  @newEvent: (name, startDt, endDt, timezone, {days, repeatUntil, location, \
       description, color}={})->
 
-    recurrence = if days? and to?
+    recurrence = if days? and repeatUntil?
       days.forEach (day)->
         if not (day in DAYS)
           throw new Error "Academical: Event days must be one of #{DAYS}"
       daysOfWeek: days
       freq: "WEEKLY"
-      repeatUntil: to
+      repeatUntil: repeatUntil
 
     ev =
       name:      name

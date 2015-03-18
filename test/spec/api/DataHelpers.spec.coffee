@@ -14,7 +14,7 @@ describe 'DataHelpers', ->
         "2015-01-01T10:55:00+00:00"
         "America/Bogota"
         days: ["MO", "TU"]
-        to: "2015-05-01T10:35:00+00:00"
+        repeatUntil: "2015-05-01T10:35:00+00:00"
       )
       expect(ev).toEqual
         name: "Ev"
@@ -47,6 +47,6 @@ describe 'DataHelpers', ->
           "2015-01-01T10:55:00+00:00"
           "America/Bogota"
           days: ["Mon", "Tue"]
-          to: "2015-05-01T10:35:00+00:00"
+          repeatUntil: "2015-05-01T10:35:00+00:00"
         )
       expect(f).toThrowError()

@@ -42,11 +42,13 @@ class ApiUtils
         schoolId
         term
       )
-    newEvent: (name, startDt, endDt, days, {to ,timezone, location, \
+    newEvent: (name, startDt, endDt, days, {repeatUntil ,timezone, location, \
         description, color}={})->
-      if not to?
+      if not repeatUntil?
         termEnd = _.utcFromStr _currentSchool.terms[0].endDate, "YYYY-MM-DD"
-        to = _.setTimeAndFormat termEnd, startDt, _currentSchool.utcOffset
+        repeatUntil = _.setTimeAndFormat(
+          termEnd, startDt, _currentSchool.utcOffset
+        )
 
       timezone ?= _currentSchool.timezone
       _api.data.newEvent(
@@ -55,7 +57,7 @@ class ApiUtils
         _.format endDt
         timezone
         days: days
-        to: to
+        repeatUntil: repeatUntil
         location: location
         description: description
         color: color
