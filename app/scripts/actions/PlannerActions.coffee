@@ -93,8 +93,9 @@ class PlannerActions
       startDt: startDt
       endDt: endDt
 
-  @addEvent: (name, startDt, endDt, days)->
-    event = ApiUtils.data.newEvent name, startDt, endDt, days
+  @addEvent: (name, startDt, endDt, days, repeatUntil)->
+    event = ApiUtils.data.newEvent name, startDt, endDt, days,
+      repeatUntil: repeatUntil
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_EVENT
       event: event
