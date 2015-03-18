@@ -179,7 +179,7 @@ EventForm = React.createClass(
       inputGroup: clockIcon
       placeholder: "11:30am"
       ref: "endTime"
-    repeatUntil = @renderInput repeatUntilId, 'Pick a date',
+    repeatUntil = @renderInput repeatUntilId, @t("eventForm.untilDate"),
       inputGroup: calIcon
       onFocus: @handleRepeatUntilFocus
       ref: 'repeatUntil'
@@ -204,7 +204,7 @@ EventForm = React.createClass(
               )
               "#{day[0]}#{day[1].toLowerCase()}"
       R.div className: "form-group", ref: "repeatUntilGroup",
-        R.label null, "Repeat Until"
+        R.label null, @t("eventForm.until")
         R.div className: "row",
           R.div className: "col-md-5 col-vertical-align",
             R.label className: "checkbox-inline",
@@ -212,9 +212,9 @@ EventForm = React.createClass(
                 type: "checkbox",
                 checked: @state.defUntil
                 onChange: @handleDefUntilChecked
-              "The end of this school period"
+              @t("eventForm.defaultUntil")
           R.div className: "col-md-2 col-vertical-align",
-            R.label null, "-- or --"
+            R.label null, "-- #{@t('eventForm.or')} --"
           R.div className: "col-md-5 col-vertical-align repeat-until",
             repeatUntil
 

@@ -61,7 +61,11 @@
       "end": "End time",
       "name": "Name",
       "namePlaceholder": "e.g. gym",
-      "days": "Days"
+      "days": "Days",
+      "until": "Repeat Until",
+      "defaultUntil": "The end of this school period",
+      "or": "or",
+      "untilDate": "Pick a date"
     }
   },
   "es": {
@@ -126,7 +130,11 @@
       "end": "Hora de Fin",
       "name": "Nombre",
       "namePlaceholder": "ej: gimnasio",
-      "days": "Días"
+      "days": "Días",
+      "until": "Repetir hasta",
+      "defaultUntil": "El final del periodo académico actual",
+      "or": "o",
+      "untilDate": "Elige una fecha"
     }
   }
 }
