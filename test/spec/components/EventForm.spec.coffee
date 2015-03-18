@@ -16,6 +16,7 @@ describe "EventForm", ->
     @global  = H.rewire EventForm,
       EventFormStore: @store
       PlannerActions: @actions
+      _utcOffset: -> -240
 
   afterEach ->
     @global()
@@ -83,7 +84,6 @@ describe "EventForm", ->
 
     beforeEach ->
       @restore = H.rewire EventForm,
-        "ApiUtils.currentSchool": -> utcOffset: -240
         "CurrentWeekStore.week": -> 12  # Week of march 16/2015
       @form = H.render EventForm, initialState: checkedDays: []
       @st   = "10:00am"
@@ -110,13 +110,15 @@ describe "EventForm", ->
   describe "#handleSubmit", ->
 
     beforeEach ->
+      H.rewire EventForm,
+        "_.setTimeAndFormat": -> "2015-04-19T10:00-05:00"
       @form = H.render EventForm, initialState: checkedDays: [1], defUntil: true
       @start = Moment.utc()
       @end   = Moment(@start).hours(@start.hours()+1)
       H.spyOn @form, "getStartEnd", retVal: [@start, @end]
       H.spyOn @form, "getState", retVal: checkedDays: [1]
 
-    it 'grabs and submits form data correctly', ->
+    it 'grabs and submits form data correctly when repeat until not present', ->
       @form.setState checkedDays: [3,1,7], =>
         @form.refs.name.getDOMNode().value = "Name"
         @form.refs.startTime.getDOMNode().value = "10:00am"
@@ -125,8 +127,22 @@ describe "EventForm", ->
         @form.handleSubmit preventDefault: ->
         expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
         expect(@actions.addEvent).toHaveBeenCalledWith(
-          "Name", @start, @end, ["WE", "MO", "SU"]
+          "Name", @start, @end, ["WE", "MO", "SU"], undefined
         )
+
+    it 'submits repeat until when provided', ->
+      @form.setState checkedDays: [3,1,7], defUntil: false, =>
+        @form.refs.name.getDOMNode().value = "Name"
+        @form.refs.startTime.getDOMNode().value = "10:00am"
+        @form.refs.endTime.getDOMNode().value = "3:00pm"
+        @form.refs.repeatUntil.getDOMNode().value = "2015-04-19"
+
+        @form.handleSubmit preventDefault: ->
+        expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
+        expect(@actions.addEvent).toHaveBeenCalledWith(
+          "Name", @start, @end, ["WE", "MO", "SU"], "2015-04-19T10:00-05:00"
+        )
+
 
     it 'clears the inputs', ->
       @form.handleSubmit preventDefault: ->
