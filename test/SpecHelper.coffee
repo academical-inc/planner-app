@@ -80,7 +80,7 @@ class SpecHelper
   @$:         $
 
   @mock$: ({spyFuncs}={})->
-    spyFuncs ?= ["trigger", "mmenu", "fullCalendar", "timepicker", "modal"]
+    spyFuncs ?= ["trigger", "mmenu", "fullCalendar", "timepicker", "modal", "datepicker"]
     mock$El = @spyObj "mock$El", spyFuncs
     mock$ = @spy "mock$", retVal: mock$El
     [mock$, mock$El]
