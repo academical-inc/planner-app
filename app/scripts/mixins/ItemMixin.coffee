@@ -14,5 +14,10 @@ module.exports =
     @props.handleItemDelete @props.item
 
   renderDeleteIcon: ->
-    @icon "trash-o", fw: false, className: "delete-icon", onClick: @handleItemDelete
-
+    if @props.item.del is true
+      @renderSpinner()
+    else
+      @icon "trash-o",
+        fw: false
+        className: "delete-icon"
+        onClick: @handleItemDelete

@@ -18,7 +18,7 @@ ScheduleInfoBar = React.createClass(
     totalSections: SectionStore.count()
     totalCredits: SectionStore.credits()
     sections: SectionStore.sections()
-    events: EventStore.events()
+    events: EventStore.eventsExceptDirtyAdded()
 
   getInitialState: ->
     @props.initialState or @getState()

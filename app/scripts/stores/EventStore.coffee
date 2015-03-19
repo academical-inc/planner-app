@@ -70,6 +70,9 @@ class EventStore extends Store
   events: ->
     _.currentElements
 
+  eventsExceptDirtyAdded: ->
+    HelperUtils.filter _.currentElements, (ev)-> not(ev.dirtyAdd is true)
+
   eventsExceptDeleted: ->
     HelperUtils.filter _.currentElements, (ev)-> not(ev.del is true)
 
