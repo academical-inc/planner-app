@@ -54,7 +54,8 @@
     },
     "calendar": {
       "today": "today",
-      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      "saving": "Saving..."
     },
     "eventForm": {
       "header": "Add a personal event",
@@ -124,7 +125,8 @@
     },
     "calendar": {
       "today": "hoy",
-      "days": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]
+      "days": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+      "saving": "Guardando..."
     },
     "eventForm": {
       "header": "Agrega un evento personal",

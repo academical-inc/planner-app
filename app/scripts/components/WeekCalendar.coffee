@@ -49,7 +49,7 @@ WeekCalendar = React.createClass(
     ev      = event.ev
     isDirty = parent.dirtyAdd or parent.dirtyUpdate
     id:              parent.id
-    title:           if isDirty then "Saving..." else parent.name
+    title:           if isDirty then @t("calendar.saving") else parent.name
     description:     parent.description
     start:           ev.startDt
     end:             ev.endDt
