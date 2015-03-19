@@ -16,9 +16,11 @@ body {
 }
 
 /* Icons */
+i {
+  cursor: pointer;
+}
 i.delete-icon {
   color: $gray-light;
-  cursor: pointer;
 
   &:hover {
     color: $brand-danger;
