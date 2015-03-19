@@ -141,9 +141,9 @@ WeekCalendar = React.createClass(
 
   renderEvent: (event, jqElement)->
     icon = if event.del is true
-      @spinnerMarkup classNames: ['pull-right']
+      @spinnerMarkup className: 'pull-right'
     else
-      @iconMarkup "times", fw: false, inverse: true, classNames: ['pull-right']
+      @iconMarkup "times", fw: false, inverse: true, className: 'pull-right'
 
     icon = $(icon)
     if event.isSection
