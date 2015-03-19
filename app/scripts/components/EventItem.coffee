@@ -1,5 +1,6 @@
 
 React         = require 'react'
+IconMixin     = require '../mixins/IconMixin'
 ItemMixin     = require '../mixins/ItemMixin'
 {UiConstants} = require '../constants/PlannerConstants'
 ColorPicker   = React.createFactory require './ColorPicker'
@@ -8,7 +9,7 @@ R             = React.DOM
 
 EventItem = React.createClass(
 
-  mixins: [ItemMixin]
+  mixins: [IconMixin, ItemMixin]
 
   getInitialState: ->
     @props.item
