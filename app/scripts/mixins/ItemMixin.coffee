@@ -5,11 +5,14 @@ R     = React.DOM
 
 module.exports =
 
+  componentWillMount: ->
+    throw new Error "Must include IconMixin" if not @icon?
+
   handleItemDelete: (e)->
     e.preventDefault()
     e.stopPropagation()
     @props.handleItemDelete @props.item
 
   renderDeleteIcon: ->
-    R.i className: "fa fa-trash-o delete-icon", onClick: @handleItemDelete
+    @icon "trash-o", fw: false, className: "delete-icon", onClick: @handleItemDelete
 
