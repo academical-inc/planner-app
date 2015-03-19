@@ -45,10 +45,11 @@
     },
     "sidebar": {
       "sectionsHeader": "Sections: {{sections}} Credits: {{credits}}",
-      "eventsHeader": "Other Events",
+      "eventsHeader": "My Events",
       "section": {
         "seats": "{{seats}} seats available",
-        "info": "{{credits}} credits - Section {{number}} - {{id}}"
+        "info": "{{credits}} credits - Section {{number}} - {{id}}",
+        "noTeacher": "No teacher assigned yet"
       }
     },
     "calendar": {
@@ -117,7 +118,8 @@
       "eventsHeader": "Mis Eventos",
       "section": {
         "seats": "{{seats}} cupos disponibles",
-        "info": "{{credits}} créditos - Sección {{number}} - {{id}}"
+        "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
+        "noTeacher": "Aún no hay profesor asignado"
       }
     },
     "calendar": {
