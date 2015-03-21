@@ -6,6 +6,9 @@ ApiUtils       = require './utils/ApiUtils'
 PlannerActions = require './actions/PlannerActions'
 ErrorPage      = React.createFactory require './components/ErrorPage'
 
+# Initializers
+require './initializers/bootstrap'
+
 I18n.init()
 ApiUtils.init()
 
