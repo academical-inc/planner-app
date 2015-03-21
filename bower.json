@@ -46,7 +46,9 @@
         "assets/javascripts/bootstrap/transition.js",
         "assets/javascripts/bootstrap/collapse.js",
         "assets/javascripts/bootstrap/modal.js",
-        "assets/javascripts/bootstrap/dropdown.js"
+        "assets/javascripts/bootstrap/dropdown.js",
+        "assets/javascripts/bootstrap/tooltip.js",
+        "assets/javascripts/bootstrap/popover.js"
       ]
     }
   },
