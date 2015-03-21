@@ -33,7 +33,9 @@ module.exports =
     "<i class='#{iconClasses(icon, opts)}'>"
 
   icon: (icon, opts={})->
-    R.i className: iconClasses(icon, opts), onClick: opts.onClick
+    R.i
+      className: iconClasses(icon, opts)
+      onClick: opts.onClick
 
   spinnerMarkup: (opts)->
     "<i class='#{spinnerClasses(opts)}'>"
