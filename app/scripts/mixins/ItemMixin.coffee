@@ -1,6 +1,9 @@
 
-React = require 'react'
-R     = React.DOM
+$            = require 'jquery'
+React        = require 'react'
+Popover      = React.createFactory require '../components/Popover'
+ItemSettings = React.createFactory require '../components/ItemSettings'
+R            = React.DOM
 
 
 module.exports =
@@ -21,3 +24,12 @@ module.exports =
         fw: false
         className: "delete-icon"
         onClick: @handleItemDelete
+
+  renderSettings: ->
+    Popover
+      content: ItemSettings
+        handleColorSelect: @handleColorSelect
+        deleteIcon: @renderDeleteIcon()
+      placement: 'bottom'
+      trigger: 'click'
+      @icon 'cog', fw: false
