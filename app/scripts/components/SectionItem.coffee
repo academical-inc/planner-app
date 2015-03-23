@@ -4,7 +4,6 @@ I18nMixin     = require '../mixins/I18nMixin'
 IconMixin     = require '../mixins/IconMixin'
 ItemMixin     = require '../mixins/ItemMixin'
 {UiConstants} = require '../constants/PlannerConstants'
-ColorPicker   = React.createFactory require './ColorPicker'
 ColorPalette  = React.createFactory require './ColorPalette'
 R             = React.DOM
 
@@ -41,7 +40,7 @@ SectionItem = React.createClass(
     else
       @props.item.teacherNames.join ", "
 
-    R.div className: "pla-section-item panel panel-default",
+    R.div className: "pla-section-item pla-item panel panel-default",
       R.div(
         {
           className: "panel-heading"
@@ -63,7 +62,7 @@ SectionItem = React.createClass(
           R.span className: "pull-right",
             R.span className: "label label-seats label-#{seatsClass}",
               @props.item.seats.available
-            @renderDeleteIcon()
+            @renderSettings()
         )
       ),
       R.div(
@@ -84,12 +83,7 @@ SectionItem = React.createClass(
               number: @props.item.sectionNumber, id: @props.item.sectionId)
           R.li className: "list-group-item clearfix",
             R.span null, "#{@props.item.departments[0].name}"
-            ColorPicker colorPaletteId: colorPaletteId
-            ColorPalette id: colorPaletteId
       )
 )
 
 module.exports = SectionItem
-
-
-
