@@ -18,6 +18,7 @@ module.exports = (config) ->
       'dist/scripts/vendor.js'
       'test/shims/*.{js,coffee}'
       'test/SpecHelper.coffee'
+      'test/shared/**/*.coffee'
       'test/spec/**/*.spec.coffee'
     ]
 
@@ -73,7 +74,7 @@ module.exports = (config) ->
     singleRun: false
 
     browserify: {
-      bundleDelay: 1000
+      bundleDelay: 1500
       extensions: ['.coffee']
       debug: true
       transform: [

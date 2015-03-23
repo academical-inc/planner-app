@@ -1,5 +1,6 @@
 
 $         = require 'jquery'
+_         = require 'underscore'
 React     = require 'react/addons'
 NodeUrl   = require 'url'
 Humps     = require 'humps'
@@ -222,5 +223,33 @@ class SpecHelper
 
   @sim: TestUtils.Simulate
 
+  # Courtesy of https://robots.thoughtbot.com/jasmine-and-shared-examples
+  @itBehavesLike = ->
+    exampleName = _.first arguments
+    exampleArguments = _.select(_.rest(arguments), (arg) ->
+      not _.isFunction(arg)
+    )
+    innerBlock = _.detect(arguments, (arg) ->
+      _.isFunction arg
+    )
+    exampleGroup = jasmine.sharedExamples[exampleName]
+    if exampleGroup
+      if _.isFunction exampleGroup
+        describe exampleName, ->
+          exampleGroup.apply this, exampleArguments
+          if innerBlock
+            innerBlock()
+          return
+      else if _.isObject exampleGroup
+        _.each exampleGroup, (example, name)->
+          describe name, ->
+            example.apply this, exampleArguments
+            if innerBlock
+              innerBlock()
+            return
+    else
+      it "cannot find shared behavior: '#{exampleName}'", ->
+        expect(false).toEqual true
+        return
 
 module.exports = SpecHelper
