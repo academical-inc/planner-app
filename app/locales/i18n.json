@@ -51,6 +51,7 @@
       },
       "section": {
         "seats": "{{seats}} seats available",
+        "seatsTT": "Seats available",
         "info": "{{credits}} credits - Section {{number}} - {{id}}",
         "noTeacher": "No teacher assigned yet"
       }
@@ -125,6 +126,7 @@
       },
       "section": {
         "seats": "{{seats}} cupos disponibles",
+        "seatsTT": "Cupos disponibles",
         "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
         "noTeacher": "Aún no hay profesor asignado"
       }

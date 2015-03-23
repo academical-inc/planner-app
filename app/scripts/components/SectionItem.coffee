@@ -29,6 +29,11 @@ SectionItem = React.createClass(
   handleColorSelect: (color)->
     console.log "selected", color
 
+  componentDidMount: ->
+    $(@refs.seatsIndicator.getDOMNode()).tooltip
+      placement: "top"
+      title: @t "sidebar.section.seatsTT"
+
   render: ->
     headingId      = "section-heading-#{@props.item.id}"
     contentId      = "section-info-#{@props.item.id}"
@@ -60,7 +65,9 @@ SectionItem = React.createClass(
             "#{@props.item.courseCode} - #{@props.item.courseName}"
           )
           R.span className: "pull-right",
-            R.span className: "label label-seats label-#{seatsClass}",
+            R.span
+              className: "label label-seats label-#{seatsClass}"
+              ref: "seatsIndicator"
               @props.item.seats.available
             @renderSettings()
         )
