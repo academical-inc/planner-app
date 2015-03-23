@@ -1,5 +1,6 @@
 
 H           = require '../../SpecHelper'
+Popover     = require '../../../app/scripts/components/Popover'
 SectionItem = require '../../../app/scripts/components/SectionItem'
 
 
@@ -72,6 +73,7 @@ describe 'SectionItem', ->
       trigger   = H.findWithTag heading, "a"
       content   = H.findWithClass item, "panel-collapse"
       info_list = H.scryWithClass item, "list-group-item"
+      settingsTrigger = H.findWithType item, Popover
 
       expect(heading.props.style.borderColor).toEqual data.color
 
@@ -91,28 +93,14 @@ describe 'SectionItem', ->
       expect(info_list[2].props.children).toContain data.sectionId
 
       final = info_list[3].props.children
-      expect(final[0].props.children).toContain data.departments[0].name
-      expect(final[1].props.colorPaletteId).toEqual colorId
-      expect(final[2].props.id).toEqual colorId
+      expect(final.props.children).toContain data.departments[0].name
+
+      expect(settingsTrigger).toBeDefined()
 
 
-    beforeEach ->
-      @restore = H.rewire SectionItem,
-        ColorPicker: H.mockComponent()
-        ColorPalette: H.mockComponent()
-
-    afterEach ->
-      @restore
-
-    it 'renders correctly based on state', ->
+    it 'renders correctly', ->
       item = H.render SectionItem, item: @data
       assertRenderedState item, @data
 
-    it 'calls the on delete item callback correctly', ->
-      handler = H.spy "handler"
-      item = H.render SectionItem, item: @data, handleItemDelete: handler
-      deleteIcon = H.findWithClass item, "delete-icon"
 
-      H.sim.click deleteIcon.getDOMNode()
-      expect(handler).toHaveBeenCalledWith @data
-
+  H.itBehavesLike 'item', itemClass: SectionItem
