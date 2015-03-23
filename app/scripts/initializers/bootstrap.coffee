@@ -18,9 +18,9 @@ $.fn.popover.Constructor::setContent = ->
     # Render title, if any
     $title = $tip.find('.popover-title')
     if title
-      React.renderComponent title, $title[0]
+      React.render title, $title[0]
     else
       $title.hide()
-    React.renderComponent content, $tip.find('.popover-content')[0]
+    React.render content, $tip.find('.popover-content')[0]
   return
 
