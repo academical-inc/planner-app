@@ -2,12 +2,14 @@
 $              = require 'jquery'
 React          = require 'react'
 SectionStore   = require '../stores/SectionStore'
+ColorStore     = require '../stores/SectionColorStore'
 PreviewStore   = require '../stores/PreviewStore'
 EventStore     = require '../stores/EventStore'
 DateUtils      = require '../utils/DateUtils'
 ApiUtils       = require '../utils/ApiUtils'
 I18nMixin      = require '../mixins/I18nMixin'
 IconMixin      = require '../mixins/IconMixin'
+StoreMixin     = require '../mixins/StoreMixin'
 PlannerActions = require '../actions/PlannerActions'
 {UiConstants}  = require '../constants/PlannerConstants'
 R              = React.DOM
@@ -15,24 +17,35 @@ R              = React.DOM
 # Private
 _utcOffset     = -> ApiUtils.currentSchool().utcOffset
 _sectionEvents = -> SectionStore.sectionEvents()
+_sectionColors = -> ColorStore.colors()
 _previewEvents = -> PreviewStore.previewEvents()
 _events        = -> EventStore.expandedEvents()
 
 
 WeekCalendar = React.createClass(
 
-  mixins: [I18nMixin, IconMixin]
+  mixins: [I18nMixin, IconMixin, StoreMixin(
+    {store: SectionStore, handler: "onSectionsChange"}
+    {store: ColorStore, handler: "onSectionsChange"}
+    {store: PreviewStore, handler: "onPreviewChange"}
+    {store: EventStore, handler: "onEventsChange"}
+  )]
 
   sectionEventDataTransform: (sectionEvent)->
-    id:          sectionEvent.section.id
-    title:       sectionEvent.section.courseName
-    description: sectionEvent.section.courseDescription
-    start:       sectionEvent.event.startDt
-    end:         sectionEvent.event.endDt
-    location:    sectionEvent.event.location
-    editable:    false
-    allDay:      false
-    isSection:   true
+    section = sectionEvent.section
+    event   = sectionEvent.event
+
+    id:              section.id
+    title:           section.courseName
+    description:     section.courseDescription
+    start:           event.startDt
+    end:             event.endDt
+    location:        event.location
+    backgroundColor: _sectionColors()[section.id]
+    borderColor:     _sectionColors()[section.id]
+    editable:        false
+    allDay:          false
+    isSection:       true
 
   previewEventDataTransform: (sectionEvent)->
     id:              sectionEvent.section.id
@@ -95,14 +108,12 @@ WeekCalendar = React.createClass(
     PlannerActions.changeWeek fcView.start
 
   componentDidMount: ->
-    SectionStore.addChangeListener @onSectionsChange
-    PreviewStore.addChangeListener @onPreviewChange
-    EventStore.addChangeListener @onEventsChange
     @cal = $(@getDOMNode())
     @sources =
       sections:
         events: []
         eventDataTransform: @sectionEventDataTransform
+        # TODO remove this when result list ready
         backgroundColor: UiConstants.defaultSectionColor
         borderColor: UiConstants.defaultSectionColor
       preview:
@@ -111,8 +122,6 @@ WeekCalendar = React.createClass(
       events:
         events: []
         eventDataTransform: @eventDataTransform
-        backgroundColor: UiConstants.defaultPevColor
-        borderColor: UiConstants.defaultPevColor
 
     @cal.fullCalendar(
       defaultView: "agendaWeek"
@@ -133,11 +142,6 @@ WeekCalendar = React.createClass(
       eventDrop: @handleEventUpdate
       viewRender: @handleWeekChange
     )
-
-  componentWillUnmount: ->
-    SectionStore.removeChangeListener @onSectionsChange
-    PreviewStore.removeChangeListener @onPreviewChange
-    EventStore.removeChangeListener @onEventsChange
 
   renderEvent: (event, jqElement)->
     icon = if event.del is true
