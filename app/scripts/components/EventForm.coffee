@@ -106,13 +106,14 @@ EventForm = React.createClass(
       days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
       earliestDay = Math.min @state.checkedDays...
       repUntilVal = @refs.repeatUntil.getDOMNode().value
+      color       = UiConstants.defaultEventColor
 
       [startDt, endDt] = @getStartEnd startTime, endTime, earliestDay
       repeatUntil = if @state.defUntil is false and repUntilVal
         dt = _.utcFromStr repUntilVal, "YYYY-MM-DD"
         _.setTimeAndFormat dt, startDt, _utcOffset()
 
-      PlannerActions.addEvent name, startDt, endDt, days, repeatUntil
+      PlannerActions.addEvent name, startDt, endDt, days, repeatUntil, color
 
       # Clean up inputs
       @clearFields()

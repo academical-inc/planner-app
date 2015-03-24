@@ -24,7 +24,7 @@ module.exports =
   dropdown:
     MAX_INPUT_LENGTH: 28
   defaultSectionColor: "#2daae1"
-  defaultPevColor: "#6db533"
+  defaultEventColor: "#6db533"
   days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   colors: [
     "#2daae1"
