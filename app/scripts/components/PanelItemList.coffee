@@ -17,6 +17,7 @@ PanelItemList = React.createClass(
           @props.itemType
             key: item.id
             item: item
+            color: item.color or @props.colors[item.id]
             handleItemDelete: @props.handleItemDelete
       )
       if @props.handleItemAdd?

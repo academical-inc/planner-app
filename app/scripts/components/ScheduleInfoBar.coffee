@@ -2,6 +2,7 @@
 React          = require 'react'
 PlannerActions = require '../actions/PlannerActions'
 SectionStore   = require '../stores/SectionStore'
+ColorStore     = require '../stores/SectionColorStore'
 EventStore     = require '../stores/EventStore'
 I18nMixin      = require '../mixins/I18nMixin'
 StoreMixin     = require '../mixins/StoreMixin'
@@ -12,12 +13,13 @@ R              = React.DOM
 
 ScheduleInfoBar = React.createClass(
 
-  mixins: [I18nMixin, StoreMixin(SectionStore, EventStore)]
+  mixins: [I18nMixin, StoreMixin(SectionStore, EventStore, ColorStore)]
 
   getState: ->
     totalSections: SectionStore.count()
     totalCredits: SectionStore.credits()
     sections: SectionStore.sections()
+    sectionColors: ColorStore.colors()
     events: EventStore.eventsExceptDirtyAdded()
 
   getInitialState: ->
@@ -43,6 +45,7 @@ ScheduleInfoBar = React.createClass(
           credits: @state.totalCredits
         handleItemDelete: @handleSectionRemove
         items: @state.sections
+        colors: @state.sectionColors
       PanelItemList
         itemType: EventItem
         header: @t "sidebar.eventsHeader"
