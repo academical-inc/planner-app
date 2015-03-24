@@ -2,6 +2,7 @@
 $                 = require 'jquery'
 ScheduleStore     = require '../stores/ScheduleStore'
 SectionStore      = require '../stores/SectionStore'
+ColorStore        = require '../stores/SectionColorStore'
 EventStore        = require '../stores/EventStore'
 ApiUtils          = require '../utils/ApiUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
@@ -141,6 +142,7 @@ class PlannerActions
       SectionStore.credits()
       SectionStore.sections().concat []           # Make a copy
       EventStore.eventsExceptDeleted().concat []  # Make a copy
+      $.extend {}, ColorStore.colors()
     )
     PlannerDispatcher.handleViewAction
       type: ActionTypes.SAVE_SCHEDULE
