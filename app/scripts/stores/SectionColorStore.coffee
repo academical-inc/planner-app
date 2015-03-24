@@ -9,6 +9,7 @@ ChildStoreHelper = require '../utils/ChildStoreHelper'
 _ = new ChildStoreHelper(ScheduleStore, 'sectionColors')
 
 
+# TODO revisit this design
 class SectionColorStore extends Store
 
   colors: ->
