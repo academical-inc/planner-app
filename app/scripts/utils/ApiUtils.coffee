@@ -23,14 +23,14 @@ class ApiUtils
     _currentSchoolNickname = _hostname.split(".")[0]
 
   @data:
-    scheduleToUpdate: (name, credits, sections, events)->
+    scheduleToUpdate: (name, credits, sections, events, sectionColors)->
       events = events.map (event)->
         ev = $.extend {}, true, event
         delete ev.expanded    if ev.expanded?
         delete ev.dirtyAdd    if ev.dirtyAdd?
         delete ev.dirtyUpdate if ev.dirtyUpdate?
         ev
-      _api.data.scheduleToUpdate name, credits, sections, events
+      _api.data.scheduleToUpdate name, credits, sections, events, sectionColors
     newSchedule: (name, {studentId, schoolId, term}={})->
       studentId ?= _currentStudent.id
       schoolId  ?= _currentSchool.id

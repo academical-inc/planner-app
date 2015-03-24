@@ -3,12 +3,13 @@ DAYS = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
 
 class DataHelpers
 
-  @scheduleToUpdate: (name, credits, sections, events)->
+  @scheduleToUpdate: (name, credits, sections, events, sectionColors)->
     name: name
     totalCredits: credits
     totalSections: sections.length
     events: events
     sectionIds: sections.map (sec)-> sec.id
+    sectionColors: sectionColors
 
   @newSchedule: (name, studentId, schoolId, term)->
     name:       name
