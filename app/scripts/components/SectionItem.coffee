@@ -1,11 +1,12 @@
 
-React         = require 'react'
-I18nMixin     = require '../mixins/I18nMixin'
-IconMixin     = require '../mixins/IconMixin'
-ItemMixin     = require '../mixins/ItemMixin'
-{UiConstants} = require '../constants/PlannerConstants'
-ColorPalette  = React.createFactory require './ColorPalette'
-R             = React.DOM
+React          = require 'react'
+I18nMixin      = require '../mixins/I18nMixin'
+IconMixin      = require '../mixins/IconMixin'
+ItemMixin      = require '../mixins/ItemMixin'
+PlannerActions = require '../actions/PlannerActions'
+{UiConstants}  = require '../constants/PlannerConstants'
+ColorPalette   = React.createFactory require './ColorPalette'
+R              = React.DOM
 
 
 SectionItem = React.createClass(
@@ -21,13 +22,8 @@ SectionItem = React.createClass(
     else
       seatsMap.ZERO.className
 
-  getColor: ->
-    # TODO: Random color selection is temporary
-    colors = UiConstants.colors
-    @props.item.color || colors[Math.floor(Math.random() * colors.length)]
-
   handleColorSelect: (color)->
-    console.log "selected", color
+    PlannerActions.changeSectionColor @props.item.id, color
 
   componentDidMount: ->
     $(@refs.seatsIndicator.getDOMNode()).tooltip
@@ -39,7 +35,7 @@ SectionItem = React.createClass(
     contentId      = "section-info-#{@props.item.id}"
     colorPaletteId = "section-colors-#{@props.item.id}"
     seatsClass     = @getSeatsColorClass()
-    colorStyle     = borderColor: @getColor()
+    colorStyle     = borderColor: @props.color
     teacherNames   = if @props.item.teacherNames.length == 0
       @t("sidebar.section.noTeacher")
     else
