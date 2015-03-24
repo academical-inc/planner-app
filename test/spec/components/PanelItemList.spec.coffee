@@ -20,10 +20,11 @@ describe 'PanelItemList', ->
       @itemType = H.spy "itemType", retVal: "data"
       @defProps =
         itemType: @itemType
-        items: [id: "item1", id: "item2"]
+        items: [{id: "item1", color: "b"}, {id: "item2", color: "r"}]
+        colors: {item1: "g", item2: "l"}
         handleItemDelete: ->
 
-    it 'renders the list of items correctly', ->
+    it 'renders the list of items correctly when item has color', ->
       list     = H.render PanelItemList, @defProps
       expected = @defProps.items
 
@@ -34,6 +35,23 @@ describe 'PanelItemList', ->
         expect(@itemType.calls.argsFor(i)).toEqual [{
           key: expected[i].id
           item: expected[i]
+          color: expected[i].color
+          handleItemDelete: @defProps.handleItemDelete
+        }]
+
+    it 'renders the list of items correctly when item has no color', ->
+      @defProps.items = [{id: "item1"}, {id: "item2"}]
+      list     = H.render PanelItemList, @defProps
+      expected = @defProps.items
+
+      items = H.findWithClass(list, "panel-group").props.children
+      expect(items.length).toEqual expected.length
+      items.forEach (item, i)=>
+        expect(item).toEqual "data"
+        expect(@itemType.calls.argsFor(i)).toEqual [{
+          key: expected[i].id
+          item: expected[i]
+          color: @defProps.colors[expected[i].id]
           handleItemDelete: @defProps.handleItemDelete
         }]
 

@@ -18,7 +18,7 @@ describe 'SectionItem', ->
       teacherNames: ["Dimitri Alejo", "Juan Tejada"]
       credits: 3
       departments: [{name: "Math Department"}]
-      color: "#fff"
+    @color = "#fff"
 
 
   describe '#getSeatsColorClass', ->
@@ -38,28 +38,28 @@ describe 'SectionItem', ->
       @restore()
 
     it 'returns correct css class when seats available is >= upper bound ', ->
-      item = H.render SectionItem, item: seats(50, @data)
+      item = H.render SectionItem, item: seats(50, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "upper"
 
-      item = H.render SectionItem, item: seats(60, @data)
+      item = H.render SectionItem, item: seats(60, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "upper"
 
     it 'returns correct css class when seats available is < upper bound and
         >= lower bound', ->
-      item = H.render SectionItem, item: seats(15, @data)
+      item = H.render SectionItem, item: seats(15, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "lower"
 
-      item = H.render SectionItem, item: seats(20, @data)
+      item = H.render SectionItem, item: seats(20, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "lower"
 
     it 'returns correct css class when seats available is < lower bound ', ->
-      item = H.render SectionItem, item: seats(14, @data)
+      item = H.render SectionItem, item: seats(14, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "zero"
 
-      item = H.render SectionItem, item: seats(0, @data)
+      item = H.render SectionItem, item: seats(0, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "zero"
 
-      item = H.render SectionItem, item: seats(-3, @data)
+      item = H.render SectionItem, item: seats(-3, @data), color: @color
       expect(item.getSeatsColorClass()).toEqual "zero"
 
 

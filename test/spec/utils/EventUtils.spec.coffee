@@ -1,8 +1,9 @@
 
+Humps      = require 'humps'
 H          = require '../../SpecHelper'
 EventUtils = require '../../../app/scripts/utils/EventUtils'
 
-sections   = require '../../fixtures/sections.json'
+sections   = Humps.camelizeKeys require '../../fixtures/sections.json'
 
 
 describe 'EventUtils', ->

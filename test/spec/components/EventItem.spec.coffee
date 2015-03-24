@@ -10,13 +10,13 @@ describe 'EventItem', ->
     @data =
       id: '1'
       name: "event"
-      color: "red"
+    @color = "red"
     @handler = H.spy "handler"
 
   describe '#render', ->
 
     it 'renders correctly', ->
-      event   = H.render EventItem, item: @data
+      event   = H.render EventItem, item: @data, color: @color
       heading = H.findWithClass event, "panel-heading"
       name    = H.scryWithTag(event, "a")[0]
       settingsTrigger = H.findWithType event, Popover
@@ -24,6 +24,7 @@ describe 'EventItem', ->
       colorsId = "event-colors-#{@data.id}"
 
       expect(heading.props.id).toEqual "event-heading-#{@data.id}"
+      expect(heading.props.style.borderColor).toEqual @color
       expect(name.props.children).toEqual @data.name
       expect(settingsTrigger).toBeDefined()
 

@@ -19,7 +19,8 @@ describe 'ScheduleInfoBar', ->
         totalCredits: 6
         totalSections: 2
         sections: [ {id: "s1"}, {id: "s2"} ]
-        events: [ {id: "p1"}, {id: "p2"} ]
+        events: [ {id: "p1", color: "blue"}, {id: "p2", color: "purp"} ]
+        sectionColors: {s1: "red", s2: "green"}
 
 
     afterEach ->
@@ -33,6 +34,7 @@ describe 'ScheduleInfoBar', ->
       expect(sections.props.header).toContain data.totalSections
       expect(sections.props.header).toContain data.totalCredits
       expect(sections.props.items).toEqual data.sections
+      expect(sections.props.colors).toEqual data.sectionColors
 
       events = lists[1]
       expect(events.props.itemType).toEqual eventItem

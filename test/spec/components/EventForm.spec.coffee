@@ -112,6 +112,7 @@ describe "EventForm", ->
     beforeEach ->
       H.rewire EventForm,
         "_.setTimeAndFormat": -> "2015-04-19T10:00-05:00"
+        "UiConstants.defaultEventColor": "red"
       @form = H.render EventForm, initialState: checkedDays: [1], defUntil: true
       @start = Moment.utc()
       @end   = Moment(@start).hours(@start.hours()+1)
@@ -127,7 +128,7 @@ describe "EventForm", ->
         @form.handleSubmit preventDefault: ->
         expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
         expect(@actions.addEvent).toHaveBeenCalledWith(
-          "Name", @start, @end, ["WE", "MO", "SU"], undefined
+          "Name", @start, @end, ["WE", "MO", "SU"], undefined, "red"
         )
 
     it 'submits repeat until when provided', ->
@@ -140,7 +141,7 @@ describe "EventForm", ->
         @form.handleSubmit preventDefault: ->
         expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
         expect(@actions.addEvent).toHaveBeenCalledWith(
-          "Name", @start, @end, ["WE", "MO", "SU"], "2015-04-19T10:00-05:00"
+          "Name", @start, @end, ["WE", "MO", "SU"], "2015-04-19T10:00-05:00", "red"
         )
 
 
