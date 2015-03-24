@@ -64,6 +64,10 @@ removeEvent = (eventId)->
   [ev, i] = _.findElement eventId
   ev.del = true if ev?
 
+changeColor = (eventId, color)->
+  [event, idx] = _.findElement eventId
+  event.color = color if event?
+
 
 class EventStore extends Store
 
@@ -110,6 +114,9 @@ class EventStore extends Store
         @emitChange()
       when ActionTypes.REMOVE_EVENT
         removeEvent action.eventId
+        @emitChange()
+      when ActionTypes.CHANGE_EVENT_COLOR
+        changeColor action.eventId, action.color
         @emitChange()
       when ActionTypes.SAVE_SCHEDULE_SUCCESS
         _.wait()
