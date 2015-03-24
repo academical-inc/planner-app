@@ -14,8 +14,8 @@ class ChildStoreHelper
   setCurrent: (scheduleId=@store.current().id)->
     @currentElements = @elementsMap[scheduleId]
 
-  addSchedule: (scheduleId)->
-    @elementsMap[scheduleId] = []
+  addSchedule: (scheduleId, emptyEls=[])->
+    @elementsMap[scheduleId] = emptyEls
 
   updateSchedule: (schedule)->
     @setElements schedule.id, schedule[@collection]
@@ -40,8 +40,8 @@ class ChildStoreHelper
   elementsFor: (scheduleId)->
     @elementsMap[scheduleId]
 
-  wait: ->
-    PlannerDispatcher.waitFor [@store.dispatchToken]
+  wait: (stores=[])->
+    PlannerDispatcher.waitFor [@store.dispatchToken].concat stores
 
 
 module.exports = ChildStoreHelper

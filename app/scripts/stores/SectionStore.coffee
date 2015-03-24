@@ -1,14 +1,17 @@
 
-Store            = require './Store'
-ScheduleStore    = require './ScheduleStore'
-ChildStoreHelper = require '../utils/ChildStoreHelper'
-EventUtils       = require '../utils/EventUtils'
-{ActionTypes}    = require '../constants/PlannerConstants'
+Store             = require './Store'
+ScheduleStore     = require './ScheduleStore'
+SectionColorStore = require './SectionColorStore'
+ChildStoreHelper  = require '../utils/ChildStoreHelper'
+EventUtils        = require '../utils/EventUtils'
+{ActionTypes}     = require '../constants/PlannerConstants'
 
 
 # Private
 _ = new ChildStoreHelper(ScheduleStore, 'sections')
 
+wait = ->
+  _.wait [SectionColorStore.dispatchToken]
 
 class SectionStore extends Store
 
@@ -29,21 +32,21 @@ class SectionStore extends Store
 
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
-        _.wait()
+        wait()
         _.setCurrent()
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
-        _.wait()
+        wait()
         _.initElementsMap action.schedules
         _.setCurrent()
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
-        _.wait()
+        wait()
         _.addSchedule action.schedule.id
         _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
-        _.wait()
+        wait()
         _.removeSchedule action.scheduleId
         _.setCurrent()
         @emitChange()
@@ -55,9 +58,9 @@ class SectionStore extends Store
         @emitChange()
       when ActionTypes.SAVE_SCHEDULE_SUCCESS
         # TODO
-        _.wait()
+        wait()
       when ActionTypes.SAVE_SCHEDULE_FAIL
         # TODO
-        _.wait()
+        wait()
 
 module.exports = new SectionStore
