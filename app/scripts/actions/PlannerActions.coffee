@@ -66,10 +66,18 @@ class PlannerActions
           type: ActionTypes.DELETE_SCHEDULE_SUCCESS
           scheduleId: scheduleId
 
-  @addSection: (section)->
+  @addSection: (section, color)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_SECTION
       section: section
+      color: color
+    @saveSchedule()
+
+  @changeSectionColor: (sectionId, color)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.CHANGE_SECTION_COLOR
+      sectionId: sectionId
+      color: color
     @saveSchedule()
 
   @removeSection: (sectionId)->
@@ -93,22 +101,30 @@ class PlannerActions
       startDt: startDt
       endDt: endDt
 
-  @addEvent: (name, startDt, endDt, days, repeatUntil)->
+  @addEvent: (name, startDt, endDt, days, repeatUntil, color)->
     event = ApiUtils.data.newEvent name, startDt, endDt, days,
       repeatUntil: repeatUntil
+      color: color
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_EVENT
       event: event
     @saveSchedule()
 
-  @updateEvent: (id, startDt, endDt, dayDelta)->
+  @updateEvent: (eventId, startDt, endDt, dayDelta)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.UPDATE_EVENT
       event:
-        id: id
+        id: eventId
         startDt: startDt
         endDt: endDt
         dayDelta: dayDelta
+    @saveSchedule()
+
+  @changeEventColor: (eventId, color)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.CHANGE_EVENT_COLOR
+      eventId: eventId
+      color: color
     @saveSchedule()
 
   @removeEvent: (eventId)->
