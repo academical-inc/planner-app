@@ -5,7 +5,6 @@ Dropdown = require '../../../app/scripts/components/Dropdown'
 
 describe 'Dropdown', ->
 
-
   describe '#handleItemAdd', ->
 
     beforeEach ->
@@ -196,7 +195,7 @@ describe 'Dropdown', ->
       dd = H.render Dropdown, @props
 
       ddNode = dd.getDOMNode()
-      expect(ddNode.tagName.toLowerCase()).toEqual root.type
+      expect(ddNode.tagName.toLowerCase()).toEqual "div"
       expect(ddNode.getAttribute("class")).toContain "klass"
       expect(ddNode.getAttribute("class")).toContain "dropdown"
 

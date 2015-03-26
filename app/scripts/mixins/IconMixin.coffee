@@ -1,6 +1,7 @@
 
-React = require 'react/addons'
-R     = React.DOM
+React      = require 'react'
+Classnames = require 'classnames'
+R          = React.DOM
 
 
 iconClasses = (icon, {fw, inverse, className}={})->
@@ -13,7 +14,7 @@ iconClasses = (icon, {fw, inverse, className}={})->
     "fa-fw": fw
   cs["fa-#{icon}"] = true
   className.split(" ").forEach (cls)-> cs[cls] = true
-  React.addons.classSet cs
+  Classnames cs
 
 spinnerClasses = ({type, anim, className}={})->
   type      ?= "spinner"
@@ -24,7 +25,7 @@ spinnerClasses = ({type, anim, className}={})->
   cs["fa-#{type}"] = true
   cs["fa-#{anim}"] = true
   className.split(" ").forEach (cls)-> cs[cls] = true
-  React.addons.classSet cs
+  Classnames cs
 
 
 module.exports =

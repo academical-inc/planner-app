@@ -1,6 +1,7 @@
 
 $             = require 'jquery'
-React         = require 'react/addons'
+React         = require 'react'
+Classnames    = require 'classnames'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
@@ -10,7 +11,7 @@ SlideMenuHandle = React.createClass(
     $(UiConstants.selectors.SCHEDULE_LIST).trigger "open.mm"
 
   render: ->
-    classes = React.addons.classSet({
+    classes = Classnames({
       'pla-slide-menu-handle'
       'hidden-md'
       'hidden-lg'

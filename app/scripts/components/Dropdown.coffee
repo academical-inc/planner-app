@@ -1,7 +1,8 @@
 
 $             = require 'jquery'
-React         = require 'react/addons'
+React         = require 'react'
 ClickOutside  = require 'react-onclickoutside'
+Classnames    = require 'classnames'
 I18nMixin     = require '../mixins/I18nMixin'
 FormMixin     = require '../mixins/FormMixin'
 {UiConstants} = require '../constants/PlannerConstants'
@@ -100,7 +101,7 @@ Dropdown = React.createClass(
     classes["dropdown"]       = true
     classes[@props.className] = @props.className?
 
-    classes = React.addons.classSet classes
+    classes = Classnames classes
 
     ulProps = className: "dropdown-menu", role: "menu"
     ul = if @props.handleItemAdd?
