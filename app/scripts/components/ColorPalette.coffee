@@ -1,20 +1,27 @@
 
-React  = require 'React'
-colors = require('../constants/PlannerConstants').colors
-R      = React.DOM
+React         = require 'react'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 
 ColorPalette = React.createClass(
 
+  renderColor: (color)->
+    handleColorSelect = @props.handleColorSelect
+    R.div
+      key: color
+      className: "color"
+      style: {backgroundColor: color}
+      "data-color": color
+      onClick: handleColorSelect.bind null, color if handleColorSelect?
+
   render: ->
-    R.div className: "pla-color-palette collapse", id: @props.id,
-      (R.div(
-        key: color
-        className: "color"
-        style: {backgroundColor: color}
-        onClick: @props.handleColorSelect
-        "data-color": color
-       ) for color in colors)
+    count = UiConstants.colors.length
+    R.div className: "pla-color-palette",
+      R.div className: "color-row",
+        (@renderColor color for color in UiConstants.colors[0...count/2])
+      R.div className: "color-row",
+        (@renderColor color for color in UiConstants.colors[count/2...count])
 
 )
 

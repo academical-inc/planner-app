@@ -1,10 +1,31 @@
 {
   "en": {
+    "errors": {
+      "header": "Could not complete your request :(",
+      "connError": [
+        "There was a problem connecting to the web.",
+        "Please check your connection and try again."
+      ],
+      "apiError": [
+        "Oops! Something is wrong with our servers.",
+        "Please give us a moment and try again."
+      ],
+      "clientError": [
+        "Looks like there is something wrong with the request to our servers.",
+        "Please email support@academical.co with the details of your situation and the following message:",
+        "{{errMsg}}"
+      ]
+    },
+    "errorDialog": {
+      "header": "Error!",
+      "ok": "OK"
+    },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
       "addBtn": "Add"
     },
     "scheduleList": {
+      "defaultName": "Schedule 1",
       "namePlaceholder": "Add a new schedule"
     },
     "options": {
@@ -24,15 +45,21 @@
     },
     "sidebar": {
       "sectionsHeader": "Sections: {{sections}} Credits: {{credits}}",
-      "eventsHeader": "Other Events",
+      "eventsHeader": "My Events",
+      "item":{
+        "delete": "Delete"
+      },
       "section": {
         "seats": "{{seats}} seats available",
-        "info": "{{credits}} credits - Section {{number}} - {{id}}"
+        "seatsTT": "Seats available",
+        "info": "{{credits}} credits - Section {{number}} - {{id}}",
+        "noTeacher": "No teacher assigned yet"
       }
     },
     "calendar": {
       "today": "today",
-      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+      "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      "saving": "Saving..."
     },
     "eventForm": {
       "header": "Add a personal event",
@@ -40,15 +67,40 @@
       "end": "End time",
       "name": "Name",
       "namePlaceholder": "e.g. gym",
-      "days": "Days"
+      "days": "Days",
+      "until": "Repeat Until",
+      "defaultUntil": "The end of this school period",
+      "or": "or",
+      "untilDate": "Pick a date"
     }
   },
   "es": {
+    "errors": {
+      "header": "No se pudo completar tu acción :(",
+      "connError": [
+        "Hubo un problema conectándose a la web.",
+        "Por favor revisa tu conexión e intenta de nuevo."
+      ],
+      "apiError": [
+        "Oops! Parece que hay un problema con nuestros servidores.",
+        "Por favor danos un momento e intenta de nuevo."
+      ],
+      "clientError": [
+        "Parece que hay un problema con el pedido al servidor.",
+        "Por favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje:",
+        "{{errMsg}}"
+      ]
+    },
+    "errorDialog": {
+      "header": "Error!",
+      "ok": "OK"
+    },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
       "addBtn": "Agregar"
     },
     "scheduleList": {
+      "defaultName": "Horario 1",
       "namePlaceholder": "Crea un nuevo horario"
     },
     "options": {
@@ -69,14 +121,20 @@
     "sidebar": {
       "sectionsHeader": "Secciones: {{sections}} Créditos: {{credits}}",
       "eventsHeader": "Mis Eventos",
+      "item":{
+        "delete": "Eliminar"
+      },
       "section": {
         "seats": "{{seats}} cupos disponibles",
-        "info": "{{credits}} créditos - Sección {{number}} - {{id}}"
+        "seatsTT": "Cupos disponibles",
+        "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
+        "noTeacher": "Aún no hay profesor asignado"
       }
     },
     "calendar": {
       "today": "hoy",
-      "days": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"]
+      "days": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+      "saving": "Guardando..."
     },
     "eventForm": {
       "header": "Agrega un evento personal",
@@ -84,7 +142,11 @@
       "end": "Hora de Fin",
       "name": "Nombre",
       "namePlaceholder": "ej: gimnasio",
-      "days": "Días"
+      "days": "Días",
+      "until": "Repetir hasta",
+      "defaultUntil": "El final del periodo académico actual",
+      "or": "o",
+      "untilDate": "Elige una fecha"
     }
   }
 }

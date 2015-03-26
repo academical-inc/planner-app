@@ -11,25 +11,41 @@ describe 'ScheduleItem', ->
       @clickHandler = H.spy "clickHandler"
       @deleteHandler = H.spy "deleteHandler"
       @props =
-        item: name: "item-val"
+        item: name: "Schedule"
         onClick: @clickHandler
         handleItemDelete: @deleteHandler
-      @item = H.render ScheduleItem, @props
 
     it 'renders properties correctly', ->
-      anchor = H.findWithTag @item, "a"
-      icon = H.findWithTag @item, "i"
+      item = H.render ScheduleItem, @props
+      anchor = H.findWithTag item, "a"
 
-      expect(@item.props.onClick).toEqual @props.onClick
-      expect(anchor.props.children[0]).toEqual @props.item.val
+      expect(item.props.onClick).toEqual @props.onClick
+      expect(anchor.props.children[0]).toEqual @props.item.name
+
+    it 'renders spinner when item (schedule) is for delete', ->
+      @props.item.del = true
+      item = H.render ScheduleItem, @props
+      icon = H.findWithTag item, "i"
+
+      expect(item.props.onClick).toEqual @props.onClick
+      expect(icon.props.className).toContain "spinner"
+
+    it 'renders delete icon when item (schedule) is not for delete', ->
+      item = H.render ScheduleItem, @props
+      icon = H.findWithTag item, "i"
+
+      expect(item.props.onClick).toEqual @props.onClick
+      expect(icon.props.className).toContain "delete"
 
     it 'calls on click handler correctly', ->
-      H.sim.click @item.getDOMNode()
+      item = H.render ScheduleItem, @props
+      H.sim.click item.getDOMNode()
       expect(@clickHandler).toHaveBeenCalled()
       expect(@deleteHandler).not.toHaveBeenCalled()
 
     it 'calls item delete handler correctly', ->
-      icon = H.findWithTag @item, "i"
+      item = H.render ScheduleItem, @props
+      icon = H.findWithTag item, "i"
       H.sim.click icon.getDOMNode()
       expect(@deleteHandler).toHaveBeenCalledWith @props.item
       expect(@clickHandler).not.toHaveBeenCalled()

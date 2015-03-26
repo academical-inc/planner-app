@@ -1,40 +1,69 @@
 
-React        = require 'react'
-$            = require 'jquery'
-mq           = require '../utils/MediaQueries.coffee'
-ids          = require('../constants/PlannerConstants').ids
-I18nMixin    = require '../mixins/I18nMixin'
-Dropdown     = React.createFactory require './Dropdown'
-ScheduleItem = React.createFactory require './ScheduleItem'
-R            = React.DOM
+React          = require 'react'
+$              = require 'jquery'
+{UiConstants}  = require '../constants/PlannerConstants'
+MediaQueries   = require '../utils/MediaQueries.coffee'
+IconMixin      = require '../mixins/IconMixin'
+I18nMixin      = require '../mixins/I18nMixin'
+ScheduleStore  = require '../stores/ScheduleStore'
+PlannerActions = require '../actions/PlannerActions'
+Dropdown       = React.createFactory require './Dropdown'
+ScheduleItem   = React.createFactory require './ScheduleItem'
+R              = React.DOM
 
 
 ScheduleList = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [IconMixin, I18nMixin]
+
+  getState: ->
+    current = ScheduleStore.current()
+    current: if current? then current.name else @renderSpinner()
+    schedules: ScheduleStore.all()
+
+  onChange: (state=@getState())->
+    @setState @getState()
+
+  addSchedule: (name)->
+    PlannerActions.createSchedule name
+
+  openSchedule: (scheduleItem)->
+    schedule =
+      id: scheduleItem.id
+      name: scheduleItem.val
+    PlannerActions.openSchedule schedule
+
+  deleteSchedule: (scheduleItem)->
+    PlannerActions.deleteSchedule scheduleItem.id if scheduleItem.id?
+
+  getInitialState: ->
+    @getState()
 
   componentDidMount: ->
-    if not mq.matchesMDAndUp()
+    ScheduleStore.addChangeListener @onChange
+    if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
         dragOpen:
           open: true
       )
     return
 
-  getInitialState: ->
-    data: [{id: "S1", val: "Schedule 1"}, {id: "S2", val: "Schedule 2"}]
+  componentWillUnmount: ->
+    ScheduleStore.removeChangeListener @onChange
 
   render: ->
     Dropdown(
-      id: ids.SCHEDULE_LIST
+      id: UiConstants.ids.SCHEDULE_LIST
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
-      title: @state.data[0].val
-      items: @state.data
+      title: @state.current
+      items: @state.schedules
       itemType: ScheduleItem
-      updateNameOnSelect: true
-      handleItemAdd: ->
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
+      closeOnAdd: false
+      handleItemAdd: @addSchedule
+      handleItemSelected: @openSchedule
+      handleItemDelete: @deleteSchedule
     )
 
 )

@@ -1,30 +1,47 @@
 
-React     = require 'react/addons'
-I18nMixin = require '../mixins/I18nMixin'
-R         = React.DOM
+$             = require 'jquery'
+React         = require 'react/addons'
+ClickOutside  = require 'react-onclickoutside'
+I18nMixin     = require '../mixins/I18nMixin'
+FormMixin     = require '../mixins/FormMixin'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
-MAX_INPUT_LENGTH = require('../constants/PlannerConstants').dropdown.\
-  MAX_INPUT_LENGTH
+MAX_INPUT_LENGTH = UiConstants.dropdown.MAX_INPUT_LENGTH
 
 
 Dropdown = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, ClickOutside, FormMixin]
+
+  getDefaultProps: ->
+    closeOnAdd: true
+
+  toggleDropdown: (e)->
+    e.preventDefault() if e?
+    $(@getDOMNode()).toggleClass "open"
+
+  closeDropdown: ->
+    $(@getDOMNode()).removeClass "open"
 
   getInitialState: ->
-    title: @props.title
     buttonDisabled: false
+
+  formFields: ->
+    ["itemName"]
 
   handleItemAdd: (e)->
     e.preventDefault()
-    itemName = @refs.itemName.getDOMNode().value.trim()
-    @props.handleItemAdd itemName
-    @refs.itemName.getDOMNode().value = ''
+    @clearFormErrors()
+    @validateForm (fields)=>
+      @props.handleItemAdd fields.itemName
+      @clearFields()
+      @closeDropdown() if @props.closeOnAdd
 
-  handleItemSelected: (item)->
-    if @props.updateNameOnSelect == true
-      @setState title: item.val
+  handleItemSelected: (e, item)->
+    e.preventDefault()
     @props.handleItemSelected item if @props.handleItemSelected?
+    @closeDropdown()
 
   handleInputChange: (e)->
     val = @refs.itemName.getDOMNode().value.trim()
@@ -33,11 +50,15 @@ Dropdown = React.createClass(
     else
       @setState buttonDisabled: false
 
+  handleClickOutside: (e)->
+    @closeDropdown()
+
   getItem: (item)->
     @props.itemType
       key: item.id
       item: item
-      onClick: @handleItemSelected.bind this, item
+      onClick: (e)=>
+        @handleItemSelected e, item
       handleItemDelete: @props.handleItemDelete
 
   renderAddInput: ->
@@ -45,6 +66,7 @@ Dropdown = React.createClass(
       R.form className: 'navbar-form', onSubmit: @handleItemAdd,
         R.div className: 'form-group',
           R.input
+            className: "form-control"
             ref: "itemName"
             type: "text"
             placeholder: @props.addItemPlaceholder
@@ -96,10 +118,10 @@ Dropdown = React.createClass(
           className: "dropdown-toggle"
           role: "button"
           href: "#"
-          "data-toggle": "dropdown"
+          onClick: @toggleDropdown
           "aria-expanded": false
         }
-        @state.title
+        @props.title
         R.span className: 'caret'
       )
       ul

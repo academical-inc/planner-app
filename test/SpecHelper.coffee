@@ -1,19 +1,87 @@
 
 $         = require 'jquery'
+_         = require 'underscore'
 React     = require 'react/addons'
+NodeUrl   = require 'url'
+Humps     = require 'humps'
 I18n      = require '../app/scripts/utils/I18n'
 TestUtils = React.addons.TestUtils
 
 I18n.init()
 
+class Ajax
+
+  @install: ->
+    jasmine.Ajax.install()
+
+  @uninstall: ->
+    jasmine.Ajax.uninstall()
+
+  @mostRecent: ->
+    jasmine.Ajax.requests.mostRecent()
+
+  @succeed: (data, code=200, req=@mostRecent())->
+    req.respondWith
+      status: code
+      contentType: "application/json"
+      responseText: JSON.stringify data: data
+
+  @fail: (code=404, msg="Error", req=@mostRecent())->
+    req.respondWith
+      status: code
+      contentType: "application/json"
+      responseText: JSON.stringify message: msg
+
+  @assertRequest: (method, host, protocol, path, {req, data, headers}={})->
+    req   ?= @mostRecent()
+    method = method.toLowerCase()
+
+    expect(req.method.toLowerCase()).toEqual method
+
+    if headers?
+      reqHds = if req.requestHeaders? then req.requestHeaders else req.header
+      expect(reqHds).toEqual headers
+
+    url = req.url
+    if protocol.length == 0
+      protocol = "http"
+      url = url[2..] if url.indexOf "//" == 0
+      url = "#{protocol}://#{url}"
+    url = NodeUrl.parse url
+    expect(url.host).toEqual       host
+    expect(url.protocol).toEqual   protocol + ":"
+    expect(url.pathname).toEqual   path
+
+    if method == "get"
+      if data?
+        data = Humps.decamelizeKeys data
+        expect(url.query).toEqual $.param(data) + "&camelize=true"
+      else
+        expect(url.query).toEqual "camelize=true"
+    else
+      reqData = if req._data? then req._data else req.data()
+      if data?
+        data = Humps.decamelizeKeys data
+        expect(reqData).toEqual data: data, camelize: true
+      else
+        expect(reqData).toEqual camelize: true
+
+
+# Private
+_divContainer = document.createElement 'div'
+
+afterEach ->
+  SpecHelper.unmount()
+
 class SpecHelper
 
   @React:     React
   @TestUtils: TestUtils
+  @ajax:      Ajax
   @$:         $
 
   @mock$: ({spyFuncs}={})->
-    spyFuncs ?= ["trigger", "mmenu", "fullCalendar", "timepicker", "modal"]
+    spyFuncs ?= ["trigger", "mmenu", "fullCalendar", "timepicker", "modal", "datepicker"]
     mock$El = @spyObj "mock$El", spyFuncs
     mock$ = @spy "mock$", retVal: mock$El
     [mock$, mock$El]
@@ -21,10 +89,25 @@ class SpecHelper
   @mockComponent: ->
     React.createFactory 'div'
 
-  @spyOn: spyOn
+  @mockLsCache: (getRetVal=null)->
+    @spyObj "mockLsCache", {get: getRetVal, set: null}
+
+  @mockCurrentSchool: (currentSchool)->
+    @spyObj "mockCurrentSchool", {currentSchool: currentSchool}
+
+  @any: jasmine.any
+
+  @spyOn: (obj, key, {retVal}={})->
+    if $.isFunction retVal
+      spyOn(obj, key).and.callFake retVal
+    else
+      spyOn(obj, key).and.returnValue retVal
 
   @spy: (name, {retVal}={})->
-    jasmine.createSpy(name).and.returnValue retVal
+    if $.isFunction retVal
+      jasmine.createSpy(name).and.callFake retVal
+    else
+      jasmine.createSpy(name).and.returnValue retVal
 
   @spyObj: (name, spyFuncs)->
     if Array.isArray spyFuncs
@@ -32,7 +115,10 @@ class SpecHelper
     else if typeof spyFuncs == 'object'
       spy = jasmine.createSpyObj name, Object.keys(spyFuncs)
       for key of spyFuncs
-        spy[key].and.returnValue spyFuncs[key]
+        if $.isFunction spyFuncs[key]
+          spy[key].and.callFake spyFuncs[key]
+        else
+          spy[key].and.returnValue spyFuncs[key]
       spy
     else
       console.error "'spyFuncs' must be an array or an object"
@@ -50,7 +136,10 @@ class SpecHelper
 
   @render: (reactComponent, props={}, children)->
     factory = React.createFactory(reactComponent)
-    TestUtils.renderIntoDocument factory(props, children)
+    React.render factory(props, children), _divContainer
+
+  @unmount: ->
+    React.unmountComponentAtNode _divContainer
 
   @rewireAndRender: (reactComponent, props={}, stubs={})->
     restore = @rewire(reactComponent, stubs)
@@ -134,5 +223,33 @@ class SpecHelper
 
   @sim: TestUtils.Simulate
 
+  # Courtesy of https://robots.thoughtbot.com/jasmine-and-shared-examples
+  @itBehavesLike = ->
+    exampleName = _.first arguments
+    exampleArguments = _.select(_.rest(arguments), (arg) ->
+      not _.isFunction(arg)
+    )
+    innerBlock = _.detect(arguments, (arg) ->
+      _.isFunction arg
+    )
+    exampleGroup = jasmine.sharedExamples[exampleName]
+    if exampleGroup
+      if _.isFunction exampleGroup
+        describe exampleName, ->
+          exampleGroup.apply this, exampleArguments
+          if innerBlock
+            innerBlock()
+          return
+      else if _.isObject exampleGroup
+        _.each exampleGroup, (example, name)->
+          describe name, ->
+            example.apply this, exampleArguments
+            if innerBlock
+              innerBlock()
+            return
+    else
+      it "cannot find shared behavior: '#{exampleName}'", ->
+        expect(false).toEqual true
+        return
 
 module.exports = SpecHelper

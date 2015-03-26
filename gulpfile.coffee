@@ -10,6 +10,8 @@ runSeq     = require 'run-sequence'
 wiredep    = require 'wiredep'
 merge      = require 'merge-stream'
 bowerFiles = require 'main-bower-files'
+envify     = require 'envify/custom'
+env        = require './.env.json'
 karma      = require('karma').server
 
 # Load plugins
@@ -50,6 +52,7 @@ bundler = (watch = false)->
   # Apply browserify transforms
   b.transform 'coffeeify'
   b.transform 'browserify-shim'
+  b.transform envify(env)
   b
 
 bundle = (b)->
@@ -63,6 +66,7 @@ bundle = (b)->
 
 # Tasks
 gulp.task 'set-development', ->
+  env.APP_ENV       = "development"
   config.production = false
 
 gulp.task 'clean', (cb)->
@@ -77,31 +81,31 @@ gulp.task 'scripts', ['lint'], ->
   bundle bundler()
 
 gulp.task 'styles', ->
-  gulp.src paths.main.style, cwd: base.app
-    .pipe $.rubySass(
-      style: 'expanded'
+  $.rubySass(base.app + "/" + paths.main.style[0],
+      style: 'compact'
       loadPath: ['bower_components']
       bundleExec: true
+      sourcemap: true
     )
     .on 'error', $.util.log.bind($.util, "Sass Error")
-    .pipe $.autoprefixer('last 2 version')
+    .pipe $.autoprefixer()
+    .pipe $.if((not config.production), $.sourcemaps.write())
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
 
 gulp.task 'vendor', ->
-  jsDeps = wiredep(
-    exclude: ['font-awesome']
-  )
+  jsDeps = wiredep().js
+
   cssDeps = wiredep(
     exclude: ['bootstrap-sass-official', 'font-awesome']
-  )
+  ).css
 
-  jsStream = gulp.src jsDeps.js
+  jsStream = gulp.src jsDeps
     .pipe $.concat('vendor.js')
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
-  cssStream = gulp.src cssDeps.css
+  cssStream = gulp.src cssDeps
     .pipe $.concat('vendor.css')
     .pipe $.if(config.production, $.minifyCss())
     .pipe gulp.dest("#{base.dist}/styles")
@@ -110,7 +114,7 @@ gulp.task 'vendor', ->
 
 gulp.task 'fonts', ->
   gulp.src bowerFiles()
-    .pipe $.filter('**/*.{eot,svg,ttf,woff}')
+    .pipe $.filter('**/*.{eot,svg,ttf,woff,woff2}')
     .pipe $.flatten()
     .pipe gulp.dest("#{base.dist}/styles/fonts")
 
@@ -142,6 +146,7 @@ gulp.task 'serve', ->
       livereload: true
       port: 9000
       host: "0.0.0.0"
+      fallback: 'index.html'
     )
 
 gulp.task 'watch', ['serve'], ->

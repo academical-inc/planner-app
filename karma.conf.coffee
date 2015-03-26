@@ -10,7 +10,7 @@ module.exports = (config) ->
 
     # frameworks to use
     # available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify', 'jasmine']
+    frameworks: ['browserify', 'jasmine-ajax', 'jasmine']
 
 
     # list of files / patterns to load in the browser
@@ -18,6 +18,7 @@ module.exports = (config) ->
       'dist/scripts/vendor.js'
       'test/shims/*.{js,coffee}'
       'test/SpecHelper.coffee'
+      'test/shared/**/*.coffee'
       'test/spec/**/*.spec.coffee'
     ]
 
@@ -73,13 +74,15 @@ module.exports = (config) ->
     singleRun: false
 
     browserify: {
+      bundleDelay: 1500
       extensions: ['.coffee']
       debug: true
       transform: [
         'coffeeify'
-        'browserify-shim',
+        'browserify-shim'
+        ['envify', require('./.env.json')]
         ['rewireify', {
-            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee"
+            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee,SpinnerMixin.coffee,FormMixin.coffee"
           }
         ]
       ]

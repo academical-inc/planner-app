@@ -1,17 +1,19 @@
 
-React = require 'react'
-$     = require 'jquery'
-html  = require('../constants/PlannerConstants').htmlEntities
-R     = React.DOM
+React         = require 'react'
+$             = require 'jquery'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 module.exports =
 
   renderButtons: (btns)->
     defaults =
       accept:
+        show: true
         type: "success"
         text: "Save"
       cancel:
+        show: true
         type: "danger"
         text: "Cancel"
     btns = $.extend true, {}, defaults, btns
@@ -33,10 +35,13 @@ module.exports =
       onClick: btns.cancel.handler
       "data-dismiss": "modal"
 
-    [
-      R.button btnCancelProps, btns.cancel.text
-      R.button btnAcceptProps, btns.accept.text
-    ]
+    btnsRes = []
+    if btns.cancel.show is true
+      btnsRes.push R.button(btnCancelProps, btns.cancel.text)
+    if btns.accept.show is true
+      btnsRes.push R.button(btnAcceptProps, btns.accept.text)
+
+    btnsRes
 
   show: ->
     $(@getDOMNode()).modal "show"
@@ -61,7 +66,7 @@ module.exports =
         R.div className: "modal-content",
           R.div className: "modal-header",
             R.button className: "close", "data-dismiss": "modal",
-              R.span "aria-hidden": true, html.TIMES
+              R.span "aria-hidden": true, UiConstants.htmlEntities.TIMES
               R.span className: "sr-only", "Close"
             R.h4 className: "modal-title", id: labelId, header
           R.div className: "modal-body", body

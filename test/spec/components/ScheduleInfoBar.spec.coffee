@@ -6,24 +6,6 @@ PanelItemList   = require '../../../app/scripts/components/PanelItemList'
 
 describe 'ScheduleInfoBar', ->
 
-  describe '#handlePersonalEventAdd', ->
-
-    beforeEach ->
-      [@mock$, @mock$El] = H.mock$()
-      @modalSelector = ".modal-selector"
-      @restore = H.rewire ScheduleInfoBar,
-        selectors: PERSONAL_EVENT_MODAL: @modalSelector
-        $: @mock$
-
-    afterEach ->
-      @restore()
-
-    it 'should open the modal for personal event form', ->
-      bar = H.render ScheduleInfoBar
-      bar.handlePersonalEventAdd()
-      expect(@mock$).toHaveBeenCalledWith @modalSelector
-      expect(@mock$El.modal).toHaveBeenCalledWith "show"
-
   describe '#render', ->
 
     beforeEach ->
@@ -31,13 +13,14 @@ describe 'ScheduleInfoBar', ->
       @eventItem     = ->
       @restore = H.rewire ScheduleInfoBar,
         SectionItem: @sectionItem
-        PersonalEventItem: @eventItem
+        EventItem: @eventItem
 
       @data =
         totalCredits: 6
         totalSections: 2
         sections: [ {id: "s1"}, {id: "s2"} ]
-        personalEvents: [ {id: "p1"}, {id: "p2"} ]
+        events: [ {id: "p1", color: "blue"}, {id: "p2", color: "purp"} ]
+        sectionColors: {s1: "red", s2: "green"}
 
 
     afterEach ->
@@ -51,10 +34,11 @@ describe 'ScheduleInfoBar', ->
       expect(sections.props.header).toContain data.totalSections
       expect(sections.props.header).toContain data.totalCredits
       expect(sections.props.items).toEqual data.sections
+      expect(sections.props.colors).toEqual data.sectionColors
 
       events = lists[1]
       expect(events.props.itemType).toEqual eventItem
-      expect(events.props.items).toEqual data.personalEvents
+      expect(events.props.items).toEqual data.events
 
     it 'renders correctly based on initial state', ->
       bar   = H.render ScheduleInfoBar, initialState: @data

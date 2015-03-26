@@ -20,6 +20,10 @@ class I18n
       text = text.replace new RegExp("{{#{key}}}", "g"), values[key]
     text
 
+  @_templateAll: (lines, values)->
+    lines.map (line)=>
+      @_template line, values
+
   @init: (locale)->
     @setLocale (locale || DEFAULT_LOCALE)
 
@@ -39,7 +43,11 @@ class I18n
 
   @t = (key, values)->
     res = @_valueFor key, @localeMessages
-    res = @_template res, values if values?
+    if values?
+      res = if Array.isArray res
+        @_templateAll res, values
+      else
+        @_template res, values
     res
 
 

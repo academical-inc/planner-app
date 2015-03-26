@@ -12,25 +12,44 @@ describe 'Dropdown', ->
       @handler = H.spy "handler"
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
-        items: [{id: "i1", val: "v1"}]
+        items: []
         itemType: H.mockComponent()
         handleItemAdd: @handler
-      @input = @dd.refs.itemName
-      @input.getDOMNode().value = "  Value!  "
-      @dd.handleItemAdd preventDefault: ->
+      @input = @dd.refs.itemName.getDOMNode()
 
-    it 'calls provided handler with correct value', ->
-      expect(@handler).toHaveBeenCalledWith "Value!"
+    describe 'when item name value provided', ->
 
-    it 'clears input after adding', ->
-      expect(@input.getDOMNode().value).toEqual ""
+      beforeEach ->
+        @input.value = "  Value!  "
+        @dd.handleItemAdd preventDefault: ->
+
+      it 'calls provided handler with correct value', ->
+        expect(@handler).toHaveBeenCalledWith "Value!"
+
+      it 'clears input after adding', ->
+        expect(@input.value).toEqual ""
+
+      it 'input form group does not have error class', ->
+        expect(@input.parentElement.className).not.toContain "has-error"
+
+    describe 'when item name value provided', ->
+
+      beforeEach ->
+        @dd.handleItemAdd preventDefault: ->
+
+      it 'does not call callback', ->
+        expect(@handler).not.toHaveBeenCalled()
+
+      it 'adds error class to form group', ->
+        expect(@input.parentElement.className).toContain "has-error"
 
 
   describe '#handleItemSelected', ->
 
     beforeEach ->
-      @item = val: "data"
+      @item    = val: "data"
       @handler = H.spy "handler"
+      @e       = H.spyObj "e", ["preventDefault"]
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
         handleItemSelected: @handler
@@ -39,19 +58,15 @@ describe 'Dropdown', ->
         itemType: H.mockComponent()
 
     it 'calls handler set by parent in the props', ->
-      @dd.handleItemSelected @item
+      @dd.handleItemSelected @e, @item
+      expect(@e.preventDefault).toHaveBeenCalled()
       expect(@handler).toHaveBeenCalledWith @item
 
-    it 'updates title correctly when property to do so is specified', ->
-      H.spyOn @dd, "setState"
-      @dd.handleItemSelected @item
-      expect(@dd.setState).toHaveBeenCalledWith title: @item.val
-
-    it 'does not update title when property to do so is not specified', ->
-      @dd.props.updateNameOnSelect = undefined
-      H.spyOn @dd, "setState"
-      @dd.handleItemSelected @item
-      expect(@dd.setState).not.toHaveBeenCalled()
+    it 'does not call handler if not provided', ->
+      @dd.props.handleItemSelected = undefined
+      @dd.handleItemSelected @e, @item
+      expect(@e.preventDefault).toHaveBeenCalled()
+      expect(@handler).not.toHaveBeenCalled()
 
 
   describe '#handleInputChange', ->
@@ -91,7 +106,7 @@ describe 'Dropdown', ->
   describe '#getItem', ->
 
     beforeEach ->
-      @factory = H.spy "factory"
+      @factory = H.mockComponent()
       @bindRet = ->
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
@@ -102,14 +117,10 @@ describe 'Dropdown', ->
       @item = {id: "k1", val: "v1"}
 
     it 'returns the correct item component', ->
-      @dd.getItem @item
-      expect(@factory).toHaveBeenCalledWith(
-        key: @item.id
-        item: @item
-        onClick: @bindRet
-        handleItemDelete: @dd.props.handleItemDelete
-      )
-      expect(@dd.handleItemSelected.bind).toHaveBeenCalledWith @dd, @item
+      div = @dd.getItem @item
+      expect(div.key).toEqual @item.id
+      expect(div.props.item).toEqual @item
+      expect(div.props.handleItemDelete).toEqual @dd.props.handleItemDelete
 
 
   describe '#renderItems', ->
@@ -214,6 +225,7 @@ describe 'Dropdown', ->
 
       it 'calls handleItemAdd when form submitted', ->
         form = H.findWithTag @dd, "form"
+        @dd.refs.itemName.getDOMNode().value = "My schedule"
         H.sim.submit form.getDOMNode()
         expect(@handler).toHaveBeenCalled()
 
