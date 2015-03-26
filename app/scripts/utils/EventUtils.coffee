@@ -16,7 +16,7 @@ class EventUtils
             else
               arguments[0]
         else
-          event = eventFactory null, event if eventFactory?
+          event = eventFactory event, event if eventFactory?
           prevArr.concat [event]
       , []
     )

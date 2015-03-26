@@ -43,7 +43,7 @@ describe 'EventUtils', ->
       expanded', ->
         res = @util.concatExpandedEvents @events.notEx, @evFactory
         expect(res).toEqual @events.notEx
-        expected = @events.notEx.map (e)-> [null, e]
+        expected = @events.notEx.map (e)-> [e, e]
         expect(@evFactory.calls.allArgs()).toEqual expected
 
       it 'returns correct concated events with correct ids when some expanded
@@ -53,7 +53,7 @@ describe 'EventUtils', ->
         expect(@evFactory.calls.count()).toEqual 3
         expect(@evFactory.calls.argsFor(0)).toContain @expandExp[0]
         expect(@evFactory.calls.argsFor(1)).toContain @expandExp[1]
-        expect(@evFactory.calls.argsFor(2)).toEqual [null, {id: "e2"}]
+        expect(@evFactory.calls.argsFor(2)).toEqual [{id: "e2"}, {id: "e2"}]
 
 
     describe 'when event factory not provided', ->
