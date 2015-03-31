@@ -15,9 +15,9 @@ PlannerHeader = React.createClass(
         R.div className: "container-fluid",
           LogoBox({})
           R.ul className: "nav navbar-nav navbar-left",
+            OptionsMenu rootTag: R.li
             ScheduleList rootTag: R.li
           R.ul className: "nav navbar-nav navbar-right",
-            OptionsMenu rootTag: R.li
             ProfileBox rootTag: R.li, name: "Juan", url: "//placehold.it/50x50"
 
 )
