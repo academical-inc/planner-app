@@ -1,21 +1,41 @@
 
 .pla-search-bar {
 
+  margin-top: 12%;
+  margin-bottom: 2%;
+
   div,input[type=text] {
     width: 100%;
   }
 
   .search-input {
     margin-bottom: 0.3em;
+    display: inline-block;
+    width: 70%;
   }
+
+  .search-filters {
+    display: inline-block;
+    width: 22%;
+    padding: 1%;
+    padding-left: 3%;
+    float: right;
+    background-color: $academical-blue-filter;
+    color: $white;
+    font-size: 105%;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
 
   .filters-toggle {
     color: inherit;
 
-    &:before {
+    &:after {
       font-family: FontAwesome;
-      padding-right: 0.3em;
+      padding-left: 0.3em;
       content: "\f0d8"; // Caret up icon
+      color: $dark;
     }
 
     &:hover {
@@ -23,7 +43,7 @@
     }
   }
 
-  .filters-toggle.collapsed:before {
+  .filters-toggle.collapsed:after {
     content: "\f0d7"; // Caret down icon
   }
 

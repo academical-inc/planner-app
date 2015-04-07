@@ -1,9 +1,9 @@
 
 React           = require 'react'
-PlannerHeader   = React.createFactory require './PlannerHeader'
 PlannerBody     = React.createFactory require './PlannerBody'
 SlideMenuHandle = React.createFactory require './SlideMenuHandle'
 PlannerModals   = React.createFactory require './PlannerModals'
+PlannerSideBar = React.createFactory require './PlannerSideBar'
 R               = React.DOM
 
 PlannerApp = React.createClass(
@@ -11,7 +11,7 @@ PlannerApp = React.createClass(
   render: ->
     R.div className: 'pla-content container-fluid',
       SlideMenuHandle({})
-      PlannerHeader({})
+      PlannerSideBar({})
       PlannerBody({})
       PlannerModals({})
 

@@ -4,14 +4,6 @@
 
   height: 100%;
 
-  .pla-side-bar {
-    @include make-md-column(3);
-  }
-
-  .pla-week-calendar {
-    @include make-md-column(9);
-    @include make-xs-column(12);
-  }
 }
 
 /* Medium devices (desktops, 992px and up) */

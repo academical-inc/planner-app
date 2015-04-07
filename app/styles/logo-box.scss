@@ -1,10 +1,11 @@
 
 .pla-logo-box {
-  a {
     background: $academical-blue;
+    padding: 6.5%;
     img {
-      max-width: 100%;
-      max-height: 100%;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
     }
-  }
 }

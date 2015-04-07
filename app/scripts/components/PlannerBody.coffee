@@ -1,7 +1,7 @@
 
 React          = require 'react'
 WeekCalendar   = React.createFactory require './WeekCalendar'
-PlannerSideBar = React.createFactory require './PlannerSideBar'
+PlannerHeader   = React.createFactory require './PlannerHeader'
 R              = React.DOM
 
 
@@ -9,7 +9,7 @@ PlannerBody = React.createClass(
 
   render: ->
     R.section className: 'pla-planner-body',
-      PlannerSideBar({})
+      PlannerHeader({})
       WeekCalendar({})
 
 )

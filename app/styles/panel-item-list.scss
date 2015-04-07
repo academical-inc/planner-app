@@ -4,8 +4,21 @@
   padding-right: 1px;
 
   .list-header {
-    text-align: center;
+    text-align: left;
+    margin-left: 5%;
+    color: white;
+    font-weight: 200;
+    font-size: 150%;
   }
+
+  .list-summary {
+    text-align: left;
+    margin-left: 5%;
+    color: $white;
+    font-weight: 200;
+    font-size: 120%;
+  }
+
 
   .panel-heading {
     padding: 7px 10px;
@@ -13,8 +26,19 @@
   }
 
   .panel-title {
-    font-size: 14px;
-    font-weight: 200;
+    color: $dark;
+    font-weight: 400;
+    font-size: 110%;
+
+    .label-seats{
+      border-radius: 10em;
+      font-weight: 500;
+      padding: 0;
+      font-size: 100%;
+      background: transparent;
+      color: $dark;
+      border: 1px solid $golden-sand;
+    }
   }
 
   .panel-collapse {
