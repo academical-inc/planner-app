@@ -41,7 +41,7 @@ SectionItem = React.createClass(
     else
       @props.item.teacherNames.join ", "
 
-    R.div className: "pla-section-item pla-item panel panel-default",
+    R.div className: "pla-section-item panel panel-default",
       R.div(
         {
           className: "panel-heading"
@@ -66,6 +66,7 @@ SectionItem = React.createClass(
               ref: "seatsIndicator"
               @props.item.seats.available
             @renderSettings()
+            R.img className: "img_settings", src: 'images/settings_icon.png',
         )
       ),
       R.div(

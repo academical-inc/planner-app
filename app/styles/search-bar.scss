@@ -4,21 +4,30 @@
   margin-top: 12%;
   margin-bottom: 2%;
 
-  div,input[type=text] {
-    width: 100%;
+  input[type=text] {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 112%;
+    &:focus{
+      color: white;
+      outline: none
+    }
   }
 
   .search-input {
-    margin-bottom: 0.3em;
     display: inline-block;
     width: 70%;
+    span{
+      border-bottom: 1px solid $white;
+    }
   }
 
   .search-filters {
     display: inline-block;
     width: 22%;
     padding: 1%;
-    padding-left: 3%;
+    padding-left: 2%;
     float: right;
     background-color: $academical-blue-filter;
     color: $white;
@@ -35,7 +44,7 @@
       font-family: FontAwesome;
       padding-left: 0.3em;
       content: "\f0d8"; // Caret up icon
-      color: $dark;
+      color: black;
     }
 
     &:hover {

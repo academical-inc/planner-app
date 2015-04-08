@@ -1,6 +1,5 @@
 
 .pla-panel-item-list {
-  padding-top:10px;
   padding-right: 1px;
 
   .list-header {
@@ -11,52 +10,28 @@
     font-size: 150%;
   }
 
-  .list-summary {
-    text-align: left;
-    margin-left: 5%;
-    color: $white;
-    font-weight: 200;
-    font-size: 120%;
-  }
-
-
-  .panel-heading {
-    padding: 7px 10px;
-    border-left: 5px solid #eee;
-  }
-
-  .panel-title {
-    color: $dark;
-    font-weight: 400;
-    font-size: 110%;
-
-    .label-seats{
-      border-radius: 10em;
-      font-weight: 500;
-      padding: 0;
-      font-size: 100%;
-      background: transparent;
-      color: $dark;
-      border: 1px solid $golden-sand;
-    }
+  .pla-section-item{
+    margin-bottom: -3px;
   }
 
   .panel-collapse {
-    border-left: 5px solid #eee;
+    border-left: 7px solid #eee;
   }
 
   .list-group {
     margin-bottom: 0;
 
     .list-group-item {
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-      font-size: 13px;
-      padding: 5px 10px;
+      font-weight: 500;
+      font-size: 96%;
+      padding: 3px 10px;
+      border: 0px;
+      color: $dark;
 
-      &:last-child {
-        border-bottom: none;
+      &:first-child {
+        font-weight: 800;
+        font-size: 100%;
+        color: white;
       }
     }
   }

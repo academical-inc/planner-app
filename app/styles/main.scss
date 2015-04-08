@@ -7,6 +7,7 @@
 
   height: 100%;
   font-family: open-sans;
+  padding: 0%;
 
   .pla-side-bar {
     @include make-md-column(3);
@@ -33,7 +34,6 @@
   @import "./dropdown";
   @import "./schedule-item";
   @import "./profile-box";
-  @import "./item";
   @import "./item-settings";
   @import "./options-item";
 }

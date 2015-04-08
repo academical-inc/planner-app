@@ -1,12 +1,29 @@
 
 .pla-section-item {
 
-  .panel-title .label-seats {
-    border-radius: 0.85em;
-    margin-right: 0.5em;
-    font-size: 10px;
-    font-weight: 200;
-    padding: 3px 5px;
+  .panel-heading {
+    padding: 7px 10px;
+    border-left: 7px solid #eee;
+  }
+
+  .panel-title {
+    color: $dark;
+    font-weight: 400;
+    font-size: 110%;
+
+  .img_settings{
+    width: 30%;
+  }
+      
+    .label-seats {
+      border-radius: 10em;
+      font-size: 100%;
+      font-weight: 500;
+      padding: 2px 6px 2px 6px;
+      margin-right: 5px;
+      background: transparent;
+      color: $dark;
+      border: 2.5px solid $jordy-blue;
   }
 
   .list-group-item.teachers {
@@ -16,5 +33,5 @@
     font-weight: 500;
     text-align: center;
   }
-
+ }
 }

@@ -18,7 +18,7 @@ EventItem = React.createClass(
     colorPaletteId = "event-colors-#{@props.item.id}"
     colorStyle     = borderColor: @props.color
 
-    R.div className: "pla-event-item pla-item panel panel-default",
+    R.div className: "pla-event-item panel panel-default",
       R.div(
         {
           className: "panel-heading"
