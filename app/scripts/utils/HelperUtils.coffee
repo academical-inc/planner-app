@@ -24,5 +24,16 @@ class HelperUtils
     @removeAt arr, idx
     el
 
+  # https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+  @escapeRegexCharacters: (str)->
+    str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  @findAllRegexMatches: (re, str)->
+    indices = []
+    while result = re.exec(str)
+      indices.push result.index
+    indices
+
+
 
 module.exports = HelperUtils

@@ -96,3 +96,23 @@ describe 'HelperUtils', ->
       expect(@arr).toEqual ["some", 34, 5, {thing: "5"}, 34]
 
 
+  describe '.findAllRegexMatches', ->
+
+    beforeEach ->
+      @str = "heyquery what is que in spanish"
+
+    it 'returns correct indices for regex matches when found', ->
+      re = /que/gi
+      indices = _.findAllRegexMatches re, @str
+      expect(indices).toEqual [3, 17]
+      re = /\bque/gi
+      indices = _.findAllRegexMatches re, @str
+      expect(indices).toEqual [17]
+      re = new RegExp 'Alg', 'gi'
+      indices = _.findAllRegexMatches re, 'Algebra and Linear Exps.'
+      expect(indices).toEqual [0]
+
+    it 'returns empty array when no matches', ->
+      re = /\bempty/gi
+      indices = _.findAllRegexMatches re, @str
+      expect(indices).toEqual []
