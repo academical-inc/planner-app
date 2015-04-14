@@ -27,55 +27,50 @@
     content: "\f0d7"; // Caret down icon
   }
 
-  .twitter-typeahead {
-    width: 100%;
-  }
-  .twitter-typeahead .tt-query,
-  .twitter-typeahead .tt-hint {
-    margin-bottom: 0;
-  }
-  .tt-hint {
-    display: block;
-    padding-left: 2px;
-    font-size: 14px;
-    line-height: 1.428571429;
-    color: #999;
-    vertical-align: middle;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  }
-  .tt-dropdown-menu {
-    max-height: 550px;
-    overflow-y: scroll;
-    width: 100%;
-    margin-top: 1px;
-    padding: 5px 0;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    background-clip: padding-box;
-  }
-  .tt-suggestion {
-    display: block;
-    padding: 3px 20px;
-  }
-  .tt-suggestion.tt-cursor {
-    color: #fff;
-    background-color: #428bca;
-  }
-  .tt-suggestion.tt-cursor a {
-    color: #fff;
-  }
-  .tt-suggestion p {
-    margin: 0;
+  // Typeahead
+  .react-autosuggest {
+    $font-size: 18px;
+    $border-color: #aaa;
+    $border-radius: 4px;
+
+    position: relative;
+
+    &__suggestions {
+      position: absolute;
+      top: 51px;
+      width: 280px;
+      border: 1px solid $border-color;
+      background-color: #fff;
+      font-size: $font-size;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      z-index: 2;
+
+      &-section {
+        &:first-child {
+          .react-autosuggest__suggestions-section-name {
+            border-top: 0;
+          }
+        }
+
+        &-name {
+          padding: 10px 0 0 10px;
+          font-size: 12px;
+          text-transform: uppercase;
+          color: #777;
+          border-top: 1px solid #777;
+        }
+      }
+    }
+
+    &__suggestion {
+      cursor: pointer;
+      padding: 10px 20px;
+
+      &--focused {
+        background-color: #ddd;
+      }
+    }
   }
 
 }
