@@ -52,7 +52,7 @@
       ]
     },
     "typeahead.js": {
-      "main": "dist/bloodhound.min.js"
+      "main": "dist/bloodhound.js"
     }
   },
   "resolutions": {
