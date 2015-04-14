@@ -58,7 +58,8 @@ SectionItem = React.createClass(
               "aria-expanded": "false"
               "aria-controls": contentId
             },
-            "#{@props.item.courseCode} - #{@props.item.courseName}"
+            R.span null, "#{@props.item.courseCode} - "
+            R.strong null, @props.item.courseName
           )
           R.span className: "pull-right",
             R.span
@@ -66,7 +67,6 @@ SectionItem = React.createClass(
               ref: "seatsIndicator"
               @props.item.seats.available
             @renderSettings()
-            R.img className: "img_settings", src: 'images/settings_icon.png',
         )
       ),
       R.div(

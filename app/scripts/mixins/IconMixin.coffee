@@ -27,6 +27,12 @@ spinnerClasses = ({type, anim, className}={})->
   className.split(" ").forEach (cls)-> cs[cls] = true
   Classnames cs
 
+imgIconClasses = (className="")->
+  cs = {}
+  cs["img-icon"] = true
+  className.split(" ").forEach (cls)-> cs[cls] = true
+  Classnames cs
+
 
 module.exports =
 
@@ -37,6 +43,12 @@ module.exports =
     R.i
       className: iconClasses(icon, opts)
       onClick: opts.onClick
+
+  imgIcon: (src, {className, onClick}={})->
+    R.img
+      src: src
+      className: imgIconClasses(className) 
+      onClick: onClick if onClick?
 
   spinnerMarkup: (opts)->
     "<i class='#{spinnerClasses(opts)}'>"

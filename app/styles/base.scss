@@ -6,6 +6,7 @@ html, body {
 /* Space out content a bit */
 body {
   padding: 0px;
+  font-family: "open sans";
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -19,12 +20,8 @@ body {
 i {
   cursor: pointer;
 }
-i.delete-icon {
-  color: $gray-light;
-
-  &:hover {
-    color: $brand-danger;
-  }
+.img-icon {
+  cursor: pointer;
 }
 
 /* Buttons */

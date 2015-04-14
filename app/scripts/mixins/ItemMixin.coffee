@@ -20,9 +20,7 @@ module.exports =
     if @props.item.del is true
       @renderSpinner()
     else
-      @icon "trash-o",
-        fw: false
-        className: "delete-icon"
+      @imgIcon "images/delete_icon.png",
         onClick: @handleItemDelete
 
   renderSettings: ->
@@ -32,4 +30,4 @@ module.exports =
         deleteIcon: @renderDeleteIcon()
       placement: 'bottom'
       trigger: 'click'
-      @icon 'cog', fw: false
+      @imgIcon 'images/settings_icon.png'

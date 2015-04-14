@@ -1,5 +1,6 @@
 
 .pla-section-item {
+  margin-bottom: -3px;
 
   .panel-heading {
     padding: 7px 10px;
@@ -11,9 +12,9 @@
     font-weight: 400;
     font-size: 110%;
 
-  .img_settings{
-    width: 30%;
-  }
+    .settings-icon {
+      width: 30%;
+    }
       
     .label-seats {
       border-radius: 10em;
@@ -24,14 +25,16 @@
       background: transparent;
       color: $dark;
       border: 2.5px solid $jordy-blue;
-  }
+    }
 
-  .list-group-item.teachers {
-    font-weight: 500;
+    .list-group-item.teachers {
+      font-weight: 500;
+    }
+
+    .list-group-item.seats {
+      font-weight: 500;
+      text-align: center;
+    }
+
   }
-  .list-group-item.seats {
-    font-weight: 500;
-    text-align: center;
-  }
- }
 }

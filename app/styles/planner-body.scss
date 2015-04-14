@@ -1,6 +1,8 @@
 
 .pla-planner-body {
   @include make-row();
+  @include make-md-column(9);
+  @include make-xs-column(12);
 
   height: 100%;
   margin-left: 0;

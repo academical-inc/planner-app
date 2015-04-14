@@ -44,7 +44,8 @@
       "filters": "Filters"
     },
     "sidebar": {
-      "sectionsHeader": "Sections: {{sections}} Credits: {{credits}}",
+      "sectionsHeader": "My Courses",
+      "sectionsHeaderInfo": "Sections: {{sections}} Credits: {{credits}}",
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
@@ -119,7 +120,8 @@
       "filters": "Filtros"
     },
     "sidebar": {
-      "sectionsHeader": "Secciones: {{sections}} Créditos: {{credits}}",
+      "sectionsHeader": "Mis Cursos",
+      "sectionsHeaderInfo": "Secciones: {{sections}} Créditos: {{credits}}",
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"

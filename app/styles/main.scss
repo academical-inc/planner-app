@@ -6,17 +6,7 @@
 .pla-content {
 
   height: 100%;
-  font-family: open-sans;
   padding: 0%;
-
-  .pla-side-bar {
-    @include make-md-column(3);
-  }
-
-  .pla-planner-body {
-    @include make-md-column(9);
-    @include make-xs-column(12);
-  }
 
   @import "./slide-menu-handle";
   @import "./planner-header";

@@ -6,7 +6,8 @@ PanelItemList = React.createClass(
 
   render: ->
     R.div className: "pla-panel-item-list",
-      R.h5 className: "list-header", @props.header
+      R.h4 className: "list-header", @props.header
+      R.h5 className: "list-subheader", @props.subheader if @props.subheader?
       R.div(
         {
           className: "panel-group"
@@ -28,7 +29,7 @@ PanelItemList = React.createClass(
               className: "btn btn-info btn-circle"
               onClick: @props.handleItemAdd
             },
-            R.i className: "fa fa-plus"
+            R.img src: 'images/add_event_icon.png'
           )
 )
 

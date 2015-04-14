@@ -41,8 +41,12 @@ ScheduleInfoBar = React.createClass(
     R.div className: "pla-schedule-info-bar",
       PanelItemList
         itemType: SectionItem
-        header: @t "sidebar.sectionsHeader", sections: @state.totalSections,\
+        header: @t "sidebar.sectionsHeader"
+        subheader: @t(
+          "sidebar.sectionsHeaderInfo"
+          sections: @state.totalSections
           credits: @state.totalCredits
+        ) 
         handleItemDelete: @handleSectionRemove
         items: @state.sections
         colors: @state.sectionColors
