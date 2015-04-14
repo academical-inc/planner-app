@@ -48,13 +48,14 @@
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
-      },
-      "section": {
-        "seats": "{{seats}} seats available",
-        "seatsTT": "Seats available",
-        "info": "{{credits}} credits - Section {{number}} - {{id}}",
-        "noTeacher": "No teacher assigned yet"
       }
+    },
+    "section": {
+      "seats": "{{seats}} seats available",
+      "seatsTT": "Seats available",
+      "info": "{{credits}} credits - Section {{number}} - {{id}}",
+      "noTeacher": "No teacher assigned yet",
+      "noDepartment": "Unknown department"
     },
     "calendar": {
       "today": "today",
@@ -123,13 +124,14 @@
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"
-      },
-      "section": {
-        "seats": "{{seats}} cupos disponibles",
-        "seatsTT": "Cupos disponibles",
-        "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
-        "noTeacher": "Aún no hay profesor asignado"
       }
+    },
+    "section": {
+      "seats": "{{seats}} cupos disponibles",
+      "seatsTT": "Cupos disponibles",
+      "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
+      "noTeacher": "Aún no hay profesor asignado",
+      "noDepartment": "Programa desconocido"
     },
     "calendar": {
       "today": "hoy",
