@@ -1,23 +1,23 @@
 
-React                = require 'react'
-I18nMixin            = require '../mixins/I18nMixin'
-SearchStore          = require '../stores/SearchStore'
-{UiConstants}        = require '../constants/PlannerConstants'
-ResultItem           = React.createFactory require './ResultItem'
-Typeahead            = React.createFactory require 'react-autosuggest'
-R                    = React.DOM
+React         = require 'react'
+I18nMixin     = require '../mixins/I18nMixin'
+SearchStore   = require '../stores/SearchStore'
+{UiConstants} = require '../constants/PlannerConstants'
+ResultItem    = React.createFactory require './ResultItem'
+Typeahead     = React.createFactory require 'react-autosuggest'
+R             = React.DOM
 
 
 SearchBar = React.createClass(
 
   mixins: [I18nMixin]
 
+  showSuggestionsWhen: (input)->
+    input.trim().length > UiConstants.search.minLen
+
   suggestions: (input, cb)->
-    if input.length > UiConstants.search.minLen
-      SearchStore.query input, (suggestions)->
-        cb null, suggestions
-    else
-      cb null, []
+    SearchStore.query input, (suggestions)->
+      cb null, suggestions
 
   suggestionValue: (section)->
     section.courseName
@@ -34,6 +34,7 @@ SearchBar = React.createClass(
           inputAttributes:
             className: "typeahead"
             placeholder: @t("searchBar.placeholder")
+          showWhen: @showSuggestionsWhen
           suggestions: @suggestions
           suggestionValue: @suggestionValue
           suggestionRenderer: @suggestionRenderer
