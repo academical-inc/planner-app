@@ -1,10 +1,13 @@
 
-React = require 'react'
-_     = require '../utils/HelperUtils'
-R     = React.DOM
+React     = require 'react'
+_         = require '../utils/HelperUtils'
+I18nMixin = require '../mixins/I18nMixin'
+R         = React.DOM
 
 
 ResultItem = React.createClass(
+
+  mixins: [I18nMixin]
 
   highlight: (text, query=@props.query)->
     qLen = query.length
@@ -38,9 +41,11 @@ ResultItem = React.createClass(
     else
       @t "section.noDepartment"
 
-    R.div className: 'pla-result-item',
+    R.div
+      className: 'pla-result-item'
       R.div null,
         @highlight section.sectionId
+        R.span null, " "
         @highlight section.courseCode
       R.div null,
         @highlight section.courseName
