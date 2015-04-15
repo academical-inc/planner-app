@@ -52,7 +52,8 @@ WeekCalendar = React.createClass(
     start:           sectionEvent.event.startDt
     end:             sectionEvent.event.endDt
     backgroundColor: 'red' if sectionEvent.event.isOverlapping
-    rendering:       'background'
+    borderColor:     'red' if sectionEvent.event.isOverlapping
+    className:       'dirty-event'
     editable:        false
     allDay:          false
     isPreview:       true
@@ -119,6 +120,8 @@ WeekCalendar = React.createClass(
       preview:
         events: []
         eventDataTransform: @previewEventDataTransform
+        backgroundColor: UiConstants.defaultSectionColor
+        borderColor: UiConstants.defaultSectionColor
       events:
         events: []
         eventDataTransform: @eventDataTransform
@@ -144,17 +147,18 @@ WeekCalendar = React.createClass(
     )
 
   renderEvent: (event, jqElement)->
-    icon = if event.del is true
-      @spinnerMarkup className: 'pull-right'
-    else
-      @iconMarkup "times", fw: false, inverse: true, className: 'pull-right'
+    if not (event.isPreview)
+      icon = if event.del is true
+        @spinnerMarkup className: 'pull-right'
+      else
+        @iconMarkup "times", fw: false, inverse: true, className: 'pull-right'
 
-    icon = $(icon)
-    if event.isSection
-      icon.on "click", @removeSection.bind(@, event.id)
-    else if event.isEvent
-      icon.on "click", @removeEvent.bind(@, event.id) if not(event.del is true)
-    jqElement.find('.fc-time').append icon
+      icon = $(icon)
+      if event.isSection
+        icon.on "click", @removeSection.bind(@, event.id)
+      else if event.isEvent and not(event.del is true)
+        icon.on "click", @removeEvent.bind(@, event.id)
+      jqElement.find('.fc-time').append icon
     jqElement
 
   render: ->
