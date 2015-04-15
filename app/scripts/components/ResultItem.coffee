@@ -1,8 +1,9 @@
 
-React     = require 'react'
-_         = require '../utils/HelperUtils'
-I18nMixin = require '../mixins/I18nMixin'
-R         = React.DOM
+React          = require 'react'
+_              = require '../utils/HelperUtils'
+I18nMixin      = require '../mixins/I18nMixin'
+PlannerActions = require '../actions/PlannerActions'
+R              = React.DOM
 
 
 ResultItem = React.createClass(
@@ -28,6 +29,9 @@ ResultItem = React.createClass(
 
     R.span.apply null, args
 
+  handleMouseLeave: ->
+    PlannerActions.removeSectionPreview()
+
   render: ->
     section = @props.section
     query   = @props.query
@@ -43,6 +47,7 @@ ResultItem = React.createClass(
 
     R.div
       className: 'pla-result-item'
+      onMouseLeave: @handleMouseLeave
       R.div null,
         @highlight section.sectionId
         R.span null, " "
