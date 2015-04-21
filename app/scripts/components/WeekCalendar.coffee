@@ -133,10 +133,10 @@ WeekCalendar = React.createClass(
       weekends: true
       editable: true
       selectable: true
-      header:
-        left: "prev"
-        center: @t "calendar.today"
-        right: "next"
+      header: null
+        # left: "prev"
+        # center: @t "calendar.today"
+        # right: "next"
       eventRender: @renderEvent
       select: @handleSelect
       eventDrop: @handleEventUpdate

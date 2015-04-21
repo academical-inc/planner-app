@@ -8,7 +8,7 @@
     background: transparent;
     border: none;
     color: white;
-    font-size: 112%;
+    font-size: 110%;
     &:focus{
       color: white;
       outline: none
@@ -37,15 +37,17 @@
 
   .search-filters {
     display: inline-block;
-    width: 22%;
-    padding: 1%;
-    padding-left: 2%;
+    width: 21%;
     float: right;
     background-color: $academical-blue-filter;
     color: $white;
     font-size: 105%;
     font-weight: 400;
     text-decoration: none;
+    a{
+      background-color: $academical-blue-filter;
+      padding: 12%;
+    }
   }
 
 

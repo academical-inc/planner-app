@@ -46,7 +46,7 @@ ScheduleInfoBar = React.createClass(
           "sidebar.sectionsHeaderInfo"
           sections: @state.totalSections
           credits: @state.totalCredits
-        ) 
+        )
         handleItemDelete: @handleSectionRemove
         items: @state.sections
         colors: @state.sectionColors

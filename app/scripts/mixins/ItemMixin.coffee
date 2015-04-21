@@ -22,6 +22,7 @@ module.exports =
     else
       @imgIcon "images/delete_icon.png",
         onClick: @handleItemDelete
+        className: "delete-icon"
 
   renderSettings: ->
     Popover
@@ -30,4 +31,5 @@ module.exports =
         deleteIcon: @renderDeleteIcon()
       placement: 'bottom'
       trigger: 'click'
-      @imgIcon 'images/settings_icon.png'
+      @imgIcon 'images/settings_icon.png',
+        className: "settings-icon"

@@ -55,7 +55,8 @@
         "seatsTT": "Seats available",
         "info": "{{credits}} credits - Section {{number}} - {{id}}",
         "noTeacher": "No teacher assigned yet"
-      }
+      },
+      "createEvent": "Create new event"
     },
     "calendar": {
       "today": "today",
@@ -131,7 +132,8 @@
         "seatsTT": "Cupos disponibles",
         "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
         "noTeacher": "Aún no hay profesor asignado"
-      }
+      },
+      "createEvent": "Crear nuevo evento"
     },
     "calendar": {
       "today": "hoy",

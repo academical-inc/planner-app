@@ -1,40 +1,42 @@
 
 .pla-panel-item-list {
   padding-right: 1px;
+  margin-top: 20px;
 
   .list-header {
     text-align: left;
     margin-left: 5%;
     color: white;
     font-weight: 200;
-    font-size: 150%;
+    font-size: 190%;
+  }
+
+  .list-subheader {
+    text-align: left;
+    margin-left: 5%;
+    color: white;
+    font-weight: 200;
+    font-size: 135%;
+  }
+
+  .panel-group{
+  margin-bottom: 0px;
   }
 
   .panel-collapse {
     border-left: 7px solid #eee;
   }
 
-  .list-group {
-    margin-bottom: 0;
-
-    .list-group-item {
-      font-weight: 500;
-      font-size: 96%;
-      padding: 3px 10px;
-      border: 0px;
-      color: $dark;
-
-      &:first-child {
-        font-weight: 800;
-        font-size: 100%;
-        color: white;
-      }
-    }
-  }
-
   .add-item-bar {
-    text-align: center;
-    margin-top: -5px;
+    text-align: left;
+    margin-top: 5%;
+    margin-left: 5%; 
+
+    .btn-info{
+      background-color: white;
+      border-color: white;
+      padding: 0px;
+    }
 
     img {
 

@@ -41,7 +41,7 @@ SectionItem = React.createClass(
     else
       @props.item.teacherNames.join ", "
 
-    R.div className: "pla-section-item panel panel-default",
+    R.div className: "pla-section-item pla-item panel panel-default",
       R.div(
         {
           className: "panel-heading"

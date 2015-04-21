@@ -63,7 +63,7 @@ module.exports =
         "aria-hidden": true
       },
       R.div className: "modal-dialog",
-        R.div className: "modal-content",
+        R.div className: "modal-content #{modalId}",
           R.div className: "modal-header",
             R.button className: "close", "data-dismiss": "modal",
               R.span "aria-hidden": true, UiConstants.htmlEntities.TIMES

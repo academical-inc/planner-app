@@ -1,8 +1,11 @@
 
 React = require 'react'
+I18nMixin = require '../mixins/I18nMixin'
 R     = React.DOM
 
 PanelItemList = React.createClass(
+
+  mixins: [I18nMixin]
 
   render: ->
     R.div className: "pla-panel-item-list",
@@ -31,6 +34,7 @@ PanelItemList = React.createClass(
             },
             R.img src: 'images/add_event_icon.png'
           )
+          R.span className: "list-header", @t("sidebar.createEvent")
 )
 
 module.exports = PanelItemList
