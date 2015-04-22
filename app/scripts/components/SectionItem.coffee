@@ -24,6 +24,7 @@ SectionItem = React.createClass(
       seatsMap.ZERO.className
 
   handleColorSelect: (color)->
+    section  = @props.item
     PlannerActions.changeSectionColor section.id, color
 
   componentDidMount: ->
