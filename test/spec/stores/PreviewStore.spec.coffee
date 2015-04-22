@@ -5,7 +5,7 @@ PreviewStore   = require '../../../app/scripts/stores/PreviewStore'
 {ActionTypes}  = require '../../../app/scripts/constants/PlannerConstants'
 
 
-fdescribe 'PreviewStore', ->
+describe 'PreviewStore', ->
 
   beforeEach ->
     @assertPreview = (prev, res1, res2, overlap)=>
