@@ -18,7 +18,7 @@ R              = React.DOM
 _utcOffset     = -> ApiUtils.currentSchool().utcOffset
 _sectionEvents = -> SectionStore.sectionEvents()
 _sectionColors = -> ColorStore.colors()
-_previewEvents = -> PreviewStore.previewEvents()
+_previewEvents = -> PreviewStore.allPreviewEvents()
 _events        = -> EventStore.expandedEvents()
 
 
