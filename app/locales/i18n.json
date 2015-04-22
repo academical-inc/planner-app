@@ -41,7 +41,8 @@
     },
     "searchBar": {
       "placeholder": "Search Course Sections...",
-      "filters": "Filters"
+      "filters": "Filters",
+      "corequisites": "Select corequisite"
     },
     "sidebar": {
       "sectionsHeader": "Sections: {{sections}} Credits: {{credits}}",
@@ -117,7 +118,8 @@
     },
     "searchBar": {
       "placeholder": "Busca Secciones...",
-      "filters": "Filtros"
+      "filters": "Filtros",
+      "corequisites": "Seleccionar Complementaria"
     },
     "sidebar": {
       "sectionsHeader": "Secciones: {{sections}} Créditos: {{credits}}",

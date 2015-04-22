@@ -5,9 +5,22 @@
     width: 100%;
   }
 
-  .search-input {
+  .autosuggest-wrapper {
     margin-bottom: 0.3em;
+    position: relative;
+
+    .corequisites {
+      position: absolute;
+      padding: 5px 0;
+      top: 0;
+      text-align: center;
+      background-color: $academical-dark-blue;
+      color: $white;
+      height: 30px;
+      width: 100%;
+    }
   }
+
 
   .filters-toggle {
     color: inherit;
@@ -27,7 +40,7 @@
     content: "\f0d7"; // Caret down icon
   }
 
-  // Typeahead
+  // Autosuggest
   .react-autosuggest {
     $font-size: 18px;
     $border-color: #aaa;
@@ -40,7 +53,7 @@
       max-height: 564px;
       overflow-y: scroll;
       top: 51px;
-      width: 280px;
+      width: 100%;
       margin: 0;
       padding: 0;
       list-style-type: none;
