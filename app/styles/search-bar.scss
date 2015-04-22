@@ -19,6 +19,73 @@
       height: 30px;
       width: 100%;
     }
+
+    .search-icon {
+      position: absolute;
+      top: 5px;
+      left: 190px;
+    }
+
+    .autosuggest-input {
+      padding-right: 25px;
+    }
+
+    // Autosuggest
+    .react-autosuggest {
+      $font-size: 18px;
+      $border-color: #aaa;
+      $border-radius: 4px;
+
+      position: relative;
+
+      &__suggestions {
+        position: absolute;
+        max-height: 564px;
+        overflow-y: scroll;
+        top: 51px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        border: 1px solid $border-color;
+        background-color: #fff;
+        font-size: $font-size;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+        z-index: 2;
+
+        &-section {
+          &:first-child {
+            .react-autosuggest__suggestions-section-name {
+              border-top: 0;
+            }
+          }
+
+          &-name {
+            padding: 10px 0 0 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #777;
+            border-top: 1px dashed #ccc;
+          }
+
+          &-suggestions {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+          }
+        }
+      }
+
+      &__suggestion {
+        cursor: pointer;
+        padding: 10px 20px;
+
+        &--focused {
+          background-color: #ddd;
+        }
+      }
+    }
   }
 
 
@@ -38,63 +105,6 @@
 
   .filters-toggle.collapsed:before {
     content: "\f0d7"; // Caret down icon
-  }
-
-  // Autosuggest
-  .react-autosuggest {
-    $font-size: 18px;
-    $border-color: #aaa;
-    $border-radius: 4px;
-
-    position: relative;
-
-    &__suggestions {
-      position: absolute;
-      max-height: 564px;
-      overflow-y: scroll;
-      top: 51px;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
-      border: 1px solid $border-color;
-      background-color: #fff;
-      font-size: $font-size;
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-      z-index: 2;
-
-      &-section {
-        &:first-child {
-          .react-autosuggest__suggestions-section-name {
-            border-top: 0;
-          }
-        }
-
-        &-name {
-          padding: 10px 0 0 10px;
-          font-size: 12px;
-          text-transform: uppercase;
-          color: #777;
-          border-top: 1px dashed #ccc;
-        }
-
-        &-suggestions {
-          margin: 0;
-          padding: 0;
-          list-style-type: none;
-        }
-      }
-    }
-
-    &__suggestion {
-      cursor: pointer;
-      padding: 10px 20px;
-
-      &--focused {
-        background-color: #ddd;
-      }
-    }
   }
 
 }

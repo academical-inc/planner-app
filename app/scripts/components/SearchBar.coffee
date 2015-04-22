@@ -27,7 +27,9 @@ SearchBar = React.createClass(
     input.trim().length > UiConstants.search.minLen
 
   suggestions: (input, cb)->
-    SearchStore.query input, (suggestions)->
+    @setState searching: true
+    SearchStore.query input, (suggestions)=>
+      @setState searching: false
       cb null, suggestions
 
   suggestionValue: (section)->
@@ -81,12 +83,18 @@ SearchBar = React.createClass(
       @refs.autosuggest.onInputChange target: value: _lastInputVal
 
   render: ->
+    coreqs     = @state.corequisites
+    searchIcon = if @state.searching
+      @renderSpinner className: "search-icon"
+    else
+      @icon "search", className: "search-icon"
+
     R.div className: "pla-search-bar container-fluid",
       R.div className: "autosuggest-wrapper", ref: "autosuggestWrapper",
         Autosuggest
           ref: "autosuggest"
           inputAttributes:
-            className: "autosuggest"
+            className: "autosuggest-input"
             placeholder: @t "searchBar.placeholder"
           showWhen: @showSuggestionsWhen
           suggestions: @suggestions
@@ -95,7 +103,8 @@ SearchBar = React.createClass(
           onSuggestionFocused: @handleSectionFocus
           onSuggestionUnfocused: @handleSectionUnfocus
           onSuggestionSelected: @handleSectionSelect
-        if @state.corequisites
+        searchIcon
+        if coreqs
           R.div className: 'corequisites',
             @t "searchBar.corequisites"
             @icon "times", onClick: @clearCorequisites
