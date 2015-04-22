@@ -40,7 +40,6 @@
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.3",
     "gulp-webserver": "^0.9.0",
-    "humps": "^0.4.2",
     "karma": "^0.12.31",
     "karma-browserify": "^3.0.1",
     "karma-chrome-launcher": "^0.1.7",
@@ -68,7 +67,7 @@
     "mustache": "^1.0.0",
     "page": "^1.6.0",
     "react": "^0.13.1",
-    "react-autosuggest": "^1.9.0",
+    "react-autosuggest": "git://github.com/jstejada/react-autosuggest.git#tmp-dist",
     "react-onclickoutside": "^0.2.3",
     "superagent": "^0.21.0"
   },
