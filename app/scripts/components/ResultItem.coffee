@@ -10,31 +10,33 @@ ResultItem = React.createClass(
 
   mixins: [I18nMixin]
 
+  getDefaultProps: ->
+    query: ""
+
   highlight: (text, query=@props.query)->
     qLen = query.length
-    re   = new RegExp _.escapeRegexCharacters(query), 'gi'
-    idxs = _.findAllRegexMatches re, text
-    cur  = 0
-    args = [null]
+    if qLen > 0
+      re   = new RegExp _.escapeRegexCharacters(query), 'gi'
+      idxs = _.findAllRegexMatches re, text
+      cur  = 0
+      args = [null]
 
-    idxs.forEach (idx)->
-      reg  = text[cur...idx]
-      bold = text[idx...idx+qLen]
-      args.push reg if reg
-      args.push R.strong(null, bold) if bold
-      cur = idx + qLen
+      idxs.forEach (idx)->
+        reg  = text[cur...idx]
+        bold = text[idx...idx+qLen]
+        args.push reg if reg
+        args.push R.strong(null, bold) if bold
+        cur = idx + qLen
 
-    last = text[cur...]
-    args.push last
+      last = text[cur...]
+      args.push last
 
-    R.span.apply null, args
-
-  handleMouseLeave: ->
-    PlannerActions.removeSectionPreview()
+      R.span.apply null, args
+    else
+      R.span null, text
 
   render: ->
     section = @props.section
-    query   = @props.query
 
     teacherNames = if section.teacherNames.length > 0
       section.teacherNames.join ", "
@@ -47,7 +49,6 @@ ResultItem = React.createClass(
 
     R.div
       className: 'pla-result-item'
-      onMouseLeave: @handleMouseLeave
       R.div null,
         @highlight section.sectionId
         R.span null, " "

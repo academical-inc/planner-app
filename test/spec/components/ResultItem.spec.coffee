@@ -38,6 +38,9 @@ describe 'ResultItem', ->
       span = @item.highlight @sec.courseName, "xxxx"
       expect(span.props.children).toEqual @sec.courseName
 
+    it 'highlights nothing when query is empty', ->
+      span = @item.highlight @sec.courseName, ""
+      expect(span.props.children).toEqual @sec.courseName
 
   describe '#render', ->
 
