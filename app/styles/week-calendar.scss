@@ -1,15 +1,9 @@
 
 .pla-week-calendar {
-
   height: 100%;
-  margin: 0px 2%;
-
-  .fc-toolbar {
-    height: 7%;
-  }
 
   .fc-view-container {
-    height: 93%;
+    margin-top: 3%;
     overflow-y: scroll;
   }
 
@@ -17,25 +11,23 @@
     cursor: pointer;
   }
 
+  .fc-content {
+
+    .fc-time,.fc-title {
+      font-size: .75em;
+      font-weight: 600;
+    }
+
+    .fc-time {
+      padding: .2em .5em 0 .5em;
+    }
+    .fc-title {
+      padding: .2em 0 0 .5em;
+    }
+  }
+
   .dirty-event {
-    opacity: 0.7;
-  }
-
-  /* Only small and extra small devices (phones, less than 768px) */
-  @media (max-width: ($screen-md-min - 1)) {
-    .fc-toolbar {
-      padding-left: 46px;
-    }
-  }
-
-  /* Small devices and up (tablets, 768px and up) */
-  @media (min-width: $screen-sm-min) {
-    .fc-toolbar {
-      height: 5%;
-    }
-    .fc-view-containe {
-      height: 95%;
-    }
+    opacity: .7;
   }
 
 }
