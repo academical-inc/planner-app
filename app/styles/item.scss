@@ -6,15 +6,15 @@
 
   .panel-heading {
     width: 100%;
-    padding: 0.45em 0.65em 0.45em 1em;
-    border-left: 0.45em solid #eee;
+    padding: .45em .65em .45em 1em;
+    border-left: .45em solid #eee;
     border-radius: 0;
 
     .panel-title {
       color: $dark;
       font-weight: 300;
-      font-size: 0.9em;
-      padding-top: 0.4em;
+      font-size: .9em;
+      padding-top: .4em;
       width: 75%;
       display: inline-block;
       text-overflow: ellipsis;
@@ -36,7 +36,7 @@
   }
 
   .panel-collapse {
-    border-left: 0.45em solid #eee;
+    border-left: .45em solid #eee;
   }
 
   .popover-content {

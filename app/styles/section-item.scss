@@ -4,10 +4,10 @@
   .label-seats {
     display: inline-block;
     border-radius: 50%;
-    font-size: 0.8em;
+    font-size: .8em;
     font-weight: 500;
     padding: 0;
-    margin-right: 0.7em;
+    margin-right: .7em;
     background: transparent;
     color: $dark;
     border: 1.5px solid;
@@ -40,8 +40,8 @@
 
     .list-group-item {
       font-weight: 600;
-      font-size: 0.75em;
-      padding: 0.3em 1.35em;
+      font-size: .75em;
+      padding: .3em 1.35em;
       border: 0;
       color: $dark;
 
@@ -52,12 +52,12 @@
       }
 
       &:last-child {
-        padding-bottom: 0.9em;
+        padding-bottom: .9em;
       }
     }
 
     .teachers {
-      margin-top: 0.9em;
+      margin-top: .9em;
       font-weight: 700;
     }
 
