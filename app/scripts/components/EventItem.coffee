@@ -19,18 +19,15 @@ EventItem = React.createClass(
     colorStyle     = borderColor: @props.color
 
     R.div className: "pla-event-item pla-item panel panel-default",
-      R.div(
-        {
-          className: "panel-heading"
-          style: colorStyle
-          role: "tab"
-          id: headingId
-        }
+      R.div
+        className: "panel-heading"
+        style: colorStyle
+        role: "tab"
+        id: headingId
         R.h4 className: "panel-title clearfix",
           R.a null, @props.item.name
-          R.span className: "pull-right",
-            @renderSettings()
-      )
+        R.span className: "settings-container",
+          @renderSettings()
 
 )
 
