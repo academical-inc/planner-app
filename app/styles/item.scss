@@ -1,0 +1,45 @@
+
+.pla-item {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+
+  .panel-heading {
+    width: 100%;
+    padding: 0.45em 0.65em 0.45em 1em;
+    border-left: 0.45em solid #eee;
+    border-radius: 0;
+
+    .panel-title {
+      color: $dark;
+      font-weight: 300;
+      font-size: 0.9em;
+      padding-top: 0.4em;
+      width: 75%;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .settings-container {
+      float: right;
+
+      .settings-icon {
+        zoom: 0.75;
+      }
+    }
+  }
+
+  .panel-collapse {
+    border-left: 0.45em solid #eee;
+  }
+
+  .popover-content {
+    padding: 8px 12px;
+  }
+}
