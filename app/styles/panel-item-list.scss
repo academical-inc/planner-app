@@ -3,43 +3,52 @@
   padding-right: 1px;
   margin-top: 20px;
 
-  .list-header {
+  .list-header,.list-subheader {
     text-align: left;
-    margin-left: 5%;
+    margin-left: 7%;
     color: white;
-    font-weight: 200;
-    font-size: 190%;
+    font-weight: 300;
+    font-size: 1.45em;
   }
 
   .list-subheader {
-    text-align: left;
-    margin-left: 5%;
-    color: white;
-    font-weight: 200;
-    font-size: 135%;
+    font-size: 1em;
   }
 
   .panel-group{
-  margin-bottom: 0px;
-  }
+    width: 100%;
+    margin-bottom: 0;
 
-  .panel-collapse {
-    border-left: 7px solid #eee;
+    .pla-item {
+      + .pla-item {
+        margin-top: 0.08em;
+      }
+    }
   }
 
   .add-item-bar {
     text-align: left;
     margin-top: 5%;
-    margin-left: 5%; 
+    margin-left: 5%;
 
-    .btn-info{
+    .btn-circle{
       background-color: white;
       border-color: white;
-      padding: 0px;
+      padding: 0;
+      width: 2em;
+      height: 2em;
+
+      img {
+        zoom: 0.78;
+        vertical-align: baseline;
+      }
     }
 
-    img {
-
+    .add-item-header {
+      font-size: 0.9em;
+      font-weight: 300;
+      color: $white;
+      margin-left: 3%;
     }
   }
 }
