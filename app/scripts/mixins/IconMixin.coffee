@@ -47,7 +47,7 @@ module.exports =
   imgIcon: (src, {className, onClick}={})->
     R.img
       src: src
-      className: imgIconClasses(className) 
+      className: imgIconClasses(className)
       onClick: onClick if onClick?
 
   spinnerMarkup: (opts)->
