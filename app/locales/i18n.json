@@ -40,18 +40,18 @@
       "logout": "Log Out"
     },
     "searchBar": {
-      "placeholder": "Search Course Sections...",
-      "filters": "Filters"
+      "placeholder": "Search Course Sections",
+      "filters": "Filter: "
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
-      "sectionsHeaderInfo": "Sections: {{sections}} Credits: {{credits}}",
+      "sectionsHeaderInfo": "Sections: {{sections}} - Credits: {{credits}}",
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
       },
       "section": {
-        "seats": "{{seats}} seats available",
+        "seats": "Seats: {{seats}}",
         "seatsTT": "Seats available",
         "info": "{{credits}} credits - Section {{number}} - {{id}}",
         "noTeacher": "No teacher assigned yet"
@@ -117,18 +117,18 @@
       "logout": "Salir"
     },
     "searchBar": {
-      "placeholder": "Busca Secciones...",
-      "filters": "Filtros"
+      "placeholder": "Busca Secciones",
+      "filters": "Filtrar: "
     },
     "sidebar": {
       "sectionsHeader": "Mis Cursos",
-      "sectionsHeaderInfo": "Secciones: {{sections}} Créditos: {{credits}}",
+      "sectionsHeaderInfo": "Secciones: {{sections}} - Créditos: {{credits}}",
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"
       },
       "section": {
-        "seats": "{{seats}} cupos disponibles",
+        "seats": "Cupos: {{seats}}",
         "seatsTT": "Cupos disponibles",
         "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
         "noTeacher": "Aún no hay profesor asignado"
