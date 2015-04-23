@@ -42,41 +42,32 @@ SectionItem = React.createClass(
       @props.item.teacherNames.join ", "
 
     R.div className: "pla-section-item pla-item panel panel-default",
-      R.div(
-        {
-          className: "panel-heading"
-          style: colorStyle
-          role: "tab"
-          id: headingId
-        }
-        R.h4(className: "panel-title clearfix",
-          R.a(
-            {
-              className: "collapsed"
-              href: "##{contentId}"
-              "data-toggle": "collapse"
-              "aria-expanded": "false"
-              "aria-controls": contentId
-            },
+      R.div
+        className: "panel-heading"
+        style: colorStyle
+        role: "tab"
+        id: headingId
+        R.h4 className: "panel-title clearfix",
+          R.a
+            className: "collapsed"
+            href: "##{contentId}"
+            "data-toggle": "collapse"
+            "aria-expanded": "false"
+            "aria-controls": contentId
             R.span null, "#{@props.item.courseCode} - "
-            R.strong null, @props.item.courseName
-          )
-          R.span className: "pull-right",
-            R.span
-              className: "label label-seats label-#{seatsClass}"
-              ref: "seatsIndicator"
-              @props.item.seats.available
-            @renderSettings()
-        )
-      ),
-      R.div(
-        {
-          className: "panel-collapse collapse"
-          style: colorStyle
-          role: "tabpanel"
-          id: contentId
-          "aria-labelledby": headingId
-        },
+            R.strong title: @props.item.courseName, @props.item.courseName
+        R.span className: "settings-container",
+          R.span
+            className: "label-seats label-seats-#{seatsClass}"
+            ref: "seatsIndicator"
+            @props.item.seats.available
+          @renderSettings()
+      R.div
+        className: "panel-collapse collapse"
+        style: colorStyle
+        role: "tabpanel"
+        id: contentId
+        "aria-labelledby": headingId
         R.ul className: "list-group",
           R.li className: "list-group-item list-group-item-#{seatsClass} seats",
             @t("sidebar.section.seats", seats: @props.item.seats.available)
@@ -87,7 +78,7 @@ SectionItem = React.createClass(
               number: @props.item.sectionNumber, id: @props.item.sectionId)
           R.li className: "list-group-item clearfix",
             R.span null, "#{@props.item.departments[0].name}"
-      )
+
 )
 
 module.exports = SectionItem
