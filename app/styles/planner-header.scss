@@ -3,22 +3,26 @@
 
   height: 10%;
 
-  .navbar{
+  .navbar {
     border: none;
     padding: 0;
     margin: 0;
     height: 100%;
   }
 
-  .container-fluid{
+  .container-fluid {
     height: 100%;
     padding: 0px;
   }
 
-  .navbar-left{
+  .navbar-left {
     background-color: $academical-blue;
     border-bottom: 1px solid $academical-blue-filter;
     height: 100%;
     width: 25%;
+  }
+
+  .navbar-nav:last-child {
+    float: right;
   }
 }

@@ -40,7 +40,15 @@
     border-left: .45em solid #eee;
   }
 
-  .popover-content {
-    padding: 0.5em 0.7em;
+  .popover {
+    left: 51%;
+
+    div.arrow {
+      left: 87%;
+    }
+
+    .popover-content {
+      padding: 0.5em 0.7em;
+    }
   }
 }
