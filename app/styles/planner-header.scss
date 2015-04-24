@@ -1,17 +1,24 @@
 
 .pla-planner-header {
+
+  height: 10%;
+
   .navbar{
-    padding: 1.3% 0;
-    border-radius: 0px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
   }
+
   .container-fluid{
+    height: 100%;
     padding: 0px;
   }
 
   .navbar-left{
-    a{
-      padding: 0px;
-      margin: 15px;
-    }
+    background-color: $academical-blue;
+    border-bottom: 1px solid $academical-blue-filter;
+    height: 100%;
+    width: 25%;
   }
 }
