@@ -1,46 +1,122 @@
 
 .pla-search-bar {
 
-  margin-top: 12%;
-  margin-bottom: 2%;
+  margin-top: 13%;
+  margin-bottom: 10%;
+  position: relative;
 
-  input[type=text] {
+
+  .search-input {
     background: transparent;
     border: none;
     color: $white;
     font-size: .8em;
+    display: inline-block;
+    width: 70%;
+    vertical-align: sub;
+    padding-right: 2em;
+    padding-bottom: .45em;
+    border-bottom: 1px solid $white;
     &:focus{
       color: $white;
       outline: none
     }
-  }
-
-  .search-input {
-    display: inline-block;
-    width: 70%;
-    vertical-align: sub;
-    span{
-      border-bottom: 1px solid $white;
-    }
-    ::-webkit-input-placeholder {
+    &::-webkit-input-placeholder {
       color: $white;
     }
-    :-moz-placeholder { /* Firefox 18- */
+    &:-moz-placeholder { /* Firefox 18- */
        color: $white;
     }
-    ::-moz-placeholder {  /* Firefox 19+ */
+    &::-moz-placeholder {  /* Firefox 19+ */
        color: $white;
     }
-    :-ms-input-placeholder {
+    &:-ms-input-placeholder {
        color: $white;
+    }
+  }
+
+  .corequisites {
+    position: absolute;
+    padding: 5px 0;
+    top: 0;
+    text-align: center;
+    background-color: $academical-dark-blue;
+    color: $white;
+    height: 30px;
+    width: 100%;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 6px;
+    left: 166px;
+    color: $white;
+  }
+
+  // Autosuggest
+  .react-autosuggest {
+    $font-size: 18px;
+    $border-color: #aaa;
+    $border-radius: 4px;
+
+    position: relative;
+    display: inline;
+
+    &__suggestions {
+      position: absolute;
+      max-height: 564px;
+      overflow-y: scroll;
+      top: 51px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      border: 1px solid $border-color;
+      background-color: #fff;
+      font-size: $font-size;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      z-index: 2;
+
+      &-section {
+        &:first-child {
+          .react-autosuggest__suggestions-section-name {
+            border-top: 0;
+          }
+        }
+
+        &-name {
+          padding: 10px 0 0 10px;
+          font-size: 12px;
+          text-transform: uppercase;
+          color: #777;
+          border-top: 1px dashed #ccc;
+        }
+
+        &-suggestions {
+          margin: 0;
+          padding: 0;
+          list-style-type: none;
+        }
+      }
+    }
+
+    &__suggestion {
+      cursor: pointer;
+      padding: 10px 20px;
+
+      &--focused {
+        background-color: #ddd;
+      }
     }
   }
 
   .search-filters {
     float: right;
     text-align: center;
-    width: 23%;
+    width: 24%;
     height: 2.3em;
+    margin-top: .1em;
     padding-top: .4em;
     background-color: $academical-blue-filter;
     color: $white;
@@ -67,57 +143,6 @@
 
   .filters-toggle.collapsed:after {
     content: "\f0d7"; // Caret down icon
-  }
-
-  .twitter-typeahead {
-    width: 100%;
-  }
-  .twitter-typeahead .tt-query,
-  .twitter-typeahead .tt-hint {
-    margin-bottom: 0;
-  }
-  .tt-hint {
-    display: block;
-    padding-left: 2px;
-    font-size: 14px;
-    line-height: 1.428571429;
-    color: #999;
-    vertical-align: middle;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  }
-  .tt-dropdown-menu {
-    max-height: 550px;
-    overflow-y: scroll;
-    width: 100%;
-    margin-top: 1px;
-    padding: 5px 0;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    background-clip: padding-box;
-  }
-  .tt-suggestion {
-    display: block;
-    padding: 3px 20px;
-  }
-  .tt-suggestion.tt-cursor {
-    color: #fff;
-    background-color: #428bca;
-  }
-  .tt-suggestion.tt-cursor a {
-    color: #fff;
-  }
-  .tt-suggestion p {
-    margin: 0;
   }
 
 }

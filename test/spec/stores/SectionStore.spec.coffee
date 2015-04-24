@@ -19,14 +19,14 @@ describe 'SectionStore', ->
     @currentSchedId = "sch1"
     @sections =
       sch1: [
-        {id: "sec1", credits: 3}
-        {id: "sec2", credits: 2}
-        {id: "sec3", credits: 3}
+        {id: "sec1", credits: 3, corequisites: []}
+        {id: "sec2", credits: 2, corequisites: [{id: "sec3"}]}
+        {id: "sec3", credits: 3, corequisites: [], corequisiteOfId: "sec2"}
       ]
       sch2: [
-        {id: "sec1", credits: 3}
-        {id: "sec5", credits: 1}
-        {id: "sec6", credits: 3}
+        {id: "sec1", credits: 3, corequisites: []}
+        {id: "sec5", credits: 1, corequisites: []}
+        {id: "sec6", credits: 3, corequisites: []}
       ]
     @schedules = [
       {id: @currentSchedId, sections: @sections.sch1}
@@ -155,11 +155,33 @@ describe 'SectionStore', ->
 
     it 'removes specified section', ->
       H.rewire SectionStore,
-        _: @childStoreHelper @sections, @sections.sch1
+        _: @childStoreHelper @sections, @sections.sch1.concat []
       expect(@credits()).toEqual 8
       expect(@count()).toEqual 3
       @payloads.remove.action.sectionId = "sec1"
       @dispatch @payloads.remove
       expect(@credits()).toEqual 5
       expect(@count()).toEqual 2
-      expect(@current()).toEqual [{id: "sec2", credits: 2}, {id: "sec3", credits: 3}]
+      expect(@current()).toEqual [@sections.sch1[1], @sections.sch1[2]]
+
+    it 'removes specified section and any of its corequisites', ->
+      H.rewire SectionStore,
+        _: @childStoreHelper @sections, @sections.sch1.concat []
+      expect(@credits()).toEqual 8
+      expect(@count()).toEqual 3
+      @payloads.remove.action.sectionId = "sec2"
+      @dispatch @payloads.remove
+      expect(@credits()).toEqual 3
+      expect(@count()).toEqual 1
+      expect(@current()).toEqual [@sections.sch1[0]]
+
+    it 'removes specified section and parent of which it is a corequisite of', ->
+      H.rewire SectionStore,
+        _: @childStoreHelper @sections, @sections.sch1.concat []
+      expect(@credits()).toEqual 8
+      expect(@count()).toEqual 3
+      @payloads.remove.action.sectionId = "sec3"
+      @dispatch @payloads.remove
+      expect(@credits()).toEqual 3
+      expect(@count()).toEqual 1
+      expect(@current()).toEqual [@sections.sch1[0]]

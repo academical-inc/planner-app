@@ -10,8 +10,8 @@ _currentSchool         = null
 _hostname              = window.location.hostname
 
 # TODO Implement properly from login
-_currentStudent = id: "54e4f2386d61635e22050000"
-# _currentStudent = id: "54dc48196d616337d5000000"
+_currentStudent = id: "5501ec676d616308f5000000"
+# _currentStudent = id: "552edf8b6d6163c2b1000000"
 
 
 class ApiUtils

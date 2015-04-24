@@ -1,79 +1,123 @@
 
-React                = require 'react'
-Bloodhound           = require 'bloodhound'
-Env                  = require '../Env'
-I18nMixin            = require '../mixins/I18nMixin'
-TypeaheadSectionItem = require './TypeaheadSectionItem'
-R                    = React.DOM
+React          = require 'react'
+I18nMixin      = require '../mixins/I18nMixin'
+IconMixin      = require '../mixins/IconMixin'
+SearchStore    = require '../stores/SearchStore'
+{UiConstants}  = require '../constants/PlannerConstants'
+{PreviewTypes} = require '../constants/PlannerConstants'
+PlannerActions = require '../actions/PlannerActions'
+ResultItem     = React.createFactory require './ResultItem'
+Autosuggest    = React.createFactory require 'react-autosuggest'
+R              = React.DOM
+
+# Private
+_lastInputVal    = ''
+_selectedSection = null
 
 
 SearchBar = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, IconMixin]
 
-  datumTokenizer:(section)->
-    teacherNames = section.teacherNames.map (name)->
-      Bloodhound.tokenizers.whitespace name
+  getInitialState: ->
+    corequisites: false
+    searching: false
 
-    if teacherNames.length > 0
-      teacherNames = teacherNames.reduce (a1, a2) -> a1.concat(a2)
+  showSuggestionsWhen: (input)->
+    input.trim().length > UiConstants.search.minLen
 
-    [].concat(
-      Bloodhound.tokenizers.whitespace section.courseName
-      [section.courseCode]
-      Bloodhound.tokenizers.whitespace section.departments[0].name
-      [section.sectionId]
-      teacherNames
-    )
+  suggestions: (input, cb)->
+    @setState searching: true
+    SearchStore.query input, (suggestions)=>
+      @setState searching: false
+      cb null, suggestions
 
-  dupDetector: (section1, section2)->
-    section1.sectionId == section2.sectionId
+  suggestionValue: (section)->
+    section.courseName
 
-  initSearchEngine: ->
-    engine = new Bloodhound
-      name: 'sections',
-      prefetch:
-        url: Env.SECTIONS_URL
-        ttl: 1
-      limit: 30
-      datumTokenizer: @datumTokenizer
-      dupDetector:    @dupDetector
-      queryTokenizer: Bloodhound.tokenizers.whitespace
+  suggestionRenderer: (section, query)->
+    ResultItem
+      section: section
+      query: query
 
-    engine.initialize()
-    engine.ttAdapter()
+  handleSectionUnfocus: (section)->
+    PlannerActions.removePreview @curPreviewType()
 
-  componentDidMount: ->
-    engine = @initSearchEngine()
-    $(@refs.search.getDOMNode()).typeahead(
-      {hint: true, highlight: true, minLength: 1}
-      {
-        source: engine
-        displayKey: "courseName"
-        templates:
-          suggestion: TypeaheadSectionItem.render
-      }
-    )
+  handleSectionFocus: (section)->
+    PlannerActions.addPreview section, @curPreviewType()
+
+  handleSectionSelect: (section)->
+    if @state.corequisites
+      @handleCorequisiteSelect section
+    else
+      @handleInitialSelect section
+
+  handleInitialSelect: (section)->
+    if section.corequisites.length > 0
+      input = $(@getDOMNode()).find(
+        '.react-autosuggest input'
+      )
+      _lastInputVal = input.val()
+      _selectedSection = section
+      PlannerActions.addPreview section, PreviewTypes.PRIMARY
+      @setState corequisites: true, =>
+        @refs.autosuggest.setSuggestionsState section.corequisites
+    else
+      @addSection section, PreviewTypes.PRIMARY
+
+  handleCorequisiteSelect: (section)->
+    @addSection _selectedSection, PreviewTypes.PRIMARY
+    @addSection section, PreviewTypes.SECONDARY
+    @setState corequisites: false
+
+  curPreviewType: ->
+    if @state.corequisites
+      PreviewTypes.SECONDARY
+    else
+      PreviewTypes.PRIMARY
+
+  addSection: (section, previewType)->
+    PlannerActions.removePreview previewType
+    PlannerActions.addSection section, UiConstants.defaultSectionColor
+
+  clearCorequisites: ->
+    @setState corequisites: false, =>
+      @refs.autosuggest.onInputChange target: value: _lastInputVal
 
   render: ->
-    R.div className: "pla-search-bar container-fluid",
-      R.div className: "search-input",
-        R.input
-          className: "typeahead"
-          ref: "search"
-          type: "text"
-          placeholder: @t("searchBar.placeholder")
+    coreqs     = @state.corequisites
+    searchIcon = if @state.searching
+      @renderSpinner className: "search-icon", ref: "searchIcon"
+    else
+      @icon "search", className: "search-icon", ref: "searchIcon"
+
+    R.div
+      className: "pla-search-bar container-fluid"
+      Autosuggest
+        ref: "autosuggest"
+        inputAttributes:
+          className: "search-input"
+          placeholder: @t "searchBar.placeholder"
+        showWhen: @showSuggestionsWhen
+        suggestions: @suggestions
+        suggestionValue: @suggestionValue
+        suggestionRenderer: @suggestionRenderer
+        onSuggestionFocused: @handleSectionFocus
+        onSuggestionUnfocused: @handleSectionUnfocus
+        onSuggestionSelected: @handleSectionSelect
+      searchIcon
+      if coreqs
+        R.div className: 'corequisites',
+          @t "searchBar.corequisites"
+          @icon "times", onClick: @clearCorequisites
       R.div className: "search-filters",
-        R.a(
-          {
-            className: "filters-toggle collapsed"
-            href: "#filters-body"
-            "data-toggle": "collapse"
-            "aria-expanded": "false"
-            "aria-controls": "filters-body"
-          },
+        R.a
+          className: "filters-toggle collapsed"
+          href: "#filters-body"
+          "data-toggle": "collapse"
+          "aria-expanded": "false"
+          "aria-controls": "filters-body"
           @t "searchBar.filters"
-        )
         R.div className: "collapse", id: "filters-body",
           "Here be the filters"
 

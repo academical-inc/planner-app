@@ -13,6 +13,15 @@ _ = new ChildStoreHelper(ScheduleStore, 'sections')
 wait = ->
   _.wait [SectionColorStore.dispatchToken]
 
+removeSection = (sectionId)->
+  removed = _.removeElement sectionId
+  if removed?
+    if removed.corequisites.length > 0
+      removed.corequisites.forEach (coreq)->
+        _.removeElement coreq.id
+    else if removed.corequisiteOfId
+      _.removeElement removed.corequisiteOfId
+
 class SectionStore extends Store
 
   sections: ->
@@ -54,7 +63,7 @@ class SectionStore extends Store
         _.addElement action.section
         @emitChange()
       when ActionTypes.REMOVE_SECTION
-        _.removeElement action.sectionId
+        removeSection action.sectionId
         @emitChange()
       when ActionTypes.SAVE_SCHEDULE_SUCCESS
         # TODO

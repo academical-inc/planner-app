@@ -50,6 +50,9 @@
         "assets/javascripts/bootstrap/tooltip.js",
         "assets/javascripts/bootstrap/popover.js"
       ]
+    },
+    "typeahead.js": {
+      "main": "dist/bloodhound.js"
     }
   },
   "resolutions": {

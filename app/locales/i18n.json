@@ -41,7 +41,8 @@
     },
     "searchBar": {
       "placeholder": "Search Course Sections",
-      "filters": "Filter: "
+      "filters": "Filter: ",
+      "corequisites": "Select corequisite"
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
@@ -50,13 +51,14 @@
       "item":{
         "delete": "Delete"
       },
-      "section": {
-        "seats": "Seats: {{seats}}",
-        "seatsTT": "Seats available",
-        "info": "{{credits}} credits - Section {{number}} - {{id}}",
-        "noTeacher": "No teacher assigned yet"
-      },
       "createEvent": "Create new event"
+    },
+    "section": {
+      "seats": "Seats: {{seats}}",
+      "seatsTT": "Seats available",
+      "info": "{{credits}} credits - Section {{number}} - {{id}}",
+      "noTeacher": "No teacher assigned yet",
+      "noDepartment": "Unknown department"
     },
     "calendar": {
       "today": "today",
@@ -118,7 +120,8 @@
     },
     "searchBar": {
       "placeholder": "Busca Secciones",
-      "filters": "Filtrar: "
+      "filters": "Filtrar: ",
+      "corequisites": "Seleccionar Complementaria"
     },
     "sidebar": {
       "sectionsHeader": "Mis Cursos",
@@ -127,13 +130,14 @@
       "item":{
         "delete": "Eliminar"
       },
-      "section": {
-        "seats": "Cupos: {{seats}}",
-        "seatsTT": "Cupos disponibles",
-        "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
-        "noTeacher": "Aún no hay profesor asignado"
-      },
       "createEvent": "Crear nuevo evento"
+    },
+    "section": {
+      "seats": "Cupos: {{seats}}",
+      "seatsTT": "Cupos disponibles",
+      "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
+      "noTeacher": "Aún no hay profesor asignado",
+      "noDepartment": "Programa desconocido"
     },
     "calendar": {
       "today": "hoy",
