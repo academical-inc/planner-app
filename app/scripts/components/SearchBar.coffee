@@ -13,6 +13,7 @@ R              = React.DOM
 # Private
 _lastInputVal    = ''
 _selectedSection = null
+_input           = null
 
 
 SearchBar = React.createClass(
@@ -22,6 +23,9 @@ SearchBar = React.createClass(
   getInitialState: ->
     corequisites: false
     searching: false
+    iconPos:
+      top: ".45em"
+      left: "12em"
 
   showSuggestionsWhen: (input)->
     input.trim().length > UiConstants.search.minLen
@@ -54,9 +58,7 @@ SearchBar = React.createClass(
 
   handleInitialSelect: (section)->
     if section.corequisites.length > 0
-      input = $(@getDOMNode()).find(
-        '.react-autosuggest input'
-      )
+      input = @input()
       _lastInputVal = input.val()
       _selectedSection = section
       PlannerActions.addPreview section, PreviewTypes.PRIMARY
@@ -84,12 +86,30 @@ SearchBar = React.createClass(
     @setState corequisites: false, =>
       @refs.autosuggest.onInputChange target: value: _lastInputVal
 
+  input: ->
+    _input ?= $(@getDOMNode()).find('.react-autosuggest input')
+    _input
+
+  componentDidMount: ->
+    input  = @input()
+    pos    = input.position()
+    inputW = input.outerWidth true
+    iconW  = @refs.searchIcon.getDOMNode().offsetWidth
+    @setState iconPos:
+      top: pos.top + 2
+      left: pos.left + inputW
+
   render: ->
     coreqs     = @state.corequisites
+    iconProps  =
+      className: "search-icon"
+      style: @state.iconPos
+      ref: "searchIcon"
     searchIcon = if @state.searching
-      @renderSpinner className: "search-icon", ref: "searchIcon"
+      @renderSpinner iconProps
     else
-      @icon "search", className: "search-icon", ref: "searchIcon"
+      @icon "search", iconProps
+    console.log searchIcon
 
     R.div
       className: "pla-search-bar container-fluid"
