@@ -109,7 +109,6 @@ SearchBar = React.createClass(
       @renderSpinner iconProps
     else
       @icon "search", iconProps
-    console.log searchIcon
 
     R.div
       className: "pla-search-bar container-fluid"
