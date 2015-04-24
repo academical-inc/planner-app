@@ -40,23 +40,25 @@
       "logout": "Log Out"
     },
     "searchBar": {
-      "placeholder": "Search Course Sections...",
-      "filters": "Filters"
+      "placeholder": "Search Course Sections",
+      "filters": "Filter: ",
+      "corequisites": "Select corequisite"
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
-      "sectionsHeaderInfo": "Sections: {{sections}} Credits: {{credits}}",
+      "sectionsHeaderInfo": "Sections: {{sections}} - Credits: {{credits}}",
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
       },
-      "section": {
-        "seats": "{{seats}} seats available",
-        "seatsTT": "Seats available",
-        "info": "{{credits}} credits - Section {{number}} - {{id}}",
-        "noTeacher": "No teacher assigned yet"
-      },
       "createEvent": "Create new event"
+    },
+    "section": {
+      "seats": "Seats: {{seats}}",
+      "seatsTT": "Seats available",
+      "info": "{{credits}} credits - Section {{number}} - {{id}}",
+      "noTeacher": "No teacher assigned yet",
+      "noDepartment": "Unknown department"
     },
     "calendar": {
       "today": "today",
@@ -117,23 +119,25 @@
       "logout": "Salir"
     },
     "searchBar": {
-      "placeholder": "Busca Secciones...",
-      "filters": "Filtros"
+      "placeholder": "Busca Secciones",
+      "filters": "Filtrar: ",
+      "corequisites": "Seleccionar Complementaria"
     },
     "sidebar": {
       "sectionsHeader": "Mis Cursos",
-      "sectionsHeaderInfo": "Secciones: {{sections}} Créditos: {{credits}}",
+      "sectionsHeaderInfo": "Secciones: {{sections}} - Créditos: {{credits}}",
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"
       },
-      "section": {
-        "seats": "{{seats}} cupos disponibles",
-        "seatsTT": "Cupos disponibles",
-        "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
-        "noTeacher": "Aún no hay profesor asignado"
-      },
       "createEvent": "Crear nuevo evento"
+    },
+    "section": {
+      "seats": "Cupos: {{seats}}",
+      "seatsTT": "Cupos disponibles",
+      "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
+      "noTeacher": "Aún no hay profesor asignado",
+      "noDepartment": "Programa desconocido"
     },
     "calendar": {
       "today": "hoy",

@@ -87,14 +87,16 @@ class PlannerActions
       sectionId: sectionId
     @saveSchedule()
 
-  @addSectionPreview: (section)->
+  @addPreview: (section, previewType)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_SECTION_PREVIEW
+      previewType: previewType
       section: section
 
-  @removeSectionPreview: ->
+  @removePreview: (previewType)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.REMOVE_SECTION_PREVIEW
+      previewType: previewType
 
   @openEventForm: (startDt, endDt)->
     PlannerDispatcher.handleViewAction

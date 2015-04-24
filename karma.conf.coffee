@@ -12,9 +12,14 @@ module.exports = (config) ->
     # available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['browserify', 'jasmine-ajax', 'jasmine']
 
+    # Proxy to serve statis assets
+    proxies: {
+      '/images/': 'http://localhost:9876/base/dist/images/'
+    },
 
     # list of files / patterns to load in the browser
     files: [
+      {pattern: 'dist/images/**/*.png', watched: false, included: false, served: true}
       'dist/scripts/vendor.js'
       'test/shims/*.{js,coffee}'
       'test/SpecHelper.coffee'

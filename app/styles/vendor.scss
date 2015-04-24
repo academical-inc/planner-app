@@ -1,7 +1,8 @@
-$icon-font-path:  "bootstrap-sass-official/assets/fonts/";
-$fa-font-path:    "fonts";
-$mm_width:        0.2;
-$mm_maxWidth:     200px;
+$icon-font-path: "bootstrap-sass-official/assets/fonts/";
+$fa-font-path:   "fonts";
+$mm_width:       0.2;
+$mm_maxWidth:    200px;
+$screen-xl-min:  2100px;
 
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 @import "bootstrap-sass-datepicker/sass/datepicker";

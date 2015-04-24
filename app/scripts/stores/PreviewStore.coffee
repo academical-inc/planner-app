@@ -1,14 +1,24 @@
 
-Store         = require './Store'
-SectionStore  = require './SectionStore'
-EventUtils    = require '../utils/EventUtils'
-{ActionTypes} = require '../constants/PlannerConstants'
+Store          = require './Store'
+SectionStore   = require './SectionStore'
+EventUtils     = require '../utils/EventUtils'
+{ActionTypes}  = require '../constants/PlannerConstants'
+{PreviewTypes} = require '../constants/PlannerConstants'
 
 
 # Private
-_preview = null
-_previewEvents = []
-_isOverlapping = false
+class Preview
+  constructor: (@section=null, @events=[])->
+
+_previews = {}
+_previews[PreviewTypes.PRIMARY] = new Preview
+_previews[PreviewTypes.SECONDARY] = new Preview
+
+_primary         = null
+_secondary       = null
+_primaryEvents   = []
+_secondaryEvents = []
+_isOverlapping   = false
 
 areOverlapping = (ev1, ev2)->
   ev1St = Date.parse ev1.startDt
@@ -25,25 +35,36 @@ anyOverlapping = (previewEvents, allSectionEvents)->
         _isOverlapping = true
   previewEvents
 
-addPreview = (section)->
-  _preview = section
-  prevEvents = EventUtils.getSectionEvents [_preview]
+previewEvents = (section)->
+  prevEvents = EventUtils.getSectionEvents [section]
   sectionEvents = SectionStore.sectionEvents()
-  _previewEvents = anyOverlapping prevEvents, sectionEvents
+  anyOverlapping prevEvents, sectionEvents
 
-removePreview = ->
-  _preview = null
-  _previewEvents = []
+addPreview = (previewType, section)->
+  _previews[previewType].section = section
+  _previews[previewType].events  = previewEvents section
+
+removePreview = (previewType)->
+  _previews[previewType] = new Preview
   _isOverlapping = false
 
 
 class PreviewStore extends Store
 
-  preview: ->
-    _preview
+  primary: ->
+    _previews[PreviewTypes.PRIMARY].section
 
-  previewEvents: ->
-    _previewEvents
+  primaryEvents: ->
+    _previews[PreviewTypes.PRIMARY].events
+
+  secondary: ->
+    _previews[PreviewTypes.SECONDARY].section
+
+  secondaryEvents: ->
+    _previews[PreviewTypes.SECONDARY].events
+
+  allPreviewEvents: ->
+    @primaryEvents().concat @secondaryEvents()
 
   isOverlapping: ->
     _isOverlapping
@@ -53,10 +74,10 @@ class PreviewStore extends Store
 
     switch action.type
       when ActionTypes.ADD_SECTION_PREVIEW
-        addPreview action.section
+        addPreview action.previewType, action.section
         @emitChange()
       when ActionTypes.REMOVE_SECTION_PREVIEW
-        removePreview()
+        removePreview action.previewType
         @emitChange()
 
 

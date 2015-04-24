@@ -40,4 +40,7 @@ module.exports =
     "#ef1616"
     "#9fde25"
   ]
+  search:
+    minLen: 1
+    maxResults: 30
 

@@ -1,0 +1,54 @@
+
+.pla-item {
+  width: 100%;
+  border-radius: 0;
+  border: none;
+
+  .panel-heading {
+    width: 100%;
+    padding: .45em .65em .45em 1em;
+    border-left: .45em solid #eee;
+    border-radius: 0;
+    background-color: $white;
+
+    .panel-title {
+      color: $dark;
+      font-weight: 300;
+      font-size: .9em;
+      padding-top: .4em;
+      width: 75%;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .settings-container {
+      float: right;
+
+      .settings-icon img {
+        zoom: .75;
+      }
+    }
+  }
+
+  .panel-collapse {
+    border-left: .45em solid #eee;
+  }
+
+  .popover {
+    left: 51%;
+
+    div.arrow {
+      left: 87%;
+    }
+
+    .popover-content {
+      padding: 0.5em 0.7em;
+    }
+  }
+}

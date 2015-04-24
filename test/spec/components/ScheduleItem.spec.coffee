@@ -32,7 +32,7 @@ describe 'ScheduleItem', ->
 
     it 'renders delete icon when item (schedule) is not for delete', ->
       item = H.render ScheduleItem, @props
-      icon = H.findWithTag item, "i"
+      icon = H.findWithTag item, "img"
 
       expect(item.props.onClick).toEqual @props.onClick
       expect(icon.props.className).toContain "delete"
@@ -45,7 +45,7 @@ describe 'ScheduleItem', ->
 
     it 'calls item delete handler correctly', ->
       item = H.render ScheduleItem, @props
-      icon = H.findWithTag item, "i"
+      icon = H.findWithTag item, "img"
       H.sim.click icon.getDOMNode()
       expect(@deleteHandler).toHaveBeenCalledWith @props.item
       expect(@clickHandler).not.toHaveBeenCalled()

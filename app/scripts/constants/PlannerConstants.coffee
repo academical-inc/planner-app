@@ -32,3 +32,7 @@ module.exports =
     "CHANGE_EVENT_COLOR"
     "CHANGE_WEEK"
   }
+  PreviewTypes: {
+    "PRIMARY"
+    "SECONDARY"
+  }

@@ -15,79 +15,77 @@ SectionItem = React.createClass(
 
   getSeatsColorClass: ->
     seatsMap = UiConstants.sectionSeatsMap
-    if @props.item.seats.available >= seatsMap.UPPER.bound
+    section  = @props.item
+    if section.seats.available >= seatsMap.UPPER.bound
       seatsMap.UPPER.className
-    else if @props.item.seats.available >= seatsMap.LOWER.bound
+    else if section.seats.available >= seatsMap.LOWER.bound
       seatsMap.LOWER.className
     else
       seatsMap.ZERO.className
 
   handleColorSelect: (color)->
-    PlannerActions.changeSectionColor @props.item.id, color
+    section  = @props.item
+    PlannerActions.changeSectionColor section.id, color
 
   componentDidMount: ->
     $(@refs.seatsIndicator.getDOMNode()).tooltip
       placement: "top"
-      title: @t "sidebar.section.seatsTT"
+      title: @t "section.seatsTT"
 
   render: ->
-    headingId      = "section-heading-#{@props.item.id}"
-    contentId      = "section-info-#{@props.item.id}"
-    colorPaletteId = "section-colors-#{@props.item.id}"
+    section        = @props.item
+    headingId      = "section-heading-#{section.id}"
+    contentId      = "section-info-#{section.id}"
+    colorPaletteId = "section-colors-#{section.id}"
     seatsClass     = @getSeatsColorClass()
     colorStyle     = borderColor: @props.color
-    teacherNames   = if @props.item.teacherNames.length == 0
-      @t("sidebar.section.noTeacher")
+    teacherNames   = if section.teacherNames.length > 0
+      section.teacherNames.join ", "
     else
-      @props.item.teacherNames.join ", "
+      @t "section.noTeacher"
+    department = if section.departments.length > 0
+      section.departments[0].name
+    else
+      @t "section.noDepartment"
 
     R.div className: "pla-section-item pla-item panel panel-default",
-      R.div(
-        {
-          className: "panel-heading"
-          style: colorStyle
-          role: "tab"
-          id: headingId
-        }
-        R.h4(className: "panel-title clearfix",
-          R.a(
-            {
-              className: "collapsed"
-              href: "##{contentId}"
-              "data-toggle": "collapse"
-              "aria-expanded": "false"
-              "aria-controls": contentId
-            },
-            R.span null, "#{@props.item.courseCode} - "
-            R.strong null, @props.item.courseName
-          )
-          R.span className: "pull-right",
-            R.span
-              className: "label label-seats label-#{seatsClass}"
-              ref: "seatsIndicator"
-              @props.item.seats.available
-            @renderSettings()
-        )
-      ),
-      R.div(
-        {
-          className: "panel-collapse collapse"
-          style: colorStyle
-          role: "tabpanel"
-          id: contentId
-          "aria-labelledby": headingId
-        },
+      R.div
+        className: "panel-heading"
+        style: colorStyle
+        role: "tab"
+        id: headingId
+        R.h4 className: "panel-title clearfix",
+          R.a
+            className: "collapsed"
+            href: "##{contentId}"
+            "data-toggle": "collapse"
+            "aria-expanded": "false"
+            "aria-controls": contentId
+            R.span null, "#{section.courseCode} - "
+            R.strong title: section.courseName, section.courseName
+        R.span className: "settings-container",
+          R.span
+            className: "label-seats label-seats-#{seatsClass}"
+            ref: "seatsIndicator"
+            section.seats.available
+          @renderSettings()
+      R.div
+        className: "panel-collapse collapse"
+        style: colorStyle
+        role: "tabpanel"
+        id: contentId
+        "aria-labelledby": headingId
         R.ul className: "list-group",
           R.li className: "list-group-item list-group-item-#{seatsClass} seats",
-            @t("sidebar.section.seats", seats: @props.item.seats.available)
+            @t("section.seats", seats: section.seats.available)
           R.li className: "list-group-item teachers",
             teacherNames
           R.li className: "list-group-item",
-            @t("sidebar.section.info", credits: @props.item.credits,\
-              number: @props.item.sectionNumber, id: @props.item.sectionId)
+            @t("section.info", credits: section.credits,\
+              number: section.sectionNumber, id: section.sectionId)
           R.li className: "list-group-item clearfix",
-            R.span null, "#{@props.item.departments[0].name}"
-      )
+            R.span null, department
+
 )
 
 module.exports = SectionItem

@@ -2,11 +2,15 @@
 .pla-item-settings {
 
   .delete-msg {
-    margin-left: 0.4em;
+    margin-left: .4em;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85em;
+    font-weight: normal;
   }
 
   .delete-icon{
-    width: 15%;
+    zoom: 0.85;
+    vertical-align: baseline;
   }
 
   .pla-color-palette {

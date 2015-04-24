@@ -4,17 +4,17 @@
 
   .color-row {
     white-space: nowrap;
+    margin-bottom: -0.15em;
 
     .color {
-      height: 0.9em;
-      width: 0.9em;
+      height: .9em;
+      width: .9em;
       display: inline-block;
-      margin-right: 0.5em;
       cursor: pointer;
       border-radius: 10px;
 
-      &:last-child {
-        margin-right: 0;
+      + .color {
+        margin-left: .5em;
       }
     }
   }
