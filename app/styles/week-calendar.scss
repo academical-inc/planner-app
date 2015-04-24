@@ -1,10 +1,12 @@
 
 .pla-week-calendar {
   height: 100%;
+  max-height: 100%;
+  overflow-y: hidden;
 
   .fc-view-container {
-    margin-top: 3%;
-    overflow-y: scroll;
+    margin-top: 1.5%;
+    max-height: 96%;
   }
 
   .fc-time i {
