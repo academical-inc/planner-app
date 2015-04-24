@@ -28,7 +28,11 @@ PanelItemList = React.createClass(
             className: "btn btn-circle"
             onClick: @props.handleItemAdd
             R.img src: '/images/add_event_icon.png'
-          R.span className: "add-item-header", @t("sidebar.createEvent")
+          R.span
+            className: "add-item-header"
+            onClick: @props.handleItemAdd
+            @t("sidebar.createEvent")
+
 )
 
 module.exports = PanelItemList
