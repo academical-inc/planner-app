@@ -31,6 +31,22 @@
     border-color: $brand-danger;
   }
 
+  .tooltip {
+    opacity: 1;
+  }
+  .tooltip-arrow {
+    border-top-color: $gray-lighter;
+  }
+  .tooltip-inner {
+    background-color: $white;
+    color: $dark;
+    font-size: .8em;
+    white-space: nowrap;
+    border-radius: 1em;
+    border: solid 1px $gray-lighter;
+    padding: 2px 9px;
+  }
+
   .settings-icon img {
     vertical-align: text-bottom;
   }
