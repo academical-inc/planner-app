@@ -43,16 +43,23 @@ module.exports =
     R.i
       className: iconClasses(icon, opts)
       onClick: opts.onClick
+      style: opts.style
+      ref: opts.ref
 
-  imgIcon: (src, {className, onClick}={})->
+  imgIcon: (src, opts={})->
     R.img
       src: src
-      className: imgIconClasses(className)
-      onClick: onClick if onClick?
+      className: imgIconClasses(opts.className)
+      onClick: opts.onClick
+      style: opts.style
+      ref: opts.ref
 
   spinnerMarkup: (opts)->
     "<i class='#{spinnerClasses(opts)}'>"
 
-  renderSpinner: (opts)->
-    R.i className: spinnerClasses opts
+  renderSpinner: (opts={})->
+    R.i
+      className: spinnerClasses(opts)
+      style: opts.style
+      ref: opts.ref
 
