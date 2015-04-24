@@ -30,8 +30,8 @@
     .settings-container {
       float: right;
 
-      .settings-icon {
-        zoom: 0.75;
+      .settings-icon img {
+        zoom: .75;
       }
     }
   }
@@ -41,6 +41,6 @@
   }
 
   .popover-content {
-    padding: 8px 12px;
+    padding: 0.5em 0.7em;
   }
 }

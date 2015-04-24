@@ -31,5 +31,5 @@ module.exports =
         deleteIcon: @renderDeleteIcon()
       placement: 'bottom'
       trigger: 'click'
-      @imgIcon 'images/settings_icon.png',
-        className: "settings-icon"
+      R.span className: 'settings-icon',
+        @imgIcon 'images/settings_icon.png',
