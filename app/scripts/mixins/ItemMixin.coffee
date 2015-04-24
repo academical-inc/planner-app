@@ -28,6 +28,7 @@ module.exports =
     Popover
       content: ItemSettings
         handleColorSelect: @handleColorSelect
+        handleItemDelete: @handleItemDelete
         deleteIcon: @renderDeleteIcon()
       placement: 'bottom'
       trigger: 'click'
