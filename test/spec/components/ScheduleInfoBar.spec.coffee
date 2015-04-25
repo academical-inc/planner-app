@@ -31,8 +31,8 @@ describe 'ScheduleInfoBar', ->
 
       sections = lists[0]
       expect(sections.props.itemType).toEqual sectionItem
-      expect(sections.props.header).toContain data.totalSections
-      expect(sections.props.header).toContain data.totalCredits
+      expect(sections.props.subheader).toContain data.totalSections
+      expect(sections.props.subheader).toContain data.totalCredits
       expect(sections.props.items).toEqual data.sections
       expect(sections.props.colors).toEqual data.sectionColors
 

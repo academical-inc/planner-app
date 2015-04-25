@@ -8,7 +8,7 @@ R              = React.DOM
 PlannerBody = React.createClass(
 
   render: ->
-    R.section className: 'pla-planner-body',
+    R.section className: 'pla-planner-body container-fluid',
       PlannerSideBar({})
       WeekCalendar({})
 

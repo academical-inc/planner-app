@@ -33,7 +33,7 @@ OptionsMenu = React.createClass(
 
   render: ->
     Dropdown(
-      className: 'pla-options-list'
+      className: 'pla-options-menu'
       rootTag: @props.rootTag
       title: @icon "gears"
       itemType: OptionsItem

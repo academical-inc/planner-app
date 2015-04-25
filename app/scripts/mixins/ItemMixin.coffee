@@ -20,16 +20,17 @@ module.exports =
     if @props.item.del is true
       @renderSpinner()
     else
-      @icon "trash-o",
-        fw: false
-        className: "delete-icon"
+      @imgIcon "/images/delete_icon.png",
         onClick: @handleItemDelete
+        className: "delete-icon"
 
   renderSettings: ->
     Popover
       content: ItemSettings
         handleColorSelect: @handleColorSelect
+        handleItemDelete: @handleItemDelete
         deleteIcon: @renderDeleteIcon()
       placement: 'bottom'
       trigger: 'click'
-      @icon 'cog', fw: false
+      R.span className: 'settings-icon',
+        @imgIcon '/images/settings_icon.png',

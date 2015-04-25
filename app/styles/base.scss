@@ -5,26 +5,42 @@ html, body {
 
 /* Space out content a bit */
 body {
-  padding-top: 10px;
+  padding: 0px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
   body {
-      padding-bottom: 20px;
+    font-size: 14px;
   }
 }
 
+@media (min-width: 1300px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1500px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Extra Large devices (desktops, 2100px and up) */
+@media (min-width: $screen-xl-min) {
+  body {
+    font-size: 27px;
+  }
+}
 /* Icons */
 i {
   cursor: pointer;
 }
-i.delete-icon {
-  color: $gray-light;
-
-  &:hover {
-    color: $brand-danger;
-  }
+.img-icon {
+  cursor: pointer;
 }
 
 /* Buttons */

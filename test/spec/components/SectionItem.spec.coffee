@@ -71,6 +71,8 @@ describe 'SectionItem', ->
 
       heading   = H.findWithClass item, "panel-heading"
       trigger   = H.findWithTag heading, "a"
+      code      = trigger.props.children[0]
+      name      = trigger.props.children[1]
       content   = H.findWithClass item, "panel-collapse"
       info_list = H.scryWithClass item, "list-group-item"
       settingsTrigger = H.findWithType item, Popover
@@ -79,8 +81,10 @@ describe 'SectionItem', ->
 
       expect(trigger.props.href).toEqual "##{contentId}"
       expect(trigger.props["data-toggle"]).toEqual "collapse"
-      expect(trigger.props.children).toEqual "#{data.courseCode} -
-        #{data.courseName}"
+      expect(code.type).toEqual "span"
+      expect(code.props.children).toEqual "#{data.courseCode} - "
+      expect(name.type).toEqual "strong"
+      expect(name.props.children).toEqual data.courseName
 
       expect(content.props.id).toEqual contentId
       expect(content.props.style.borderColor).toEqual data.color

@@ -29,7 +29,7 @@ ErrorDialog = React.createClass(
     R.div className: "pla-error-dialog",
       R.div className: "row",
         R.div className: "col-md-4",
-          R.img src: "images/error_icon.png"
+          R.img src: "/images/error_icon.png"
         R.div className: "col-md-8",
           R.h4 null, @t("errors.header")
           if Array.isArray @state.error

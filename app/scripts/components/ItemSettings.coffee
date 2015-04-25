@@ -18,7 +18,10 @@ ItemSettings = React.createClass(
       R.div null,
         R.span null,
           @props.deleteIcon
-          R.span className: "delete-msg", @t("sidebar.item.delete")
+          R.span
+            className: "delete-msg"
+            onClick: @props.handleItemDelete
+            @t("sidebar.item.delete")
 
 )
 

@@ -1,11 +1,13 @@
 
 .pla-planner-body {
   @include make-row();
-
   height: 100%;
+  margin: 0;
+  padding: 0;
 
   .pla-side-bar {
     @include make-md-column(3);
+    padding: 0;
   }
 
   .pla-week-calendar {
@@ -17,7 +19,7 @@
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
   .pla-planner-body {
-    height: 92%;
+    height: 90%;
   }
 }
 

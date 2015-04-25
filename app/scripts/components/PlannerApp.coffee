@@ -1,9 +1,9 @@
 
 React           = require 'react'
-PlannerHeader   = React.createFactory require './PlannerHeader'
 PlannerBody     = React.createFactory require './PlannerBody'
 SlideMenuHandle = React.createFactory require './SlideMenuHandle'
 PlannerModals   = React.createFactory require './PlannerModals'
+PlannerHeader   = React.createFactory require './PlannerHeader'
 R               = React.DOM
 
 PlannerApp = React.createClass(

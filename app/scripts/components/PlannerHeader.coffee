@@ -13,11 +13,12 @@ PlannerHeader = React.createClass(
     R.section className: 'pla-planner-header hidden-xs hidden-sm',
       R.nav className: "navbar navbar-default", role: "navigation",
         R.div className: "container-fluid",
-          LogoBox({})
           R.ul className: "nav navbar-nav navbar-left",
-            ScheduleList rootTag: R.li
-          R.ul className: "nav navbar-nav navbar-right",
+            LogoBox({})
+          R.ul className: "nav navbar-nav",
             OptionsMenu rootTag: R.li
+            ScheduleList rootTag: R.li
+          R.ul className: "nav navbar-nav",
             ProfileBox rootTag: R.li, name: "Juan", url: "//placehold.it/50x50"
 
 )

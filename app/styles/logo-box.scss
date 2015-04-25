@@ -1,10 +1,19 @@
 
 .pla-logo-box {
-  a {
-    background: $academical-blue;
+  height: 100%;
+  width: 100%;
+  white-space: nowrap;
+  text-align: center; margin: 1em 0;
+
+  div {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+
     img {
-      max-width: 100%;
-      max-height: 100%;
+      zoom: 0.75;
+      vertical-align: middle;
     }
   }
 }

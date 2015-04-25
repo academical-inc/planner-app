@@ -13,6 +13,7 @@ R              = React.DOM
 # Private
 _lastInputVal    = ''
 _selectedSection = null
+_input           = null
 
 
 SearchBar = React.createClass(
@@ -22,6 +23,9 @@ SearchBar = React.createClass(
   getInitialState: ->
     corequisites: false
     searching: false
+    iconPos:
+      top: ".45em"
+      left: "12em"
 
   showSuggestionsWhen: (input)->
     input.trim().length > UiConstants.search.minLen
@@ -54,7 +58,7 @@ SearchBar = React.createClass(
 
   handleInitialSelect: (section)->
     if section.corequisites.length > 0
-      input = $(@refs.autosuggestWrapper.getDOMNode()).find('input')
+      input = @input()
       _lastInputVal = input.val()
       _selectedSection = section
       PlannerActions.addPreview section, PreviewTypes.PRIMARY
@@ -82,43 +86,57 @@ SearchBar = React.createClass(
     @setState corequisites: false, =>
       @refs.autosuggest.onInputChange target: value: _lastInputVal
 
+  input: ->
+    _input ?= $(@getDOMNode()).find('.react-autosuggest input')
+    _input
+
+  componentDidMount: ->
+    input  = @input()
+    pos    = input.position()
+    inputW = input.outerWidth true
+    iconW  = @refs.searchIcon.getDOMNode().offsetWidth
+    @setState iconPos:
+      top: pos.top + 2
+      left: pos.left + inputW
+
   render: ->
     coreqs     = @state.corequisites
+    iconProps  =
+      className: "search-icon"
+      style: @state.iconPos
+      ref: "searchIcon"
     searchIcon = if @state.searching
-      @renderSpinner className: "search-icon"
+      @renderSpinner iconProps
     else
-      @icon "search", className: "search-icon"
+      @icon "search", iconProps
 
-    R.div className: "pla-search-bar container-fluid",
-      R.div className: "autosuggest-wrapper", ref: "autosuggestWrapper",
-        Autosuggest
-          ref: "autosuggest"
-          inputAttributes:
-            className: "autosuggest-input"
-            placeholder: @t "searchBar.placeholder"
-          showWhen: @showSuggestionsWhen
-          suggestions: @suggestions
-          suggestionValue: @suggestionValue
-          suggestionRenderer: @suggestionRenderer
-          onSuggestionFocused: @handleSectionFocus
-          onSuggestionUnfocused: @handleSectionUnfocus
-          onSuggestionSelected: @handleSectionSelect
-        searchIcon
-        if coreqs
-          R.div className: 'corequisites',
-            @t "searchBar.corequisites"
-            @icon "times", onClick: @clearCorequisites
+    R.div
+      className: "pla-search-bar container-fluid"
+      Autosuggest
+        ref: "autosuggest"
+        inputAttributes:
+          className: "search-input"
+          placeholder: @t "searchBar.placeholder"
+        showWhen: @showSuggestionsWhen
+        suggestions: @suggestions
+        suggestionValue: @suggestionValue
+        suggestionRenderer: @suggestionRenderer
+        onSuggestionFocused: @handleSectionFocus
+        onSuggestionUnfocused: @handleSectionUnfocus
+        onSuggestionSelected: @handleSectionSelect
+      searchIcon
+      if coreqs
+        R.div className: 'corequisites',
+          @t "searchBar.corequisites"
+          @icon "times", onClick: @clearCorequisites
       R.div className: "search-filters",
-        R.a(
-          {
-            className: "filters-toggle collapsed"
-            href: "#filters-body"
-            "data-toggle": "collapse"
-            "aria-expanded": "false"
-            "aria-controls": "filters-body"
-          },
+        R.a
+          className: "filters-toggle collapsed"
+          href: "#filters-body"
+          "data-toggle": "collapse"
+          "aria-expanded": "false"
+          "aria-controls": "filters-body"
           @t "searchBar.filters"
-        )
         R.div className: "collapse", id: "filters-body",
           "Here be the filters"
 

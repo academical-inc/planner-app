@@ -1,11 +1,13 @@
 
 @import "./vendor";
+@import "./fonts";
 @import "./base";
 @import "./colors";
 
 .pla-content {
 
   height: 100%;
+  padding: 0;
 
   @import "./slide-menu-handle";
   @import "./planner-header";
@@ -25,4 +27,6 @@
   @import "./profile-box";
   @import "./item";
   @import "./item-settings";
+  @import "./options-item";
+  @import "./event-modal";
 }

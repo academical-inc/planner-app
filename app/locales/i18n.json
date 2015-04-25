@@ -40,19 +40,21 @@
       "logout": "Log Out"
     },
     "searchBar": {
-      "placeholder": "Search Course Sections...",
-      "filters": "Filters",
+      "placeholder": "Search Course Sections",
+      "filters": "Filter: ",
       "corequisites": "Select corequisite"
     },
     "sidebar": {
-      "sectionsHeader": "Sections: {{sections}} Credits: {{credits}}",
+      "sectionsHeader": "My Courses",
+      "sectionsHeaderInfo": "Sections: {{sections}} - Credits: {{credits}}",
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
-      }
+      },
+      "createEvent": "Create new event"
     },
     "section": {
-      "seats": "{{seats}} seats available",
+      "seats": "Seats: {{seats}}",
       "seatsTT": "Seats available",
       "info": "{{credits}} credits - Section {{number}} - {{id}}",
       "noTeacher": "No teacher assigned yet",
@@ -117,19 +119,21 @@
       "logout": "Salir"
     },
     "searchBar": {
-      "placeholder": "Busca Secciones...",
-      "filters": "Filtros",
+      "placeholder": "Busca Secciones",
+      "filters": "Filtrar: ",
       "corequisites": "Seleccionar Complementaria"
     },
     "sidebar": {
-      "sectionsHeader": "Secciones: {{sections}} Créditos: {{credits}}",
+      "sectionsHeader": "Mis Cursos",
+      "sectionsHeaderInfo": "Secciones: {{sections}} - Créditos: {{credits}}",
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"
-      }
+      },
+      "createEvent": "Crear nuevo evento"
     },
     "section": {
-      "seats": "{{seats}} cupos disponibles",
+      "seats": "Cupos: {{seats}}",
       "seatsTT": "Cupos disponibles",
       "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
       "noTeacher": "Aún no hay profesor asignado",

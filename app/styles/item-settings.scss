@@ -2,6 +2,18 @@
 .pla-item-settings {
 
   .delete-msg {
-    margin-left: 0.4em;
+    margin-left: .4em;
+    font-size: 0.85em;
+    font-weight: normal;
+    cursor: pointer;
+  }
+
+  .delete-icon{
+    zoom: 0.85;
+    vertical-align: baseline;
+  }
+
+  .pla-color-palette {
+    margin-bottom: 4px;
   }
 }
