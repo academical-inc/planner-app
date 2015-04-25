@@ -22,26 +22,22 @@ datumTokenizer = (section)->
     teacherNames
   )
 
-dupDetector = (section1, section2)->
-  section1.sectionId == section2.sectionId
+identify = (section)->
+  section.id
 
 _engine = new Bloodhound
-  name: 'sections',
   prefetch:
     url: Env.SECTIONS_URL
     ttl: 1
-  limit: UiConstants.search.maxResults
-  dupDetector:    dupDetector
+  identify:    identify
   datumTokenizer: datumTokenizer
   queryTokenizer: Bloodhound.tokenizers.whitespace
-
-_engine.initialize()
 
 
 class SearchStore extends Store
 
   query: (query, cb)->
-    _engine.get query, cb
+    _engine.search query, cb
 
   dispatchCallback: (payload)->
     action = payload.action
