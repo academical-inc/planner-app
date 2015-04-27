@@ -87,7 +87,7 @@ SearchBar = React.createClass(
       @refs.autosuggest.onInputChange target: value: _lastInputVal
 
   input: ->
-    _input ?= $(@getDOMNode()).find('.react-autosuggest input')
+    _input ?= $(React.findDOMNode(@refs.autosuggest.refs.input))
     _input
 
   componentDidMount: ->
