@@ -34,7 +34,7 @@ SearchBar = React.createClass(
 
   suggestions: (input, cb)->
     @setState searching: true
-    SearchStore.query input, (suggestions)=>
+    SearchStore.search input, (suggestions)=>
       @setState searching: false
       cb null, suggestions[...UiConstants.search.maxResults]
 

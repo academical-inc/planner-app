@@ -36,7 +36,7 @@ _engine = new Bloodhound
 
 class SearchStore extends Store
 
-  query: (query, cb)->
+  search: (query, cb)->
     _engine.search query, cb
 
   dispatchCallback: (payload)->
