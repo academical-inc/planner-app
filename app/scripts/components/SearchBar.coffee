@@ -3,6 +3,7 @@ React          = require 'react'
 I18nMixin      = require '../mixins/I18nMixin'
 IconMixin      = require '../mixins/IconMixin'
 SearchStore    = require '../stores/SearchStore'
+PreviewStore   = require '../stores/PreviewStore'
 {UiConstants}  = require '../constants/PlannerConstants'
 {PreviewTypes} = require '../constants/PlannerConstants'
 PlannerActions = require '../actions/PlannerActions'
@@ -11,9 +12,10 @@ Autosuggest    = React.createFactory require 'react-autosuggest'
 R              = React.DOM
 
 # Private
-_lastInputVal    = ''
-_selectedSection = null
-_input           = null
+_lastInputVal   = ''
+_selectedParent = null
+_input          = null
+_isOverlapping  = false
 
 
 SearchBar = React.createClass(
@@ -49,28 +51,32 @@ SearchBar = React.createClass(
 
   handleSectionFocus: (section)->
     PlannerActions.addPreview section, @curPreviewType()
+    _isOverlapping = PreviewStore.isOverlapping()
 
   handleSectionSelect: (section)->
-    if @state.corequisites
-      @handleCorequisiteSelect section
-    else
-      @handleInitialSelect section
-
-  handleInitialSelect: (section)->
     if section.corequisites.length > 0
       input = @input()
       _lastInputVal = input.val()
-      _selectedSection = section
-      PlannerActions.addPreview section, PreviewTypes.PRIMARY
-      @setState corequisites: true, =>
-        @refs.autosuggest.setSuggestionsState section.corequisites
+      _selectedParent = section
+      if not _isOverlapping
+        PlannerActions.addPreview section, PreviewTypes.PRIMARY
+        @setState corequisites: true, =>
+          @refs.autosuggest.setSuggestionsState section.corequisites
     else
       @addSection section, PreviewTypes.PRIMARY
+      @refs.autosuggest.setState value: null
 
   handleCorequisiteSelect: (section)->
-    @addSection _selectedSection, PreviewTypes.PRIMARY
+    @addSection _selectedParent, PreviewTypes.PRIMARY
     @addSection section, PreviewTypes.SECONDARY
-    @setState corequisites: false
+    @setState corequisites: false, =>
+      @refs.autosuggest.setState value: null
+
+  handleSelect: (section)->
+    if @state.corequisites
+      @handleCorequisiteSelect section
+    else
+      @handleSectionSelect section
 
   curPreviewType: ->
     if @state.corequisites
@@ -78,9 +84,12 @@ SearchBar = React.createClass(
     else
       PreviewTypes.PRIMARY
 
+  # TODO Do not close autosuggest if can't add section
   addSection: (section, previewType)->
     PlannerActions.removePreview previewType
-    PlannerActions.addSection section, UiConstants.defaultSectionColor
+    if not _isOverlapping
+      _isOverlapping = false
+      PlannerActions.addSection section, UiConstants.defaultSectionColor
 
   clearCorequisites: ->
     @setState corequisites: false, =>
@@ -123,7 +132,7 @@ SearchBar = React.createClass(
         suggestionRenderer: @suggestionRenderer
         onSuggestionFocused: @handleSectionFocus
         onSuggestionUnfocused: @handleSectionUnfocus
-        onSuggestionSelected: @handleSectionSelect
+        onSuggestionSelected: @handleSelect
       searchIcon
       if coreqs
         R.div className: 'corequisites',
