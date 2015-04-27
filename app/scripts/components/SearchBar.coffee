@@ -99,7 +99,7 @@ SearchBar = React.createClass(
     _input ?= $(React.findDOMNode(@refs.autosuggest.refs.input))
     _input
 
-  componentDidMount: ->
+  setSearchIconPos: ->
     input  = @input()
     pos    = input.position()
     inputW = input.outerWidth true
@@ -107,6 +107,9 @@ SearchBar = React.createClass(
     @setState iconPos:
       top: pos.top + 2
       left: pos.left + inputW
+
+  componentDidMount: ->
+    @setSearchIconPos()
 
   render: ->
     coreqs     = @state.corequisites
