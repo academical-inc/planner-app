@@ -13,12 +13,8 @@ class Preview
 _previews = {}
 _previews[PreviewTypes.PRIMARY] = new Preview
 _previews[PreviewTypes.SECONDARY] = new Preview
-
-_primary         = null
-_secondary       = null
-_primaryEvents   = []
-_secondaryEvents = []
 _isOverlapping   = false
+
 
 areOverlapping = (ev1, ev2)->
   ev1St = Date.parse ev1.startDt
