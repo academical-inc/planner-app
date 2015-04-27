@@ -12,7 +12,7 @@ PlannerApp = React.createClass(
     R.div className: 'pla-content container-fluid',
       SlideMenuHandle({})
       PlannerHeader({})
-      PlannerBody({})
+      PlannerBody ui: @props.ui
       PlannerModals({})
 
 )

@@ -9,7 +9,7 @@ PlannerBody = React.createClass(
 
   render: ->
     R.section className: 'pla-planner-body container-fluid',
-      PlannerSideBar({})
+      PlannerSideBar ui: @props.ui
       WeekCalendar({})
 
 )

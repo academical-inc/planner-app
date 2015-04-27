@@ -8,7 +8,7 @@ PlannerSideBar = React.createClass(
 
   render: ->
     R.div className: 'pla-side-bar hidden-sm hidden-xs',
-      SearchBar({})
+      SearchBar ui: @props.ui
       ScheduleInfoBar({})
 
 )
