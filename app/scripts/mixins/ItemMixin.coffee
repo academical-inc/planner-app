@@ -24,6 +24,12 @@ module.exports =
         onClick: @handleItemDelete
         className: "delete-icon"
 
+  renderSettingsIcon: ->
+    if @props.item.del is true
+      @renderSpinner()
+    else
+      @imgIcon '/images/settings_icon.png',
+
   renderSettings: ->
     Popover
       content: ItemSettings
@@ -33,4 +39,4 @@ module.exports =
       placement: 'bottom'
       trigger: 'click'
       R.span className: 'settings-icon',
-        @imgIcon '/images/settings_icon.png',
+        @renderSettingsIcon()
