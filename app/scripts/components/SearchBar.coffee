@@ -8,6 +8,7 @@ PreviewStore   = require '../stores/PreviewStore'
 {PreviewTypes} = require '../constants/PlannerConstants'
 PlannerActions = require '../actions/PlannerActions'
 ResultItem     = React.createFactory require './ResultItem'
+SearchFilters  = React.createFactory require './SearchFilters'
 Autosuggest    = React.createFactory require 'react-autosuggest'
 R              = React.DOM
 
@@ -141,16 +142,7 @@ SearchBar = React.createClass(
         R.div className: 'corequisites',
           @t "searchBar.corequisites"
           @icon "times", onClick: @clearCorequisites
-      R.div className: "search-filters",
-        R.a
-          className: "filters-toggle collapsed"
-          href: "#filters-body"
-          "data-toggle": "collapse"
-          "aria-expanded": "false"
-          "aria-controls": "filters-body"
-          @t "searchBar.filters"
-        R.div className: "collapse", id: "filters-body",
-          "Here be the filters"
+      SearchFilters ui: @props.ui
 
 )
 
