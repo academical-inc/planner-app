@@ -23,13 +23,14 @@ areOverlapping = (ev1, ev2)->
   ev2En = Date.parse ev2.endDt
   not (ev1St >= ev2En or ev1En <= ev2St)
 
-anyOverlapping = (previewEvents, allSectionEvents)->
-  previewEvents.forEach (prevEv)->
+anyOverlapping = (prevEvents, allSectionEvents)->
+  prevEvents.forEach (prevEv)->
+    prevEv.event.isOverlapping = false
     allSectionEvents.forEach (secEv)->
       if areOverlapping prevEv.event, secEv.event
         prevEv.event.isOverlapping = true
         _isOverlapping = true
-  previewEvents
+  prevEvents
 
 previewEvents = (section)->
   prevEvents = EventUtils.getSectionEvents [section]

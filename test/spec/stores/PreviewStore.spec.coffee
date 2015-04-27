@@ -133,7 +133,7 @@ describe 'PreviewStore', ->
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, undefined, true
+      @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when all preview events overlap', ->
       @previewEvents[0].event.startDt = "2015-01-06T10:00:00-05:00"
@@ -151,7 +151,7 @@ describe 'PreviewStore', ->
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, undefined, true
+      @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when preview event overlaps with end time', ->
       @previewEvents[0].event.startDt = "2015-01-06T11:00:00-05:00"
@@ -159,7 +159,7 @@ describe 'PreviewStore', ->
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, undefined, true
+      @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when preview event overlaps inside', ->
       @previewEvents[0].event.startDt = "2015-01-06T10:10:00-05:00"
@@ -167,7 +167,7 @@ describe 'PreviewStore', ->
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, undefined, true
+      @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when preview event overlaps outside', ->
       @previewEvents[0].event.startDt = "2015-01-06T09:50:00-05:00"
@@ -175,7 +175,7 @@ describe 'PreviewStore', ->
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, undefined, true
+      @assertPreview @primaryPrev, true, false, true
 
 
   describe 'when REMOVE_SECTION_PREVIEW received', ->
