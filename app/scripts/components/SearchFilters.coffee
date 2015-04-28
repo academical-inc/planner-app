@@ -10,7 +10,7 @@ SearchFilters = React.createClass(
   mixins: [I18nMixin]
 
   checkbox: (name, value)->
-    R.div className: "checkbox",
+    R.div className: "checkbox", key: value,
       R.label null,
         R.input type: "checkbox", value: value, name
 

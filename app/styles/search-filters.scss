@@ -2,20 +2,33 @@
 .pla-search-filters {
   background-color: $academical-blue-filter;
   color: $white;
-  padding: 1.3em;
+  padding: 1.3em 2em;
   font-size: .8em;
 
   label {
     font-weight: normal;
   }
 
-  .checkbox {
-    margin-top: 0;
-    margin-bottom: .4em;
-  }
-
   input[type="checkbox"] {
     margin-top: .18em;
   }
+
+  .row+.row {
+    margin-top: 1em;
+  }
+
+  .checkbox {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    + .checkbox {
+      margin-top: .4em;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
 }
 
