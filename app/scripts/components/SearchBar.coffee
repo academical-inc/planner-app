@@ -166,7 +166,7 @@ SearchBar = React.createClass(
           "aria-controls": filtersId
           @t "searchBar.filters"
       R.div null,
-        SearchFilters ui: @props.ui, ref: "filters"
+        SearchFilters filters: @props.ui.searchFilters, ref: "filters"
 
 )
 
