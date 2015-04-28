@@ -1,7 +1,8 @@
 
-React     = require 'react'
-I18nMixin = require '../mixins/I18nMixin'
-R         = React.DOM
+React         = require 'react'
+I18nMixin     = require '../mixins/I18nMixin'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 
 SearchFilters = React.createClass(
@@ -10,17 +11,10 @@ SearchFilters = React.createClass(
 
   render: ->
     ui = @props.ui
+    id = UiConstants.ids.SEARCH_FILTERS
 
-    R.div className: "pla-search-filters",
-      R.a
-        className: "filters-toggle collapsed"
-        href: "#filters-body"
-        "data-toggle": "collapse"
-        "aria-expanded": "false"
-        "aria-controls": "filters-body"
-        @t "searchBar.filters"
-      R.div className: "collapse", id: "filters-body",
-        "Here be the filters"
+    R.div className: "collapse pla-search-filters", id: id,
+      "Here be the filters"
 
 )
 
