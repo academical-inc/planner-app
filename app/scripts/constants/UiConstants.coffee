@@ -3,6 +3,7 @@ ids =
   SCHEDULE_LIST: 'pla-schedule-list'
   EVENT_MODAL: 'pla-event-modal'
   ERROR_MODAL: 'pla-error-modal'
+  SEARCH_FILTERS: 'pla-search-filters'
 
 module.exports =
   media:
@@ -15,6 +16,7 @@ module.exports =
     SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
     EVENT_MODAL: "##{ids.EVENT_MODAL}"
     ERROR_MODAL: "##{ids.ERROR_MODAL}"
+    SEARCH_FILTERS: "##{ids.SEARCH_FILTERS}"
   htmlEntities:
     TIMES: "\u00d7"
   sectionSeatsMap:
