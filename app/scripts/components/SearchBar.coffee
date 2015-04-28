@@ -26,6 +26,7 @@ SearchBar = React.createClass(
   getInitialState: ->
     corequisites: false
     searching: false
+    filtersCollapsed: true
     iconPos:
       top: ".45em"
       left: "12em"
@@ -109,11 +110,25 @@ SearchBar = React.createClass(
       top: pos.top + 2
       left: pos.left + inputW
 
+  initFiltersCollapse: ->
+    filters = $(@refs.filters.getDOMNode())
+    filters.on 'show.bs.collapse', =>
+      @setState filtersCollapsed: false
+    filters.on 'hide.bs.collapse', =>
+      @setState filtersCollapsed: true
+
   componentDidMount: ->
     @setSearchIconPos()
+    @initFiltersCollapse()
 
   render: ->
-    coreqs     = @state.corequisites
+    coreqs          = @state.corequisites
+
+    filtersSelector = UiConstants.selectors.SEARCH_FILTERS
+    filtersId       = UiConstants.ids.SEARCH_FILTERS
+    filtersTrgClass = "search-filters-trigger"
+    filtersTrgClass += " collapsed" if @state.filtersCollapsed
+
     iconProps  =
       className: "search-icon"
       style: @state.iconPos
@@ -142,7 +157,16 @@ SearchBar = React.createClass(
         R.div className: 'corequisites',
           @t "searchBar.corequisites"
           @icon "times", onClick: @clearCorequisites
-      SearchFilters ui: @props.ui
+      R.div className: filtersTrgClass,
+        R.a
+          className: "filters-toggle collapsed"
+          href: filtersSelector
+          "data-toggle": "collapse"
+          "aria-expanded": "false"
+          "aria-controls": filtersId
+          @t "searchBar.filters"
+      R.div null,
+        SearchFilters ui: @props.ui, ref: "filters"
 
 )
 
