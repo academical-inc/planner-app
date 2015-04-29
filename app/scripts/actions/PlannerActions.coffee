@@ -8,6 +8,21 @@ ApiUtils          = require '../utils/ApiUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
 
+# Private
+getSchedules = (action, success, fail)->
+  PlannerDispatcher.handleViewAction
+    type: action
+
+  ApiUtils.getSchedules (err, schedules)->
+    if err?
+      PlannerDispatcher.handleServerAction
+        type: fail
+        error: err
+    else
+      PlannerDispatcher.handleServerAction
+        type: success
+        schedules: schedules
+
 
 class PlannerActions
 
@@ -17,18 +32,18 @@ class PlannerActions
       schedule: schedule
 
   @initSchedules: ->
-    PlannerDispatcher.handleViewAction
-      type: ActionTypes.GET_SCHEDULES
+    getSchedules(
+      ActionTypes.GET_SCHEDULES
+      ActionTypes.GET_SCHEDULES_SUCCESS
+      ActionTypes.GET_SCHEDULES_FAIL
+    )
 
-    ApiUtils.getSchedules (err, schedules)->
-      if err?
-        PlannerDispatcher.handleServerAction
-          type: ActionTypes.GET_SCHEDULES_FAIL
-          error: err
-      else
-        PlannerDispatcher.handleServerAction
-          type: ActionTypes.GET_SCHEDULES_SUCCESS
-          schedules: schedules
+  @updateSchedules: ->
+    getSchedules(
+      ActionTypes.UPDATE_SCHEDULES
+      ActionTypes.UPDATE_SCHEDULES_SUCCESS
+      ActionTypes.UPDATE_SCHEDULES_FAIL
+    )
 
   @createSchedule: (scheduleName, {dispatchInitial}={})->
     dispatchInitial ?= true
