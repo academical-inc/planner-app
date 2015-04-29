@@ -6,6 +6,8 @@ ApiUtils       = require './utils/ApiUtils'
 PlannerActions = require './actions/PlannerActions'
 ErrorPage      = React.createFactory require './components/ErrorPage'
 
+{POLL_INTERVAL} = require './constants/PlannerConstants'
+
 # Initializers
 require './initializers/bootstrap'
 
@@ -22,6 +24,8 @@ Page '/', ->
       )
     else
       PlannerActions.initSchedules()
+      # OK because POLL_INTERVAL will always be sufficiently big
+      setInterval PlannerActions.updateSchedules, POLL_INTERVAL
 
       PlannerApp = React.createFactory require './components/PlannerApp'
       React.render(

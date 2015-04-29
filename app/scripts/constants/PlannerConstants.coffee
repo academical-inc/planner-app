@@ -39,3 +39,4 @@ module.exports =
     "PRIMARY"
     "SECONDARY"
   }
+  POLL_INTERVAL: 120000  # milliseconds
