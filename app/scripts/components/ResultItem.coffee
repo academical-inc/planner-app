@@ -57,6 +57,7 @@ ResultItem = React.createClass(
         @highlight section.courseName
       R.div null,
         @highlight department
+        @t "section.seats", seats: section.seats.available
       R.div null,
         @highlight teacherNames
 
