@@ -22,6 +22,7 @@ removeSection = (sectionId)->
     else if removed.corequisiteOfId
       _.removeElement removed.corequisiteOfId
 
+
 class SectionStore extends Store
 
   sections: ->
@@ -45,6 +46,11 @@ class SectionStore extends Store
         _.setCurrent()
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
+        wait()
+        _.initElementsMap action.schedules
+        _.setCurrent()
+        @emitChange()
+      when ActionTypes.UPDATE_SCHEDULES_SUCCESS
         wait()
         _.initElementsMap action.schedules
         _.setCurrent()
