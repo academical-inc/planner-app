@@ -181,5 +181,9 @@ class PlannerActions
       type: ActionTypes.CHANGE_WEEK
       weekStart: weekStart
 
+  @openSummaryDialog: ->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.OPEN_SUMMARY_DIALOG
+
 
 module.exports = PlannerActions

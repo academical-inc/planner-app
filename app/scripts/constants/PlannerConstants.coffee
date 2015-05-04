@@ -34,6 +34,7 @@ module.exports =
     "REMOVE_EVENT"
     "CHANGE_EVENT_COLOR"
     "CHANGE_WEEK"
+    "OPEN_SUMMARY_DIALOG"
   }
   PreviewTypes: {
     "PRIMARY"
