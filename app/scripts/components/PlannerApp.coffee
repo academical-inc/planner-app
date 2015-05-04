@@ -13,7 +13,7 @@ PlannerApp = React.createClass(
       SlideMenuHandle({})
       PlannerHeader({})
       PlannerBody ui: @props.ui
-      PlannerModals({})
+      PlannerModals ui: @props.ui
 
 )
 
