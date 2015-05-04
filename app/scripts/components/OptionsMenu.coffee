@@ -1,10 +1,11 @@
 
-React       = require 'react'
-I18nMixin   = require '../mixins/I18nMixin'
-IconMixin   = require '../mixins/IconMixin'
-Dropdown    = React.createFactory require './Dropdown'
-OptionsItem = React.createFactory require './OptionsItem'
-R           = React.DOM
+React          = require 'react'
+I18nMixin      = require '../mixins/I18nMixin'
+IconMixin      = require '../mixins/IconMixin'
+PlannerActions = require '../actions/PlannerActions'
+Dropdown       = React.createFactory require './Dropdown'
+OptionsItem    = React.createFactory require './OptionsItem'
+R              = React.DOM
 
 
 OptionsMenu = React.createClass(
@@ -31,6 +32,13 @@ OptionsMenu = React.createClass(
       }
     ]
 
+  openSummary: ->
+    PlannerActions.openSummaryDialog()
+
+  handleItemSelected: (item)->
+    switch item.id
+      when "opt1" then @openSummary()
+
   render: ->
     Dropdown(
       className: 'pla-options-menu'
@@ -38,6 +46,7 @@ OptionsMenu = React.createClass(
       title: @icon "gears"
       itemType: OptionsItem
       items: @getItems()
+      handleItemSelected: @handleItemSelected
     )
 
 )
