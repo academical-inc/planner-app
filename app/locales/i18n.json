@@ -76,6 +76,10 @@
       "defaultUntil": "The end of this school period",
       "or": "or",
       "untilDate": "Pick a date"
+    },
+    "summaryDialog": {
+      "header": "Schedule Summary",
+      "ok": "OK"
     }
   },
   "es": {
@@ -155,6 +159,10 @@
       "defaultUntil": "El final del periodo académico actual",
       "or": "o",
       "untilDate": "Elige una fecha"
+    },
+    "summaryDialog": {
+      "header": "Resumen del Horario",
+      "ok": "OK"
     }
   }
 }
