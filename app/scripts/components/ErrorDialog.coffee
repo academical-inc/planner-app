@@ -1,6 +1,6 @@
 
-React         = require 'react'
 $             = require 'jquery'
+React         = require 'react'
 ModalMixin    = require '../mixins/ModalMixin'
 I18nMixin     = require '../mixins/I18nMixin'
 ErrorStore    = require '../stores/ErrorStore'
