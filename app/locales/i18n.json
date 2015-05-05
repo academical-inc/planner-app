@@ -80,7 +80,8 @@
     "summaryDialog": {
       "header": "Schedule Summary",
       "ok": "OK"
-    }
+    },
+    "empty": "N/A"
   },
   "es": {
     "errors": {
@@ -163,6 +164,7 @@
     "summaryDialog": {
       "header": "Resumen del Horario",
       "ok": "OK"
-    }
+    },
+    "empty": "N/A"
   }
 }

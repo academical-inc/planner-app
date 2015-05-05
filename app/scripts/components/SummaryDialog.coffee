@@ -25,10 +25,10 @@ SummaryDialog = React.createClass(
         R.tr null,
           fields.map (f) -> R.th key: f.name, f.name
       R.tbody null,
-        @state.summary.map (sectionVals)->
-          R.tr null,
-            sectionVals.map (val)->
-              R.td null, val
+        @state.summary.map (sectionVals, i)=>
+          R.tr key: "summ-#{i}",
+            sectionVals.map (val, j)=>
+              R.td key: "summ-#{i}-#{j}", val or @t("empty")
 
 
   render: ->
