@@ -15,7 +15,7 @@ PlannerHeader = React.createClass(
         R.div className: "container-fluid",
           R.ul className: "nav navbar-nav navbar-left",
             LogoBox({})
-          R.ul className: "nav navbar-nav",
+          R.ul className: "nav navbar-nav navbar-dropdowns",
             OptionsMenu rootTag: R.li
             ScheduleList rootTag: R.li
           R.ul className: "nav navbar-nav",

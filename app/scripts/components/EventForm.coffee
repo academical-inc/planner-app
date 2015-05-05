@@ -172,13 +172,13 @@ EventForm = React.createClass(
       val: @state.startTime
       onChange: @handleStartTimeChange
       inputGroup: clockIcon
-      placeholder: "10:00am"
+      placeholder: @t("eventForm.start")
       ref: "startTime"
     endInput = @renderInput endId, @t("eventForm.end"),
       val: @state.endTime
       onChange: @handleEndTimeChange
       inputGroup: clockIcon
-      placeholder: "11:30am"
+      placeholder: @t("eventForm.end")
       ref: "endTime"
     repeatUntil = @renderInput repeatUntilId, @t("eventForm.untilDate"),
       inputGroup: calIcon

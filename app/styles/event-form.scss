@@ -1,6 +1,20 @@
 
 .pla-event-form {
 
+  .form-group {
+    margin-top: 15px;
+    margin-bottom: 0px;
+    input{
+        font-size: 13px;
+    }
+  }
+  .days {
+    label.checkbox-inline {
+      padding-left: 28px;
+    }
+  }
+
+
   .label-font {
     font-size: 15px;
     font-weight: 200;
