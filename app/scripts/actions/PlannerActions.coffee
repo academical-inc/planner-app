@@ -145,8 +145,11 @@ class PlannerActions
       eventId: eventId
     @saveSchedule()
 
-  @saveSchedule: ->
-    schedule = ScheduleStore.current()
+  @saveSchedule: (id)->
+    schedule = if id?
+      ScheduleStore.get id
+    else
+      ScheduleStore.current()
 
     toSave = ApiUtils.data.scheduleToUpdate(
       schedule.name
