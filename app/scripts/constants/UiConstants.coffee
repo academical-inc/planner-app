@@ -28,6 +28,9 @@ module.exports =
   search:
     MIN_LEN: 1
     MAX_RESULTS: 30
+  keys:
+    ENTER: 13
+    ESC: 27
   DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   COLORS: [
     "#2daae1"
