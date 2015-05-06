@@ -117,8 +117,8 @@ WeekCalendar = React.createClass(
       preview:
         events: []
         eventDataTransform: @previewEventDataTransform
-        backgroundColor: UiConstants.defaultSectionColor
-        borderColor: UiConstants.defaultSectionColor
+        backgroundColor: UiConstants.DEFAULT_SECTION_COLOR
+        borderColor: UiConstants.DEFAULT_SECTION_COLOR
       events:
         events: []
         eventDataTransform: @eventDataTransform

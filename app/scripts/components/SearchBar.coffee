@@ -32,13 +32,13 @@ SearchBar = React.createClass(
       left: "12em"
 
   showSuggestionsWhen: (input)->
-    input.trim().length > UiConstants.search.minLen
+    input.trim().length > UiConstants.search.MIN_LEN
 
   suggestions: (input, cb)->
     @setState searching: true
     SearchStore.search input, (suggestions)=>
       @setState searching: false
-      cb null, suggestions[...UiConstants.search.maxResults]
+      cb null, suggestions[...UiConstants.search.MAX_RESULTS]
 
   suggestionValue: (section)->
     section.courseName
@@ -91,7 +91,7 @@ SearchBar = React.createClass(
     PlannerActions.removePreview previewType
     if not _isOverlapping
       _isOverlapping = false
-      PlannerActions.addSection section, UiConstants.defaultSectionColor
+      PlannerActions.addSection section, UiConstants.DEFAULT_SECTION_COLOR
 
   clearCorequisites: ->
     @setState corequisites: false, =>

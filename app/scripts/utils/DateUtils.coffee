@@ -7,10 +7,10 @@ class DateUtils
   # Assumes MO is 1 and SU is 7
 
   @getDayStr: (dayNo)->
-    UiConstants.days[dayNo-1]
+    UiConstants.DAYS[dayNo-1]
 
   @getDayNo: (dayStr)->
-    UiConstants.days.indexOf(dayStr) + 1
+    UiConstants.DAYS.indexOf(dayStr) + 1
 
   @now: ->
     Moment.utc()

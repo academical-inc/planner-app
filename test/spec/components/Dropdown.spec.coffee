@@ -71,7 +71,7 @@ describe 'Dropdown', ->
   describe '#handleInputChange', ->
 
     beforeEach ->
-      @restore = H.rewire Dropdown, MAX_INPUT_LENGTH: 5
+      @restore = H.rewire Dropdown, UiConstants: MAX_SCHEDULE_NAME_LENGTH: 5
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
         items: []

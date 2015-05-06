@@ -106,7 +106,7 @@ EventForm = React.createClass(
       days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
       earliestDay = Math.min @state.checkedDays...
       repUntilVal = @refs.repeatUntil.getDOMNode().value
-      color       = UiConstants.defaultEventColor
+      color       = UiConstants.DEFAULT_EVENT_COLOR
 
       [startDt, endDt] = @getStartEnd startTime, endTime, earliestDay
       repeatUntil = if @state.defUntil is false and repUntilVal

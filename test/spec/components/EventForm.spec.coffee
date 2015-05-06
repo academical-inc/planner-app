@@ -112,7 +112,7 @@ describe "EventForm", ->
     beforeEach ->
       H.rewire EventForm,
         "_.setTimeAndFormat": -> "2015-04-19T10:00-05:00"
-        "UiConstants.defaultEventColor": "red"
+        "UiConstants.DEFAULT_EVENT_COLOR": "red"
       @form = H.render EventForm, initialState: checkedDays: [1], defUntil: true
       @start = Moment.utc()
       @end   = Moment(@start).hours(@start.hours()+1)
@@ -232,7 +232,7 @@ describe "EventForm", ->
       @expected = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
       @restore = H.rewire EventForm,\
         UiConstants:
-          days: @days
+          DAYS: @days
           ids: EVENT_MODAL: "modal-id"
           selectors: EVENT_MODAL: "#modal-id"
 

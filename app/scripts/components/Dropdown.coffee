@@ -8,8 +8,6 @@ FormMixin     = require '../mixins/FormMixin'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
-MAX_INPUT_LENGTH = UiConstants.dropdown.MAX_INPUT_LENGTH
-
 
 Dropdown = React.createClass(
 
@@ -46,7 +44,7 @@ Dropdown = React.createClass(
 
   handleInputChange: (e)->
     val = @refs.itemName.getDOMNode().value.trim()
-    if val.length >= MAX_INPUT_LENGTH
+    if val.length >= UiConstants.MAX_SCHEDULE_NAME_LENGTH
       @setState buttonDisabled: true
     else
       @setState buttonDisabled: false

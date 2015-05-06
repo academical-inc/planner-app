@@ -9,7 +9,7 @@ describe "DateUtils", ->
   beforeEach ->
     @restore = H.rewire DateUtils,\
       UiConstants:
-        days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+        DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     @utils = DateUtils
 
   afterEach ->
