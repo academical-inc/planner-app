@@ -113,12 +113,6 @@ class PlannerActions
       type: ActionTypes.REMOVE_SECTION_PREVIEW
       previewType: previewType
 
-  @openEventForm: (startDt, endDt)->
-    PlannerDispatcher.handleViewAction
-      type: ActionTypes.OPEN_EVENT_FORM
-      startDt: startDt
-      endDt: endDt
-
   @addEvent: (name, startDt, endDt, days, repeatUntil, color)->
     event = ApiUtils.data.newEvent name, startDt, endDt, days,
       repeatUntil: repeatUntil
@@ -180,6 +174,12 @@ class PlannerActions
     PlannerDispatcher.handleViewAction
       type: ActionTypes.CHANGE_WEEK
       weekStart: weekStart
+
+  @openEventForm: (startDt, endDt)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.OPEN_EVENT_FORM
+      startDt: startDt
+      endDt: endDt
 
   @openSummaryDialog: ->
     PlannerDispatcher.handleViewAction
