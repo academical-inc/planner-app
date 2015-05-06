@@ -26,7 +26,6 @@
     },
     "options": {
       "summary": "Summary",
-      "changeName": "Change name",
       "duplicate": "Duplicate",
       "share": "Share your schedule",
       "calendar": "Calendar",
@@ -113,7 +112,6 @@
     },
     "options": {
       "summary": "Resumen",
-      "changeName": "Cambiar nombre",
       "duplicate": "Duplicar",
       "share": "Comparte tu horario",
       "calendar": "Calendario",

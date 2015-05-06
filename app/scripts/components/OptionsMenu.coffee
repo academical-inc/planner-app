@@ -18,16 +18,15 @@ OptionsMenu = React.createClass(
         header: "General:"
         items: [
           {id: "opt1", val: @t("options.summary"), icon: @icon "book"}
-          {id: "opt2", val: @t("options.changeName"), icon: @icon "pencil"}
-          {id: "opt3", val: @t("options.duplicate"), icon: @icon "copy"}
-          {id: "opt4", val: @t("options.share"), icon: @icon "share-alt"}
+          {id: "opt2", val: @t("options.duplicate"), icon: @icon "copy"}
+          {id: "opt3", val: @t("options.share"), icon: @icon "share-alt"}
         ]
       }
       {
         header: "Export:"
         items: [
-          {id: "opt5", val: @t("options.calendar"), icon: @icon "calendar"}
-          {id: "opt6", val: @t("options.image"), icon: @icon "camera-retro"}
+          {id: "opt4", val: @t("options.calendar"), icon: @icon "calendar"}
+          {id: "opt5", val: @t("options.image"), icon: @icon "camera-retro"}
         ]
       }
     ]
