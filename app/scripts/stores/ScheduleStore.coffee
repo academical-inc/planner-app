@@ -97,6 +97,10 @@ createSchedule = ->
   newSchedule = PlannerActions.createSchedule name, dispatchInitial: false
   addSchedule newSchedule
 
+updateScheduleName = (id, name)->
+  schedule = _.find _schedules, (el)-> el.id is id
+  schedule.name = name
+
 
 class ScheduleStore extends Store
 
@@ -105,6 +109,9 @@ class ScheduleStore extends Store
 
   current: ->
     _current
+
+  get: (id)->
+    _.find _schedules, (el)-> el.id is id
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -134,6 +141,9 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         initSchedules action.schedules
+        @emitChange()
+      when ActionTypes.UPDATE_SCHEDULE_NAME
+        updateScheduleName action.scheduleId, action.name
         @emitChange()
 
 
