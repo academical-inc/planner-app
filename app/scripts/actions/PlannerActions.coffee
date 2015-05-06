@@ -82,6 +82,13 @@ class PlannerActions
           type: ActionTypes.DELETE_SCHEDULE_SUCCESS
           scheduleId: scheduleId
 
+  @updateScheduleName: (scheduleId, name)->
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.UPDATE_SCHEDULE_NAME
+      scheduleId: scheduleId
+      name: name
+    @saveSchedule scheduleId
+
   @addSection: (section, color)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_SECTION
