@@ -25,10 +25,10 @@ describe 'ScheduleItem', ->
     it 'renders spinner when item (schedule) is for delete', ->
       @props.item.del = true
       item = H.render ScheduleItem, @props
-      icon = H.findWithTag item, "i"
+      icon = H.findWithClass item, "fa-spinner"
 
+      expect(H.scryWithClass(item, "delete-icon")).toEqual []
       expect(item.props.onClick).toEqual @props.onClick
-      expect(icon.props.className).toContain "spinner"
 
     it 'renders delete icon when item (schedule) is not for delete', ->
       item = H.render ScheduleItem, @props

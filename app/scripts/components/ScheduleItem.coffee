@@ -7,6 +7,7 @@ PlannerActions = require '../actions/PlannerActions'
 R              = React.DOM
 
 
+# TODO Tests
 ScheduleItem = React.createClass(
 
   mixins: [ItemMixin, IconMixin]
