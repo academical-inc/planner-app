@@ -10,6 +10,7 @@ _ = new ChildStoreHelper(ScheduleStore, 'sectionColors')
 
 
 # TODO revisit this design
+# TODO Tests
 class SectionColorStore extends Store
 
   colors: ->

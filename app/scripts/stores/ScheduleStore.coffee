@@ -142,6 +142,7 @@ class ScheduleStore extends Store
       when ActionTypes.GET_SCHEDULES_SUCCESS
         initSchedules action.schedules
         @emitChange()
+      #TODO Tests
       when ActionTypes.UPDATE_SCHEDULE_NAME
         updateScheduleName action.scheduleId, action.name
         @emitChange()

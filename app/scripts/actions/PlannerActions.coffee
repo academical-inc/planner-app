@@ -24,6 +24,7 @@ getSchedules = (action, success, fail)->
         schedules: schedules
 
 
+# TODO Tests
 class PlannerActions
 
   @openSchedule: (schedule)->

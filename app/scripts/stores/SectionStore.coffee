@@ -50,6 +50,7 @@ class SectionStore extends Store
         _.initElementsMap action.schedules
         _.setCurrent()
         @emitChange()
+      # TODO Tests
       when ActionTypes.UPDATE_SCHEDULES_SUCCESS
         wait()
         _.initElementsMap action.schedules

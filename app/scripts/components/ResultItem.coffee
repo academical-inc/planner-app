@@ -35,6 +35,7 @@ ResultItem = React.createClass(
     else
       R.span null, text
 
+  # TODO Tests
   render: ->
     section = @props.section
 

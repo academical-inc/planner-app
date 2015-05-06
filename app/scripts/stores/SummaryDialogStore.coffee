@@ -13,6 +13,7 @@ fields = ->
     Humps.camelize f.field
 
 
+# TODO Tests
 class SummaryDialogStore extends Store
 
   summary: ->

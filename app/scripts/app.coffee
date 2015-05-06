@@ -24,6 +24,7 @@ Page '/', ->
       )
     else
       PlannerActions.initSchedules()
+      # TODO Tests
       # OK because POLL_INTERVAL will always be sufficiently big
       setInterval PlannerActions.updateSchedules, POLL_INTERVAL
 

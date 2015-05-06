@@ -8,6 +8,7 @@ SummaryDialogStore = require '../stores/SummaryDialogStore'
 R                  = React.DOM
 
 
+# TODO Tests
 SummaryDialog = React.createClass(
 
   mixins: [I18nMixin, ModalMixin, StoreMixin(SummaryDialogStore)]

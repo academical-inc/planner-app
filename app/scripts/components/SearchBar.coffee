@@ -19,6 +19,7 @@ _input          = null
 _isOverlapping  = false
 
 
+# TODO Tests
 SearchBar = React.createClass(
 
   mixins: [I18nMixin, IconMixin]
