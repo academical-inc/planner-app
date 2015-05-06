@@ -30,14 +30,13 @@ SummaryDialog = React.createClass(
             sectionVals.map (val, j)=>
               R.td key: "summ-#{i}-#{j}", val or @t("empty")
 
-
   render: ->
     fields = @props.fields
     @renderModal(
       UiConstants.ids.SUMMARY_MODAL
       @t "summaryDialog.header"
       @renderBody fields
-      accept: text: @t "summaryDialog.ok"
+      accept: text: @t "dialogs.ok"
       cancel: show: false
     )
 

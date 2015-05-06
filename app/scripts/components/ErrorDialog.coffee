@@ -44,7 +44,7 @@ ErrorDialog = React.createClass(
       @t "errorDialog.header"
       @renderBody()
       accept: show: false
-      cancel: text: @t "errorDialog.ok"
+      cancel: text: @t "dialogs.ok"
     )
 
 )

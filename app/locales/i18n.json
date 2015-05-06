@@ -16,10 +16,6 @@
         "{{errMsg}}"
       ]
     },
-    "errorDialog": {
-      "header": "Error!",
-      "ok": "OK"
-    },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
       "addBtn": "Add"
@@ -77,9 +73,16 @@
       "or": "or",
       "untilDate": "Pick a date"
     },
+    "dialogs": {
+      "ok": "OK",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
     "summaryDialog": {
       "header": "Schedule Summary",
-      "ok": "OK"
+    },
+    "errorDialog": {
+      "header": "Error!",
     },
     "empty": "N/A"
   },
@@ -99,10 +102,6 @@
         "Por favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje:",
         "{{errMsg}}"
       ]
-    },
-    "errorDialog": {
-      "header": "Error!",
-      "ok": "OK"
     },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
@@ -161,9 +160,16 @@
       "or": "o",
       "untilDate": "Elige una fecha"
     },
+    "dialogs": {
+      "ok": "OK",
+      "save": "Guardar",
+      "cancel": "Cancelar"
+    },
     "summaryDialog": {
       "header": "Resumen del Horario",
-      "ok": "OK"
+    },
+    "errorDialog": {
+      "header": "Error!",
     },
     "empty": "N/A"
   }
