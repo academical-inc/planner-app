@@ -1,5 +1,5 @@
 
-$             = require 'jquery'
+_             = require '../utils/HelperUtils'
 Humps         = require 'humps'
 Store         = require './Store'
 SectionStore  = require './SectionStore'
@@ -22,10 +22,8 @@ class SummaryDialogStore extends Store
 
     sections.map (section)->
       fds.map (f)->
-        val = section
-        f.split(".").forEach (part)->
-          val = val[part]
-        if $.isArray val
+        val = _.getNested section, f
+        if Array.isArray val
           val.join ", "
         else
           val
