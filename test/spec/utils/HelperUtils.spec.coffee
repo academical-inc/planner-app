@@ -96,6 +96,69 @@ describe 'HelperUtils', ->
       expect(@arr).toEqual ["some", 34, 5, {thing: "5"}, 34]
 
 
+  describe '.getNested', ->
+
+    beforeEach ->
+      @obj = k: {k1: 1, j: {k3: 3}}, k2: 2
+
+    it 'gets value for nested key', ->
+      expect(_.getNested(@obj, "k.k1")).toEqual 1
+      expect(_.getNested(@obj, "k.j.k3")).toEqual 3
+
+    fit 'gets value for normal key', ->
+      expect(_.getNested(@obj, "k2")).toEqual 2
+
+    it 'returns null if key not found', ->
+      expect(_.getNested(@obj, "k.k2")).toBe null
+      expect(_.getNested(@obj, "k3")).toBe null
+
+
+  describe '.objFilter', ->
+
+    beforeEach ->
+      @obj = k1: 1, k3: 3
+
+    it 'filters keys in obj when keys to filter is array', ->
+      keys = ["k1", "k2"]
+      expect(_.objFilter(@obj, keys)).toEqual k1: 1
+
+    it 'filters obj correctly when keys to filter is object', ->
+      keys = k1: null, k2: null
+      expect(_.objFilter(@obj, keys)).toEqual k1: 1
+
+    it 'filters correctly when test function provided', ->
+      keys = ["k1", "k3"]
+      test = (val)-> val == 1
+      expect(_.objFilter(@obj, keys, test)).toEqual k1: 1
+
+    describe 'when defaults present', ->
+
+      it 'filters object correctly when defaults are values', ->
+        keys = k1: null, k2: 2
+        expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: 2
+
+      it 'filters object correctly when defaults are functions', ->
+        keys = k1: null, k2: -> 2
+        expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: 2
+
+      it 'filters object correctly when defaults are overrided', ->
+        @obj.k2 = "new val"
+        keys = k1: null, k2: 2
+        expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: "new val"
+
+      it 'filters object correctly when test func also provided', ->
+        @obj.k4 = 4
+        keys = k1: null, k2: 2, k4: null
+        test = (val)-> val == 1
+        expect(_.objFilter(@obj, keys, test)).toEqual k1: 1, k2: 2
+
+      it 'filters object correctly when test func also provided and def overrided', ->
+        @obj.k2 = 1
+        keys = k1: null, k2: 2
+        test = (val)-> val == 1
+        expect(_.objFilter(@obj, keys, test)).toEqual k1: 1, k2: 1
+
+
   describe '.findAllRegexMatches', ->
 
     beforeEach ->

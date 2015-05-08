@@ -24,6 +24,26 @@ class HelperUtils
     @removeAt arr, idx
     el
 
+  @getNested: (obj, key)->
+    val = obj
+    key.split(".").forEach (part)->
+      val = val[part]
+    val
+
+  @objFilter: (obj, keys, test=->true)->
+    keyList  = if Array.isArray(keys) then keys else Object.keys(keys)
+    filtered = {}
+
+    for key in keyList
+      if obj.hasOwnProperty(key) and test(obj[key])
+        filtered[key] = obj[key]
+      else if keys[key]?
+        filtered[key] = if typeof keys[key] == 'function'
+          keys[key]()
+        else
+          keys[key]
+    filtered
+
   # https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/
   # Regular_Expressions#Using_Special_Characters
   @escapeRegexCharacters: (str)->
