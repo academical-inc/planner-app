@@ -44,13 +44,16 @@ class HelperUtils
     filtered = {}
 
     for key in keyList
-      if obj.hasOwnProperty(key) and test(obj[key])
-        filtered[key] = obj[key]
-      else if keys[key]?
-        filtered[key] = if typeof keys[key] == 'function'
-          keys[key]()
+      val    = @getNested obj, key
+      defVal = keys[key]
+      if val? and test(val)
+        @setNested filtered, key, val
+      else if defVal?
+        defVal = if typeof defVal == 'function'
+          defVal obj
         else
-          keys[key]
+          defVal
+        @setNested filtered, key, defVal
     filtered
 
   # https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/

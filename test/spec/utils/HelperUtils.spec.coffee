@@ -133,7 +133,7 @@ describe 'HelperUtils', ->
     beforeEach ->
       @obj = k1: 1, k3: 3
 
-    it 'filters keys in obj when keys to filter is array', ->
+    it 'filters obj correctly when keys to filter is array', ->
       keys = ["k1", "k2"]
       expect(_.objFilter(@obj, keys)).toEqual k1: 1
 
@@ -141,33 +141,46 @@ describe 'HelperUtils', ->
       keys = k1: null, k2: null
       expect(_.objFilter(@obj, keys)).toEqual k1: 1
 
-    it 'filters correctly when test function provided', ->
+    it 'filters obj correctly when keys are nested', ->
+      @obj.k1 = {k4: 4, k5: 5}
+      @obj.k2 = 2
+      keys = ["k1.k4", "k2"]
+      expect(_.objFilter(@obj, keys)).toEqual k1: {k4: 4}, k2: 2
+
+    it 'filters obj correctly when test function provided', ->
       keys = ["k1", "k3"]
       test = (val)-> val == 1
       expect(_.objFilter(@obj, keys, test)).toEqual k1: 1
 
     describe 'when defaults present', ->
 
-      it 'filters object correctly when defaults are values', ->
+      it 'filters obj correctly when defaults are values', ->
         keys = k1: null, k2: 2
         expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: 2
 
-      it 'filters object correctly when defaults are functions', ->
-        keys = k1: null, k2: -> 2
+      it 'filters obj correctly when defaults are functions', ->
+        defFunc = H.spy "defFunc", retVal: 2
+        keys = k1: null, k2: defFunc
         expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: 2
+        expect(defFunc).toHaveBeenCalledWith @obj
 
-      it 'filters object correctly when defaults are overrided', ->
+      it 'filters obj correctly when nested defaults', ->
+        @obj.kN = {kN1: "n1", kN2: "n2"}
+        keys = k1: null, "kN.kN1": "defN1", "kN.kN3": "defN3"
+        expect(_.objFilter(@obj, keys)).toEqual k1: 1, kN: {kN1: "n1", kN3: "defN3"}
+
+      it 'filters obj correctly when defaults are overrided', ->
         @obj.k2 = "new val"
         keys = k1: null, k2: 2
         expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: "new val"
 
-      it 'filters object correctly when test func also provided', ->
+      it 'filters obj correctly when test func also provided', ->
         @obj.k4 = 4
         keys = k1: null, k2: 2, k4: null
         test = (val)-> val == 1
         expect(_.objFilter(@obj, keys, test)).toEqual k1: 1, k2: 2
 
-      it 'filters object correctly when test func also provided and def overrided', ->
+      it 'filters obj correctly when test func also provided and def overrided', ->
         @obj.k2 = 1
         keys = k1: null, k2: 2
         test = (val)-> val == 1
