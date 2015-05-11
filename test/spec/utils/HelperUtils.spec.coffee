@@ -105,10 +105,11 @@ describe 'HelperUtils', ->
       expect(_.getNested(@obj, "k.k1")).toEqual 1
       expect(_.getNested(@obj, "k.j.k3")).toEqual 3
 
-    fit 'gets value for normal key', ->
+    it 'gets value for normal key', ->
       expect(_.getNested(@obj, "k2")).toEqual 2
 
     it 'returns null if key not found', ->
+      expect(_.getNested(@obj, "k.k2.k5")).toBe null
       expect(_.getNested(@obj, "k.k2")).toBe null
       expect(_.getNested(@obj, "k3")).toBe null
 

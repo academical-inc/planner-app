@@ -26,7 +26,8 @@ class HelperUtils
 
   @getNested: (obj, key)->
     val = obj
-    key.split(".").forEach (part)->
+    for part in key.split(".")
+      return null if not val[part]
       val = val[part]
     val
 
