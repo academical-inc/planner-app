@@ -31,6 +31,14 @@ class HelperUtils
       val = val[part]
     val
 
+  @setNested: (obj, key, val)->
+    parts = key.split(".")
+    last  = parts[parts.length-1]
+    parts[...-1].forEach (part)->
+      obj[part] = {} if not obj[part]?
+      obj = obj[part]
+    obj[last] = val
+
   @objFilter: (obj, keys, test=->true)->
     keyList  = if Array.isArray(keys) then keys else Object.keys(keys)
     filtered = {}

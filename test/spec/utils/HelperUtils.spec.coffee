@@ -114,6 +114,20 @@ describe 'HelperUtils', ->
       expect(_.getNested(@obj, "k3")).toBe null
 
 
+  describe '.setNested', ->
+
+    beforeEach ->
+      @obj = k: {k1: 1, j: {k3: 3}}, k2: 2
+
+    it 'should set value when key exists', ->
+      _.setNested @obj, "k.k1", 100
+      expect(_.getNested(@obj, "k.k1")).toEqual 100
+
+    it 'should set value when key does not exist', ->
+      _.setNested @obj, "k.k4.k5", 100
+      expect(_.getNested(@obj, "k.k4.k5")).toEqual 100
+
+
   describe '.objFilter', ->
 
     beforeEach ->
