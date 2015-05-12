@@ -86,7 +86,7 @@ EventForm = React.createClass(
   handleDatepickerShow: (dp, e)->
     earliestDay = Math.min @state.checkedDays...
     [startDt, endDt] = @getStartEnd '12:00am', '12:00am', earliestDay
-    dp.datepicker 'setStartDate', _.parse(startDt).toDate()
+    dp.datepicker 'setStartDate', _.date(startDt).toDate()
 
   handleStartTimeChange: (e)->
     @setState startTime: e.target.value
