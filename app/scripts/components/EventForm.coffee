@@ -17,21 +17,27 @@ R                = React.DOM
 # Private
 _ = $.extend true, {}, HelperUtils, DateUtils
 _utcOffset = -> ApiUtils.currentSchool().utcOffset
+_term      = -> ApiUtils.currentSchool().terms[0]
 
 
 EventForm = React.createClass(
 
   mixins: [I18nMixin, ModalMixin, FormMixin, IconMixin]
 
+  # TODO Test
   getState: ->
-    [startDt, endDt] = EventFormStore.getStartEnd()
-    date = startDt or endDt or _.now()
     # Transform momentjs SU as 0 to 7
-    day = if date.day() == 0 then 7 else date.day()
+    [startDt, endDt] = EventFormStore.getStartEnd()
+    date     = startDt or endDt or _.now()
+    day      = if date.day() == 0 then 7 else date.day()
+    defUntil = CurrentWeekStore.weekDate().isBefore(
+      _.utcFromStr _term().endDate
+    )
     checkedDays: [day]
     startTime: _.getTimeStr startDt if startDt?
     endTime: _.getTimeStr endDt if endDt?
-    defUntil: true
+    defUntil: defUntil
+    defDisabled: not defUntil
 
   getInitialState: ->
     @props.initialState or @getState()
@@ -57,6 +63,7 @@ EventForm = React.createClass(
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange
+    dp     = $(@refs.repeatUntil.getDOMNode())
     tpOpts =
       step: 15
       selectOnBlur: true
@@ -69,11 +76,17 @@ EventForm = React.createClass(
 
     $(@refs.startTime.getDOMNode()).timepicker tpOpts
     $(@refs.endTime.getDOMNode()).timepicker tpOpts
-    $(@refs.repeatUntil.getDOMNode()).datepicker dpOpts
+    dp.datepicker(dpOpts).on 'show', @handleDatepickerShow.bind @, dp
     return
 
   componentWillUnmount: ->
     EventFormStore.removeChangeListener @onChange
+
+  # TODO Test
+  handleDatepickerShow: (dp, e)->
+    earliestDay = Math.min @state.checkedDays...
+    [startDt, endDt] = @getStartEnd '12:00am', '12:00am', earliestDay
+    dp.datepicker 'setStartDate', _.parse(startDt).toDate()
 
   handleStartTimeChange: (e)->
     @setState startTime: e.target.value
@@ -217,8 +230,9 @@ EventForm = React.createClass(
               R.input
                 type: "checkbox",
                 checked: @state.defUntil
+                disabled: @state.defDisabled
                 onChange: @handleDefUntilChecked
-              @t("eventForm.defaultUntil")
+              "#{@t('eventForm.defaultUntil')} (#{_term().endDate})"
           R.div className: "col-md-2 col-vertical-align",
             R.label null, "-- #{@t('eventForm.or')} --"
           R.div className: "col-md-5 col-vertical-align repeat-until",

@@ -17,6 +17,7 @@ describe "EventForm", ->
       EventFormStore: @store
       PlannerActions: @actions
       _utcOffset: -> -240
+      _term: -> endDate: "2015-05-31"
 
   afterEach ->
     @global()
@@ -25,6 +26,8 @@ describe "EventForm", ->
 
     beforeEach ->
       [@mock$, @mock$El] = H.mock$()
+      @mockOn = H.spy 'mockOn'
+      @mock$El.datepicker.and.returnValue on: @mockOn
       @restore = H.rewire EventForm, $: @mock$
       @form = H.render EventForm, initialState: checkedDays: [1]
 
@@ -41,6 +44,7 @@ describe "EventForm", ->
       @form = H.render EventForm, initialState: checkedDays: [1]
       expect(@mock$).toHaveBeenCalledWith @form.refs.repeatUntil.getDOMNode()
       expect(@mock$El.datepicker).toHaveBeenCalled()
+      expect(@mockOn).toHaveBeenCalled()
 
     it 'should subscribe to store', ->
       expect(@store.addChangeListener).toHaveBeenCalledWith @form.onChange
