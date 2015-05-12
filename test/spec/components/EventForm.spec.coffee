@@ -96,15 +96,19 @@ describe "EventForm", ->
       sd = Moment.utc [2015, 2, 17, 10, 0]  # Tuesday
       ed = Moment.utc [2015, 2, 17, 15, 15]
       [resStart, resEnd] = @form.getStartEnd(@st, @et, 2)
-      assertDates resStart,-240, sd
-      assertDates resEnd, -240, ed
+      expect(resStart).toEqual '2015-03-17T10:00:00-04:00'
+      expect(resEnd).toEqual '2015-03-17T15:15:00-04:00'
+      assertDates Moment.parseZone(resStart),-240, sd
+      assertDates Moment.parseZone(resEnd), -240, ed
 
     it 'computes correctly when day is sunday', ->
       sd = Moment.utc [2015, 2, 22, 10, 0]  # Sunday
       ed = Moment.utc [2015, 2, 22, 15, 15]
       [resStart, resEnd] = @form.getStartEnd(@st, @et, 7)
-      assertDates resStart,-240, sd
-      assertDates resEnd, -240, ed
+      expect(resStart).toEqual '2015-03-22T10:00:00-04:00'
+      expect(resEnd).toEqual '2015-03-22T15:15:00-04:00'
+      assertDates Moment.parseZone(resStart),-240, sd
+      assertDates Moment.parseZone(resEnd), -240, ed
 
 
   describe "#handleSubmit", ->

@@ -45,7 +45,7 @@ EventForm = React.createClass(
     date = _.setWeek date, CurrentWeekStore.week()
     date = _.setDay date, day
     date = _.inUtcOffset date, _utcOffset()
-    date
+    _.format date
 
   getStartEnd: (startTime, endTime, day)->
     startDt = @buildDate startTime, day
@@ -117,6 +117,7 @@ EventForm = React.createClass(
 
       # Clean up inputs
       @clearFields()
+      @refs.repeatUntil.getDOMNode().value = ''
       @setState @getState()
       # Close
       @hide()
