@@ -25,17 +25,17 @@ removeSection = (sectionId)->
 
 class SectionStore extends Store
 
-  sections: ->
-    _.currentElements
+  sections: (id)->
+    _.currentElementsOr id
 
-  sectionEvents: ->
-    EventUtils.getSectionEvents _.currentElements
+  sectionEvents: (id)->
+    EventUtils.getSectionEvents @sections(id)
 
-  credits: ->
-    _.currentElements.reduce ((acum, section)-> acum + section.credits), 0.0
+  credits: (id)->
+    @sections(id).reduce ((acum, section)-> acum + section.credits), 0.0
 
-  count: ->
-    _.currentElements.length
+  count: (id)->
+    @sections(id).length
 
   dispatchCallback: (payload)=>
     action = payload.action

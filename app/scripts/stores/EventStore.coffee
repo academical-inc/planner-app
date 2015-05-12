@@ -71,17 +71,17 @@ changeColor = (eventId, color)->
 
 class EventStore extends Store
 
-  events: ->
-    _.currentElements
+  events: (id)->
+    _.currentElementsOr id
 
-  eventsExceptDirtyAdded: ->
-    HelperUtils.filter _.currentElements, (ev)-> not(ev.dirtyAdd is true)
+  eventsExceptDirtyAdded: (id)->
+    HelperUtils.filter @events(id), (ev)-> not(ev.dirtyAdd is true)
 
-  eventsExceptDeleted: ->
-    HelperUtils.filter _.currentElements, (ev)-> not(ev.del is true)
+  eventsExceptDeleted: (id)->
+    HelperUtils.filter @events(id), (ev)-> not(ev.del is true)
 
-  expandedEvents: ->
-    EventUtils.getScheduleEvents _.currentElements
+  expandedEvents: (id)->
+    EventUtils.getScheduleEvents @events(id)
 
   dispatchCallback: (payload)=>
     action = payload.action

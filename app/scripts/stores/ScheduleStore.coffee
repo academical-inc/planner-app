@@ -107,11 +107,11 @@ class ScheduleStore extends Store
   all: ->
     _schedules
 
-  current: ->
-    _current
-
-  get: (id)->
-    _.find _schedules, (el)-> el.id is id
+  current: (id)->
+    if id?
+      _.find _schedules, (el)-> el.id is id
+    else
+      _current
 
   dispatchCallback: (payload)=>
     action = payload.action

@@ -40,6 +40,12 @@ class ChildStoreHelper
   elementsFor: (scheduleId)->
     @elementsMap[scheduleId]
 
+  currentElementsOr: (id)->
+    if id?
+      @elementsFor id
+    else
+      @currentElements
+
   wait: (stores=[])->
     PlannerDispatcher.waitFor [@store.dispatchToken].concat stores
 
