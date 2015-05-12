@@ -40,6 +40,9 @@ EventForm = React.createClass(
     @setState @getState()
     @show()
 
+  onShown: ->
+    @refs.name.getDOMNode().focus()
+
   buildDate: (time, day)->
     date = _.getUtcTimeFromStr time
     date = _.setWeek date, CurrentWeekStore.week()
@@ -187,7 +190,8 @@ EventForm = React.createClass(
       ref: 'repeatUntil'
 
     R.form className: formId, role: "form", id: formId, onSubmit: @handleSubmit,
-      @renderInput nameId, @t("eventForm.name"), ref: "name",\
+      @renderInput nameId, @t("eventForm.name"),
+        ref: "name"
         placeholder: @t("eventForm.namePlaceholder")
       R.div className: "row",
         R.div className: "col-md-6", startInput

@@ -50,6 +50,9 @@ module.exports =
   hide: ->
     $(@getDOMNode()).modal "hide"
 
+  componentDidMount: ->
+    $(@getDOMNode()).on 'shown.bs.modal', @onShown if @onShown?
+
   renderModal: (modalId, header, body, buttons)->
     buttons = @renderButtons buttons
     labelId = "#{@props.id}-label"
