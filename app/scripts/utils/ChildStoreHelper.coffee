@@ -12,7 +12,7 @@ class ChildStoreHelper
       @updateSchedule schedule
 
   setCurrent: (scheduleId=@store.current().id)->
-    @currentElements = @elementsMap[scheduleId]
+    @currentElements = @elementsFor scheduleId
 
   addSchedule: (scheduleId, emptyEls=[])->
     @elementsMap[scheduleId] = emptyEls
