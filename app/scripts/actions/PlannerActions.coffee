@@ -1,10 +1,8 @@
 
 $                 = require 'jquery'
-ScheduleStore     = require '../stores/ScheduleStore'
-SectionStore      = require '../stores/SectionStore'
-ColorStore        = require '../stores/SectionColorStore'
-EventStore        = require '../stores/EventStore'
 ApiUtils          = require '../utils/ApiUtils'
+ScheduleFactory   = require '../factories/ScheduleFactory'
+EventFactory      = require '../factories/EventFactory'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
 
@@ -49,7 +47,7 @@ class PlannerActions
   @createSchedule: (scheduleName, {dispatchInitial}={})->
     dispatchInitial ?= true
 
-    newSchedule = ApiUtils.data.newSchedule scheduleName
+    newSchedule = ScheduleFactory.create name: scheduleName
     if dispatchInitial
       PlannerDispatcher.handleViewAction
         type: ActionTypes.CREATE_SCHEDULE
@@ -90,6 +88,23 @@ class PlannerActions
       name: name
     @saveSchedule scheduleId
 
+  @saveSchedule: (id)->
+    toSave = ScheduleFactory.buildCurrent id
+    PlannerDispatcher.handleViewAction
+      type: ActionTypes.SAVE_SCHEDULE
+      schedule: toSave
+
+    ApiUtils.saveSchedule toSave.id, toSave, (err, saved)->
+      if err?
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.SAVE_SCHEDULE_FAIL
+          scheduleId: toSave.id
+          error: err
+      else
+        PlannerDispatcher.handleServerAction
+          type: ActionTypes.SAVE_SCHEDULE_SUCCESS
+          schedule: saved
+
   @addSection: (section, color)->
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_SECTION
@@ -122,9 +137,14 @@ class PlannerActions
       previewType: previewType
 
   @addEvent: (name, startDt, endDt, days, repeatUntil, color)->
-    event = ApiUtils.data.newEvent name, startDt, endDt, days,
-      repeatUntil: repeatUntil
+    event = EventFactory.create
+      name: name
+      startDt: startDt
+      endDt: endDt
       color: color
+      recurrence:
+        daysOfWeek: days
+        repeatUntil: repeatUntil
     PlannerDispatcher.handleViewAction
       type: ActionTypes.ADD_EVENT
       event: event
@@ -152,34 +172,6 @@ class PlannerActions
       type: ActionTypes.REMOVE_EVENT
       eventId: eventId
     @saveSchedule()
-
-  @saveSchedule: (id)->
-    schedule = if id?
-      ScheduleStore.get id
-    else
-      ScheduleStore.current()
-
-    toSave = ApiUtils.data.scheduleToUpdate(
-      schedule.name
-      SectionStore.credits()
-      SectionStore.sections().concat []           # Make a copy
-      EventStore.eventsExceptDeleted().concat []  # Make a copy
-      $.extend {}, ColorStore.colors()
-    )
-    PlannerDispatcher.handleViewAction
-      type: ActionTypes.SAVE_SCHEDULE
-      schedule: toSave
-
-    ApiUtils.saveSchedule schedule.id, toSave, (err, saved)->
-      if err?
-        PlannerDispatcher.handleServerAction
-          type: ActionTypes.SAVE_SCHEDULE_FAIL
-          scheduleId: schedule.id
-          error: err
-      else
-        PlannerDispatcher.handleServerAction
-          type: ActionTypes.SAVE_SCHEDULE_SUCCESS
-          schedule: saved
 
   @changeWeek: (weekStart)->
     PlannerDispatcher.handleViewAction
