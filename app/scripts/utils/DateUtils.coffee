@@ -4,8 +4,9 @@ Moment        = require 'moment'
 
 class DateUtils
 
-  # Assumes MO is 1 and SU is 7
+  @parse: Moment.parseZone
 
+  # Assumes MO is 1 and SU is 7
   @getDayStr: (dayNo)->
     UiConstants.DAYS[dayNo-1]
 
