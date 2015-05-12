@@ -16,6 +16,7 @@ ApiUtils.init()
 
 
 Page '/', ->
+  # TODO init this as an action. School and User stores
   ApiUtils.initSchool (err, school)->
     if err?
       React.render(
