@@ -58,8 +58,8 @@ describe 'SectionStore', ->
 
     @dispatch = SectionStore.dispatchCallback
     @current  = SectionStore.sections
-    @credits  = SectionStore.credits
-    @count    = SectionStore.count
+    @credits  = SectionStore.credits.bind SectionStore
+    @count    = SectionStore.count.bind SectionStore
     @childStoreHelper = childStoreHelper.bind null, @currentSchedId
     H.spyOn SectionStore, "emitChange"
     @restore = H.rewire SectionStore,
