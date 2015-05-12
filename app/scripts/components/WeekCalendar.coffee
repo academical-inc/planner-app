@@ -156,7 +156,7 @@ WeekCalendar = React.createClass(
     jqElement
 
   render: ->
-    R.div className: 'pla-week-calendar'
+    R.div className: 'pla-week-calendar', id: UiConstants.ids.WEEK_CALENDAR
 
 )
 

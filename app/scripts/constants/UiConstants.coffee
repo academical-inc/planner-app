@@ -2,6 +2,7 @@
 ids =
   SCHEDULE_LIST: 'pla-schedule-list'
   SEARCH_FILTERS: 'pla-search-filters'
+  WEEK_CALENDAR: 'pla-week-calendar'
   EVENT_MODAL: 'pla-event-modal'
   SUMMARY_MODAL: 'pla-summary-modal'
   ERROR_MODAL: 'pla-error-modal'
@@ -16,6 +17,7 @@ module.exports =
   selectors:
     SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
     SEARCH_FILTERS: "##{ids.SEARCH_FILTERS}"
+    WEEK_CALENDAR: "##{ids.WEEK_CALENDAR}"
     EVENT_MODAL: "##{ids.EVENT_MODAL}"
     SUMMARY_MODAL: "##{ids.SUMMARY_MODAL}"
     ERROR_MODAL: "##{ids.ERROR_MODAL}"
