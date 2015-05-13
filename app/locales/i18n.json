@@ -78,12 +78,13 @@
       "cancel": "Cancel"
     },
     "summaryDialog": {
-      "header": "Schedule Summary",
+      "header": "Schedule Summary"
     },
     "errorDialog": {
-      "header": "Error!",
+      "header": "Error!"
     },
-    "empty": "N/A"
+    "empty": "N/A",
+    "copyOf": "Copy of {{name}}"
   },
   "es": {
     "errors": {
@@ -164,11 +165,12 @@
       "cancel": "Cancelar"
     },
     "summaryDialog": {
-      "header": "Resumen del Horario",
+      "header": "Resumen del Horario"
     },
     "errorDialog": {
-      "header": "Error!",
+      "header": "Error!"
     },
-    "empty": "N/A"
+    "empty": "N/A",
+    "copyOf": "Copia de {{name}}"
   }
 }
