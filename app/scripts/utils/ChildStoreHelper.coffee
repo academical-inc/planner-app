@@ -14,9 +14,6 @@ class ChildStoreHelper
   setCurrent: (scheduleId=@store.current().id)->
     @currentElements = @elementsFor scheduleId
 
-  addSchedule: (scheduleId, emptyEls=[])->
-    @elementsMap[scheduleId] = emptyEls
-
   updateSchedule: (schedule)->
     @setElements schedule.id, schedule[@collection]
 
@@ -34,8 +31,8 @@ class ChildStoreHelper
   findElement: (elementId)->
     _.findWithIdx @currentElements, (el)-> el.id == elementId
 
-  setElements: (scheduleId, elements)->
-    @elementsMap[scheduleId] = elements or []
+  setElements: (scheduleId, elements=[])->
+    @elementsMap[scheduleId] = elements
 
   elementsFor: (scheduleId)->
     @elementsMap[scheduleId]

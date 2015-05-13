@@ -58,7 +58,7 @@ class SectionStore extends Store
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         wait()
-        _.addSchedule action.schedule.id
+        _.updateSchedule action.schedule
         _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS

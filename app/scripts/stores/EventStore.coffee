@@ -97,7 +97,7 @@ class EventStore extends Store
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _.wait()
-        _.addSchedule action.schedule.id
+        _.updateSchedule action.schedule
         _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS

@@ -29,7 +29,7 @@ class SectionColorStore extends Store
         _.setCurrent()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _.wait()
-        _.addSchedule action.schedule.id, {}
+        _.updateSchedule action.schedule
         _.setCurrent()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         _.wait()
