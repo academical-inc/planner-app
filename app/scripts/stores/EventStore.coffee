@@ -5,7 +5,6 @@ ScheduleStore    = require './ScheduleStore'
 ChildStoreHelper = require '../utils/ChildStoreHelper'
 ApiUtils         = require '../utils/ApiUtils'
 EventUtils       = require '../utils/EventUtils'
-HelperUtils      = require '../utils/HelperUtils'
 DateUtils        = require '../utils/DateUtils'
 {ActionTypes}    = require '../constants/PlannerConstants'
 
@@ -17,7 +16,7 @@ _toRevert  = {}
 
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
-  events = HelperUtils.filter events, (ev)-> not(ev.dirtyAdd is true)
+  events = events.filter (ev)-> not(ev.dirtyAdd is true)
   events = events.map (ev)->
     delete ev.del if ev.del is true
     if ev.dirtyUpdate is true
@@ -75,10 +74,10 @@ class EventStore extends Store
     _.currentElementsOr id
 
   eventsExceptDirtyAdded: (id)->
-    HelperUtils.filter @events(id), (ev)-> not(ev.dirtyAdd is true)
+    @events(id).filter (ev)-> not(ev.dirtyAdd is true)
 
   eventsExceptDeleted: (id)->
-    HelperUtils.filter @events(id), (ev)-> not(ev.del is true)
+    @events(id).filter (ev)-> not(ev.del is true)
 
   expandedEvents: (id)->
     EventUtils.getScheduleEvents @events(id)

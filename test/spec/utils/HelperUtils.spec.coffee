@@ -45,27 +45,6 @@ describe 'HelperUtils', ->
       expect(res).toBeNull()
       expect(idx).toBeNull()
 
-
-  describe '.filter', ->
-
-    beforeEach ->
-      @arr = [34, 2, 2, {data: 5}, {data: 6}, {data: 5}]
-
-    it 'finds all elements that match test function', ->
-      res = _.filter @arr, (datum)-> datum is 2
-      expect(res).toEqual [2, 2]
-      res = _.filter @arr, (datum)-> datum.data is 5
-      expect(res).toEqual [{data: 5}, {data: 5}]
-
-    it 'returns empty array if no values found', ->
-      res = _.filter @arr, (datum)-> datum is "poof"
-      expect(res).toEqual []
-
-    it 'returns empty array if array is empty', ->
-      res = _.filter [], (datum)-> datum is 5
-      expect(res).toEqual []
-
-
   describe '.removeAt', ->
 
     it 'removes element at specified index and modifies original array', ->
