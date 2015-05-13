@@ -1,6 +1,7 @@
 
 $                 = require 'jquery'
 ApiUtils          = require '../utils/ApiUtils'
+I18n              = require '../utils/I18n'
 ScheduleFactory   = require '../factories/ScheduleFactory'
 EventFactory      = require '../factories/EventFactory'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
@@ -20,6 +21,24 @@ getSchedules = (action, success, fail)->
       PlannerDispatcher.handleServerAction
         type: success
         schedules: schedules
+
+createSchedule = (newSchedule, dispatchInitial, action, success, fail)->
+  if dispatchInitial
+    PlannerDispatcher.handleViewAction
+      type: action
+      schedule: $.extend(true, {}, newSchedule)
+
+  ApiUtils.createSchedule newSchedule, (err, schedule)->
+    if err?
+      PlannerDispatcher.handleServerAction
+        type: fail
+        schedule: newSchedule
+        error: err
+    else
+      PlannerDispatcher.handleServerAction
+        type: success
+        schedule: schedule
+  newSchedule
 
 
 # TODO Tests
@@ -46,24 +65,25 @@ class PlannerActions
 
   @createSchedule: (scheduleName, {dispatchInitial}={})->
     dispatchInitial ?= true
-
     newSchedule = ScheduleFactory.create name: scheduleName
-    if dispatchInitial
-      PlannerDispatcher.handleViewAction
-        type: ActionTypes.CREATE_SCHEDULE
-        schedule: $.extend(true, {}, newSchedule)
+    createSchedule(
+      newSchedule
+      dispatchInitial
+      ActionTypes.CREATE_SCHEDULE
+      ActionTypes.CREATE_SCHEDULE_SUCCESS
+      ActionTypes.CREATE_SCHEDULE_FAIL
+    )
 
-    ApiUtils.createSchedule newSchedule, (err, schedule)->
-      if err?
-        PlannerDispatcher.handleServerAction
-          type: ActionTypes.CREATE_SCHEDULE_FAIL
-          schedule: newSchedule
-          error: err
-      else
-        PlannerDispatcher.handleServerAction
-          type: ActionTypes.CREATE_SCHEDULE_SUCCESS
-          schedule: schedule
-    newSchedule
+  @duplicateSchedule: ->
+    newSchedule = ScheduleFactory.buildCurrent exclude: ['id']
+    newSchedule.name = I18n.t "copyOf", name: newSchedule.name
+    createSchedule(
+      newSchedule
+      true
+      ActionTypes.CREATE_SCHEDULE
+      ActionTypes.CREATE_SCHEDULE_SUCCESS
+      ActionTypes.CREATE_SCHEDULE_FAIL
+    )
 
   @deleteSchedule: (scheduleId)->
     PlannerDispatcher.handleViewAction
@@ -89,7 +109,7 @@ class PlannerActions
     @saveSchedule scheduleId
 
   @saveSchedule: (id)->
-    toSave = ScheduleFactory.buildCurrent id
+    toSave = ScheduleFactory.buildCurrent id: id
     PlannerDispatcher.handleViewAction
       type: ActionTypes.SAVE_SCHEDULE
       schedule: toSave
