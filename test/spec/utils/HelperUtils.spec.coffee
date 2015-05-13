@@ -112,65 +112,52 @@ describe 'HelperUtils', ->
       _.setNested @obj, "k.k4.k5", 100
       expect(_.getNested(@obj, "k.k4.k5")).toEqual 100
 
-
-  describe '.objFilter', ->
+  describe '.objInclude', ->
 
     beforeEach ->
       @obj = k1: 1, k3: 3
 
-    it 'filters obj correctly when keys to filter is array', ->
+    it 'filters obj correctly when keys to include is array', ->
       keys = ["k1", "k2"]
-      expect(_.objFilter(@obj, keys)).toEqual k1: 1
+      expect(_.objInclude(@obj, keys)).toEqual k1: 1
 
-    it 'filters obj correctly when keys to filter is object', ->
+    it 'filters obj correctly when keys to include is object', ->
       keys = k1: null, k2: null
-      expect(_.objFilter(@obj, keys)).toEqual k1: 1
+      expect(_.objInclude(@obj, keys)).toEqual k1: 1
 
     it 'filters obj correctly when keys are nested', ->
       @obj.k1 = {k4: 4, k5: 5}
       @obj.k2 = 2
       keys = ["k1.k4", "k2"]
-      expect(_.objFilter(@obj, keys)).toEqual k1: {k4: 4}, k2: 2
+      expect(_.objInclude(@obj, keys)).toEqual k1: {k4: 4}, k2: 2
 
-    it 'filters obj correctly when test function provided', ->
-      keys = ["k1", "k3"]
-      test = (val)-> val == 1
-      expect(_.objFilter(@obj, keys, test)).toEqual k1: 1
+    it 'filters obj correctly when keys have null values', ->
+      @obj.k1 = {k4: undefined, k5: 5}
+      @obj.k2 = null
+      keys = ["k1.k4", "k2"]
+      expect(_.objInclude(@obj, keys)).toEqual k1: {k4: undefined}, k2: null
 
     describe 'when defaults present', ->
 
       it 'filters obj correctly when defaults are values', ->
         keys = k1: null, k2: 2
-        expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: 2
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, k2: 2
 
       it 'filters obj correctly when defaults are functions', ->
         defFunc = H.spy "defFunc", retVal: 2
         keys = k1: null, k2: defFunc
-        expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: 2
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, k2: 2
         expect(defFunc).toHaveBeenCalledWith @obj
 
       it 'filters obj correctly when nested defaults', ->
         @obj.kN = {kN1: "n1", kN2: "n2"}
         keys = k1: null, "kN.kN1": "defN1", "kN.kN3": "defN3"
-        expect(_.objFilter(@obj, keys)).toEqual k1: 1, kN: {kN1: "n1", kN3: "defN3"}
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, kN: {kN1: "n1", kN3: "defN3"}
 
       it 'filters obj correctly when defaults are overrided', ->
         @obj.k2 = "new val"
         keys = k1: null, k2: 2
-        expect(_.objFilter(@obj, keys)).toEqual k1: 1, k2: "new val"
-
-      it 'filters obj correctly when test func also provided', ->
-        @obj.k4 = 4
-        keys = k1: null, k2: 2, k4: null
-        test = (val)-> val == 1
-        expect(_.objFilter(@obj, keys, test)).toEqual k1: 1, k2: 2
-
-      it 'filters obj correctly when test func also provided and def overrided', ->
-        @obj.k2 = 1
-        keys = k1: null, k2: 2
-        test = (val)-> val == 1
-        expect(_.objFilter(@obj, keys, test)).toEqual k1: 1, k2: 1
-
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, k2: "new val"
 
   describe '.findAllRegexMatches', ->
 

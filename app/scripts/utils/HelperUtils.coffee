@@ -43,15 +43,14 @@ class HelperUtils
       obj = obj[part]
     obj[last] = val
 
-  @objFilter: (obj, keys, test=->true)->
-    keyList  = if Array.isArray(keys) then keys else Object.keys(keys)
+  @objInclude: (obj, include)->
+    keyList  = if Array.isArray(include) then include else Object.keys(include)
     filtered = {}
 
     for key in keyList
-      val    = @getNested obj, key
-      defVal = keys[key]
-      if val? and test(val)
-        @setNested filtered, key, val
+      defVal = include[key]
+      if @hasNested obj, key
+        @setNested filtered, key, @getNested(obj, key)
       else if defVal?
         defVal = if typeof defVal == 'function'
           defVal obj
