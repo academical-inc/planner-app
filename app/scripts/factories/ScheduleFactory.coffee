@@ -19,18 +19,18 @@ class ScheduleFactory extends Factory
     "schoolId":       -> ApiUtils.currentSchool().id
     "term":           -> ApiUtils.currentSchool().terms[0]
     "sectionIds":     null
-    "sectionColors":  null
+    "sectionColors":  {}
     "totalCredits":   null
     "totalSections":  null
     "events":         null
   }
 
-  buildCurrent: (id)->
+  buildCurrent: ({id, exclude}={})->
     schedule = ScheduleStore.current id
     events   = EventStore.eventsExceptDeleted(id).map (event)->
       EventFactory.create event
 
-    $.extend true, {}, @create(
+    obj = $.extend true, {}, {
       id:             schedule.id
       name:           schedule.name
       studentId:      schedule.studentId
@@ -41,7 +41,9 @@ class ScheduleFactory extends Factory
       totalCredits:   SectionStore.credits id
       totalSections:  SectionStore.count id
       events:         events
-    )
+    }
+
+    @create obj, exclude: exclude
 
 
 module.exports = new ScheduleFactory
