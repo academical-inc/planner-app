@@ -24,9 +24,16 @@ class HelperUtils
   @getNested: (obj, key)->
     val = obj
     for part in key.split(".")
-      return null if not val[part]
+      return null if not val.hasOwnProperty part
       val = val[part]
     val
+
+  @hasNested: (obj, key)->
+    val = obj
+    for part in key.split(".")
+      return false if not val.hasOwnProperty part
+      val = val[part]
+    true
 
   @setNested: (obj, key, val)->
     parts = key.split(".")

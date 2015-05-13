@@ -74,7 +74,6 @@ describe 'HelperUtils', ->
       expect(removed).toBeNull()
       expect(@arr).toEqual ["some", 34, 5, {thing: "5"}, 34]
 
-
   describe '.getNested', ->
 
     beforeEach ->
@@ -87,11 +86,18 @@ describe 'HelperUtils', ->
     it 'gets value for normal key', ->
       expect(_.getNested(@obj, "k2")).toEqual 2
 
+    it 'gets value for key when value is null or undefined', ->
+      @obj.k2 = undefined
+      @obj.k.k1 = null
+      @obj.k.j.k3 = null
+      expect(_.getNested(@obj, "k2")).toEqual undefined
+      expect(_.getNested(@obj, "k.k1")).toEqual null
+      expect(_.getNested(@obj, "k.j.k3")).toEqual null
+
     it 'returns null if key not found', ->
       expect(_.getNested(@obj, "k.k2.k5")).toBe null
       expect(_.getNested(@obj, "k.k2")).toBe null
       expect(_.getNested(@obj, "k3")).toBe null
-
 
   describe '.setNested', ->
 
