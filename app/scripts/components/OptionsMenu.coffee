@@ -34,9 +34,13 @@ OptionsMenu = React.createClass(
   openSummary: ->
     PlannerActions.openSummaryDialog()
 
+  duplicateSchedule: ->
+    PlannerActions.duplicateSchedule()
+
   handleItemSelected: (item)->
     switch item.id
       when "opt1" then @openSummary()
+      when "opt2" then @duplicateSchedule()
 
   render: ->
     Dropdown(
