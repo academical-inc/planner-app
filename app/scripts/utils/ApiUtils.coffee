@@ -42,7 +42,12 @@ class ApiUtils
       cb
 
   @createSchedule: (schedule, cb)->
-    _api.schedules.create schedule, cb
+    _api.schedules.create
+      data: schedule
+      params:
+        includeSections: true
+        expandEvents: true
+      cb
 
   @deleteSchedule: (scheduleId, cb)->
     _api.schedules.del scheduleId, cb
