@@ -2,7 +2,6 @@
 Store          = require './Store'
 I18n           = require '../utils/I18n'
 _              = require '../utils/HelperUtils'
-PlannerActions = require '../actions/PlannerActions'
 {ActionTypes}  = require '../constants/PlannerConstants'
 
 
@@ -92,11 +91,6 @@ revertRemovedSchedule = (id)->
   [toRemove, idx] = findToRemove id
   delete toRemove.del if toRemove?
 
-createSchedule = ->
-  name = I18n.t "scheduleList.defaultName"
-  newSchedule = PlannerActions.createSchedule name, dispatchInitial: false
-  addSchedule newSchedule
-
 updateScheduleName = (id, name)->
   schedule = _.find _schedules, (el)-> el.id is id
   schedule.name = name
@@ -134,7 +128,6 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         finallyRemoveSchedule action.scheduleId
-        createSchedule() if _schedules.length is 0
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_FAIL
         revertRemovedSchedule action.scheduleId
