@@ -28,6 +28,7 @@ class HelperUtils
       val = val[part]
     val
 
+  # TODO Test
   @hasNested: (obj, key)->
     val = obj
     for part in key.split(".")
@@ -70,6 +71,14 @@ class HelperUtils
       indices.push result.index
     indices
 
+  # TODO Test
+  # https://github.com/domchristie/humps/blob/master/humps.js#L49
+  @camelize: (str)->
+    str = str.replace /[\-_\s]+(.)?/g, (match, chr)->
+      if chr then chr.toUpperCase() else ''
+    # Ensure 1st char is always lowercase
+    str.replace /^([A-Z])/, (match, chr)->
+      if chr then chr.toLowerCase() else ''
 
 
 module.exports = HelperUtils
