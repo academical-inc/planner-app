@@ -1,6 +1,5 @@
 
 _             = require '../utils/HelperUtils'
-Humps         = require 'humps'
 Store         = require './Store'
 SectionStore  = require './SectionStore'
 ApiUtils      = require '../utils/ApiUtils'
@@ -10,7 +9,7 @@ ApiUtils      = require '../utils/ApiUtils'
 fields = ->
   fds = ApiUtils.currentSchool().appUi.summaryFields
   fds.map (f)->
-    Humps.camelize f.field
+    _.camelize f.field
 
 
 # TODO Tests
