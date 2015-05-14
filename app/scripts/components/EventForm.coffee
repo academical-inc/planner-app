@@ -15,9 +15,9 @@ PlannerActions   = require '../actions/PlannerActions'
 R                = React.DOM
 
 # Private
-_ = $.extend true, {}, HelperUtils, DateUtils
-_utcOffset = -> ApiUtils.currentSchool().utcOffset
-_term      = -> ApiUtils.currentSchool().terms[0]
+_ = $.extend true, {}, HelperUtils, DateUtils, ApiUtils
+_utcOffset = -> _.currentSchool().utcOffset
+_term      = -> _.currentSchool().terms[0]
 
 
 EventForm = React.createClass(
@@ -30,14 +30,12 @@ EventForm = React.createClass(
     [startDt, endDt] = EventFormStore.getStartEnd()
     date     = startDt or endDt or _.now()
     day      = if date.day() == 0 then 7 else date.day()
-    defUntil = CurrentWeekStore.weekDate().isBefore(
-      _.utcFromStr _term().endDate
-    )
+    defChecked = @isCurrentBeforeTermEnd()
     checkedDays: [day]
     startTime: _.getTimeStr startDt if startDt?
     endTime: _.getTimeStr endDt if endDt?
-    defUntil: defUntil
-    defDisabled: not defUntil
+    defChecked: defChecked
+    defDisabled: not defChecked
 
   getInitialState: ->
     @props.initialState or @getState()
@@ -60,6 +58,27 @@ EventForm = React.createClass(
     startDt = @buildDate startTime, day
     endDt   = @buildDate endTime, day
     [startDt, endDt]
+
+  # TODO Test
+  defaultRepeatUntil: (startDt)->
+    termEnd = _.utcFromStr _term().endDate, "YYYY-MM-DD"
+    _.setTimeAndFormat termEnd, startDt, _utcOffset()
+
+  # TODO Test
+  selectedRepeatUntil: (startDt)->
+    repUntilVal = @refs.repeatUntil.getDOMNode().value
+    date        = _.utcFromStr repUntilVal, "YYYY-MM-DD"
+    _.setTimeAndFormat date, startDt, _utcOffset()
+
+  # TODO Test
+  getRepeatUntil: (startDt)->
+    if @state.defChecked is true
+      @defaultRepeatUntil startDt
+    else
+      @selectedRepeatUntil startDt
+
+  isCurrentBeforeTermEnd: ()->
+    CurrentWeekStore.weekDate().isBefore _.utcFromStr(_term().endDate)
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange
@@ -105,12 +124,12 @@ EventForm = React.createClass(
     @setState checkedDays: checkedDays
 
   handleDefUntilChecked: (e)->
-    checked = not @state.defUntil
+    checked = not @state.defChecked
     @refs.repeatUntil.getDOMNode().value = '' if checked
-    @setState defUntil: checked
+    @setState defChecked: checked
 
   handleRepeatUntilFocus: (e)->
-    @setState defUntil: false if @state.defUntil is true
+    @setState defChecked: false if @state.defChecked is true
 
   handleSubmit: (e)->
     e.preventDefault()
@@ -121,13 +140,9 @@ EventForm = React.createClass(
       endTime     = fields.endTime
       days        = @state.checkedDays.map (dayNo)-> _.getDayStr dayNo
       earliestDay = Math.min @state.checkedDays...
-      repUntilVal = @refs.repeatUntil.getDOMNode().value
       color       = UiConstants.DEFAULT_EVENT_COLOR
-
-      [startDt, endDt] = @getStartEnd startTime, endTime, earliestDay
-      repeatUntil = if @state.defUntil is false and repUntilVal
-        dt = _.utcFromStr repUntilVal, "YYYY-MM-DD"
-        _.setTimeAndFormat dt, startDt, _utcOffset()
+      [startDt, endDt] = @getStartEnd fields.startTime, endTime, earliestDay
+      repeatUntil = @getRepeatUntil startDt
 
       PlannerActions.addEvent name, startDt, endDt, days, repeatUntil, color
 
@@ -145,7 +160,7 @@ EventForm = React.createClass(
     @refs.daysGroup.getDOMNode() if @state.checkedDays.length == 0
 
   validateRepeatUntil: ->
-    if (not @state.defUntil) and (not @refs.repeatUntil.getDOMNode().value)
+    if (not @state.defChecked) and (not @refs.repeatUntil.getDOMNode().value)
       @refs.repeatUntilGroup.getDOMNode()
 
   customValidations: ->
@@ -229,7 +244,7 @@ EventForm = React.createClass(
             R.label className: "checkbox-inline",
               R.input
                 type: "checkbox",
-                checked: @state.defUntil
+                checked: @state.defChecked
                 disabled: @state.defDisabled
                 onChange: @handleDefUntilChecked
               "#{@t('eventForm.defaultUntil')} (#{_term().endDate})"
