@@ -23,8 +23,6 @@ ScheduleList = React.createClass(
 
   onChange: (state=@getState())->
     @setState state
-    if state.schedules.length == 0
-      PlannerActions.createSchedule @t "scheduleList.defaultName"
 
   addSchedule: (name)->
     PlannerActions.createSchedule name

@@ -1,8 +1,11 @@
 
-Store          = require './Store'
-I18n           = require '../utils/I18n'
-_              = require '../utils/HelperUtils'
-{ActionTypes}  = require '../constants/PlannerConstants'
+Store           = require './Store'
+_               = require '../utils/HelperUtils'
+I18n            = require '../utils/I18n'
+ApiUtils        = require '../utils/ApiUtils'
+ActionUtils     = require '../utils/ActionUtils'
+ScheduleFactory = require '../factories/ScheduleFactory'
+{ActionTypes}   = require '../constants/PlannerConstants'
 
 
 # Private
@@ -91,6 +94,17 @@ revertRemovedSchedule = (id)->
   [toRemove, idx] = findToRemove id
   delete toRemove.del if toRemove?
 
+createSchedule = ->
+  newSchedule = ScheduleFactory.create name: I18n.t "scheduleList.defaultName"
+  ApiUtils.createSchedule newSchedule, ActionUtils.handleServerResponse(
+    # TODO Duplication!! Almost unavoidable
+    ActionTypes.CREATE_SCHEDULE_SUCCESS
+    ActionTypes.CREATE_SCHEDULE_FAIL
+    (response)-> schedule: response
+    -> schedule: newSchedule
+  )
+  addSchedule newSchedule
+
 updateScheduleName = (id, name)->
   schedule = _.find _schedules, (el)-> el.id is id
   schedule.name = name
@@ -128,6 +142,7 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         finallyRemoveSchedule action.scheduleId
+        createSchedule() if _schedules.length is 0
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_FAIL
         revertRemovedSchedule action.scheduleId

@@ -87,17 +87,3 @@ describe "ScheduleList", ->
       expect(state).toEqual
         current: "spinner"
         schedules: []
-
-
-  describe '#onChange', ->
-
-    it 'creates a new schedule when all schedules deleted', ->
-      createSpy = H.spy 'createSpy'
-      H.rewire ScheduleList,
-        'PlannerActions.createSchedule': createSpy
-      list = H.render ScheduleList
-      H.spyOn list, 'setState'
-      H.spyOn list, 't'
-      list.onChange schedules: []
-      expect(list.t).toHaveBeenCalled()
-      expect(createSpy).toHaveBeenCalled()

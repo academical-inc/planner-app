@@ -337,14 +337,21 @@ describe 'ScheduleStore', ->
         expect(@all()).toEqual [@schedules.toDelete[0]]
         expect(@current()).toEqual @all()[0]
 
-      it 'removes and reassigns current correctly when deleting the only schedule', ->
+      it 'removes and reassigns current correctly when deleting the only
+      schedule and creates a new one', ->
+        createSpy = H.spy "createSpy", retVal: @schedules.toCreate[0]
+        apiSpy    = H.spy "apiSpy"
         H.rewire ScheduleStore,
           _schedules: [@schedules.toDelete[1]]
           _current: @schedules.toDelete[1]
+          "ApiUtils.createSchedule": apiSpy
+          "ScheduleFactory.create": createSpy
         @payloads.deleteSuccess.action.scheduleId = @schedules.toDelete[1].id
         @dispatch @payloads.deleteSuccess
-        expect(@all()).toEqual []
-        expect(@current()).toEqual null
+        expect(@all()).toEqual [@schedules.dirty[0]]
+        expect(@current()).toEqual @all()[0]
+        expect(createSpy).toHaveBeenCalled()
+        expect(apiSpy).toHaveBeenCalled()
 
     describe 'when not deleting current', ->
 
