@@ -5,13 +5,13 @@
 
 PlannerDispatcher = new Dispatcher()
 
-PlannerDispatcher.handleServerAction = (action)->
+PlannerDispatcher.dispatchServerAction = (action)->
   payload =
     source: PayloadSources.SERVER_ACTION
     action: action
   @dispatch payload
 
-PlannerDispatcher.handleViewAction = (action)->
+PlannerDispatcher.dispatchViewAction = (action)->
   payload =
     source: PayloadSources.VIEW_ACTION
     action: action
