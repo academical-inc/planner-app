@@ -8,7 +8,7 @@ class DateUtils
     if typeof date == 'string'
       Moment.parseZone date
     else
-      Moment date.parseZone date
+      Moment date
 
   # Assumes MO is 1 and SU is 7
   @getDayStr: (dayNo)->
