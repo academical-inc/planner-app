@@ -71,7 +71,7 @@ changeColor = (eventId, color)->
 class EventStore extends Store
 
   events: (id)->
-    _.currentElementsOr id
+    _.currentElementsOr(id) or []
 
   eventsExceptDirtyAdded: (id)->
     @events(id).filter (ev)-> not(ev.dirtyAdd is true)

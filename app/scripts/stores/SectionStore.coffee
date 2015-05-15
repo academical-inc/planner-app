@@ -26,7 +26,7 @@ removeSection = (sectionId)->
 class SectionStore extends Store
 
   sections: (id)->
-    _.currentElementsOr id
+    _.currentElementsOr(id) or []
 
   sectionEvents: (id)->
     EventUtils.getSectionEvents @sections(id)
@@ -45,13 +45,8 @@ class SectionStore extends Store
         wait()
         _.setCurrent()
         @emitChange()
-      when ActionTypes.GET_SCHEDULES_SUCCESS
-        wait()
-        _.initElementsMap action.schedules
-        _.setCurrent()
-        @emitChange()
-      # TODO Tests
-      when ActionTypes.UPDATE_SCHEDULES_SUCCESS
+      when ActionTypes.GET_SCHEDULES_SUCCESS, \
+           ActionTypes.UPDATE_SCHEDULES_SUCCESS
         wait()
         _.initElementsMap action.schedules
         _.setCurrent()
