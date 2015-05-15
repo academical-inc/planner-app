@@ -137,6 +137,7 @@ WeekCalendar = React.createClass(
       eventRender: @renderEvent
       select: @handleSelect
       eventDrop: @handleEventUpdate
+      eventResize: @handleEventUpdate
       viewRender: @handleWeekChange
     )
 
