@@ -6,24 +6,32 @@
     color: white;
     background: $academical-blue-sidebar;
     padding: 10px;
-
+    position: relative;
     h4 {
       font-weight: 300;
       font-size: 1.2em;
       margin-left: 10px;
     }
-
-    button {
+    .modal-close-button{
       background:$academical-blue-filter;
-      padding: 11px;
-      margin-top: -10px;
-      margin-right: -10px;
-      opacity: 1;
-
-      img {
-        width: 80%;
+      height: 100%;
+      width: 9%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      button {
+        top: auto;
+        bottom: auto;
+        height: 100%;
+        opacity: 1;
+        padding: 12px;
+        img {
+          width: 85%;
+          height: auto;
+        }
       }
     }
+
   }
 
   .modal-body {

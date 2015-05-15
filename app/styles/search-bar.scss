@@ -53,7 +53,8 @@
 
   // Autosuggest
   .react-autosuggest {
-    $font-size: 18px;
+    $font-size: .8em;
+    $color: $dark;
     $border-color: #aaa;
     $border-radius: 4px;
 
@@ -61,16 +62,20 @@
     display: inline;
 
     &__suggestions {
-      position: absolute;
-      max-height: 75vh;
+      //Changes
+      background-color: $academical-blue-filter;
+      max-height: 77.5vh;
+      top: 32px;
+      width: 157%;
+      left: -7%;
+      color: $white;
+      border: 0px solid $border-color;
+      //Default
       overflow-y: scroll;
-      top: 51px;
-      width: 100%;
+      position: absolute;
       margin: 0;
       padding: 0;
       list-style-type: none;
-      border: 1px solid $border-color;
-      background-color: #fff;
       font-size: $font-size;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
@@ -102,11 +107,23 @@
     &__suggestion {
       cursor: pointer;
       padding: 10px 20px;
-
       &--focused {
-        background-color: #ddd;
+        background-color: $academical-dark-blue;
       }
     }
+
+    //Scrollbar Style
+    ::-webkit-scrollbar {
+      width: 15px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: $academical-blue-sidebar;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: $academical-dark-blue;
+      border-radius: 15px;
+    }
+
   }
 
   .search-filters-trigger {

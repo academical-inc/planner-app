@@ -1,7 +1,7 @@
 
 .pla-planner-header {
 
-  height: 10%;
+  height: 11%;
 
   .navbar {
     border: none;
@@ -13,6 +13,7 @@
   .container-fluid {
     height: 100%;
     padding: 0px;
+    background: $gray;
   }
 
   .navbar-left {
@@ -23,7 +24,20 @@
   }
 
   .navbar-dropdowns {
-    margin-top: 0.7%;
+    margin-top: 1.7%;
+    width: 300px;
+    li {
+      background: white;
+      margin-left: 7%;
+      border: 1px solid #e5e5e5;
+      border-radius: 2px;
+      a.dropdown-toggle {
+        padding: 3px;
+        span.caret {
+          margin-left: 6px;
+        }
+      }
+    }
   }
 
   .navbar-nav:last-child {
