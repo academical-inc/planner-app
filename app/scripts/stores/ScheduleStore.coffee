@@ -107,7 +107,16 @@ createSchedule = ->
 
 updateScheduleName = (id, name)->
   schedule = _.find _schedules, (el)-> el.id is id
+  schedule.prevName = schedule.name
+  schedule.dirty = true
   schedule.name = name
+
+revertNameUpdate = (id)->
+  schedule = _.find _schedules, (el)-> el.id is id
+  if schedule? and schedule.dirty is true and schedule.prevName?
+    schedule.name = schedule.prevName
+    delete schedule.dirty
+    delete schedule.prevName
 
 
 class ScheduleStore extends Store
@@ -150,9 +159,14 @@ class ScheduleStore extends Store
       when ActionTypes.GET_SCHEDULES_SUCCESS
         initSchedules action.schedules
         @emitChange()
-      #TODO Tests
       when ActionTypes.UPDATE_SCHEDULE_NAME
         updateScheduleName action.scheduleId, action.name
+        @emitChange()
+      when ActionTypes.SAVE_SCHEDULE_SUCCESS
+        updateDirtySchedule action.schedule
+        @emitChange()
+      when ActionTypes.SAVE_SCHEDULE_FAIL
+        revertNameUpdate action.scheduleId
         @emitChange()
 
 

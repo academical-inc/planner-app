@@ -21,8 +21,8 @@ describe 'ScheduleStore', ->
   beforeEach ->
     @schedules =
       toDelete: [
-        {name: "Schedule 1", id: "sch1", sectionIds: ["sec1", "sec2"]}
-        {name: "Schedule 2", id: "sch2", del: true,sectionIds: ["sec2", "sec3"]}
+        {name: "Schedule 1", id: "sch1"}
+        {name: "Schedule 2", id: "sch2", del: true}
       ]
       toCreate: [
         {name: "Schedule 3"}
@@ -33,8 +33,8 @@ describe 'ScheduleStore', ->
         {name: "Schedule 4", dirty: true}
       ]
       clean: [
-        {name: "Schedule 1", id: "sch1", sectionIds: ["sec1", "sec2"]}
-        {name: "Schedule 2", id: "sch2", sectionIds: ["sec2", "sec3"]}
+        {name: "Schedule 1", id: "sch1"}
+        {name: "Schedule 2", id: "sch2"}
       ]
 
     @payloads =
@@ -62,12 +62,15 @@ describe 'ScheduleStore', ->
       getAllSuccess:
         action:
           type: ActionTypes.GET_SCHEDULES_SUCCESS
-      addSection:
+      updateName:
         action:
-          type: ActionTypes.ADD_SECTION
-      removeSection:
+          type: ActionTypes.UPDATE_SCHEDULE_NAME
+      saveSuccess:
         action:
-          type: ActionTypes.REMOVE_SECTION
+          type: ActionTypes.SAVE_SCHEDULE_SUCCESS
+      saveFail:
+        action:
+          type: ActionTypes.SAVE_SCHEDULE_FAIL
 
     @dispatch    = ScheduleStore.dispatchCallback
     @all         = ScheduleStore.all
@@ -400,24 +403,92 @@ describe 'ScheduleStore', ->
       expect(@current()).toEqual @schedules.clean[0]
 
 
-  xdescribe 'when ADD_SECTION received', ->
+  describe 'when UPDATE_SCHEDULE_NAME received', ->
 
-    it 'adds section id correctly', ->
+    it 'updates schedule name and marks as dirty when current', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat []
-        _current: @schedules.clean[1]
-      expect(@current().sectionIds).toEqual @schedules.clean[1].sectionIds
-      @payloads.addSection.action.section = id: "sec100"
-      @dispatch @payloads.addSection
-      expect(@current().sectionIds).toEqual ["sec2", "sec3", "sec100"]
+        _current: @schedules.clean[0]
+      @payloads.updateName.action.scheduleId = "sch1"
+      @payloads.updateName.action.name = "New name"
+      @dispatch @payloads.updateName
+      expected =
+        id: "sch1"
+        name: "New name"
+        dirty: true
+        prevName: "Schedule 1"
+      assertSingle 2, @all(), @current(), @all()[0], expected, expected
 
-  xdescribe 'when REMOVE_SECTION received', ->
-
-    it 'removes section id correctly', ->
+    it 'updates schedule name and marks as dirty when not current', ->
       H.rewire ScheduleStore,
         _schedules: @schedules.clean.concat []
-        _current: @schedules.clean[1]
-      expect(@current().sectionIds).toEqual @schedules.clean[1].sectionIds
-      @payloads.removeSection.action.sectionId = "sec3"
-      @dispatch @payloads.removeSection
-      expect(@current().sectionIds).toEqual ["sec2"]
+        _current: @schedules.clean[0]
+      @payloads.updateName.action.scheduleId = "sch2"
+      @payloads.updateName.action.name = "New name"
+      @dispatch @payloads.updateName
+      expected =
+        id: "sch2"
+        name: "New name"
+        dirty: true
+        prevName: "Schedule 2"
+      assertSingle 2, @all(), @current(), @all()[1], expected, @schedules.clean[0]
+
+
+  describe 'when SAVE_SCHEDULE_SUCCESS received', ->
+
+    it 'correctly updates dirty schedule (name) with response from server when not current', ->
+      @schedules.dirty[0].name = "New name"
+      @schedules.dirty[0].prevName = "Schedule 3"
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat [@schedules.dirty[0]]
+        _current: @schedules.clean[0]
+      expected =
+        name: "New name"
+        id: "sch3"
+      @payloads.saveSuccess.action.schedule = expected
+      @dispatch @payloads.saveSuccess
+      assertSingle 3, @all(), @current(), @all()[2], expected, @schedules.clean[0]
+
+    it 'correctly updates dirty schedule (name) with response from server when not current', ->
+      @schedules.dirty[0].name = "New name"
+      @schedules.dirty[0].prevName = "Schedule 3"
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat [@schedules.dirty[0]]
+        _current: @schedules.dirty[0]
+      expected =
+        name: "New name"
+        id: "sch3"
+      @payloads.saveSuccess.action.schedule = expected
+      @dispatch @payloads.saveSuccess
+      assertSingle 3, @all(), @current(), @all()[2], expected, expected
+
+
+  describe 'when SAVE_SCHEDULE_FAIL received', ->
+
+    it 'correctly reverts name in dirty schedule when not current', ->
+      @schedules.dirty[0].id = "sch3"
+      @schedules.dirty[0].name = "New name"
+      @schedules.dirty[0].prevName = "Schedule 3"
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat [@schedules.dirty[0]]
+        _current: @schedules.clean[0]
+      expected =
+        name: "Schedule 3"
+        id: "sch3"
+      @payloads.saveFail.action.scheduleId = "sch3"
+      @dispatch @payloads.saveFail
+      assertSingle 3, @all(), @current(), @all()[2], expected, @schedules.clean[0]
+
+    it 'correctly updates dirty schedule (name) with response from server when not current', ->
+      @schedules.dirty[0].id = "sch3"
+      @schedules.dirty[0].name = "New name"
+      @schedules.dirty[0].prevName = "Schedule 3"
+      H.rewire ScheduleStore,
+        _schedules: @schedules.clean.concat [@schedules.dirty[0]]
+        _current: @schedules.dirty[0]
+      expected =
+        name: "Schedule 3"
+        id: "sch3"
+      @payloads.saveFail.action.scheduleId = "sch3"
+      @dispatch @payloads.saveFail
+      assertSingle 3, @all(), @current(), @all()[2], expected, expected
