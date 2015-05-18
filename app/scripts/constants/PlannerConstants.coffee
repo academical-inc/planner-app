@@ -34,11 +34,16 @@ module.exports =
     "UPDATE_EVENT"
     "REMOVE_EVENT"
     "CHANGE_EVENT_COLOR"
-    "CHANGE_WEEK"
+    "SET_WEEK"
     "OPEN_SUMMARY_DIALOG"
   }
   PreviewTypes: {
     "PRIMARY"
     "SECONDARY"
+  }
+  WeekCalendarCommands: {
+    PREV: 'prev'
+    TODAY: 'today'
+    NEXT: 'next'
   }
   POLL_INTERVAL: 120000  # milliseconds

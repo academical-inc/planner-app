@@ -1,18 +1,18 @@
 
-$                = require 'jquery'
-React            = require 'react'
-ModalMixin       = require '../mixins/ModalMixin'
-I18nMixin        = require '../mixins/I18nMixin'
-FormMixin        = require '../mixins/FormMixin'
-IconMixin        = require '../mixins/IconMixin'
-DateUtils        = require '../utils/DateUtils'
-HelperUtils      = require '../utils/HelperUtils'
-ApiUtils         = require '../utils/ApiUtils'
-EventFormStore   = require '../stores/EventFormStore'
-CurrentWeekStore = require '../stores/CurrentWeekStore'
-PlannerActions   = require '../actions/PlannerActions'
-{UiConstants}    = require '../constants/PlannerConstants'
-R                = React.DOM
+$              = require 'jquery'
+React          = require 'react'
+ModalMixin     = require '../mixins/ModalMixin'
+I18nMixin      = require '../mixins/I18nMixin'
+FormMixin      = require '../mixins/FormMixin'
+IconMixin      = require '../mixins/IconMixin'
+DateUtils      = require '../utils/DateUtils'
+HelperUtils    = require '../utils/HelperUtils'
+ApiUtils       = require '../utils/ApiUtils'
+EventFormStore = require '../stores/EventFormStore'
+WeekStore      = require '../stores/WeekStore'
+PlannerActions = require '../actions/PlannerActions'
+{UiConstants}  = require '../constants/PlannerConstants'
+R              = React.DOM
 
 # Private
 _ = $.extend true, {}, HelperUtils, DateUtils, ApiUtils
@@ -49,7 +49,7 @@ EventForm = React.createClass(
 
   buildDate: (time, day)->
     date = _.getUtcTimeFromStr time
-    date = _.setWeek date, CurrentWeekStore.week()
+    date = _.setWeek date, WeekStore.currentWeekNumber()
     date = _.setDay date, day
     date = _.inUtcOffset date, _utcOffset()
     _.format date
@@ -78,7 +78,7 @@ EventForm = React.createClass(
       @selectedRepeatUntil startDt
 
   isCurrentBeforeTermEnd: ()->
-    CurrentWeekStore.weekDate().isBefore _.utcFromStr(_term().endDate)
+    WeekStore.currentWeekDate().isBefore _.utcFromStr(_term().endDate)
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange

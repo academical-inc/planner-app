@@ -5,9 +5,9 @@ PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 class WeekActions
 
-  @changeWeek: (weekStart)->
+  @setWeek: (weekStart)->
     PlannerDispatcher.dispatchViewAction
-      type: ActionTypes.CHANGE_WEEK
+      type: ActionTypes.SET_WEEK
       weekStart: weekStart
 
 

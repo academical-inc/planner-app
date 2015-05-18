@@ -1,11 +1,11 @@
 
-React           = require 'react'
-ScheduleList    = React.createFactory require './ScheduleList'
-OptionsMenu     = React.createFactory require './OptionsMenu'
-ProfileBox      = React.createFactory require './ProfileBox'
-LogoBox         = React.createFactory require './LogoBox'
-CalendarControl = React.createFactory require './CalendarControl'
-R               = React.DOM
+React        = require 'react'
+ScheduleList = React.createFactory require './ScheduleList'
+OptionsMenu  = React.createFactory require './OptionsMenu'
+ProfileBox   = React.createFactory require './ProfileBox'
+LogoBox      = React.createFactory require './LogoBox'
+WeekControl  = React.createFactory require './WeekControl'
+R            = React.DOM
 
 
 PlannerHeader = React.createClass(
@@ -17,7 +17,7 @@ PlannerHeader = React.createClass(
           R.ul className: "nav navbar-nav navbar-left",
             LogoBox({})
           R.ul className: "nav navbar-nav",
-            CalendarControl({})
+            WeekControl({})
           R.ul className: "nav navbar-nav",
             OptionsMenu rootTag: R.li
             ScheduleList rootTag: R.li

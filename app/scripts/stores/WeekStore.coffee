@@ -7,21 +7,21 @@ DateUtils     = require '../utils/DateUtils'
 # Private
 _current = DateUtils.now()
 
-class CurrentWeekStore extends Store
+class WeekStore extends Store
 
-  week: ->
+  currentWeekNumber: ->
     _current.week()
 
-  weekDate: ->
+  currentWeekDate: ->
     _current
 
   dispatchCallback: (payload)=>
     action = payload.action
 
     switch action.type
-      when ActionTypes.CHANGE_WEEK
+      when ActionTypes.SET_WEEK
         _current = action.weekStart
         @emitChange()
 
 
-module.exports = new CurrentWeekStore
+module.exports = new WeekStore

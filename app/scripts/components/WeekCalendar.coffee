@@ -105,8 +105,8 @@ WeekCalendar = React.createClass(
     end   = DateUtils.inUtcOffset event.end, _utcOffset()
     PlannerActions.updateEvent event.id, start, end, delta.days()
 
-  handleWeekChange: (fcView)->
-    PlannerActions.changeWeek fcView.start
+  handleSetWeek: (fcView)->
+    PlannerActions.setWeek fcView.start
 
   componentDidMount: ->
     @cal = $(@getDOMNode())
@@ -138,7 +138,7 @@ WeekCalendar = React.createClass(
       select: @handleSelect
       eventDrop: @handleEventUpdate
       eventResize: @handleEventUpdate
-      viewRender: @handleWeekChange
+      viewRender: @handleSetWeek
     )
 
   renderEvent: (event, jqElement)->
