@@ -36,6 +36,8 @@ module.exports =
     "CHANGE_EVENT_COLOR"
     "SET_WEEK"
     "OPEN_SUMMARY_DIALOG"
+    "EXPORT_IMAGE"
+    "EXPORT_IMAGE_SUCCESS"
   }
   PreviewTypes: {
     "PRIMARY"

@@ -5,6 +5,7 @@ SectionActions  = require './SectionActions'
 EventActions    = require './EventActions'
 WeekActions     = require './WeekActions'
 ModalActions    = require './ModalActions'
+ExportActions   = require './ExportActions'
 
 
 # # TODO Test All Actions
@@ -15,4 +16,5 @@ module.exports = $.extend(
   EventActions
   WeekActions
   ModalActions
+  ExportActions
 )
