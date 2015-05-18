@@ -74,6 +74,7 @@
   "browserify-shim": {
     "jquery": "global:$",
     "moment": "global:moment",
-    "bloodhound": "global:Bloodhound"
+    "bloodhound": "global:Bloodhound",
+    "html2canvas": "global:html2canvas"
   }
 }
