@@ -41,6 +41,14 @@ class ApiUtils
       expandEvents: true,
       cb
 
+  @getSchedule: (scheduleId, cb, params={})->
+    params = $.extend(
+      true, {includeSections: true, expandEvents: true}, params
+    )
+    _api.schedules.retrieve scheduleId,
+      params
+      cb
+
   @createSchedule: (schedule, cb)->
     _api.schedules.create
       data: schedule
