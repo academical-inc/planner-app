@@ -19,21 +19,12 @@ OptionsMenu = React.createClass(
 
   getItems: ->
     [
-      {
-        header: "General:"
-        items: [
-          {id: "opt1", val: @t("options.summary"), icon: @icon "book"}
-          {id: "opt2", val: @t("options.duplicate"), icon: @icon "copy"}
-          {id: "opt3", val: @t("options.share"), icon: @icon "share-alt"}
-        ]
-      }
-      {
-        header: "Export:"
-        items: [
-          {id: "opt4", val: @t("options.calendar"), icon: @icon "calendar"}
-          {id: "opt5", val: @t("options.image"), icon: @icon "camera-retro"}
-        ]
-      }
+      {id: "opt1", val: @t("options.summary"), icon: @icon "book"}
+      {id: "opt2", val: @t("options.duplicate"), icon: @icon "copy"}
+      {id: "opt3", val: @t("options.share"), icon: @icon "share-alt"}
+      {divider: true}
+      {id: "opt4", val: @t("options.ics"), icon: @icon "calendar"}
+      {id: "opt5", val: @t("options.image"), icon: @icon "camera-retro"}
     ]
 
   handleItemSelected: (item)->

@@ -28,8 +28,8 @@
       "summary": "Summary",
       "duplicate": "Duplicate",
       "share": "Share your schedule",
-      "calendar": "Calendar",
-      "image": "Image"
+      "ics": "Export to ICS",
+      "image": "Export to Image"
     },
     "profile": {
       "logout": "Log Out"
@@ -115,8 +115,8 @@
       "summary": "Resumen",
       "duplicate": "Duplicar",
       "share": "Comparte tu horario",
-      "calendar": "Calendario",
-      "image": "Imagen"
+      "ics": "Exportar a ICS",
+      "image": "Exportar a Imagen"
     },
     "profile": {
       "logout": "Salir"
