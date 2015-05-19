@@ -87,11 +87,11 @@ Dropdown = React.createClass(
         )
         if index != items.length-1
           r.push R.li(className: "divider", key: "#{item.header}-divider")
+      else if item.divider is true
+        r.push R.li(className: "divider", key: "divider-#{index}")
       else
-        r.push (
-          @getItem item
-        )
-    return r
+        r.push @getItem(item)
+    r
 
   render: ->
     classes = {}
