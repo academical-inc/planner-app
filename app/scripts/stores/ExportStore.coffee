@@ -1,23 +1,27 @@
 
 Store         = require './Store'
+ScheduleStore = require './ScheduleStore'
+ExportUtils   = require '../utils/ExportUtils'
 {ActionTypes} = require '../constants/PlannerConstants'
 
-
-_canvas = null
 
 # TODO Test
 class ExportStore extends Store
 
-  canvas: ->
-    _canvas
 
-  dispatchCallback: (payload)=>
+  dispatchCallback: (payload)->
     action = payload.action
 
+    # TODO Revisit this design, not very Flux-y
+    # Chose this because don't want to keep entire canvas data just hanging in
+    # memory, so prefer to perfomr download immediatly instead of keeping as
+    # private var inside this store
+    # See OptionsMenu TODO
     switch action.type
       when ActionTypes.EXPORT_IMAGE_SUCCESS
-        _canvas = action.canvas
-        @emitChange()
+        ExportUtils.downloadImage ScheduleStore.current().name, action.canvas
+      when ActionTypes.EXPORT_ICS_SUCCESS
+        ExportUtils.downloadICS ScheduleStore.current().name, action.icsData
 
 
 module.exports = new ExportStore
