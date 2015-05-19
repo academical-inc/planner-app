@@ -88,7 +88,7 @@ describe "EventForm", ->
 
     beforeEach ->
       @restore = H.rewire EventForm,
-        "CurrentWeekStore.week": -> 12  # Week of march 16/2015
+        "WeekStore.currentWeekNumber": -> 12  # Week of march 16/2015
       @form = H.render EventForm, initialState: checkedDays: []
       @st   = "10:00am"
       @et   = "3:15pm"
