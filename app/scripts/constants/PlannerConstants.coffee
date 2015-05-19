@@ -38,6 +38,9 @@ module.exports =
     "OPEN_SUMMARY_DIALOG"
     "EXPORT_IMAGE"
     "EXPORT_IMAGE_SUCCESS"
+    "EXPORT_ICS"
+    "EXPORT_ICS_SUCCESS"
+    "EXPORT_ICS_FAIL"
   }
   PreviewTypes: {
     "PRIMARY"
