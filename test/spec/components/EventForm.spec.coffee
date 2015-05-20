@@ -17,6 +17,7 @@ describe "EventForm", ->
       EventFormStore: @store
       PlannerActions: @actions
       _utcOffset: -> -240
+      _term: -> endDate: "2015-05-31"
 
   afterEach ->
     @global()
@@ -25,6 +26,8 @@ describe "EventForm", ->
 
     beforeEach ->
       [@mock$, @mock$El] = H.mock$()
+      @mockOn = H.spy 'mockOn'
+      @mock$El.datepicker.and.returnValue on: @mockOn
       @restore = H.rewire EventForm, $: @mock$
       @form = H.render EventForm, initialState: checkedDays: [1]
 
@@ -41,6 +44,7 @@ describe "EventForm", ->
       @form = H.render EventForm, initialState: checkedDays: [1]
       expect(@mock$).toHaveBeenCalledWith @form.refs.repeatUntil.getDOMNode()
       expect(@mock$El.datepicker).toHaveBeenCalled()
+      expect(@mockOn).toHaveBeenCalled()
 
     it 'should subscribe to store', ->
       expect(@store.addChangeListener).toHaveBeenCalledWith @form.onChange
@@ -84,7 +88,7 @@ describe "EventForm", ->
 
     beforeEach ->
       @restore = H.rewire EventForm,
-        "CurrentWeekStore.week": -> 12  # Week of march 16/2015
+        "WeekStore.currentWeekNumber": -> 12  # Week of march 16/2015
       @form = H.render EventForm, initialState: checkedDays: []
       @st   = "10:00am"
       @et   = "3:15pm"
@@ -96,15 +100,19 @@ describe "EventForm", ->
       sd = Moment.utc [2015, 2, 17, 10, 0]  # Tuesday
       ed = Moment.utc [2015, 2, 17, 15, 15]
       [resStart, resEnd] = @form.getStartEnd(@st, @et, 2)
-      assertDates resStart,-240, sd
-      assertDates resEnd, -240, ed
+      expect(resStart).toEqual '2015-03-17T10:00:00-04:00'
+      expect(resEnd).toEqual '2015-03-17T15:15:00-04:00'
+      assertDates Moment.parseZone(resStart),-240, sd
+      assertDates Moment.parseZone(resEnd), -240, ed
 
     it 'computes correctly when day is sunday', ->
       sd = Moment.utc [2015, 2, 22, 10, 0]  # Sunday
       ed = Moment.utc [2015, 2, 22, 15, 15]
       [resStart, resEnd] = @form.getStartEnd(@st, @et, 7)
-      assertDates resStart,-240, sd
-      assertDates resEnd, -240, ed
+      expect(resStart).toEqual '2015-03-22T10:00:00-04:00'
+      expect(resEnd).toEqual '2015-03-22T15:15:00-04:00'
+      assertDates Moment.parseZone(resStart),-240, sd
+      assertDates Moment.parseZone(resEnd), -240, ed
 
 
   describe "#handleSubmit", ->
@@ -112,12 +120,13 @@ describe "EventForm", ->
     beforeEach ->
       H.rewire EventForm,
         "_.setTimeAndFormat": -> "2015-04-19T10:00-05:00"
-        "UiConstants.defaultEventColor": "red"
-      @form = H.render EventForm, initialState: checkedDays: [1], defUntil: true
+        "UiConstants.DEFAULT_EVENT_COLOR": "red"
+      @form = H.render EventForm, initialState: checkedDays: [1], defChecked: true
       @start = Moment.utc()
       @end   = Moment(@start).hours(@start.hours()+1)
       H.spyOn @form, "getStartEnd", retVal: [@start, @end]
       H.spyOn @form, "getState", retVal: checkedDays: [1]
+      H.spyOn @form, "defaultRepeatUntil", retVal: "defaultRepeatUntil"
 
     it 'grabs and submits form data correctly when repeat until not present', ->
       @form.setState checkedDays: [3,1,7], =>
@@ -128,11 +137,11 @@ describe "EventForm", ->
         @form.handleSubmit preventDefault: ->
         expect(@form.getStartEnd).toHaveBeenCalledWith "10:00am", "3:00pm", 1
         expect(@actions.addEvent).toHaveBeenCalledWith(
-          "Name", @start, @end, ["WE", "MO", "SU"], undefined, "red"
+          "Name", @start, @end, ["WE", "MO", "SU"], "defaultRepeatUntil", "red"
         )
 
     it 'submits repeat until when provided', ->
-      @form.setState checkedDays: [3,1,7], defUntil: false, =>
+      @form.setState checkedDays: [3,1,7], defChecked: false, =>
         @form.refs.name.getDOMNode().value = "Name"
         @form.refs.startTime.getDOMNode().value = "10:00am"
         @form.refs.endTime.getDOMNode().value = "3:00pm"
@@ -157,7 +166,7 @@ describe "EventForm", ->
       startTime   = @form.refs.startTime.getDOMNode()
       endTime     = @form.refs.endTime.getDOMNode()
       repeatUntil = @form.refs.endTime.getDOMNode()
-      @form.setState checkedDays: [], defUntil: false, =>
+      @form.setState checkedDays: [], defChecked: false, =>
         name.value = ""
         startTime.value = ""
         endTime.value = ""
@@ -173,7 +182,7 @@ describe "EventForm", ->
   describe "#renderInput", ->
 
     beforeEach ->
-      @form = H.render EventForm, initialState: checkedDays: [1], defUntil: true
+      @form = H.render EventForm, initialState: checkedDays: [1], defChecked: true
 
     getInput = (form, {inputGroup, onChange}={})->
       form.renderInput "id", "label", ref: "ref", onChange: onChange,\
@@ -226,13 +235,13 @@ describe "EventForm", ->
         startTime:   "10:00am"
         endTime:     "11:30am"
         checkedDays: [3]
-        defUntil: true
+        defChecked: true
       }
       @days = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
       @expected = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
       @restore = H.rewire EventForm,\
         UiConstants:
-          days: @days
+          DAYS: @days
           ids: EVENT_MODAL: "modal-id"
           selectors: EVENT_MODAL: "#modal-id"
 
@@ -254,7 +263,7 @@ describe "EventForm", ->
         expect(state.checkedDays.indexOf(day.props.value)).not.toEqual -1
 
     it 'renders the form with the correct days', ->
-      form = H.render EventForm, initialState: checkedDays: [1], defUntil: true
+      form = H.render EventForm, initialState: checkedDays: [1], defChecked: true
       daysDiv = H.findWithClass form, "days"
       days = daysDiv.props.children
 
@@ -270,6 +279,6 @@ describe "EventForm", ->
       assertRenderedState form, @state
 
     it 'updates form correctly when state is updated', ->
-      form = H.render EventForm, initialState: checkedDays: [], defUntil: true
+      form = H.render EventForm, initialState: checkedDays: [], defChecked: true
       form.setState @state, =>
         assertRenderedState form, @state

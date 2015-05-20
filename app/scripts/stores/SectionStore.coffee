@@ -22,19 +22,20 @@ removeSection = (sectionId)->
     else if removed.corequisiteOfId
       _.removeElement removed.corequisiteOfId
 
+
 class SectionStore extends Store
 
-  sections: ->
-    _.currentElements
+  sections: (id)->
+    _.currentElementsOr(id) or []
 
-  sectionEvents: ->
-    EventUtils.getSectionEvents _.currentElements
+  sectionEvents: (id)->
+    EventUtils.getSectionEvents @sections(id)
 
-  credits: ->
-    _.currentElements.reduce ((acum, section)-> acum + section.credits), 0.0
+  credits: (id)->
+    @sections(id).reduce ((acum, section)-> acum + section.credits), 0.0
 
-  count: ->
-    _.currentElements.length
+  count: (id)->
+    @sections(id).length
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -44,14 +45,15 @@ class SectionStore extends Store
         wait()
         _.setCurrent()
         @emitChange()
-      when ActionTypes.GET_SCHEDULES_SUCCESS
+      when ActionTypes.GET_SCHEDULES_SUCCESS, \
+           ActionTypes.UPDATE_SCHEDULES_SUCCESS
         wait()
         _.initElementsMap action.schedules
         _.setCurrent()
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         wait()
-        _.addSchedule action.schedule.id
+        _.updateSchedule action.schedule
         _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS

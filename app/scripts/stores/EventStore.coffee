@@ -5,7 +5,6 @@ ScheduleStore    = require './ScheduleStore'
 ChildStoreHelper = require '../utils/ChildStoreHelper'
 ApiUtils         = require '../utils/ApiUtils'
 EventUtils       = require '../utils/EventUtils'
-HelperUtils      = require '../utils/HelperUtils'
 DateUtils        = require '../utils/DateUtils'
 {ActionTypes}    = require '../constants/PlannerConstants'
 
@@ -17,7 +16,7 @@ _toRevert  = {}
 
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
-  events = HelperUtils.filter events, (ev)-> not(ev.dirtyAdd is true)
+  events = events.filter (ev)-> not(ev.dirtyAdd is true)
   events = events.map (ev)->
     delete ev.del if ev.del is true
     if ev.dirtyUpdate is true
@@ -71,17 +70,17 @@ changeColor = (eventId, color)->
 
 class EventStore extends Store
 
-  events: ->
-    _.currentElements
+  events: (id)->
+    _.currentElementsOr(id) or []
 
-  eventsExceptDirtyAdded: ->
-    HelperUtils.filter _.currentElements, (ev)-> not(ev.dirtyAdd is true)
+  eventsExceptDirtyAdded: (id)->
+    @events(id).filter (ev)-> not(ev.dirtyAdd is true)
 
-  eventsExceptDeleted: ->
-    HelperUtils.filter _.currentElements, (ev)-> not(ev.del is true)
+  eventsExceptDeleted: (id)->
+    @events(id).filter (ev)-> not(ev.del is true)
 
-  expandedEvents: ->
-    EventUtils.getScheduleEvents _.currentElements
+  expandedEvents: (id)->
+    EventUtils.getScheduleEvents @events(id)
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -98,7 +97,7 @@ class EventStore extends Store
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _.wait()
-        _.addSchedule action.schedule.id
+        _.updateSchedule action.schedule
         _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS

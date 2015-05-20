@@ -9,11 +9,12 @@ ChildStoreHelper = require '../utils/ChildStoreHelper'
 _ = new ChildStoreHelper(ScheduleStore, 'sectionColors')
 
 
-# TODO revisit this design
+# TODO Revisit this design
+# TODO Tests
 class SectionColorStore extends Store
 
-  colors: ->
-    _.currentElements
+  colors: (id)->
+    _.currentElementsOr id
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -28,7 +29,7 @@ class SectionColorStore extends Store
         _.setCurrent()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _.wait()
-        _.addSchedule action.schedule.id, {}
+        _.updateSchedule action.schedule
         _.setCurrent()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         _.wait()

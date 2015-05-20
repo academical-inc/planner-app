@@ -40,6 +40,9 @@ describe 'SectionStore', ->
       getAllSuccess:
         action:
           type: ActionTypes.GET_SCHEDULES_SUCCESS
+      updateAllSuccess:
+        action:
+          type: ActionTypes.UPDATE_SCHEDULES_SUCCESS
       add:
         action:
           type: ActionTypes.ADD_SECTION
@@ -55,8 +58,8 @@ describe 'SectionStore', ->
 
     @dispatch = SectionStore.dispatchCallback
     @current  = SectionStore.sections
-    @credits  = SectionStore.credits
-    @count    = SectionStore.count
+    @credits  = SectionStore.credits.bind SectionStore
+    @count    = SectionStore.count.bind SectionStore
     @childStoreHelper = childStoreHelper.bind null, @currentSchedId
     H.spyOn SectionStore, "emitChange"
     @restore = H.rewire SectionStore,
@@ -109,6 +112,23 @@ describe 'SectionStore', ->
       @dispatch @payloads.getAllSuccess
       expect(SectionStore.__get__("_").elementsMap).toEqual @sections
       expect(@current()).toEqual @sections.sch1
+
+
+  describe 'when UPDATE_SCHEDULES_SUCCESS received', ->
+
+    it 'updates sections correctly', ->
+      H.rewire SectionStore,
+        _: @childStoreHelper @sections, @sections.sch1
+      expect(@current()).toEqual @sections.sch1
+      expect(SectionStore.__get__("_").elementsMap).toEqual @sections
+      @sections.sch1[0].seats = available: 5
+      @sections.sch2[0].seats = available: 7
+      @payloads.updateAllSuccess.action.schedules = @schedules
+
+      @dispatch @payloads.updateAllSuccess
+      expect(@current()[0].seats).toEqual available: 5
+      expect(SectionStore.__get__("_").elementsMap.sch2[0].seats).toEqual \
+        available: 7
 
 
   describe 'when CREATE_SCHEDULE_SUCCESS received', ->

@@ -1,6 +1,7 @@
 
-React         = require 'react'
 $             = require 'jquery'
+React         = require 'react'
+I18n          = require '../utils/I18n'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
@@ -11,11 +12,11 @@ module.exports =
       accept:
         show: true
         type: "success"
-        text: "Save"
+        text: I18n.t "dialogs.save"
       cancel:
         show: true
         type: "danger"
-        text: "Cancel"
+        text: I18n.t "dialogs.cancel"
     btns = $.extend true, {}, defaults, btns
 
     btnAcceptProps =
@@ -48,6 +49,9 @@ module.exports =
 
   hide: ->
     $(@getDOMNode()).modal "hide"
+
+  componentDidMount: ->
+    $(@getDOMNode()).on 'shown.bs.modal', @onShown if @onShown?
 
   renderModal: (modalId, header, body, buttons)->
     buttons = @renderButtons buttons

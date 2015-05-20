@@ -12,6 +12,7 @@ describe 'ResultItem', ->
       courseCode: "MATE1205"
       teacherNames: ["Alfonso Ruiz", "German Bravo"]
       departments: [{name: "Mathematics"}]
+      seats: available: 5
     @query = "Alg"
     @item = H.render ResultItem,
       section: @sec

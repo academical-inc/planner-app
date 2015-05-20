@@ -4,13 +4,18 @@ Moment        = require 'moment'
 
 class DateUtils
 
-  # Assumes MO is 1 and SU is 7
+  @date: (date)->
+    if typeof date == 'string'
+      Moment.parseZone date
+    else
+      Moment date
 
+  # Assumes MO is 1 and SU is 7
   @getDayStr: (dayNo)->
-    UiConstants.days[dayNo-1]
+    UiConstants.DAYS[dayNo-1]
 
   @getDayNo: (dayStr)->
-    UiConstants.days.indexOf(dayStr) + 1
+    UiConstants.DAYS.indexOf(dayStr) + 1
 
   @now: ->
     Moment.utc()
@@ -22,11 +27,7 @@ class DateUtils
     date.utc()
 
   @toUtcOffset: (date, offset, keepTime=false)->
-    res = if typeof date == 'string'
-      Moment.parseZone date
-    else
-      Moment date
-    res.utcOffset offset, keepTime
+    @date(date).utcOffset offset, keepTime
 
   @inUtcOffset: (date, offset)->
     @toUtcOffset date, offset, true
@@ -47,14 +48,14 @@ class DateUtils
 
   @setDay: (date, day)->
     throw new Error("Week day must be between [1-7]") if day not in [1..7]
-    date = Moment date
+    date = @date date
     # Need to do this because momentjs handles SU as 0
     day  = if date.day() == 0 and day == 7 then 0 else day
     date.day day
     date
 
   @setWeek: (date, week)->
-    date = Moment date
+    date = @date date
     date.week week
     date
 

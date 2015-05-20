@@ -9,13 +9,40 @@ describe "DateUtils", ->
   beforeEach ->
     @restore = H.rewire DateUtils,\
       UiConstants:
-        days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+        DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
     @utils = DateUtils
 
   afterEach ->
     @restore()
 
-  describe 'toUtcOffset', ->
+
+  describe '.date', ->
+
+    it 'returns correct moment obj with time zone information when string', ->
+      res = @utils.date "2015-03-10T08:00:00-05:00"
+      expect(res.utcOffset()).toEqual -300
+      expect(res.year()).toEqual 2015
+      expect(res.month()).toEqual 2
+      expect(res.date()).toEqual 10
+      expect(res.hours()).toEqual 8
+      expect(res.minutes()).toEqual 0
+      expect(res.seconds()).toEqual 0
+      expect(res.milliseconds()).toEqual 0
+
+    it 'returns correct moment obj when moment obj provided', ->
+      date = Moment.parseZone("2015-03-10T08:00+00:00")
+      res = @utils.date date
+      expect(res.utcOffset()).toEqual 0
+      expect(res.year()).toEqual 2015
+      expect(res.month()).toEqual 2
+      expect(res.date()).toEqual 10
+      expect(res.hours()).toEqual 8
+      expect(res.minutes()).toEqual 0
+      expect(res.seconds()).toEqual 0
+      expect(res.milliseconds()).toEqual 0
+
+
+  describe '.toUtcOffset', ->
 
     it 'returns date in specified utcOffset also changing time when
     specifying a moment', ->
@@ -47,7 +74,7 @@ describe "DateUtils", ->
       expect(res.seconds()).toEqual 0
       expect(res.milliseconds()).toEqual 0
 
-  describe 'inUtcOffset', ->
+  describe '.inUtcOffset', ->
 
     it 'returns date in specified utcOffset whtout changing time when
     specifying a moment', ->

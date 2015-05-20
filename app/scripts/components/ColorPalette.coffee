@@ -16,12 +16,12 @@ ColorPalette = React.createClass(
       onClick: handleColorSelect.bind null, color if handleColorSelect?
 
   render: ->
-    count = UiConstants.colors.length
+    count = UiConstants.COLORS.length
     R.div className: "pla-color-palette",
       R.div className: "color-row",
-        (@renderColor color for color in UiConstants.colors[0...count/2])
+        (@renderColor color for color in UiConstants.COLORS[0...count/2])
       R.div className: "color-row",
-        (@renderColor color for color in UiConstants.colors[count/2...count])
+        (@renderColor color for color in UiConstants.COLORS[count/2...count])
 
 )
 

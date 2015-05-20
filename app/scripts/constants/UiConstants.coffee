@@ -1,9 +1,12 @@
 
 ids =
   SCHEDULE_LIST: 'pla-schedule-list'
-  EVENT_MODAL: 'pla-event-modal'
-  ERROR_MODAL: 'pla-error-modal'
   SEARCH_FILTERS: 'pla-search-filters'
+  WEEK_CALENDAR: 'pla-week-calendar'
+  EVENT_MODAL: 'pla-event-modal'
+  SUMMARY_MODAL: 'pla-summary-modal'
+  SHARE_MODAL: 'pla-share-modal'
+  ERROR_MODAL: 'pla-error-modal'
 
 module.exports =
   media:
@@ -14,21 +17,26 @@ module.exports =
   ids: ids
   selectors:
     SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
-    EVENT_MODAL: "##{ids.EVENT_MODAL}"
-    ERROR_MODAL: "##{ids.ERROR_MODAL}"
     SEARCH_FILTERS: "##{ids.SEARCH_FILTERS}"
+    WEEK_CALENDAR: "##{ids.WEEK_CALENDAR}"
+    EVENT_MODAL: "##{ids.EVENT_MODAL}"
+    SUMMARY_MODAL: "##{ids.SUMMARY_MODAL}"
+    SHARE_MODAL: "##{ids.SHARE_MODAL}"
+    ERROR_MODAL: "##{ids.ERROR_MODAL}"
   htmlEntities:
     TIMES: "\u00d7"
   sectionSeatsMap:
     UPPER: bound: 20, className: "success"
     LOWER: bound: 10, className: "warning"
     ZERO:  className: "danger"
-  dropdown:
-    MAX_INPUT_LENGTH: 28
-  defaultSectionColor: "#2daae1"
-  defaultEventColor: "#6db533"
-  days: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
-  colors: [
+  search:
+    MIN_LEN: 1
+    MAX_RESULTS: 30
+  keys:
+    ENTER: 13
+    ESC: 27
+  DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
+  COLORS: [
     "#2daae1"
     "#ea4e59"
     "#6db533"
@@ -42,7 +50,7 @@ module.exports =
     "#ef1616"
     "#9fde25"
   ]
-  search:
-    minLen: 1
-    maxResults: 30
+  DEFAULT_SECTION_COLOR: "#2daae1"
+  DEFAULT_EVENT_COLOR: "#6db533"
+  MAX_SCHEDULE_NAME_LENGTH: 28
 

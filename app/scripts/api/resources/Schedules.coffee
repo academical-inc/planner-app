@@ -6,6 +6,11 @@ class Schedules extends Resource
 
   path: "schedules"
 
+  retrieve: Resource.createApiCall
+    method: "get"
+    path: "{id}"
+    requiredParams: ["id"]
+
   create: Resource.createApiCall
     method: "post"
 

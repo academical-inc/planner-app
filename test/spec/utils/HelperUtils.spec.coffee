@@ -45,27 +45,6 @@ describe 'HelperUtils', ->
       expect(res).toBeNull()
       expect(idx).toBeNull()
 
-
-  describe '.filter', ->
-
-    beforeEach ->
-      @arr = [34, 2, 2, {data: 5}, {data: 6}, {data: 5}]
-
-    it 'finds all elements that match test function', ->
-      res = _.filter @arr, (datum)-> datum is 2
-      expect(res).toEqual [2, 2]
-      res = _.filter @arr, (datum)-> datum.data is 5
-      expect(res).toEqual [{data: 5}, {data: 5}]
-
-    it 'returns empty array if no values found', ->
-      res = _.filter @arr, (datum)-> datum is "poof"
-      expect(res).toEqual []
-
-    it 'returns empty array if array is empty', ->
-      res = _.filter [], (datum)-> datum is 5
-      expect(res).toEqual []
-
-
   describe '.removeAt', ->
 
     it 'removes element at specified index and modifies original array', ->
@@ -95,6 +74,90 @@ describe 'HelperUtils', ->
       expect(removed).toBeNull()
       expect(@arr).toEqual ["some", 34, 5, {thing: "5"}, 34]
 
+  describe '.getNested', ->
+
+    beforeEach ->
+      @obj = k: {k1: 1, j: {k3: 3}}, k2: 2
+
+    it 'gets value for nested key', ->
+      expect(_.getNested(@obj, "k.k1")).toEqual 1
+      expect(_.getNested(@obj, "k.j.k3")).toEqual 3
+
+    it 'gets value for normal key', ->
+      expect(_.getNested(@obj, "k2")).toEqual 2
+
+    it 'gets value for key when value is null or undefined', ->
+      @obj.k2 = undefined
+      @obj.k.k1 = null
+      @obj.k.j.k3 = null
+      expect(_.getNested(@obj, "k2")).toEqual undefined
+      expect(_.getNested(@obj, "k.k1")).toEqual null
+      expect(_.getNested(@obj, "k.j.k3")).toEqual null
+
+    it 'returns null if key not found', ->
+      expect(_.getNested(@obj, "k.k2.k5")).toBe null
+      expect(_.getNested(@obj, "k.k2")).toBe null
+      expect(_.getNested(@obj, "k3")).toBe null
+
+  describe '.setNested', ->
+
+    beforeEach ->
+      @obj = k: {k1: 1, j: {k3: 3}}, k2: 2
+
+    it 'should set value when key exists', ->
+      _.setNested @obj, "k.k1", 100
+      expect(_.getNested(@obj, "k.k1")).toEqual 100
+
+    it 'should set value when key does not exist', ->
+      _.setNested @obj, "k.k4.k5", 100
+      expect(_.getNested(@obj, "k.k4.k5")).toEqual 100
+
+  describe '.objInclude', ->
+
+    beforeEach ->
+      @obj = k1: 1, k3: 3
+
+    it 'filters obj correctly when keys to include is array', ->
+      keys = ["k1", "k2"]
+      expect(_.objInclude(@obj, keys)).toEqual k1: 1
+
+    it 'filters obj correctly when keys to include is object', ->
+      keys = k1: null, k2: null
+      expect(_.objInclude(@obj, keys)).toEqual k1: 1
+
+    it 'filters obj correctly when keys are nested', ->
+      @obj.k1 = {k4: 4, k5: 5}
+      @obj.k2 = 2
+      keys = ["k1.k4", "k2"]
+      expect(_.objInclude(@obj, keys)).toEqual k1: {k4: 4}, k2: 2
+
+    it 'filters obj correctly when keys have null values', ->
+      @obj.k1 = {k4: undefined, k5: 5}
+      @obj.k2 = null
+      keys = ["k1.k4", "k2"]
+      expect(_.objInclude(@obj, keys)).toEqual k1: {k4: undefined}, k2: null
+
+    describe 'when defaults present', ->
+
+      it 'filters obj correctly when defaults are values', ->
+        keys = k1: null, k2: 2
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, k2: 2
+
+      it 'filters obj correctly when defaults are functions', ->
+        defFunc = H.spy "defFunc", retVal: 2
+        keys = k1: null, k2: defFunc
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, k2: 2
+        expect(defFunc).toHaveBeenCalledWith @obj
+
+      it 'filters obj correctly when nested defaults', ->
+        @obj.kN = {kN1: "n1", kN2: "n2"}
+        keys = k1: null, "kN.kN1": "defN1", "kN.kN3": "defN3"
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, kN: {kN1: "n1", kN3: "defN3"}
+
+      it 'filters obj correctly when defaults are overrided', ->
+        @obj.k2 = "new val"
+        keys = k1: null, k2: 2
+        expect(_.objInclude(@obj, keys)).toEqual k1: 1, k2: "new val"
 
   describe '.findAllRegexMatches', ->
 

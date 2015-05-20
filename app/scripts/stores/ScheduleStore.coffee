@@ -1,9 +1,11 @@
 
-Store          = require './Store'
-I18n           = require '../utils/I18n'
-_              = require '../utils/HelperUtils'
-PlannerActions = require '../actions/PlannerActions'
-{ActionTypes}  = require '../constants/PlannerConstants'
+Store           = require './Store'
+_               = require '../utils/HelperUtils'
+I18n            = require '../utils/I18n'
+ApiUtils        = require '../utils/ApiUtils'
+ActionUtils     = require '../utils/ActionUtils'
+ScheduleFactory = require '../factories/ScheduleFactory'
+{ActionTypes}   = require '../constants/PlannerConstants'
 
 
 # Private
@@ -93,9 +95,28 @@ revertRemovedSchedule = (id)->
   delete toRemove.del if toRemove?
 
 createSchedule = ->
-  name = I18n.t "scheduleList.defaultName"
-  newSchedule = PlannerActions.createSchedule name, dispatchInitial: false
+  newSchedule = ScheduleFactory.create name: I18n.t "scheduleList.defaultName"
+  ApiUtils.createSchedule newSchedule, ActionUtils.handleServerResponse(
+    # TODO Duplication!! Almost unavoidable
+    ActionTypes.CREATE_SCHEDULE_SUCCESS
+    ActionTypes.CREATE_SCHEDULE_FAIL
+    (response)-> schedule: response
+    -> schedule: newSchedule
+  )
   addSchedule newSchedule
+
+updateScheduleName = (id, name)->
+  schedule = _.find _schedules, (el)-> el.id is id
+  schedule.prevName = schedule.name
+  schedule.dirty = true
+  schedule.name = name
+
+revertNameUpdate = (id)->
+  schedule = _.find _schedules, (el)-> el.id is id
+  if schedule? and schedule.dirty is true and schedule.prevName?
+    schedule.name = schedule.prevName
+    delete schedule.dirty
+    delete schedule.prevName
 
 
 class ScheduleStore extends Store
@@ -103,8 +124,11 @@ class ScheduleStore extends Store
   all: ->
     _schedules
 
-  current: ->
-    _current
+  current: (id)->
+    if id?
+      _.find _schedules, (el)-> el.id is id
+    else
+      _current
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -134,6 +158,15 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         initSchedules action.schedules
+        @emitChange()
+      when ActionTypes.UPDATE_SCHEDULE_NAME
+        updateScheduleName action.scheduleId, action.name
+        @emitChange()
+      when ActionTypes.SAVE_SCHEDULE_SUCCESS
+        updateDirtySchedule action.schedule
+        @emitChange()
+      when ActionTypes.SAVE_SCHEDULE_FAIL
+        revertNameUpdate action.scheduleId
         @emitChange()
 
 

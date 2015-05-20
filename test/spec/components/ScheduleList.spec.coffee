@@ -87,4 +87,3 @@ describe "ScheduleList", ->
       expect(state).toEqual
         current: "spinner"
         schedules: []
-

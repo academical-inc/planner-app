@@ -71,7 +71,7 @@ describe 'Dropdown', ->
   describe '#handleInputChange', ->
 
     beforeEach ->
-      @restore = H.rewire Dropdown, MAX_INPUT_LENGTH: 5
+      @restore = H.rewire Dropdown, UiConstants: MAX_SCHEDULE_NAME_LENGTH: 5
       @dd = H.render Dropdown,
         rootTag: H.mockComponent()
         items: []
@@ -177,6 +177,20 @@ describe 'Dropdown', ->
       expect(@dd.getItem.calls.allArgs()).toEqual [
         [data[0]]
         [data[1]]
+      ]
+
+    it 'renders dropdown items correctly when dividers present', ->
+      data = [
+        {id: "k1", val: "v1"}
+        {divider: true}
+        {id: "k2", val: "v2"}
+      ]
+      items = @dd.renderItems data
+      expect(items.length).toEqual 3
+      expect(items[1].props.className).toEqual 'divider'
+      expect(@dd.getItem.calls.allArgs()).toEqual [
+        [data[0]]
+        [data[2]]
       ]
 
 

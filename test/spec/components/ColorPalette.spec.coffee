@@ -8,7 +8,7 @@ describe "ColorPalette", ->
   describe "#render", ->
 
     beforeEach ->
-      @restore = H.rewire ColorPalette, UiConstants: colors: ["#fff", "#000"]
+      @restore = H.rewire ColorPalette, UiConstants: COLORS: ["#fff", "#000"]
       @handler = H.spy "handler"
       @palette = H.render ColorPalette, handleColorSelect: @handler
       @colors = H.scryWithClass @palette, "color"

@@ -12,10 +12,7 @@ class ChildStoreHelper
       @updateSchedule schedule
 
   setCurrent: (scheduleId=@store.current().id)->
-    @currentElements = @elementsMap[scheduleId]
-
-  addSchedule: (scheduleId, emptyEls=[])->
-    @elementsMap[scheduleId] = emptyEls
+    @currentElements = @elementsFor scheduleId
 
   updateSchedule: (schedule)->
     @setElements schedule.id, schedule[@collection]
@@ -34,11 +31,17 @@ class ChildStoreHelper
   findElement: (elementId)->
     _.findWithIdx @currentElements, (el)-> el.id == elementId
 
-  setElements: (scheduleId, elements)->
-    @elementsMap[scheduleId] = elements or []
+  setElements: (scheduleId, elements=[])->
+    @elementsMap[scheduleId] = elements
 
   elementsFor: (scheduleId)->
     @elementsMap[scheduleId]
+
+  currentElementsOr: (id)->
+    if id?
+      @elementsFor id
+    else
+      @currentElements
 
   wait: (stores=[])->
     PlannerDispatcher.waitFor [@store.dispatchToken].concat stores

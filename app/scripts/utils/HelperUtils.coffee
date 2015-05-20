@@ -12,9 +12,6 @@ class HelperUtils
       return [val, idx] if test val
     return [null, null]
 
-  @filter: (arr, test)->
-    (val for val in arr when test(val))
-
   @removeAt: (arr, idx)->
     return null if not idx? or idx >= arr.length
     arr.splice(idx, 1)[0]
@@ -23,6 +20,45 @@ class HelperUtils
     [el, idx] = @findWithIdx arr, test
     @removeAt arr, idx
     el
+
+  @getNested: (obj, key)->
+    val = obj
+    for part in key.split(".")
+      return null if not val.hasOwnProperty part
+      val = val[part]
+    val
+
+  # TODO Test
+  @hasNested: (obj, key)->
+    val = obj
+    for part in key.split(".")
+      return false if not val.hasOwnProperty part
+      val = val[part]
+    true
+
+  @setNested: (obj, key, val)->
+    parts = key.split(".")
+    last  = parts[parts.length-1]
+    parts[...-1].forEach (part)->
+      obj[part] = {} if not obj[part]?
+      obj = obj[part]
+    obj[last] = val
+
+  @objInclude: (obj, include)->
+    keyList  = if Array.isArray(include) then include else Object.keys(include)
+    filtered = {}
+
+    for key in keyList
+      defVal = include[key]
+      if @hasNested obj, key
+        @setNested filtered, key, @getNested(obj, key)
+      else if defVal?
+        defVal = if typeof defVal == 'function'
+          defVal obj
+        else
+          defVal
+        @setNested filtered, key, defVal
+    filtered
 
   # https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/
   # Regular_Expressions#Using_Special_Characters
@@ -35,6 +71,14 @@ class HelperUtils
       indices.push result.index
     indices
 
+  # TODO Test
+  # https://github.com/domchristie/humps/blob/master/humps.js#L49
+  @camelize: (str)->
+    str = str.replace /[\-_\s]+(.)?/g, (match, chr)->
+      if chr then chr.toUpperCase() else ''
+    # Ensure 1st char is always lowercase
+    str.replace /^([A-Z])/, (match, chr)->
+      if chr then chr.toLowerCase() else ''
 
 
 module.exports = HelperUtils

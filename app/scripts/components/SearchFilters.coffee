@@ -5,6 +5,7 @@ I18nMixin     = require '../mixins/I18nMixin'
 R             = React.DOM
 
 
+# TODO Tests
 SearchFilters = React.createClass(
 
   mixins: [I18nMixin]

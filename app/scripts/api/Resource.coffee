@@ -1,7 +1,7 @@
 
 # TODO change jquery for another lib
 $        = require 'jquery'
-Humps    = require 'humps'
+Utils    = require './Utils'
 Url      = require './Url'
 ApiError = require './ApiError'
 request  = require './request'
@@ -57,7 +57,7 @@ class Resource
     else
       {}
     formatted.camelize = true
-    Humps.decamelizeKeys formatted
+    Utils.underscoredKeys formatted
 
   @_responseHandler: (cb)->
     (error, res)->

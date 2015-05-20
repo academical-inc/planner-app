@@ -1,6 +1,6 @@
 
-React         = require 'react'
 $             = require 'jquery'
+React         = require 'react'
 ModalMixin    = require '../mixins/ModalMixin'
 I18nMixin     = require '../mixins/I18nMixin'
 ErrorStore    = require '../stores/ErrorStore'
@@ -44,7 +44,7 @@ ErrorDialog = React.createClass(
       @t "errorDialog.header"
       @renderBody()
       accept: show: false
-      cancel: text: @t "errorDialog.ok"
+      cancel: text: @t "dialogs.ok"
     )
 
 )

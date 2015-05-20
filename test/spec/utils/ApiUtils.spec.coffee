@@ -35,36 +35,3 @@ describe 'ApiUtils', ->
       ApiUtils.init()
       expect(@api.setHost).toHaveBeenCalledWith "API_HOST", "API_PROTOCOL"
       expect(ApiUtils.__get__("_currentSchoolNickname")).toEqual "school"
-
-
-  describe '.data.newSchedule', ->
-
-    it 'creates new schedule correctly', ->
-      @api.data.newSchedule = H.spy "s3"
-      ApiUtils.data.newSchedule "Name"
-      expect(@api.data.newSchedule).toHaveBeenCalledWith(
-        "Name"
-        "stud1"
-        "school1"
-        @terms[0]
-      )
-
-
-  describe '.data.newEvent', ->
-
-    it 'creates new event correctly', ->
-      @api.data.newEvent = H.spy "s3"
-      start = Moment.parseZone "2015-03-10T10:00:00-05:00"
-      end = Moment.parseZone "2015-03-10T11:00:00-05:00"
-      ApiUtils.data.newEvent "Name", start, end, ["Mo"]
-      expect(@api.data.newEvent).toHaveBeenCalledWith(
-        "Name"
-        "2015-03-10T10:00:00-05:00"
-        "2015-03-10T11:00:00-05:00"
-        "America/Bogota"
-        days: ["Mo"]
-        repeatUntil: "2015-05-01T10:00:00-05:00"
-        location: undefined
-        description: undefined
-        color: undefined
-      )

@@ -105,8 +105,8 @@ WeekCalendar = React.createClass(
     end   = DateUtils.inUtcOffset event.end, _utcOffset()
     PlannerActions.updateEvent event.id, start, end, delta.days()
 
-  handleWeekChange: (fcView)->
-    PlannerActions.changeWeek fcView.start
+  handleSetWeek: (fcView)->
+    PlannerActions.setWeek fcView.start
 
   componentDidMount: ->
     @cal = $(@getDOMNode())
@@ -117,8 +117,8 @@ WeekCalendar = React.createClass(
       preview:
         events: []
         eventDataTransform: @previewEventDataTransform
-        backgroundColor: UiConstants.defaultSectionColor
-        borderColor: UiConstants.defaultSectionColor
+        backgroundColor: UiConstants.DEFAULT_SECTION_COLOR
+        borderColor: UiConstants.DEFAULT_SECTION_COLOR
       events:
         events: []
         eventDataTransform: @eventDataTransform
@@ -137,7 +137,8 @@ WeekCalendar = React.createClass(
       eventRender: @renderEvent
       select: @handleSelect
       eventDrop: @handleEventUpdate
-      viewRender: @handleWeekChange
+      eventResize: @handleEventUpdate
+      viewRender: @handleSetWeek
     )
 
   renderEvent: (event, jqElement)->
@@ -156,7 +157,7 @@ WeekCalendar = React.createClass(
     jqElement
 
   render: ->
-    R.div className: 'pla-week-calendar'
+    R.div className: 'pla-week-calendar', id: UiConstants.ids.WEEK_CALENDAR
 
 )
 

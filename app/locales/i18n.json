@@ -16,10 +16,6 @@
         "{{errMsg}}"
       ]
     },
-    "errorDialog": {
-      "header": "Error!",
-      "ok": "OK"
-    },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
       "addBtn": "Add"
@@ -30,11 +26,10 @@
     },
     "options": {
       "summary": "Summary",
-      "changeName": "Change name",
       "duplicate": "Duplicate Schedule",
       "share": "Share your schedule",
-      "calendar": "Export Calendar",
-      "image": "Export Image"
+      "ics": "Export to ICS",
+      "image": "Export to Image"
     },
     "profile": {
       "logout": "Log Out"
@@ -76,7 +71,23 @@
       "defaultUntil": "The end of this school period",
       "or": "or",
       "untilDate": "Pick a date"
-    }
+    },
+    "dialogs": {
+      "ok": "OK",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "summaryDialog": {
+      "header": "Schedule Summary"
+    },
+    "shareDialog": {
+      "header": "Share your schedule with friends!"
+    },
+    "errorDialog": {
+      "header": "Error!"
+    },
+    "empty": "N/A",
+    "copyOf": "Copy of {{name}}"
   },
   "es": {
     "errors": {
@@ -95,10 +106,6 @@
         "{{errMsg}}"
       ]
     },
-    "errorDialog": {
-      "header": "Error!",
-      "ok": "OK"
-    },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
       "addBtn": "Agregar"
@@ -109,11 +116,10 @@
     },
     "options": {
       "summary": "Resumen",
-      "changeName": "Cambiar nombre",
       "duplicate": "Duplicar Horario",
-      "share": "Compartir horario",
-      "calendar": "Exportar Calendario",
-      "image": "Exportar Imagen"
+      "share": "Comparte tu horario",
+      "ics": "Exportar a ICS",
+      "image": "Exportar a Imagen"
     },
     "profile": {
       "logout": "Salir"
@@ -155,6 +161,22 @@
       "defaultUntil": "El final del periodo académico actual",
       "or": "o",
       "untilDate": "Elige una fecha"
-    }
+    },
+    "dialogs": {
+      "ok": "OK",
+      "save": "Guardar",
+      "cancel": "Cancelar"
+    },
+    "summaryDialog": {
+      "header": "Resumen del Horario"
+    },
+    "shareDialog": {
+      "header": "Comparte tu horario con amigos!"
+    },
+    "errorDialog": {
+      "header": "Error!"
+    },
+    "empty": "N/A",
+    "copyOf": "Copia de {{name}}"
   }
 }

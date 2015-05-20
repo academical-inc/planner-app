@@ -22,7 +22,7 @@ ScheduleList = React.createClass(
     schedules: ScheduleStore.all()
 
   onChange: (state=@getState())->
-    @setState @getState()
+    @setState state
 
   addSchedule: (name)->
     PlannerActions.createSchedule name
