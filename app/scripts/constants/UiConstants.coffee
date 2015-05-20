@@ -5,6 +5,7 @@ ids =
   WEEK_CALENDAR: 'pla-week-calendar'
   EVENT_MODAL: 'pla-event-modal'
   SUMMARY_MODAL: 'pla-summary-modal'
+  SHARE_MODAL: 'pla-share-modal'
   ERROR_MODAL: 'pla-error-modal'
 
 module.exports =
@@ -20,6 +21,7 @@ module.exports =
     WEEK_CALENDAR: "##{ids.WEEK_CALENDAR}"
     EVENT_MODAL: "##{ids.EVENT_MODAL}"
     SUMMARY_MODAL: "##{ids.SUMMARY_MODAL}"
+    SHARE_MODAL: "##{ids.SHARE_MODAL}"
     ERROR_MODAL: "##{ids.ERROR_MODAL}"
   htmlEntities:
     TIMES: "\u00d7"

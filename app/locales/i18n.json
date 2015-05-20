@@ -80,6 +80,9 @@
     "summaryDialog": {
       "header": "Schedule Summary"
     },
+    "shareDialog": {
+      "header": "Share your schedule with friends!"
+    },
     "errorDialog": {
       "header": "Error!"
     },
@@ -166,6 +169,9 @@
     },
     "summaryDialog": {
       "header": "Resumen del Horario"
+    },
+    "shareDialog": {
+      "header": "Comparte tu horario con amigos!"
     },
     "errorDialog": {
       "header": "Error!"

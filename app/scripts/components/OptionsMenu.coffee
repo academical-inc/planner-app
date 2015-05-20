@@ -31,6 +31,7 @@ OptionsMenu = React.createClass(
     switch item.id
       when "opt1" then @openSummaryDialog()
       when "opt2" then @duplicateSchedule()
+      when "opt3" then @openShareDialog()
       when "opt4" then @exportICS()
       when "opt5" then @exportImage()
 
@@ -39,6 +40,11 @@ OptionsMenu = React.createClass(
 
   duplicateSchedule: ->
     PlannerActions.duplicateSchedule()
+
+  openShareDialog: ->
+    # TODO Dispatching an action and creating a store seems like overkill for
+    # this. Leaving like this for now
+    $(UiConstants.selectors.SHARE_MODAL).modal 'show'
 
   exportICS: ->
     PlannerActions.exportToICS ScheduleStore.current().id
