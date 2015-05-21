@@ -71,7 +71,7 @@ Dropdown = React.createClass(
             placeholder: @props.addItemPlaceholder
             onChange: @handleInputChange
         R.button
-          className: 'btn btn-info btn-xs'
+          className: 'btn btn-success btn-xs'
           type: "submit"
           disabled: @state.buttonDisabled
           @t "dropdown.addBtn"
