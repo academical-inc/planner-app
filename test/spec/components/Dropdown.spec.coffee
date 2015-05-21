@@ -70,36 +70,83 @@ describe 'Dropdown', ->
 
   describe '#handleInputChange', ->
 
-    beforeEach ->
-      @restore = H.rewire Dropdown, UiConstants: MAX_SCHEDULE_NAME_LENGTH: 5
-      @dd = H.render Dropdown,
-        rootTag: H.mockComponent()
-        items: []
-        itemType: H.mockComponent()
-        handleItemAdd: ->
-      H.spyOn @dd, "setState"
+    describe 'when maxInputLength provided', ->
 
-    afterEach ->
-      @restore()
+      beforeEach ->
+        @dd = H.render Dropdown,
+          rootTag: H.mockComponent()
+          items: []
+          itemType: H.mockComponent()
+          handleItemAdd: ->
+        H.spyOn @dd, "setState"
 
-    it 'disables button if input is >= max allowed length', ->
-      input = @dd.refs.itemName.getDOMNode()
-      input.value = "12345"
-      @dd.handleInputChange()
-      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
-      input.value = "123456789"
-      @dd.handleInputChange()
-      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+      it 'should have add button disabled by default', ->
+        expect(@dd.state.buttonDisabled).toBe true
 
-    it 'enables button otherwise', ->
-      input = @dd.refs.itemName.getDOMNode()
-      input.value = "1234"
-      @dd.handleInputChange()
-      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
-      @dd.setState.calls.reset()
-      input.value = ""
-      @dd.handleInputChange()
-      expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
+      it 'disables button if input length is 0', ->
+        input = @dd.refs.itemName.getDOMNode()
+        input.value = ""
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+
+      it 'enables button otherwise', ->
+        input = @dd.refs.itemName.getDOMNode()
+
+        input.value = "123456"
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
+
+        @dd.setState.calls.reset()
+
+        input.value = "123456789999999999999999999999999999999999999999"
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
+
+    describe 'when maxInputLength provided', ->
+
+      beforeEach ->
+        @dd = H.render Dropdown,
+          rootTag: H.mockComponent()
+          items: []
+          itemType: H.mockComponent()
+          handleItemAdd: ->
+          maxInputLength: 5
+        H.spyOn @dd, "setState"
+
+      it 'should have add button disabled by default', ->
+        expect(@dd.state.buttonDisabled).toBe true
+
+      it 'disables button if input is > max allowed length', ->
+        input = @dd.refs.itemName.getDOMNode()
+
+        input.value = "123456"
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+
+        @dd.setState.calls.reset()
+
+        input.value = "123456789"
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+
+      it 'disables button if input length is 0', ->
+        input = @dd.refs.itemName.getDOMNode()
+        input.value = ""
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: true
+
+      it 'enables button otherwise', ->
+        input = @dd.refs.itemName.getDOMNode()
+
+        input.value = "12345"
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
+
+        @dd.setState.calls.reset()
+
+        input.value = "1234"
+        @dd.handleInputChange()
+        expect(@dd.setState).toHaveBeenCalledWith buttonDisabled: false
 
 
   describe '#getItem', ->

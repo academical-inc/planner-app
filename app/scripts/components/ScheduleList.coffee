@@ -61,6 +61,7 @@ ScheduleList = React.createClass(
       itemType: ScheduleItem
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
       closeOnAdd: false
+      maxInputLength: UiConstants.MAX_SCHEDULE_NAME_LENGTH
       handleItemAdd: @addSchedule
       handleItemSelected: @openSchedule
       handleItemDelete: @deleteSchedule

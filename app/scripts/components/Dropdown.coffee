@@ -5,7 +5,6 @@ ClickOutside  = require 'react-onclickoutside'
 Classnames    = require 'classnames'
 I18nMixin     = require '../mixins/I18nMixin'
 FormMixin     = require '../mixins/FormMixin'
-{UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
 
@@ -24,7 +23,7 @@ Dropdown = React.createClass(
     $(@getDOMNode()).removeClass "open"
 
   getInitialState: ->
-    buttonDisabled: false
+    buttonDisabled: true
 
   formFields: ->
     ["itemName"]
@@ -44,7 +43,9 @@ Dropdown = React.createClass(
 
   handleInputChange: (e)->
     val = @refs.itemName.getDOMNode().value.trim()
-    if val.length >= UiConstants.MAX_SCHEDULE_NAME_LENGTH
+    if val.length is 0
+      @setState buttonDisabled: true
+    else if @props.maxInputLength? and val.length > @props.maxInputLength
       @setState buttonDisabled: true
     else
       @setState buttonDisabled: false
