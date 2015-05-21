@@ -35,6 +35,16 @@ body {
     font-size: 27px;
   }
 }
+
+/* Modals */
+.modal-backdrop {
+  background-color: $white;
+
+  &.in {
+    opacity: 0.8;
+  }
+}
+
 /* Icons */
 i {
   cursor: pointer;
