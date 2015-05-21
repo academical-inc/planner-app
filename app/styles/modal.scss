@@ -38,11 +38,26 @@
 
     .modal-body {
       padding: 1.1em 1.5em;
+
+      .table {
+        margin-bottom: 0px;
+      }
+
+      .pla-summary-dialog {
+        color: $dark;
+        font-size: .9em;
+        text-align: center;
+
+        th {
+          text-align: center;
+        }
+      }
+
     }
 
     .modal-footer {
       border-top: none;
-      padding: 1.6em 1.9em;
+      padding: 0.7em 1.9em 1.6em 1.9em;
       font-size: .8em;
 
       .btn-danger {
@@ -54,4 +69,6 @@
     }
 
   }
+
+
 }

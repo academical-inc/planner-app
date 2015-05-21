@@ -2,7 +2,7 @@
 .pla-search-bar {
 
   margin-top: 13%;
-  margin-bottom: 15%;
+  margin-bottom: 9%;
   position: relative;
 
 
@@ -64,10 +64,10 @@
     &__suggestions {
       //Changes
       background-color: $academical-blue-filter;
-      max-height: 77.5vh;
+      height: 77.5vh;
       top: 32px;
-      width: 157%;
-      left: -7%;
+      width: 25vw;
+      left: -8%;
       color: $white;
       border: 0px solid $border-color;
       //Default
@@ -114,7 +114,7 @@
 
     //Scrollbar Style
     ::-webkit-scrollbar {
-      width: 15px;
+      width: 12px;
     }
     ::-webkit-scrollbar-track {
       background-color: $academical-blue-sidebar;

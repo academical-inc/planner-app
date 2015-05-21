@@ -19,9 +19,13 @@ WeekControl = React.createClass(
 
   render: ->
     R.div className: 'pla-calendar-control',
-      R.button onClick: @handlePrev, '<'
+      R.button
+        onClick: @handlePrev
+        R.img src: '/images/previous_arrow.png'
       R.button onClick: @handleToday, 'Today'
-      R.button onClick: @handleNext, '>'
+      R.button
+        onClick: @handleNext
+        R.img src: '/images/next_arrow.png'
 
 )
 

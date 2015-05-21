@@ -8,16 +8,22 @@
     padding-top: 6px;
     padding-bottom: 6px;
   }
+
   .dropdown-menu {
     li {
       margin-left: 0%;
       border: 0px;
     i {
-        margin-right: 4%
+        color: $dark;
       }
     }
     .divider {
       background-color: #e5e5e5;
+    }
+    .pla-options-item{
+      span {
+          margin-left: 0.5em;
+      }
     }
   }
 

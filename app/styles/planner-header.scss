@@ -3,6 +3,10 @@
 
   height: 11%;
 
+  .container-navbar{
+    margin-top: 1.7%;
+  }
+
   .navbar {
     border: none;
     padding: 0;
@@ -24,8 +28,7 @@
   }
 
   .navbar-dropdowns {
-    margin-top: 1.7%;
-    width: 300px;
+    width: 30%;
     li {
       background: white;
       margin-left: 7%;
@@ -37,6 +40,17 @@
           margin-left: 6px;
         }
       }
+    }
+  }
+
+  .pla-calendar-control {
+    button {
+      background: none;
+      padding: 0;
+      width: 2em;
+      height: 2em;
+      border: 1px solid $academical-blue-sidebar;
+      border-right: 0;
     }
   }
 
