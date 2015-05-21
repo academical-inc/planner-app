@@ -2,31 +2,34 @@
 .pla-event-form {
 
   .form-group {
-    margin-top: 15px;
-    margin-bottom: 0px;
-    input{
-        font-size: 13px;
-    }
+    margin-top: 1.1em;
+    margin-bottom: 0;
   }
+
+  label {
+    color: $dark;
+    font-size: .9em;
+  }
+
+  .daysLabel {
+    margin-bottom: .2em;
+  }
+
   .days {
-    label.checkbox-inline {
-      padding-left: 28px;
+    .checkbox-inline {
+      color: $dark;
+
+      &:first-child {
+        padding-left: 1.7em;
+      }
+      + .checkbox-inline {
+        padding-left: 4em;
+      }
+
+      span {
+        vertical-align: middle;
+      }
     }
-  }
-
-
-  .label-font {
-    font-size: 15px;
-    font-weight: 200;
-  }
-
-  label.checkbox-inline {
-    @extend .label-font;
-    padding-left: 50px;
-  }
-
-  .repeat-until label {
-    @extend .label-font;
   }
 
   /* Medium devices (desktops, 992px and up) */
@@ -35,6 +38,10 @@
       display: inline-block;
       vertical-align: middle;
       float: none;
+
+      .form-group {
+        margin-top: 0;
+      }
     }
   }
 }
