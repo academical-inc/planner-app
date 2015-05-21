@@ -67,8 +67,8 @@
       "namePlaceholder": "Name of the event (e.g. Gym, Study, Lunch)",
       "days": "Days",
       "until": "Repeat Until",
-      "defaultUntil": "The end of this school period",
-      "or": "or",
+      "defaultUntil": "End of school period",
+      "or": "OR",
       "untilDate": "Pick a date",
       "addEvent": "Add Event"
     },
@@ -157,8 +157,8 @@
       "namePlaceholder": "Nombre del evento (ej: gimnasio, estudio, almuerzo)",
       "days": "Días",
       "until": "Repetir Hasta",
-      "defaultUntil": "El final del periodo académico actual",
-      "or": "o",
+      "defaultUntil": "Final del periodo académico",
+      "or": "Ó",
       "untilDate": "Elige una fecha",
       "addEvent": "Agregar Evento"
     },

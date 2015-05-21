@@ -70,6 +70,12 @@ i {
   border-top-left-radius: 0;
 }
 
+/* Labels */
+.label-info {
+  background-color: $academical-blue-sidebar !important;
+  border-color: $academical-blue-sidebar !important;
+}
+
 /* Buttons */
 .btn {
   border-radius: 2px;

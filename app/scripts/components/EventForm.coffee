@@ -249,11 +249,11 @@ EventForm = React.createClass(
                 checked: @state.defChecked
                 disabled: @state.defDisabled
                 onChange: @handleDefUntilChecked
-              R.span null, @t('eventForm.defaultUntil') + ": "
-              R.strong null, termEnd
+              R.span null, termEnd + " "
+              R.em null, "(#{@t('eventForm.defaultUntil')})"
           R.div className: "col-md-2 col-vertical-align",
-            R.label null, "-- #{@t('eventForm.or')} --"
-          R.div className: "col-md-5 col-vertical-align repeat-until",
+            R.span className: "label label-info", @t('eventForm.or')
+          R.div className: "col-md-5 col-vertical-align",
             repeatUntil
 
   render: ->
