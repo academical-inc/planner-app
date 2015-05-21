@@ -53,6 +53,23 @@ i {
   cursor: pointer;
 }
 
+/* Inputs */
+.form-group input {
+  border-radius: 2px;
+  border-color: $border-gray;
+  font-size: .9em;
+
+  &:focus {
+    outline: none;
+    border-color: $border-gray;
+  }
+}
+.input-group-addon:last-child {
+  border-radius: 2px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
 /* Buttons */
 .btn {
   border-radius: 2px;
