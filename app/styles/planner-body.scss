@@ -15,10 +15,6 @@
     @include make-xs-column(12);
   }
 }
-  .modal-dialog {
-    width: 500px;
-  }
-
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
