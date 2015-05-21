@@ -5,6 +5,62 @@ Dropdown = require '../../../app/scripts/components/Dropdown'
 
 describe 'Dropdown', ->
 
+  describe '#getInitialState', ->
+
+    it 'disables input if initial items are >= to maxItems', ->
+      dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: [{id:1}, {id:2}]
+        itemType: H.mockComponent()
+        handleItemAdd: ->
+        maxItems: 2
+      expect(dd.state.inputDisabled).toBe true
+
+    it 'enables input if initial items are < to maxItems', ->
+      dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: [{id:1}]
+        itemType: H.mockComponent()
+        handleItemAdd: ->
+        maxItems: 2
+      expect(dd.state.inputDisabled).toBe false
+
+    it 'enables input if maxItems not provided', ->
+      dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: [{id:1}]
+        itemType: H.mockComponent()
+        handleItemAdd: ->
+      expect(dd.state.inputDisabled).toBe false
+
+
+  describe '#componentWillReceiveProps', ->
+
+    beforeEach ->
+      @dd = H.render Dropdown,
+        rootTag: H.mockComponent()
+        items: []
+        itemType: H.mockComponent()
+        handleItemAdd: ->
+        maxItems: 2
+      H.spyOn @dd, "setState"
+
+    it 'disables button and input when new items length >= maxItems ', ->
+      @dd.setProps items: [{id:1}, {id:2}]
+      expect(@dd.setState).toHaveBeenCalledWith
+        buttonDisabled: true, inputDisabled: true
+      @dd.setState.calls.reset()
+      @dd.setProps items: [{id:1}, {id:2}, {id: 3}]
+      expect(@dd.setState).toHaveBeenCalledWith
+        buttonDisabled: true, inputDisabled: true
+
+    it 'enables button and input when new items length < maxItems ', ->
+      @dd.setProps items: [{id:1}]
+      expect(@dd.setState).toHaveBeenCalledWith inputDisabled: false
+      @dd.setState.calls.reset()
+      @dd.setProps items: []
+      expect(@dd.setState).toHaveBeenCalledWith inputDisabled: false
+
   describe '#handleItemAdd', ->
 
     beforeEach ->
@@ -20,7 +76,9 @@ describe 'Dropdown', ->
 
       beforeEach ->
         @input.value = "  Value!  "
+        H.spyOn @dd, 'handleInputChange'
         @dd.handleItemAdd preventDefault: ->
+
 
       it 'calls provided handler with correct value', ->
         expect(@handler).toHaveBeenCalledWith "Value!"
@@ -28,10 +86,13 @@ describe 'Dropdown', ->
       it 'clears input after adding', ->
         expect(@input.value).toEqual ""
 
+      it 'calls handleInputChange', ->
+        expect(@dd.handleInputChange).toHaveBeenCalled()
+
       it 'input form group does not have error class', ->
         expect(@input.parentElement.className).not.toContain "has-error"
 
-    describe 'when item name value provided', ->
+    describe 'when item name value not provided', ->
 
       beforeEach ->
         @dd.handleItemAdd preventDefault: ->

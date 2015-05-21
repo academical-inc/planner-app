@@ -24,9 +24,16 @@ Dropdown = React.createClass(
 
   getInitialState: ->
     buttonDisabled: true
+    inputDisabled: @props.items.length >= @props.maxItems
 
   formFields: ->
     ["itemName"]
+
+  componentWillReceiveProps: (nextProps)->
+    if nextProps.items.length >= @props.maxItems
+      @setState buttonDisabled: true, inputDisabled: true
+    else
+      @setState inputDisabled: false
 
   handleItemAdd: (e)->
     e.preventDefault()
@@ -34,6 +41,7 @@ Dropdown = React.createClass(
     @validateForm (fields)=>
       @props.handleItemAdd fields.itemName
       @clearFields()
+      @handleInputChange()
       @closeDropdown() if @props.closeOnAdd
 
   handleItemSelected: (e, item)->
@@ -70,6 +78,7 @@ Dropdown = React.createClass(
             ref: "itemName"
             type: "text"
             placeholder: @props.addItemPlaceholder
+            disabled: @state.inputDisabled
             onChange: @handleInputChange
         R.button
           className: 'btn btn-success btn-xs'
