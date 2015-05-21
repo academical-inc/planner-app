@@ -1,0 +1,59 @@
+
+.pla-modal {
+
+  margin: 10% auto;
+  width: 60%;
+
+  .modal-content {
+    box-shadow: 0 2px 5px lightgray;
+
+    .modal-header {
+      color: $white;
+      background-color: $academical-blue-sidebar;
+      padding: .7em;
+      position: relative;
+
+      h4 {
+        font-weight: 300;
+        font-size: 1.2em;
+        margin-left: .7em;
+      }
+
+      .close {
+        background-color: $academical-blue-filter;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 7%;
+        opacity: 1;
+
+        img {
+          zoom: 0.8;
+          vertical-align: baseline;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 1.1em 1.5em;
+    }
+
+    .modal-footer {
+      border-top: none;
+      padding: 1.6em 1.9em;
+      font-size: .8em;
+
+      .btn-danger {
+        font-weight: 600;
+      }
+      .btn-success {
+        font-weight: 600;
+      }
+    }
+
+  }
+
+
+}

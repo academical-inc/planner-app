@@ -1,8 +1,8 @@
 
 @import "./vendor";
 @import "./fonts";
-@import "./base";
 @import "./colors";
+@import "./base";
 
 .pla-content {
 
@@ -29,5 +29,5 @@
   @import "./item";
   @import "./item-settings";
   @import "./options-item";
-  @import "./event-modal";
+  @import "./modal";
 }
