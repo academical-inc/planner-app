@@ -28,7 +28,7 @@
   }
 
   .navbar-dropdowns {
-    width: 30%;
+    width: 33%;
     li {
       background: white;
       margin-left: 7%;
@@ -47,10 +47,25 @@
     button {
       background: none;
       padding: 0;
+      border: 1px solid $academical-blue-sidebar;
+
+    }
+    .btn-arrow-left{
       width: 2em;
       height: 2em;
-      border: 1px solid $academical-blue-sidebar;
       border-right: 0;
+    }
+    .btn-arrow-right{
+      width: 2em;
+      height: 2em;
+      border-left: 0;
+    }
+    .btn-day-tag{
+      width: 5em;
+      height: 2em;
+      border-left: 0;
+      border-right: 0;
+      color: $academical-blue-sidebar;
     }
   }
 

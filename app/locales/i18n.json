@@ -31,6 +31,9 @@
       "ics": "Export to ICS",
       "image": "Export to Image"
     },
+    "week": {
+      "today": "Today"
+    },
     "profile": {
       "logout": "Log Out"
     },
@@ -120,6 +123,9 @@
       "share": "Comparte tu horario",
       "ics": "Exportar a ICS",
       "image": "Exportar a Imagen"
+    },
+    "week": {
+      "today": "Hoy"
     },
     "profile": {
       "logout": "Salir"
