@@ -10,6 +10,19 @@
     font-size: 0.95em;
   }
 
+  tr:nth-child(odd) {
+    background-color: none;
+  }
+
+  tr:nth-child(even) {
+    background-color: #FCFCFC;
+  }
+
+  .fc-head {
+    background-color: #FCFCFC;
+    line-height: 2.3em;
+  }
+
   .fc-view-container {
     margin-top: 1.5%;
     max-height: 96%;
