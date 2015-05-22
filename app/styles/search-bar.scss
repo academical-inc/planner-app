@@ -51,6 +51,22 @@
     color: $white;
   }
 
+  .pla-result-item {
+    .department-section-item {
+      display: inline-block;
+    }
+    .seats-section-item {
+      background: red;
+      width: 5.5em;
+      border-radius: .9em;
+      display: inline-block;
+      border: none;
+      margin-left: 1em;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
   // Autosuggest
   .react-autosuggest {
     $font-size: .8em;
