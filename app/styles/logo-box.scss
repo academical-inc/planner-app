@@ -5,15 +5,14 @@
   white-space: nowrap;
   text-align: center;
 
-  div {
+  span {
     display: inline-block;
     height: 100%;
-    width: 100%;
-    padding: 5%;
+    vertical-align: middle;
+  }
 
-    img {
-      width: 80%;
-      vertical-align: middle;
-    }
+  img {
+    width: 78%;
+    vertical-align: middle;
   }
 }
