@@ -37,13 +37,28 @@
 
   .corequisites {
     position: absolute;
-    padding: 5px 0;
+    padding: 7px 0;
     top: 0;
     text-align: center;
     background-color: $academical-dark-blue;
     color: $white;
-    height: 30px;
+    height: 35px;
     width: 100%;
+    margin-left: -15px;
+    span {
+      float: left;
+      margin-left: 1.2em;
+    }
+    .close {
+      margin: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 12%;
+      opacity: 1;
+      zoom: 75%;
+    }
   }
 
   .search-icon {
