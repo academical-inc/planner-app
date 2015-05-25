@@ -40,7 +40,7 @@
     "searchBar": {
       "placeholder": "Search Course Sections",
       "filters": "Filter: ",
-      "corequisites": "Select corequisite"
+      "corequisites": "Select Corequisite"
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
