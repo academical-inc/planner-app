@@ -1,7 +1,8 @@
 
-class PlannerError extends Error
+AcademicalError = require './AcademicalError'
+
+class PlannerError extends AcademicalError
 
   constructor: (@message, @statusCode) ->
-    Error.captureStackTrace @, @
 
 module.exports = PlannerError

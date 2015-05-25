@@ -3,7 +3,7 @@
 $        = require 'jquery'
 Utils    = require './Utils'
 Url      = require './Url'
-ApiError = require './ApiError'
+ApiError = require '../errors/ApiError'
 request  = require './request'
 
 
