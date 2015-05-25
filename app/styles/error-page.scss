@@ -5,17 +5,19 @@
 
 .pla-error-page {
 
-  height: 250px;
+  height: 80%;
+  width: 100%;
+  white-space: nowrap;
+  text-align: center;
 
   .helper {
+    display: inline-block;
     height: 100%;
     vertical-align: middle;
-    display: inline-block;
   }
 
   .error-content {
-    margin-left: auto;
-    margin-right: auto;
+    display: inline-block;
     vertical-align: middle;
     width: 90%;
 
@@ -25,26 +27,21 @@
   }
 
   .error-image {
-    max-width: 400px;
-    overflow: auto;
     padding-top: 3em;
-    text-align: center;
-
-    img {
-      width: 80%;
-    }
+    display: inline-block;
+    vertical-align: middle;
   }
 
   .error-text-box {
     display: inline-block;
     padding: 1em;
-    float: right;
 
     .code {
       color: $red;
       display: block;
       font-size: 5em;
       font-weight: bold;
+      text-align: left;
     }
 
     .message {

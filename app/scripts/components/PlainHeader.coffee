@@ -10,7 +10,7 @@ PlainHeader = React.createClass(
     R.section className: 'pla-plain-header hidden-xs hidden-sm',
       R.nav className: "navbar navbar-default", role: "navigation",
         R.div className: "container-fluid",
-          R.ul className: "nav navbar-nav navbar-left",
+          R.ul className: "nav navbar-nav",
             LogoBox({})
 
 )

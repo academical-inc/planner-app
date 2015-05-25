@@ -16,10 +16,11 @@ ErrorPage = React.createClass(
 
     R.div className: 'pla-content container-fluid',
       PlainHeader({})
-      R.div className: 'pla-error-page container-fluid',
+      R.div className: 'pla-error-page',
         R.span className: 'helper'
         R.div className: 'error-content',
-          R.div className: 'pull-left', null
+          R.div className: 'error-image',
+            R.img src: "/images/error_icon.png"
           R.div className: 'error-text-box',
             R.span className: 'code', statusCode
             R.span className: 'message',
@@ -29,8 +30,6 @@ ErrorPage = React.createClass(
               href:'/'
               role: 'button'
               @t "errors.backHome"
-          R.div className: 'error-image',
-            R.img src: "/images/error_icon.png"
       PlainFooter({})
 
 )
