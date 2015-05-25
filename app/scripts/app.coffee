@@ -3,6 +3,7 @@ Page           = require 'page'
 React          = require 'react'
 I18n           = require './utils/I18n'
 ApiUtils       = require './utils/ApiUtils'
+PlannerError   = require './utils/PlannerError'
 PlannerActions = require './actions/PlannerActions'
 ErrorPage      = React.createFactory require './components/ErrorPage'
 
@@ -19,8 +20,10 @@ Page '/', ->
   # TODO init this as an action. School and User stores
   ApiUtils.initSchool (err, school)->
     if err?
+      # TODO - Properly transition between APIErrors/PlannerErrors.
+      error = new PlannerError "errors.pageNotFound", 404
       React.render(
-        ErrorPage error: err
+        ErrorPage error: error
         document.body
       )
     else
@@ -48,8 +51,9 @@ Page '/schedules/:scheduleId', (ctx)->
 
 
 Page '*', ->
+  error = new PlannerError "errors.pageNotFound", 404
   React.render(
-    ErrorPage({})
+    ErrorPage error: error
     document.body
   )
 
