@@ -25,11 +25,10 @@
   }
 
   .error-image {
-    display: inline-block;
-    float: left;
+    max-width: 400px;
+    overflow: auto;
     padding-top: 3em;
     text-align: center;
-    width: 25%;
 
     img {
       width: 80%;
@@ -39,6 +38,7 @@
   .error-text-box {
     display: inline-block;
     padding: 1em;
+    float: right;
 
     .code {
       color: $red;
