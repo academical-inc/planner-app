@@ -3,8 +3,8 @@ React          = require 'react'
 I18nMixin      = require '../mixins/I18nMixin'
 IconMixin      = require '../mixins/IconMixin'
 ItemMixin      = require '../mixins/ItemMixin'
+SectionUtils   = require '../utils/SectionUtils'
 PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
 ColorPalette   = React.createFactory require './ColorPalette'
 R              = React.DOM
 
@@ -12,16 +12,6 @@ R              = React.DOM
 SectionItem = React.createClass(
 
   mixins: [I18nMixin, IconMixin, ItemMixin]
-
-  getSeatsColorClass: ->
-    seatsMap = UiConstants.sectionSeatsMap
-    section  = @props.item
-    if section.seats.available >= seatsMap.UPPER.bound
-      seatsMap.UPPER.className
-    else if section.seats.available >= seatsMap.LOWER.bound
-      seatsMap.LOWER.className
-    else
-      seatsMap.ZERO.className
 
   handleColorSelect: (color)->
     section  = @props.item
@@ -37,7 +27,7 @@ SectionItem = React.createClass(
     headingId      = "section-heading-#{section.id}"
     contentId      = "section-info-#{section.id}"
     colorPaletteId = "section-colors-#{section.id}"
-    seatsClass     = @getSeatsColorClass()
+    seatsClass     = SectionUtils.seatsColorClass section
     colorStyle     = borderColor: @props.color
     teacherNames   = if section.teacherNames.length > 0
       section.teacherNames.join ", "
