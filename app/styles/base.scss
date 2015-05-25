@@ -52,6 +52,18 @@ i {
 .img-icon {
   cursor: pointer;
 }
+.close {
+  margin: 0 !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  opacity: 1 !important;
+
+  img {
+    vertical-align: baseline;
+  }
+}
 
 /* Inputs */
 .form-group input {

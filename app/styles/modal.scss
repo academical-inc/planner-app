@@ -21,17 +21,9 @@
 
       .close {
         background-color: $academical-blue-filter;
-        margin: 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 100%;
         width: 7%;
-        opacity: 1;
-
         img {
           zoom: 0.8;
-          vertical-align: baseline;
         }
       }
     }
