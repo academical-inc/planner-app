@@ -24,7 +24,7 @@ PlannerHeader = React.createClass(
               R.li null,
                 WeekControl({})
             R.ul className: "nav navbar-nav",
-               ProfileBox rootTag: R.li, name: "Juan", url: "//placehold.it/50x50"
+              ProfileBox name: "Juan", url: "//placehold.it/50x50"
 
 )
 
