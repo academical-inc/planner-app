@@ -1,0 +1,21 @@
+
+.pla-options-menu {
+
+  a.dropdown-toggle {
+    padding: 0 !important;
+    border: none;
+    background: transparent;
+
+    img {
+      zoom: 0.83;
+    }
+
+    .caret {
+      display: none;
+    }
+  }
+
+  .dropdown-menu {
+    padding: .7em 0;
+  }
+}

@@ -1,5 +1,17 @@
 .pla-options-item {
+
   a {
-    
+    font-size: .8em;
+    color: $dark;
+    padding-right: 5em;
+
+    img {
+      zoom: 0.8;
+      margin-left: .6em;
+    }
+    span {
+      margin-left: 1.2em;
+      vertical-align: middle;
+    }
   }
 }
