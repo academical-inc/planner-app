@@ -3,7 +3,7 @@ Page           = require 'page'
 React          = require 'react'
 I18n           = require './utils/I18n'
 ApiUtils       = require './utils/ApiUtils'
-PlannerError   = require './utils/PlannerError'
+PlannerError   = require './errors/PlannerError'
 PlannerActions = require './actions/PlannerActions'
 ErrorPage      = React.createFactory require './components/ErrorPage'
 

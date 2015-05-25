@@ -5,7 +5,11 @@ $mm_maxWidth:    200px;
 $screen-xl-min:  2100px;
 
 // Override default bootstrap font family
-$font-family-sans-serif: 'Open Sans', sans-serif;
+$font-family-sans-serif:  'Open Sans', sans-serif;
+$brand-success:           $green;
+$brand-warning:           $yellow;
+$brand-danger:            $red;
+$brand-info:              $academical-blue-sidebar;
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 
 @import "bootstrap-sass-datepicker/sass/datepicker";

@@ -20,49 +20,6 @@ describe 'SectionItem', ->
       departments: [{name: "Math Department"}]
     @color = "#fff"
 
-
-  describe '#getSeatsColorClass', ->
-
-    seats = (seats, data)->
-      H.$.extend(true, {}, data, seats: available: seats)
-
-    beforeEach ->
-      @restore = H.rewire SectionItem,
-        UiConstants:
-          sectionSeatsMap:
-            UPPER: bound: 50, className: "upper"
-            LOWER: bound: 15, className: "lower"
-            ZERO:  className: "zero"
-
-    afterEach ->
-      @restore()
-
-    it 'returns correct css class when seats available is >= upper bound ', ->
-      item = H.render SectionItem, item: seats(50, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "upper"
-
-      item = H.render SectionItem, item: seats(60, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "upper"
-
-    it 'returns correct css class when seats available is < upper bound and
-        >= lower bound', ->
-      item = H.render SectionItem, item: seats(15, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "lower"
-
-      item = H.render SectionItem, item: seats(20, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "lower"
-
-    it 'returns correct css class when seats available is < lower bound ', ->
-      item = H.render SectionItem, item: seats(14, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "zero"
-
-      item = H.render SectionItem, item: seats(0, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "zero"
-
-      item = H.render SectionItem, item: seats(-3, @data), color: @color
-      expect(item.getSeatsColorClass()).toEqual "zero"
-
-
   describe '#render', ->
 
     assertRenderedState = (item, data)->

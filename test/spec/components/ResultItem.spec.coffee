@@ -17,6 +17,7 @@ describe 'ResultItem', ->
     @item = H.render ResultItem,
       section: @sec
       query: @query
+      focused: false
 
   describe '#highlight', ->
 

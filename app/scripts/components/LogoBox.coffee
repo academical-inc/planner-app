@@ -7,8 +7,8 @@ LogoBox = React.createClass(
 
   render: ->
     R.div className: 'pla-logo-box',
-      R.div null,
-        R.img src: '/images/academical_logo.png'
+      R.span null
+      R.img src: '/images/academical_logo.png'
 
 )
 

@@ -1,18 +1,40 @@
 
 .pla-event-form {
 
-  .label-font {
-    font-size: 15px;
-    font-weight: 200;
+  .form-group {
+    margin-top: 1.1em;
+    margin-bottom: 0;
   }
 
-  label.checkbox-inline {
-    @extend .label-font;
-    padding-left: 50px;
+  label {
+    color: $dark;
+    font-size: .9em;
   }
 
-  .repeat-until label {
-    @extend .label-font;
+  .daysLabel {
+    margin-bottom: .2em;
+  }
+
+  .days {
+    .checkbox-inline {
+      color: $dark;
+
+      &:first-child {
+        padding-left: 1.7em;
+      }
+      + .checkbox-inline {
+        padding-left: 3em;
+      }
+
+      span {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .label-info {
+    border-radius: 1em;
+    font-size: .75em;
   }
 
   /* Medium devices (desktops, 992px and up) */
@@ -21,6 +43,10 @@
       display: inline-block;
       vertical-align: middle;
       float: none;
+
+      .form-group {
+        margin-top: 0;
+      }
     }
   }
 }

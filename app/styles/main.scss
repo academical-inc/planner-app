@@ -1,8 +1,8 @@
 
+@import "./colors";
 @import "./vendor";
 @import "./fonts";
 @import "./base";
-@import "./colors";
 
 .pla-content {
 
@@ -15,12 +15,14 @@
   @import "./planner-body";
   @import "./planner-side-bar";
   @import "./search-bar";
+  @import "./result-list";
+  @import "./result-item";
+  @import "./search-filters-trigger";
   @import "./search-filters";
   @import "./schedule-info-bar";
   @import "./panel-item-list";
   @import "./section-item";
   @import "./color-palette";
-  @import "./event-item";
   @import "./week-calendar";
   @import "./event-form";
   @import "./dropdown";
@@ -29,6 +31,6 @@
   @import "./item";
   @import "./item-settings";
   @import "./options-item";
-  @import "./event-modal";
+  @import "./modal";
   @import "./error-page";
 }

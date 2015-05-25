@@ -1,9 +1,18 @@
 
 .pla-search-filters {
+
+  /* Positioning */
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 2.8em;
+  max-height: $results-height;
+
   background-color: $academical-blue-filter;
   color: $white;
   padding: 1.3em 2em;
   font-size: .8em;
+  z-index: 1;
 
   label {
     font-weight: normal;

@@ -16,13 +16,15 @@ PlannerHeader = React.createClass(
         R.div className: "container-fluid",
           R.ul className: "nav navbar-nav navbar-left",
             LogoBox({})
-          R.ul className: "nav navbar-nav",
-            WeekControl({})
-          R.ul className: "nav navbar-nav",
-            OptionsMenu rootTag: R.li
-            ScheduleList rootTag: R.li
-          R.ul className: "nav navbar-nav",
-            ProfileBox rootTag: R.li, name: "Juan", url: "//placehold.it/50x50"
+          R.div className: "container-navbar",
+            R.ul className: "nav navbar-nav navbar-dropdowns",
+              OptionsMenu rootTag: R.li
+              ScheduleList rootTag: R.li
+            R.ul className: "nav navbar-nav",
+              R.li null,
+                WeekControl({})
+            R.ul className: "nav navbar-nav",
+              ProfileBox name: "Juan", url: "//placehold.it/50x50"
 
 )
 

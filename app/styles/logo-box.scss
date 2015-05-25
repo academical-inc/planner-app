@@ -3,17 +3,16 @@
   height: 100%;
   width: 100%;
   white-space: nowrap;
-  text-align: center; margin: 1em 0;
+  text-align: center;
 
-  div {
+  span {
     display: inline-block;
     height: 100%;
-    width: 100%;
     vertical-align: middle;
+  }
 
-    img {
-      zoom: 0.75;
-      vertical-align: middle;
-    }
+  img {
+    width: 73%;
+    vertical-align: middle;
   }
 }

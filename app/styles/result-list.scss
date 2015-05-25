@@ -1,0 +1,47 @@
+
+.pla-result-list {
+  $font-size: .8em;
+  $color: $dark;
+  $border-color: #aaa;
+  $border-radius: 4px;
+
+  background-color: $academical-blue-filter;
+  height: $results-height;
+  top: 3.5em;
+  width: 100%;
+  left: 0;
+  color: $white;
+  border: 0px solid $border-color;
+  overflow-y: scroll;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  font-size: $font-size;
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  z-index: 2;
+
+  //Scrollbar Style
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: $academical-blue-sidebar;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $academical-dark-blue;
+    border-radius: 15px;
+  }
+
+  .result {
+    cursor: pointer;
+    padding: .9em 1.8em;
+    &-focused {
+      background-color: $academical-dark-blue;
+    }
+    &-disabled {
+      cursor: not-allowed;
+    }
+  }
+}

@@ -185,7 +185,7 @@ describe "EventForm", ->
       @form = H.render EventForm, initialState: checkedDays: [1], defChecked: true
 
     getInput = (form, {inputGroup, onChange}={})->
-      form.renderInput "id", "label", ref: "ref", onChange: onChange,\
+      form.renderInput "id", label: "label", ref: "ref", onChange: onChange,\
         placeholder: "placeholder", val: "defVal", inputGroup: inputGroup
 
     assertInputProps = (tree, onChangeSet=false)->

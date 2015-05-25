@@ -5,7 +5,6 @@ ClickOutside  = require 'react-onclickoutside'
 Classnames    = require 'classnames'
 I18nMixin     = require '../mixins/I18nMixin'
 FormMixin     = require '../mixins/FormMixin'
-{UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
 
@@ -24,10 +23,17 @@ Dropdown = React.createClass(
     $(@getDOMNode()).removeClass "open"
 
   getInitialState: ->
-    buttonDisabled: false
+    buttonDisabled: true
+    inputDisabled: @props.items.length >= @props.maxItems
 
   formFields: ->
     ["itemName"]
+
+  componentWillReceiveProps: (nextProps)->
+    if nextProps.items.length >= @props.maxItems
+      @setState buttonDisabled: true, inputDisabled: true
+    else
+      @setState inputDisabled: false
 
   handleItemAdd: (e)->
     e.preventDefault()
@@ -35,6 +41,7 @@ Dropdown = React.createClass(
     @validateForm (fields)=>
       @props.handleItemAdd fields.itemName
       @clearFields()
+      @handleInputChange()
       @closeDropdown() if @props.closeOnAdd
 
   handleItemSelected: (e, item)->
@@ -44,7 +51,9 @@ Dropdown = React.createClass(
 
   handleInputChange: (e)->
     val = @refs.itemName.getDOMNode().value.trim()
-    if val.length >= UiConstants.MAX_SCHEDULE_NAME_LENGTH
+    if val.length is 0
+      @setState buttonDisabled: true
+    else if @props.maxInputLength? and val.length > @props.maxInputLength
       @setState buttonDisabled: true
     else
       @setState buttonDisabled: false
@@ -69,9 +78,10 @@ Dropdown = React.createClass(
             ref: "itemName"
             type: "text"
             placeholder: @props.addItemPlaceholder
+            disabled: @state.inputDisabled
             onChange: @handleInputChange
         R.button
-          className: 'btn btn-info btn-xs'
+          className: 'btn btn-success btn-xs'
           type: "submit"
           disabled: @state.buttonDisabled
           @t "dropdown.addBtn"

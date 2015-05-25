@@ -66,11 +66,11 @@ module.exports =
         "aria-labelledby": labelId
         "aria-hidden": true
       },
-      R.div className: "modal-dialog",
-        R.div className: "modal-content #{modalId}",
+      R.div className: "modal-dialog pla-modal",
+        R.div className: "modal-content",
           R.div className: "modal-header",
             R.button className: "close", "data-dismiss": "modal",
-              R.span "aria-hidden": true, UiConstants.htmlEntities.TIMES
+              R.img src: '/images/popup_quit_icon.png'
               R.span className: "sr-only", "Close"
             R.h4 className: "modal-title", id: labelId, header
           R.div className: "modal-body", body

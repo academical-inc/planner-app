@@ -30,11 +30,13 @@ module.exports =
     LOWER: bound: 10, className: "warning"
     ZERO:  className: "danger"
   search:
-    MIN_LEN: 1
+    MIN_LEN: 2
     MAX_RESULTS: 30
   keys:
     ENTER: 13
     ESC: 27
+    UP: 38
+    DOWN: 40
   DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   COLORS: [
     "#2daae1"
@@ -52,5 +54,6 @@ module.exports =
   ]
   DEFAULT_SECTION_COLOR: "#2daae1"
   DEFAULT_EVENT_COLOR: "#6db533"
-  MAX_SCHEDULE_NAME_LENGTH: 28
+  MAX_SCHEDULE_NAME_LENGTH: 23
+  MAX_SCHEDULES: 7
 

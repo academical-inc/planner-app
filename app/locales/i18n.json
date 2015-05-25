@@ -30,10 +30,13 @@
     },
     "options": {
       "summary": "Summary",
-      "duplicate": "Duplicate",
+      "duplicate": "Duplicate Schedule",
       "share": "Share your schedule",
       "ics": "Export to ICS",
       "image": "Export to Image"
+    },
+    "week": {
+      "today": "Today"
     },
     "profile": {
       "logout": "Log Out"
@@ -41,7 +44,7 @@
     "searchBar": {
       "placeholder": "Search Course Sections",
       "filters": "Filter: ",
-      "corequisites": "Select corequisite"
+      "corequisites": "Select Corequisite"
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
@@ -65,16 +68,16 @@
       "saving": "Saving..."
     },
     "eventForm": {
-      "header": "Add a personal event",
-      "start": "Start time",
-      "end": "End time",
-      "name": "Name",
-      "namePlaceholder": "e.g. gym",
+      "header": "Add a Personal Event",
+      "start": "Start Time",
+      "end": "End Time",
+      "namePlaceholder": "Name of the event (e.g. Gym, Study, Lunch)",
       "days": "Days",
       "until": "Repeat Until",
-      "defaultUntil": "The end of this school period",
-      "or": "or",
-      "untilDate": "Pick a date"
+      "defaultUntil": "End of school period",
+      "or": "OR",
+      "untilDate": "Pick a date",
+      "addEvent": "Add Event"
     },
     "dialogs": {
       "ok": "OK",
@@ -124,10 +127,13 @@
     },
     "options": {
       "summary": "Resumen",
-      "duplicate": "Duplicar",
+      "duplicate": "Duplicar Horario",
       "share": "Comparte tu horario",
       "ics": "Exportar a ICS",
       "image": "Exportar a Imagen"
+    },
+    "week": {
+      "today": "Hoy"
     },
     "profile": {
       "logout": "Salir"
@@ -159,16 +165,16 @@
       "saving": "Guardando..."
     },
     "eventForm": {
-      "header": "Agrega un evento personal",
+      "header": "Agrega un Evento Personal",
       "start": "Hora de Inicio",
-      "end": "Hora de Fin",
-      "name": "Nombre",
-      "namePlaceholder": "ej: gimnasio",
+      "end": "Hora de Finalización",
+      "namePlaceholder": "Nombre del evento (ej: gimnasio, estudio, almuerzo)",
       "days": "Días",
-      "until": "Repetir hasta",
-      "defaultUntil": "El final del periodo académico actual",
-      "or": "o",
-      "untilDate": "Elige una fecha"
+      "until": "Repetir Hasta",
+      "defaultUntil": "Final del periodo académico",
+      "or": "Ó",
+      "untilDate": "Elige una fecha",
+      "addEvent": "Agregar Evento"
     },
     "dialogs": {
       "ok": "OK",
