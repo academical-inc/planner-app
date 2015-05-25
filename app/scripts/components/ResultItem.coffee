@@ -2,6 +2,7 @@
 React          = require 'react'
 _              = require '../utils/HelperUtils'
 I18nMixin      = require '../mixins/I18nMixin'
+SectionUtils   = require '../utils/SectionUtils'
 PlannerActions = require '../actions/PlannerActions'
 R              = React.DOM
 
@@ -15,7 +16,7 @@ ResultItem = React.createClass(
 
   highlight: (text, query=@props.query)->
     qLen = query.length
-    if qLen > 0
+    if qLen > 0 and not @props.focused
       re   = new RegExp _.escapeRegexCharacters(query), 'gi'
       idxs = _.findAllRegexMatches re, text
       cur  = 0
@@ -38,7 +39,7 @@ ResultItem = React.createClass(
   # TODO Tests
   render: ->
     section = @props.section
-
+    colorClass = SectionUtils.seatsColorClass section
     teacherNames = if section.teacherNames.length > 0
       section.teacherNames.join ", "
     else
@@ -56,10 +57,10 @@ ResultItem = React.createClass(
         @highlight section.courseCode
       R.div null,
         @highlight section.courseName
-      R.div className: 'department-section-item',
+      R.div null,
         @highlight department
-      R.div className: 'seats-section-item',
-        @t "section.seats", seats: section.seats.available
+        R.span className: "label label-#{colorClass}",
+          @t "section.seats", seats: section.seats.available
       R.div null,
         @highlight teacherNames
 

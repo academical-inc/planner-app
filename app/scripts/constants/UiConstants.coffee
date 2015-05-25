@@ -30,11 +30,13 @@ module.exports =
     LOWER: bound: 10, className: "warning"
     ZERO:  className: "danger"
   search:
-    MIN_LEN: 1
+    MIN_LEN: 2
     MAX_RESULTS: 30
   keys:
     ENTER: 13
     ESC: 27
+    UP: 38
+    DOWN: 40
   DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   COLORS: [
     "#2daae1"

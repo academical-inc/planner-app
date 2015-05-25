@@ -1,207 +1,75 @@
 
 .pla-search-bar {
 
+  $results-height: 77.5vh !global;
+
   margin-top: 13%;
   margin-bottom: 9%;
   position: relative;
 
-
   .search-input {
-    background: transparent;
-    border: none;
-    color: $white;
-    font-size: .8em;
-    display: inline-block;
-    width: 70%;
-    vertical-align: sub;
-    padding-right: 2em;
-    padding-bottom: .45em;
-    border-bottom: 1px solid $white;
-    &:focus{
+    position: relative;
+    display: inline;
+
+    input {
+      background: transparent;
+      border: none;
       color: $white;
-      outline: none
+      font-size: .8em;
+      display: inline-block;
+      width: 70%;
+      vertical-align: sub;
+      padding-right: 2em;
+      padding-bottom: .45em;
+      border-bottom: 1px solid $white;
+
+      &:focus{
+        color: $white;
+        outline: none
+      }
+      &::-webkit-input-placeholder {
+        color: $white;
+      }
+      &:-moz-placeholder { /* Firefox 18- */
+        color: $white;
+      }
+      &::-moz-placeholder {  /* Firefox 19+ */
+        color: $white;
+      }
+      &:-ms-input-placeholder {
+        color: $white;
+      }
     }
-    &::-webkit-input-placeholder {
+
+    .search-icon {
+      position: absolute;
       color: $white;
-    }
-    &:-moz-placeholder { /* Firefox 18- */
-      color: $white;
-    }
-    &::-moz-placeholder {  /* Firefox 19+ */
-      color: $white;
-    }
-    &:-ms-input-placeholder {
-      color: $white;
+      top: .5em;
+      right: 0;
     }
   }
 
-  .corequisites {
+  .corequisites-message {
     position: absolute;
-    padding: 7px 0;
-    top: 0;
+    padding: .7em 0;
+    top: .1em;
     text-align: center;
     background-color: $academical-dark-blue;
     color: $white;
-    height: 35px;
     width: 100%;
     margin-left: -15px;
+    font-size: .9em;
+
     span {
       float: left;
       margin-left: 1.2em;
     }
     .close {
-      margin: 0;
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
       width: 12%;
-      opacity: 1;
-      zoom: 75%;
-    }
-  }
-
-  .search-icon {
-    position: absolute;
-    color: $white;
-  }
-
-  .pla-result-item {
-    .department-section-item {
-      display: inline-block;
-    }
-    .seats-section-item {
-      background: red;
-      width: 5.5em;
-      border-radius: .9em;
-      display: inline-block;
-      border: none;
-      margin-left: 1em;
-      font-weight: 600;
-      text-align: center;
-    }
-  }
-
-  // Autosuggest
-  .react-autosuggest {
-    $font-size: .8em;
-    $color: $dark;
-    $border-color: #aaa;
-    $border-radius: 4px;
-
-    position: relative;
-    display: inline;
-
-    &__suggestions {
-      //Changes
-      background-color: $academical-blue-filter;
-      height: 77.5vh;
-      top: 32px;
-      width: 25vw;
-      left: -8%;
-      color: $white;
-      border: 0px solid $border-color;
-      //Default
-      overflow-y: scroll;
-      position: absolute;
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
-      font-size: $font-size;
-      border-bottom-left-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
-      z-index: 2;
-
-      &-section {
-        &:first-child {
-          .react-autosuggest__suggestions-section-name {
-            border-top: 0;
-          }
-        }
-
-        &-name {
-          padding: 10px 0 0 10px;
-          font-size: 12px;
-          text-transform: uppercase;
-          color: #777;
-          border-top: 1px dashed #ccc;
-        }
-
-        &-suggestions {
-          margin: 0;
-          padding: 0;
-          list-style-type: none;
-        }
+      img {
+        zoom: 0.75;
       }
     }
-
-    &__suggestion {
-      cursor: pointer;
-      padding: 10px 20px;
-      &--focused {
-        background-color: $academical-dark-blue;
-      }
-    }
-
-    //Scrollbar Style
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-    ::-webkit-scrollbar-track {
-      background-color: $academical-blue-sidebar;
-    }
-    ::-webkit-scrollbar-thumb {
-      background-color: $academical-dark-blue;
-      border-radius: 15px;
-    }
-
-  }
-
-  .search-filters-trigger {
-    float: right;
-    text-align: center;
-    width: 24%;
-    height: 2.3em;
-    margin-top: .1em;
-    padding-top: .4em;
-    background-color: $academical-blue-filter;
-    border-radius: .3em;
-    border-bottom: 2.5em solid $academical-blue-filter;
-    color: $white;
-    font-size: .8em;
-    font-weight: normal;
-
-    &.collapsed {
-      border-bottom: none;
-    }
-
-    .filters-toggle {
-      color: inherit;
-      text-decoration: none;
-
-      &:after {
-        font-family: FontAwesome;
-        padding-left: .5em;
-        content: "\f0d8"; // Caret up icon
-        color: black;
-      }
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
-
-    .filters-toggle.collapsed:after {
-      content: "\f0d7"; // Caret down icon
-    }
-  }
-
-  .pla-search-filters {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 2.8em;
-    max-height: 75vh;
   }
 
 }
