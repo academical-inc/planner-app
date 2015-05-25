@@ -1,0 +1,22 @@
+
+.pla-plain-header {
+  height: 10%;
+
+  .navbar {
+    border: none;
+    margin: 0;
+    height: 100%;
+    background-color: $academical-blue;
+    padding: 20px 0px 0px 0px;
+  }
+
+  .container-fluid {
+    height: 100%;
+    padding: 0px;
+  }
+
+  .navbar-left {
+    height: 100%;
+    width: 40%;
+  }
+}

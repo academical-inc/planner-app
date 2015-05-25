@@ -2,6 +2,7 @@
   "en": {
     "errors": {
       "header": "Could not complete your request :(",
+      "backHome" : "Please take me to the homepage",
       "connError": [
         "There was a problem connecting to the web.",
         "Please check your connection and try again."
@@ -14,6 +15,9 @@
         "Looks like there is something wrong with the request to our servers.",
         "Please email support@academical.co with the details of your situation and the following message:",
         "{{errMsg}}"
+      ],
+      "pageNotFound": [
+        "Oops! Resource not found"
       ]
     },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
@@ -95,6 +99,7 @@
   "es": {
     "errors": {
       "header": "No se pudo completar tu acción :(",
+      "backHome" : "Volver a la pagina principal",
       "connError": [
         "Hubo un problema conectándose a la web.",
         "Por favor revisa tu conexión e intenta de nuevo."
@@ -107,6 +112,9 @@
         "Parece que hay un problema con el pedido al servidor.",
         "Por favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje:",
         "{{errMsg}}"
+      ],
+      "pageNotFound": [
+        "Oops! No encontramos el recurso que estas buscando!"
       ]
     },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],

@@ -1,0 +1,68 @@
+
+
+@import "./plain-header";
+@import "./plain-footer";
+
+.pla-error-page {
+
+  height: 250px;
+
+  .helper {
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+  .error-content {
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+    width: 90%;
+
+    @media (min-width: $screen-sm-min) {
+      width: 60%;
+    }
+  }
+
+  .error-image {
+    max-width: 400px;
+    overflow: auto;
+    padding-top: 3em;
+    text-align: center;
+
+    img {
+      width: 80%;
+    }
+  }
+
+  .error-text-box {
+    display: inline-block;
+    padding: 1em;
+    float: right;
+
+    .code {
+      color: $red;
+      display: block;
+      font-size: 5em;
+      font-weight: bold;
+    }
+
+    .message {
+      float: right;
+      display: inline-block;
+      color: $gray;
+      font-size: 3em;
+      white-space: nowrap;
+    }
+  }
+
+  .error-button {
+    background-color: $academical-blue-sidebar;
+    border: none;
+    color: $white;
+    float: right;
+    clear: both;
+    line-height: 2em;
+    margin-top: 1em;
+  }
+}
