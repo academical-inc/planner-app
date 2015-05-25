@@ -41,6 +41,9 @@ module.exports =
     "EXPORT_ICS"
     "EXPORT_ICS_SUCCESS"
     "EXPORT_ICS_FAIL"
+    "SEARCH"
+    "SEARCH_SUCCESS"
+    "SEARCH_FAIL"
   }
   PreviewTypes: {
     "PRIMARY"
