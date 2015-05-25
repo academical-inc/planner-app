@@ -157,7 +157,9 @@ SearchBar = React.createClass(
       if coreqs
         R.div className: 'corequisites',
           @t "searchBar.corequisites"
-          @icon "times", onClick: @clearCorequisites
+          R.button className: "close",
+            R.img src: '/images/popup_quit_icon.png',
+            onClick: @clearCorequisites
       R.div className: filtersTrgClass,
         R.a
           className: "filters-toggle collapsed"

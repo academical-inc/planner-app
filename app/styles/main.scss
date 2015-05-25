@@ -1,8 +1,8 @@
 
 @import "./vendor";
 @import "./fonts";
-@import "./base";
 @import "./colors";
+@import "./base";
 
 .pla-content {
 
@@ -20,7 +20,6 @@
   @import "./panel-item-list";
   @import "./section-item";
   @import "./color-palette";
-  @import "./event-item";
   @import "./week-calendar";
   @import "./event-form";
   @import "./dropdown";
@@ -29,5 +28,5 @@
   @import "./item";
   @import "./item-settings";
   @import "./options-item";
-  @import "./event-modal";
+  @import "./modal";
 }

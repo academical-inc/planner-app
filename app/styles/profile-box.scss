@@ -1,18 +1,44 @@
 
 .pla-profile-box {
+  margin-top: -0.7em;
+  margin-right: 1.5em;
+  display: inline-block;
 
-  > a {
-    padding: 0 1.1em;
-
-    div {
-      display: inline-block;
-
-      span {
-        margin-right: 1em;
-      }
-    }
+  img {
+    border-radius: 100%;
+    margin-right: 1em;
   }
 
+  .profile-logout {
+    display: inline-block;
+    vertical-align: middle;
+
+    span {
+      display: block;
+      color: $academical-blue-sidebar;;
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    .logout {
+      display: block;
+      img {
+        display: inline-block;
+        margin-right: 0.5em;
+        border-radius: 0;
+      }
+        .logout-button {
+          color: $dark;
+          display: inline-block;
+          background: none;
+          border: 0px;
+          font-size: 0.8em;
+          padding: 0;
+          text-decoration: underline;
+        }
+    }
+
+  }
 
 }
 

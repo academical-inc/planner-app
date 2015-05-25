@@ -166,7 +166,7 @@ EventForm = React.createClass(
   customValidations: ->
     [@validateDays, @validateRepeatUntil]
 
-  renderInput: (id, label, {ref, type, placeholder, inputGroup, onFocus,\
+  renderInput: (id, {label, ref, type, placeholder, inputGroup, onFocus,\
       val, onChange}={})->
     type ?= "text"
 
@@ -183,13 +183,13 @@ EventForm = React.createClass(
 
     if inputGroup?
       R.div className: "form-group",
-        R.label htmlFor: id, label
+        R.label htmlFor: id, label if label?
         R.div className: "input-group",
           R.input inputProps
           R.span className: "input-group-addon", inputGroup
     else
       R.div className: "form-group",
-        R.label htmlFor: id, label
+        R.label htmlFor: id, label if label?
         R.input inputProps
 
   renderBody: (formId)->
@@ -198,34 +198,36 @@ EventForm = React.createClass(
     endId         = "event-end-time-input"
     repeatUntilId = 'event-repeat-until'
 
+    termEnd   = _.format _term().endDate, "LL"
     clockIcon = @icon "clock-o"
     calIcon   = @icon "calendar"
-    startInput = @renderInput startId, @t("eventForm.start"),
+    startInput = @renderInput startId,
       val: @state.startTime
       onChange: @handleStartTimeChange
       inputGroup: clockIcon
-      placeholder: "10:00am"
+      placeholder: @t("eventForm.start")
       ref: "startTime"
-    endInput = @renderInput endId, @t("eventForm.end"),
+    endInput = @renderInput endId,
       val: @state.endTime
       onChange: @handleEndTimeChange
       inputGroup: clockIcon
-      placeholder: "11:30am"
+      placeholder: @t("eventForm.end")
       ref: "endTime"
-    repeatUntil = @renderInput repeatUntilId, @t("eventForm.untilDate"),
+    repeatUntil = @renderInput repeatUntilId,
+      placeholder: @t("eventForm.untilDate"),
       inputGroup: calIcon
       onFocus: @handleRepeatUntilFocus
       ref: 'repeatUntil'
 
     R.form className: formId, role: "form", id: formId, onSubmit: @handleSubmit,
-      @renderInput nameId, @t("eventForm.name"),
+      @renderInput nameId,
         ref: "name"
         placeholder: @t("eventForm.namePlaceholder")
       R.div className: "row",
         R.div className: "col-md-6", startInput
         R.div className: "col-md-6", endInput
       R.div className: "form-group", ref: "daysGroup",
-        R.label null, @t("eventForm.days")
+        R.label className: "daysLabel", @t("eventForm.days")
         R.div className: "days",
           [1,2,3,4,5,6,7].map (dayNo)=>
             day = _.getDayStr dayNo
@@ -247,10 +249,11 @@ EventForm = React.createClass(
                 checked: @state.defChecked
                 disabled: @state.defDisabled
                 onChange: @handleDefUntilChecked
-              "#{@t('eventForm.defaultUntil')} (#{_term().endDate})"
+              R.span null, termEnd + " "
+              R.em null, "(#{@t('eventForm.defaultUntil')})"
           R.div className: "col-md-2 col-vertical-align",
-            R.label null, "-- #{@t('eventForm.or')} --"
-          R.div className: "col-md-5 col-vertical-align repeat-until",
+            R.span className: "label label-info", @t('eventForm.or')
+          R.div className: "col-md-5 col-vertical-align",
             repeatUntil
 
   render: ->
@@ -259,7 +262,7 @@ EventForm = React.createClass(
       UiConstants.ids.EVENT_MODAL
       @t("eventForm.header")
       @renderBody(formId)
-      accept: form: formId
+      accept: form: formId, text: @t "eventForm.addEvent"
     )
 
 )

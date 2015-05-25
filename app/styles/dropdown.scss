@@ -1,10 +1,44 @@
 
 .pla-dropdown {
-  
+
+  a {
+    color: $dark;
+    font-size: 13px;
+    padding-left: 14px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .dropdown-menu {
+    li {
+      margin-left: 0%;
+      border: 0px;
+    i {
+        color: $dark;
+      }
+    }
+    .divider {
+      background-color: #e5e5e5;
+    }
+    .pla-options-item{
+      span {
+          margin-left: 0.5em;
+      }
+    }
+  }
+
+
   form.navbar-form {
     white-space: nowrap;
     button {
       margin-left: 1em;
+      font-weight: 700;
+      padding: 3px 12px;
+    }
+    input{
+      width: 165px;
+      font-size: 13px;
+      height: 28px;
     }
   }
 

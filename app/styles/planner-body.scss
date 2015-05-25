@@ -14,12 +14,13 @@
     @include make-md-column(9);
     @include make-xs-column(12);
   }
+
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
   .pla-planner-body {
-    height: 90%;
+    height: 89%;
   }
 }
 

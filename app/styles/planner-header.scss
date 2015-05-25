@@ -1,7 +1,11 @@
 
 .pla-planner-header {
 
-  height: 10%;
+  height: 11%;
+
+  .container-navbar{
+    margin-top: 1.7%;
+  }
 
   .navbar {
     border: none;
@@ -13,6 +17,7 @@
   .container-fluid {
     height: 100%;
     padding: 0px;
+    background: $gray;
   }
 
   .navbar-left {
@@ -20,6 +25,47 @@
     border-bottom: 1px solid $academical-blue-filter;
     height: 100%;
     width: 25%;
+  }
+
+  .navbar-dropdowns {
+    width: 33%;
+    li {
+      background: white;
+      margin-left: 4%;
+      border: 1px solid #e5e5e5;
+      border-radius: 2px;
+      a.dropdown-toggle {
+        padding: 3px;
+        span.caret {
+          margin-left: 6px;
+        }
+      }
+    }
+  }
+
+  .pla-calendar-control {
+    button {
+      background: none;
+      padding: 0;
+      border: 1px solid $academical-blue-sidebar;
+    }
+    .btn-arrow-left{
+      width: 2em;
+      height: 2em;
+      border-right: 0;
+    }
+    .btn-arrow-right{
+      width: 2em;
+      height: 2em;
+      border-left: 0;
+    }
+    .btn-day-tag{
+      width: 5em;
+      height: 2em;
+      border-left: 0;
+      border-right: 0;
+      color: $academical-blue-sidebar;
+    }
   }
 
   .navbar-nav:last-child {

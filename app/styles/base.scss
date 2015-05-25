@@ -35,6 +35,16 @@ body {
     font-size: 27px;
   }
 }
+
+/* Modals */
+.modal-backdrop {
+  background-color: $white;
+
+  &.in {
+    opacity: 0.8;
+  }
+}
+
 /* Icons */
 i {
   cursor: pointer;
@@ -43,7 +53,42 @@ i {
   cursor: pointer;
 }
 
+/* Inputs */
+.form-group input {
+  border-radius: 2px;
+  border-color: $border-gray;
+  font-size: .9em;
+
+  &:focus {
+    outline: none;
+    border-color: $border-gray;
+  }
+}
+.input-group-addon:last-child {
+  border-radius: 2px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+/* Labels */
+.label-info {
+  background-color: $academical-blue-sidebar !important;
+  border-color: $academical-blue-sidebar !important;
+}
+
 /* Buttons */
+.btn {
+  border-radius: 2px;
+  padding: 0.4em 1em;
+}
+.btn-danger {
+  background-color: $red !important;
+  border-color: $red !important;
+}
+.btn-success {
+  background-color: $green !important;
+  border-color: $green !important;
+}
 .btn-circle {
   width: 30px;
   height: 30px;
@@ -53,8 +98,6 @@ i {
   line-height: 1.428571429;
   border-radius: 15px;
 }
-
-.btn:focus {
+.btn:focus,button:focus {
   outline: none !important;
 }
-

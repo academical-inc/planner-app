@@ -2,7 +2,7 @@
 .pla-search-bar {
 
   margin-top: 13%;
-  margin-bottom: 15%;
+  margin-bottom: 9%;
   position: relative;
 
 
@@ -25,25 +25,40 @@
       color: $white;
     }
     &:-moz-placeholder { /* Firefox 18- */
-       color: $white;
+      color: $white;
     }
     &::-moz-placeholder {  /* Firefox 19+ */
-       color: $white;
+      color: $white;
     }
     &:-ms-input-placeholder {
-       color: $white;
+      color: $white;
     }
   }
 
   .corequisites {
     position: absolute;
-    padding: 5px 0;
+    padding: 7px 0;
     top: 0;
     text-align: center;
     background-color: $academical-dark-blue;
     color: $white;
-    height: 30px;
+    height: 35px;
     width: 100%;
+    margin-left: -15px;
+    span {
+      float: left;
+      margin-left: 1.2em;
+    }
+    .close {
+      margin: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 12%;
+      opacity: 1;
+      zoom: 75%;
+    }
   }
 
   .search-icon {
@@ -51,9 +66,26 @@
     color: $white;
   }
 
+  .pla-result-item {
+    .department-section-item {
+      display: inline-block;
+    }
+    .seats-section-item {
+      background: red;
+      width: 5.5em;
+      border-radius: .9em;
+      display: inline-block;
+      border: none;
+      margin-left: 1em;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
   // Autosuggest
   .react-autosuggest {
-    $font-size: 18px;
+    $font-size: .8em;
+    $color: $dark;
     $border-color: #aaa;
     $border-radius: 4px;
 
@@ -61,16 +93,20 @@
     display: inline;
 
     &__suggestions {
-      position: absolute;
-      max-height: 75vh;
+      //Changes
+      background-color: $academical-blue-filter;
+      height: 77.5vh;
+      top: 32px;
+      width: 25vw;
+      left: -8%;
+      color: $white;
+      border: 0px solid $border-color;
+      //Default
       overflow-y: scroll;
-      top: 51px;
-      width: 100%;
+      position: absolute;
       margin: 0;
       padding: 0;
       list-style-type: none;
-      border: 1px solid $border-color;
-      background-color: #fff;
       font-size: $font-size;
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
@@ -102,11 +138,23 @@
     &__suggestion {
       cursor: pointer;
       padding: 10px 20px;
-
       &--focused {
-        background-color: #ddd;
+        background-color: $academical-dark-blue;
       }
     }
+
+    //Scrollbar Style
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: $academical-blue-sidebar;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: $academical-dark-blue;
+      border-radius: 15px;
+    }
+
   }
 
   .search-filters-trigger {
