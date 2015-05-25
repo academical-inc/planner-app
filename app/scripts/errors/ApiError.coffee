@@ -1,6 +1,7 @@
 
+AcademicalError = require './AcademicalError'
 
-class ApiError extends Error
+class ApiError extends AcademicalError
 
   constructor: (msg, @statusCode, @apiMsg, @name='AcademicalApiError')->
     @message = if @statusCode? and @apiMsg?
@@ -10,8 +11,5 @@ class ApiError extends Error
     else
       @type = "ConnectionError"
       "Connection Error - #{msg}"
-
-    Error.captureStackTrace @, @
-
 
 module.exports = ApiError
