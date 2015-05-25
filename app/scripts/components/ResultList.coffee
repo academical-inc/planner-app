@@ -1,10 +1,14 @@
 
 React      = require 'react'
+I18nMixin  = require '../mixins/I18nMixin'
 ResultItem = React.createFactory require './ResultItem'
 R          = React.DOM
 
 
+# TODO Test
 ResultList = React.createClass(
+
+  mixins: [I18nMixin]
 
   handleResultMouseEnter: (idx)->
     @props.handleResultMouseEnter idx
@@ -15,6 +19,12 @@ ResultList = React.createClass(
   handleResultClicked: (result, e)->
     e.preventDefault()
     @props.handleResultClicked result
+
+  renderNullItem: (idx)->
+    R.li
+      key: "no-result-#{idx}"
+      className: 'no-result'
+      R.span null, @t("searchBar.noResults")
 
   renderItem: (result, idx, focused, disabled)->
     className = "result"
@@ -34,12 +44,15 @@ ResultList = React.createClass(
   render: ->
     R.ul className: 'pla-result-list',
       @props.results.map (result, i)=>
-        @renderItem(
-          result
-          i
-          i is @props.focusedIndex
-          i is @props.disabledIndex
-        )
+        if result?
+          @renderItem(
+            result
+            i
+            i is @props.focusedIndex
+            i is @props.disabledIndex
+          )
+        else
+          @renderNullItem i
 
 )
 

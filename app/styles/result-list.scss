@@ -44,4 +44,12 @@
       cursor: not-allowed;
     }
   }
+
+  .no-result {
+    background-color: $academical-dark-blue;
+    padding: .9em 1.8em;
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: 600;
+  }
 }

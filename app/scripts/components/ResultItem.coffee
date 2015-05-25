@@ -36,7 +36,7 @@ ResultItem = React.createClass(
     else
       R.span null, text
 
-  # TODO Tests
+  # TODO Test
   render: ->
     section = @props.section
     colorClass = SectionUtils.seatsColorClass section

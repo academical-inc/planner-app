@@ -162,9 +162,9 @@ SearchBar = React.createClass(
   handleInputBlur: ->
     @unfocusResult()
     if @state.corequisites
-      # @clearCorequisites()
+      @clearCorequisites()
     else
-      # @setState results: [], inputVal: ''
+      @setState results: [], inputVal: ''
 
   handleInputChange: (e)->
     @setState inputVal: e.target.value

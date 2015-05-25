@@ -30,11 +30,12 @@ _engine = new Bloodhound
   queryTokenizer: Bloodhound.tokenizers.whitespace
 
 
+# TODO Test
 class SearchUtils
 
   @search: (query, cb)->
     _engine.search query, (results)->
-      cb null, results
+      cb null, (if results.length > 0 then results else [null])
 
 
 module.exports = SearchUtils
