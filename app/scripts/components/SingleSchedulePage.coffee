@@ -1,12 +1,13 @@
 
-React = require 'react'
-R     = React.DOM
-
+React           = require 'react'
+WeekCalendar    = React.createFactory require './WeekCalendar'
+R               = React.DOM
 
 SingleSchedulePage = React.createClass(
 
   render: ->
-    R.div null, "Single Schedule #{@props.scheduleId}!!"
+    R.div className: "pla-schedule-container",
+      WeekCalendar({})
 
 )
 

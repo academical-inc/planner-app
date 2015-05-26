@@ -95,7 +95,8 @@
       "header": "Error!"
     },
     "empty": "N/A",
-    "copyOf": "Copy of {{name}}"
+    "copyOf": "Copy of {{name}}",
+    "duplicateSchedule": "Add to my Schedules"
   },
   "es": {
     "errors": {
@@ -193,6 +194,7 @@
       "header": "Error!"
     },
     "empty": "N/A",
-    "copyOf": "Copia de {{name}}"
+    "copyOf": "Copia de {{name}}",
+    "duplicateSchedule": "Agregar a mis Horarios"
   }
 }

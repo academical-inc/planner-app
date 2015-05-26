@@ -40,12 +40,14 @@ Page '/', ->
 
 
 Page '/schedules/:scheduleId', (ctx)->
-  SingleSchedulePage = React.createFactory(
-    require './components/SingleSchedulePage'
-  )
+
+  # Trigger action to fetch schedule
+  PlannerActions.getSchedule ctx.params.scheduleId
+
+  SharePage = React.createFactory require './components/SharePage'
 
   React.render(
-    SingleSchedulePage scheduleId: ctx.params.scheduleId
+    SharePage({})
     document.body
   )
 

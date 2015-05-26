@@ -76,6 +76,21 @@ class ScheduleActions
       ActionTypes.GET_SCHEDULES_FAIL
     )
 
+  @getSchedule: (scheduleId) ->
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.GET_SCHEDULES
+
+    console.log scheduleId
+
+    ApiUtils.getSchedule(
+      scheduleId,
+      ActionUtils.handleServerResponse(
+        ActionTypes.GET_SCHEDULES_SUCCESS
+        ActionTypes.GET_SCHEDULES_FAIL
+        (response)-> schedules: [response]
+      )
+    )
+
   @updateSchedules: ->
     getSchedules(
       ActionTypes.UPDATE_SCHEDULES
@@ -89,6 +104,7 @@ class ScheduleActions
 
   @duplicateSchedule: ->
     newSchedule = buildCurrentSchedule exclude: ['id']
+    console.log newSchedule
     newSchedule.name = I18n.t "copyOf", name: newSchedule.name
     createSchedule newSchedule
 

@@ -157,6 +157,7 @@ class ScheduleStore extends Store
         revertRemovedSchedule action.scheduleId
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
+        console.log action
         initSchedules action.schedules
         @emitChange()
       when ActionTypes.UPDATE_SCHEDULE_NAME
