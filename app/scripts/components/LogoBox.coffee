@@ -7,7 +7,7 @@ LogoBox = React.createClass(
 
   render: ->
     R.div className: 'pla-logo-box',
-      R.span null
+      R.span className: "vertical-align-helper"
       R.img src: '/images/academical_logo.png'
 
 )
