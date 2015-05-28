@@ -47,12 +47,18 @@ module.exports =
       ref: opts.ref
 
   imgIcon: (src, opts={})->
-    R.img
+    img = R.img
       src: src
       className: imgIconClasses(opts.className)
       onClick: opts.onClick
       style: opts.style
       ref: opts.ref
+
+    if opts.markup
+      React.renderToStaticMarkup img
+    else
+      img
+
 
   spinnerMarkup: (opts)->
     "<i class='#{spinnerClasses(opts)}'>"

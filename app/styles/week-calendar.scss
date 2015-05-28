@@ -6,21 +6,29 @@
   background-color: $white;
   color: $dark;
 
-  tr {
-    font-size: 0.95em;
+  .dirty-event {
+    opacity: .7;
   }
 
-  tr:nth-child(odd) {
-    background-color: none;
+  .remove-event-icon {
+    zoom: 0.8;
   }
 
-  tr:nth-child(even) {
-    background-color: #FCFCFC;
-  }
+  // Full Calendar overrides
 
+  // Grid
   .fc-head {
-    background-color: #FCFCFC;
-    line-height: 2.3em;
+    background-color: $calendar-gray;
+    line-height: 2.2em;
+
+    .fc-day-header {
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+  }
+
+  .fc-time-grid .fc-slats .fc-minor td {
+    border-style: solid;
   }
 
   .fc-view-container {
@@ -28,28 +36,25 @@
     max-height: 96%;
   }
 
-  .fc-time i {
-    cursor: pointer;
+  .fc-today {
+    background: $calendar-today;
   }
 
-  .fc-content {
+  // Events
+  .fc-time-grid-event {
+    padding: .35em;
 
-    .fc-time,.fc-title {
-      font-size: .75em;
-      font-weight: 600;
+    .fc-content {
+      .fc-time,.fc-title {
+        font-size: .7em;
+        font-weight: 600;
+        letter-spacing: .4px;
+        line-height: 1.3em;
+      }
+      .fc-time {
+        margin-bottom: .1em;
+      }
     }
-
-    .fc-time {
-      padding: .2em .5em 0 .5em;
-    }
-
-    .fc-title {
-      padding: .2em 0 0 .5em;
-    }
-  }
-
-  .dirty-event {
-    opacity: .7;
   }
 
 }
