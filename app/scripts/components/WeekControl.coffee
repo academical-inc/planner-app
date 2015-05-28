@@ -22,19 +22,18 @@ WeekControl = React.createClass(
 
   render: ->
     R.li className: 'pla-week-control',
-      R.div null,
-        R.button
-          onClick: @handlePrev
-          className: "btn-arrow-left"
-          R.img src: '/images/previous_arrow.png'
-        R.button
-          onClick: @handleToday
-          className: "btn-day-tag"
-          @t("week.today")
-        R.button
-          onClick: @handleNext
-          className: "btn-arrow-right"
-          R.img src: '/images/next_arrow.png'
+      R.div
+        className: "control arrow-left",
+        onClick: @handlePrev
+        R.img src: '/images/previous_arrow.png'
+      R.div
+        className: "control today",
+        onClick: @handleToday
+        @t("week.today")
+      R.div
+        className: "control arrow-right",
+        onClick: @handleNext
+        R.img src: '/images/next_arrow.png'
 
 )
 
