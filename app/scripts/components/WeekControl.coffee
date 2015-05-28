@@ -21,7 +21,7 @@ WeekControl = React.createClass(
     $(selectors.WEEK_CALENDAR).fullCalendar commands.NEXT
 
   render: ->
-    R.div className: 'pla-calendar-control',
+    R.div className: 'pla-week-control',
       R.button
         onClick: @handlePrev
         className: "btn-arrow-left"
