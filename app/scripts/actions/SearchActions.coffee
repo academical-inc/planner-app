@@ -4,28 +4,31 @@ ActionUtils       = require '../utils/ActionUtils'
 SearchUtils       = require '../utils/SearchUtils'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
+{DebounceRates}   = require '../constants/PlannerConstants'
 
 
 # Private
-search = _.debounce (query)->
-  SearchUtils.search query, ActionUtils.handleServerResponse(
-    ActionTypes.SEARCH_SUCCESS
-    ActionTypes.SEARCH_FAIL
-    (response)->
+search = _.debounce (
+  (query)->
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.SEARCH
       query: query
-      results: response
-  ),
-  100
+
+    SearchUtils.search query, ActionUtils.handleServerResponse(
+      ActionTypes.SEARCH_SUCCESS
+      ActionTypes.SEARCH_FAIL
+      (response)->
+        query: query
+        results: response
+    )
+    return
+  ), DebounceRates.SEARCH_RATE
 
 
 # TODO Test
 class SearchActions
 
   @search: (query)->
-    PlannerDispatcher.dispatchViewAction
-      type: ActionTypes.SEARCH
-      query: query
-
     search query
 
 

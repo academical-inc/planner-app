@@ -1,5 +1,6 @@
 
 $                 = require 'jquery'
+_                 = require '../utils/HelperUtils'
 I18n              = require '../utils/I18n'
 ApiUtils          = require '../utils/ApiUtils'
 ActionUtils       = require '../utils/ActionUtils'
@@ -11,6 +12,7 @@ SectionColorStore = require '../stores/SectionColorStore'
 EventStore        = require '../stores/EventStore'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
+{DebounceRates}   = require '../constants/PlannerConstants'
 
 
 # Private
@@ -60,6 +62,22 @@ buildCurrentSchedule = ({id, exclude}={})->
   }
 
   ScheduleFactory.create obj, exclude: exclude
+
+saveSchedule = _.debounce (
+  (scheduleId)->
+    toSave = buildCurrentSchedule id: scheduleId
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.SAVE_SCHEDULE
+      schedule: toSave
+
+    ApiUtils.saveSchedule toSave.id, toSave, ActionUtils.handleServerResponse(
+      ActionTypes.SAVE_SCHEDULE_SUCCESS
+      ActionTypes.SAVE_SCHEDULE_FAIL
+      (response)-> schedule: response
+      -> scheduleId: toSave.id
+    )
+    return
+  ), DebounceRates.SAVE_RATE
 
 
 class ScheduleActions
@@ -112,18 +130,8 @@ class ScheduleActions
       name: name
     @saveSchedule scheduleId
 
-  @saveSchedule: (id)->
-    toSave = buildCurrentSchedule id: id
-    PlannerDispatcher.dispatchViewAction
-      type: ActionTypes.SAVE_SCHEDULE
-      schedule: toSave
-
-    ApiUtils.saveSchedule toSave.id, toSave, ActionUtils.handleServerResponse(
-      ActionTypes.SAVE_SCHEDULE_SUCCESS
-      ActionTypes.SAVE_SCHEDULE_FAIL
-      (response)-> schedule: response
-      -> scheduleId: toSave.id
-    )
+  @saveSchedule: (scheduleId)->
+    saveSchedule scheduleId
 
 
 module.exports = ScheduleActions
