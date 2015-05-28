@@ -63,9 +63,9 @@ ScheduleItem = React.createClass(
           schedule.name
         R.span className: "pull-right",
           if @state.editing
-            R.span null,
-              @icon("check", onClick: @handleSaveEdit)
+            R.span className: 'edit-icons',
               @icon("times", onClick: @handleCancelEdit)
+              @icon("check", onClick: @handleSaveEdit)
           else
             @icon "pencil", onClick: @handleEdit
           @renderDeleteIcon()
