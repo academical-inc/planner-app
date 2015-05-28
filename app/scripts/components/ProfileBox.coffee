@@ -10,15 +10,16 @@ ProfileBox = React.createClass(
   mixins: [I18nMixin, IconMixin]
 
   render: ->
-    R.div className: "pla-profile-box",
-      R.img src: @props.url
-      R.div className: "profile-logout",
-        R.span null, @props.name
-        R.div className: "logout",
-          R.img src: '/images/logout_icon.png'
-          R.button
-            className: "logout-button"
-            @t("profile.logout")
+    R.li className: "pla-profile-box",
+      R.div null,
+        R.img src: @props.url
+        R.div className: "profile-logout",
+          R.span null, @props.name
+          R.div className: "logout",
+            R.img src: '/images/logout_icon.png'
+            R.button
+              className: "logout-button"
+              @t("profile.logout")
 
 )
 

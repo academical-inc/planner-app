@@ -22,12 +22,10 @@ PlannerHeader = React.createClass(
             ScheduleList rootTag: R.li
           R.ul className: "nav navbar-nav",
             R.span className: "vertical-align-helper"
-            R.li null,
-              WeekControl({})
+            WeekControl({})
           R.ul className: "nav navbar-nav",
             R.span className: "vertical-align-helper"
-            R.li null,
-              ProfileBox name: "Juan", url: "//placehold.it/50x50"
+            ProfileBox name: "Juan", url: "//placehold.it/50x50"
 
 )
 

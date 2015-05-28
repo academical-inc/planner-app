@@ -20,6 +20,10 @@
     width: 25%;
     height: 100%;
 
+    &:last-child {
+      text-align: right;
+    }
+
     >li {
       display: inline-block;
       vertical-align: middle;
