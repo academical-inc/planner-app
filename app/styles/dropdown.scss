@@ -3,17 +3,15 @@
 
   a {
     color: $dark;
-    font-size: 13px;
-    padding-left: 14px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    font-size: .9em;
   }
 
   .dropdown-menu {
     li {
-      margin-left: 0%;
-      border: 0px;
-    i {
+      margin-left: 0;
+      border: none;
+
+      i {
         color: $dark;
       }
     }
@@ -21,7 +19,6 @@
       background-color: #e5e5e5;
     }
   }
-
 
   form.navbar-form {
     white-space: nowrap;
@@ -32,8 +29,22 @@
     }
     input{
       width: 165px;
-      font-size: 13px;
+      padding-left: .5em;
+      font-size: .9em;
       height: 28px;
+
+      &::-webkit-input-placeholder {
+        font-style: italic;
+      }
+      &:-moz-placeholder { /* Firefox 18- */
+        font-style: italic;
+      }
+      &::-moz-placeholder {  /* Firefox 19+ */
+        font-style: italic;
+      }
+      &:-ms-input-placeholder {
+        font-style: italic;
+      }
     }
   }
 
