@@ -1,8 +1,7 @@
 
 .pla-week-control {
   $arrow-margin: .6em;
-
-  margin-left: 20%;
+  margin-left: 25%;
   border: 1px solid $academical-blue-sidebar;
   border-radius: 2px;
   background: none;
@@ -14,6 +13,9 @@
     display: inline-block;
     cursor: pointer;
   }
+  img {
+    zoom: 0.85;
+  }
   .arrow-left{
     margin-left: $arrow-margin;
   }
@@ -21,7 +23,7 @@
     margin-right: $arrow-margin;
   }
   .today{
-    margin: .3em 2.5em;
+    margin: .3em 2.7em;
   }
 
 }

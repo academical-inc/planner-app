@@ -11,15 +11,14 @@ ProfileBox = React.createClass(
 
   render: ->
     R.li className: "pla-profile-box",
-      R.div null,
-        R.img src: @props.url
-        R.div className: "profile-logout",
-          R.span null, @props.name
-          R.div className: "logout",
-            R.img src: '/images/logout_icon.png'
-            R.button
-              className: "logout-button"
-              @t("profile.logout")
+      R.div className: "profile container-fluid",
+        R.img className: "img-circle", src: @props.url
+        R.span null, @props.name
+      R.div className: "logout container-fluid",
+        @imgIcon '/images/logout_icon.png'
+        R.button
+          className: "logout-button"
+          @t("profile.logout")
 
 )
 
