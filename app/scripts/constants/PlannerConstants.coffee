@@ -57,4 +57,8 @@ module.exports =
     TODAY: 'today'
     NEXT: 'next'
   }
+  DebounceRates: {  # milliseconds
+    SAVE_RATE: 1000
+    SEARCH_RATE: 100
+  }
   POLL_INTERVAL: 120000  # milliseconds

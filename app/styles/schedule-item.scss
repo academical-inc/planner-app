@@ -2,7 +2,7 @@
 .pla-schedule-item {
 
   a {
-    padding: .6em 1.43em;
+    padding: .6em 1.2em;
   }
 
   .dirty {
@@ -12,6 +12,12 @@
   i {
     margin-right: .7em;
     font-size: .9em;
+  }
+
+  .edit-icons {
+    i:first-child {
+      margin-right: .2em;
+    }
   }
 
   .delete-icon{

@@ -14,17 +14,18 @@ PlannerHeader = React.createClass(
     R.section className: 'pla-planner-header hidden-xs hidden-sm',
       R.nav className: "navbar navbar-default", role: "navigation",
         R.div className: "container-fluid",
-          R.ul className: "nav navbar-nav navbar-left",
+          R.ul className: "nav navbar-nav navbar-left nav-logo-box",
             LogoBox({})
-          R.div className: "container-navbar",
-            R.ul className: "nav navbar-nav navbar-dropdowns",
-              OptionsMenu rootTag: R.li
-              ScheduleList rootTag: R.li
-            R.ul className: "nav navbar-nav",
-              R.li null,
-                WeekControl({})
-            R.ul className: "nav navbar-nav",
-              ProfileBox name: "Juan", url: "//placehold.it/50x50"
+          R.ul className: "nav navbar-nav nav-menus",
+            R.span className: "vertical-align-helper"
+            OptionsMenu rootTag: R.li
+            ScheduleList rootTag: R.li
+          R.ul className: "nav navbar-nav",
+            R.span className: "vertical-align-helper"
+            WeekControl({})
+          R.ul className: "nav navbar-nav",
+            R.span className: "vertical-align-helper"
+            ProfileBox name: "Juan", url: "//placehold.it/50x50"
 
 )
 

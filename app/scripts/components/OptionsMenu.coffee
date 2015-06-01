@@ -19,12 +19,32 @@ OptionsMenu = React.createClass(
 
   getItems: ->
     [
-      {id: "opt1", val: @t("options.summary"), icon: @icon "book"}
-      {id: "opt2", val: @t("options.duplicate"), icon: @icon "copy"}
-      {id: "opt3", val: @t("options.share"), icon: @icon "share-alt"}
+      {
+        id: "opt1"
+        val: @t("options.summary")
+        icon: @imgIcon "/images/resumen_icon.png"
+      }
+      {
+        id: "opt2"
+        val: @t("options.duplicate")
+        icon: @imgIcon "/images/duplicate_icon.png"
+      }
+      {
+        id: "opt3"
+        val: @t("options.share")
+        icon: @imgIcon "/images/share_icon.png"
+      }
       {divider: true}
-      {id: "opt4", val: @t("options.ics"), icon: @icon "calendar"}
-      {id: "opt5", val: @t("options.image"), icon: @icon "camera-retro"}
+      {
+        id: "opt4"
+        val: @t("options.ics")
+        icon: @imgIcon "/images/export_icon.png"
+      }
+      {
+        id: "opt5"
+        val: @t("options.image")
+        icon: @imgIcon "/images/export_image_icon.png"
+      }
     ]
 
   handleItemSelected: (item)->
@@ -56,7 +76,7 @@ OptionsMenu = React.createClass(
     Dropdown(
       className: 'pla-options-menu'
       rootTag: @props.rootTag
-      title: @icon "gears"
+      title: @imgIcon "/images/sidebar_icon.png"
       itemType: OptionsItem
       items: @getItems()
       handleItemSelected: @handleItemSelected
