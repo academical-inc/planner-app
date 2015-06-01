@@ -1,7 +1,7 @@
 
 H          = require '../../SpecHelper'
 Resource   = require '../../../app/scripts/api/Resource'
-ApiError   = require '../../../app/scripts/api/ApiError'
+ApiError   = require '../../../app/scripts/errors/ApiError'
 Academical = require '../../../app/scripts/api/Academical'
 
 
