@@ -1,12 +1,12 @@
 
-React          = require 'react'
-I18nMixin      = require '../mixins/I18nMixin'
-IconMixin      = require '../mixins/IconMixin'
-ItemMixin      = require '../mixins/ItemMixin'
-SectionUtils   = require '../utils/SectionUtils'
-PlannerActions = require '../actions/PlannerActions'
-ColorPalette   = React.createFactory require './ColorPalette'
-R              = React.DOM
+React        = require 'react'
+I18nMixin    = require '../mixins/I18nMixin'
+IconMixin    = require '../mixins/IconMixin'
+ItemMixin    = require '../mixins/ItemMixin'
+SectionUtils = require '../utils/SectionUtils'
+AppActions   = require '../actions/AppActions'
+ColorPalette = React.createFactory require './ColorPalette'
+R            = React.DOM
 
 
 SectionItem = React.createClass(
@@ -15,7 +15,7 @@ SectionItem = React.createClass(
 
   handleColorSelect: (color)->
     section  = @props.item
-    PlannerActions.changeSectionColor section.id, color
+    AppActions.changeSectionColor section.id, color
 
   componentDidMount: ->
     $(@refs.seatsIndicator.getDOMNode()).tooltip

@@ -1,18 +1,18 @@
 
-$              = require 'jquery'
-React          = require 'react'
-SectionStore   = require '../stores/SectionStore'
-ColorStore     = require '../stores/SectionColorStore'
-PreviewStore   = require '../stores/PreviewStore'
-EventStore     = require '../stores/EventStore'
-DateUtils      = require '../utils/DateUtils'
-ApiUtils       = require '../utils/ApiUtils'
-I18nMixin      = require '../mixins/I18nMixin'
-IconMixin      = require '../mixins/IconMixin'
-StoreMixin     = require '../mixins/StoreMixin'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-R              = React.DOM
+$             = require 'jquery'
+React         = require 'react'
+SectionStore  = require '../stores/SectionStore'
+ColorStore    = require '../stores/SectionColorStore'
+PreviewStore  = require '../stores/PreviewStore'
+EventStore    = require '../stores/EventStore'
+DateUtils     = require '../utils/DateUtils'
+ApiUtils      = require '../utils/ApiUtils'
+I18nMixin     = require '../mixins/I18nMixin'
+IconMixin     = require '../mixins/IconMixin'
+StoreMixin    = require '../mixins/StoreMixin'
+AppActions    = require '../actions/AppActions'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 # Private
 _utcOffset     = -> ApiUtils.currentSchool().utcOffset
@@ -91,22 +91,22 @@ WeekCalendar = React.createClass(
     @updateEventSource @sources.events, _events()
 
   removeSection: (sectionId)->
-    PlannerActions.removeSection sectionId
+    AppActions.removeSection sectionId
 
   removeEvent: (eventId)->
-    PlannerActions.removeEvent eventId
+    AppActions.removeEvent eventId
 
   handleSelect: (start, end)->
     @cal.fullCalendar 'unselect'
-    PlannerActions.openEventForm start, end
+    AppActions.openEventForm start, end
 
   handleEventUpdate: (event, delta)->
     start = DateUtils.inUtcOffset event.start, _utcOffset()
     end   = DateUtils.inUtcOffset event.end, _utcOffset()
-    PlannerActions.updateEvent event.id, start, end, delta.days()
+    AppActions.updateEvent event.id, start, end, delta.days()
 
   handleSetWeek: (fcView)->
-    PlannerActions.setWeek fcView.start
+    AppActions.setWeek fcView.start
 
   componentDidMount: ->
     @cal = $(@getDOMNode())

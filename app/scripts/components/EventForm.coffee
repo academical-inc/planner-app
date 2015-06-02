@@ -10,7 +10,7 @@ HelperUtils    = require '../utils/HelperUtils'
 ApiUtils       = require '../utils/ApiUtils'
 EventFormStore = require '../stores/EventFormStore'
 WeekStore      = require '../stores/WeekStore'
-PlannerActions = require '../actions/PlannerActions'
+AppActions     = require '../actions/AppActions'
 {UiConstants}  = require '../constants/PlannerConstants'
 R              = React.DOM
 
@@ -144,7 +144,7 @@ EventForm = React.createClass(
       [startDt, endDt] = @getStartEnd fields.startTime, endTime, earliestDay
       repeatUntil = @getRepeatUntil startDt
 
-      PlannerActions.addEvent name, startDt, endDt, days, repeatUntil, color
+      AppActions.addEvent name, startDt, endDt, days, repeatUntil, color
 
       # Clean up inputs
       @clearFields()
