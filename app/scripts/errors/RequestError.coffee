@@ -1,7 +1,7 @@
 
 AcademicalError = require './AcademicalError'
 
-class ApiError extends AcademicalError
+class RequestError extends AcademicalError
 
   constructor: (msg, @statusCode, @apiMsg, @name='AcademicalApiError')->
     @message = if @statusCode? and @apiMsg?
@@ -12,4 +12,4 @@ class ApiError extends AcademicalError
       @type = "ConnectionError"
       "Connection Error - #{msg}"
 
-module.exports = ApiError
+module.exports = RequestError

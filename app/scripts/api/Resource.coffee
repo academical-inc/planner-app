@@ -1,10 +1,10 @@
 
 # TODO change jquery for another lib
-$        = require 'jquery'
-Utils    = require './Utils'
-Url      = require './Url'
-ApiError = require '../errors/ApiError'
-request  = require './request'
+$            = require 'jquery'
+Utils        = require './Utils'
+Url          = require './Url'
+RequestError = require '../errors/RequestError'
+request      = require './request'
 
 
 class Resource
@@ -62,10 +62,10 @@ class Resource
   @_responseHandler: (cb)->
     (error, res)->
       [e, result] = if error?
-        [new ApiError(error.message), null]
+        [new RequestError(error.message), null]
       else if res.error? and res.error # res.error is not null and not false
         apiMessage = res.body.message
-        [new ApiError(res.error.message, res.status, apiMessage), apiMessage]
+        [new RequestError(res.error.message, res.status, apiMessage),apiMessage]
       else
         [null, res.body.data]
 
