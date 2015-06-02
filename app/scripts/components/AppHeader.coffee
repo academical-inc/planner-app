@@ -8,10 +8,10 @@ WeekControl  = React.createFactory require './WeekControl'
 R            = React.DOM
 
 
-PlannerHeader = React.createClass(
+AppHeader = React.createClass(
 
   render: ->
-    R.section className: 'pla-planner-header hidden-xs hidden-sm',
+    R.section className: 'pla-app-header hidden-xs hidden-sm',
       R.nav className: "navbar navbar-default", role: "navigation",
         R.div className: "container-fluid",
           R.ul className: "nav navbar-nav navbar-left nav-logo-box",
@@ -29,5 +29,5 @@ PlannerHeader = React.createClass(
 
 )
 
-module.exports = PlannerHeader
+module.exports = AppHeader
 
