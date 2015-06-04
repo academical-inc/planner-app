@@ -7,6 +7,7 @@ module.exports =
     "VIEW_ACTION"
   }
   ActionTypes: {
+    "INIT_SCHOOL"
     "OPEN_SCHEDULE"
     "GET_SCHEDULES"
     "GET_SCHEDULES_SUCCESS"

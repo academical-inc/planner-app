@@ -15,10 +15,9 @@ AppActions     = require '../actions/AppActions'
 R              = React.DOM
 
 # Private
-_ = $.extend true, {}, HelperUtils, DateUtils, ApiUtils
-_utcOffset = -> _.currentSchool().utcOffset
-_term      = -> _.currentSchool().terms[0]
-
+_ = $.extend true, {}, Utils, DateUtils
+_school = SchoolStore.school()
+_term   = _school.terms[0]
 
 EventForm = React.createClass(
 
@@ -51,7 +50,7 @@ EventForm = React.createClass(
     date = _.getUtcTimeFromStr time
     date = _.setWeek date, WeekStore.currentWeekNumber()
     date = _.setDay date, day
-    date = _.inUtcOffset date, _utcOffset()
+    date = _.inUtcOffset date, _school.utcOffset
     _.format date
 
   getStartEnd: (startTime, endTime, day)->
@@ -61,14 +60,14 @@ EventForm = React.createClass(
 
   # TODO Test
   defaultRepeatUntil: (startDt)->
-    termEnd = _.utcFromStr _term().endDate, "YYYY-MM-DD"
-    _.setTimeAndFormat termEnd, startDt, _utcOffset()
+    termEnd = _.utcFromStr _term.endDate, "YYYY-MM-DD"
+    _.setTimeAndFormat termEnd, startDt, _school.utcOffset
 
   # TODO Test
   selectedRepeatUntil: (startDt)->
     repUntilVal = @refs.repeatUntil.getDOMNode().value
     date        = _.utcFromStr repUntilVal, "YYYY-MM-DD"
-    _.setTimeAndFormat date, startDt, _utcOffset()
+    _.setTimeAndFormat date, startDt, _school.utcOffset
 
   # TODO Test
   getRepeatUntil: (startDt)->
@@ -78,7 +77,7 @@ EventForm = React.createClass(
       @selectedRepeatUntil startDt
 
   isCurrentBeforeTermEnd: ()->
-    WeekStore.currentWeekDate().isBefore _.utcFromStr(_term().endDate)
+    WeekStore.currentWeekDate().isBefore _.utcFromStr(_term.endDate)
 
   componentDidMount: ->
     EventFormStore.addChangeListener @onChange
@@ -198,7 +197,7 @@ EventForm = React.createClass(
     endId         = "event-end-time-input"
     repeatUntilId = 'event-repeat-until'
 
-    termEnd   = _.format _term().endDate, "LL"
+    termEnd   = _.format _term.endDate, "LL"
     clockIcon = @icon "clock-o"
     calIcon   = @icon "calendar"
     startInput = @renderInput startId,

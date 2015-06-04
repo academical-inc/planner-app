@@ -1,6 +1,7 @@
 
 $             = require 'jquery'
 React         = require 'react'
+SchoolStore   = require '../stores/SchoolStore'
 SectionStore  = require '../stores/SectionStore'
 ColorStore    = require '../stores/SectionColorStore'
 PreviewStore  = require '../stores/PreviewStore'
@@ -15,7 +16,7 @@ AppActions    = require '../actions/AppActions'
 R             = React.DOM
 
 # Private
-_utcOffset     = -> ApiUtils.currentSchool().utcOffset
+_school        = SchoolStore.school()
 _sectionEvents = -> SectionStore.sectionEvents()
 _sectionColors = -> ColorStore.colors()
 _previewEvents = -> PreviewStore.allPreviewEvents()
@@ -101,8 +102,8 @@ WeekCalendar = React.createClass(
     AppActions.openEventForm start, end
 
   handleEventUpdate: (event, delta)->
-    start = DateUtils.inUtcOffset event.start, _utcOffset()
-    end   = DateUtils.inUtcOffset event.end, _utcOffset()
+    start = DateUtils.inUtcOffset event.start, _school.utcOffset
+    end   = DateUtils.inUtcOffset event.end, _school.utcOffset
     AppActions.updateEvent event.id, start, end, delta.days()
 
   handleSetWeek: (fcView)->
