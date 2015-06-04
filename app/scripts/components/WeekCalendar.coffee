@@ -107,7 +107,7 @@ WeekCalendar = React.createClass(
     AppActions.updateEvent event.id, start, end, delta.days()
 
   handleSetWeek: (fcView)->
-    AppActions.setWeek fcView.start
+    _.debounce(AppActions.setWeek.bind(AppActions, fcView.start), 0)()
 
   componentDidMount: ->
     @cal = $(@getDOMNode())
