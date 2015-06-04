@@ -59,4 +59,10 @@ module.exports =
     SAVE_RATE: 1000
     SEARCH_RATE: 100
   }
+  Pages: {
+    "LANDING"
+    "APP"
+    "SINGLE_SCHEDULE"
+    "ERROR"
+  }
   POLL_INTERVAL: 120000  # milliseconds
