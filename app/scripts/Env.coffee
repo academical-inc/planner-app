@@ -1,4 +1,5 @@
 
+_school = process.env.SCHOOL
 _appEnv = process.env.APP_ENV
 _env =
   production:
@@ -20,6 +21,7 @@ class Env
   @SECTIONS_URL:  _env[_appEnv].SECTIONS_URL
   @API_HOST:      _env[_appEnv].API_HOST
   @API_PROTOCOL:  _env[_appEnv].API_PROTOCOL
+  @SCHOOL:        _school
 
   @isDevelopment: ->
     _appEnv == "development"
