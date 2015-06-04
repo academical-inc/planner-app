@@ -1,6 +1,8 @@
 
 
-class HelperUtils
+class Utils
+
+  @_qs: null
 
   @find: (arr, test)->
     for val in arr
@@ -100,5 +102,35 @@ class HelperUtils
         func.apply context, args
       return
 
+  # TODO Test
+  # https://github.com/epeli/underscore.string
+  @underscored: (str)->
+    str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').\
+      replace(/[-\s]+/g, '_').toLowerCase()
 
-module.exports = HelperUtils
+  # TODO Test
+  @underscoredKeys: (obj)->
+    if Array.isArray obj
+      obj.map (el)=> @underscoredKeys el
+    else if typeof obj == 'object'
+      undObj = {}
+      for key of obj
+        undObj[@underscored(key)] = @underscoredKeys obj[key]
+      undObj
+    else
+      obj
+
+  @qs: (param, queryStr=window.location.search)->
+    if not @_qs?
+      @_qs = {}
+      params = queryStr.substr(1).split('&')
+      for val in params
+        p = val.split '=', 2
+        if p.length == 1
+          @_qs[p[0]] = ''
+        else
+          @_qs[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '))
+    @_qs[param]
+
+
+module.exports = Utils

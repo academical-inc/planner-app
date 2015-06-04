@@ -1,6 +1,6 @@
 
 $                 = require 'jquery'
-_                 = require '../utils/HelperUtils'
+_                 = require '../utils/Utils'
 I18n              = require '../utils/I18n'
 ApiUtils          = require '../utils/ApiUtils'
 ActionUtils       = require '../utils/ActionUtils'

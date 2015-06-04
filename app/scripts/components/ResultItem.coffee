@@ -1,6 +1,6 @@
 
 React        = require 'react'
-_            = require '../utils/HelperUtils'
+_            = require '../utils/Utils'
 I18nMixin    = require '../mixins/I18nMixin'
 SectionUtils = require '../utils/SectionUtils'
 AppActions   = require '../actions/AppActions'

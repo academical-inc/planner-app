@@ -1,5 +1,5 @@
 
-_             = require '../utils/HelperUtils'
+_             = require '../utils/Utils'
 Store         = require './Store'
 SectionStore  = require './SectionStore'
 ApiUtils      = require '../utils/ApiUtils'

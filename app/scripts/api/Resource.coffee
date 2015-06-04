@@ -1,8 +1,8 @@
 
 # TODO change jquery for another lib
 $            = require 'jquery'
-Utils        = require './Utils'
 Url          = require './Url'
+Utils        = require '../utils/Utils'
 RequestError = require '../errors/RequestError'
 request      = require './request'
 

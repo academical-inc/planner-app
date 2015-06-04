@@ -1,6 +1,6 @@
 
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
-_                 = require '../utils/HelperUtils'
+_                 = require '../utils/Utils'
 
 
 class ChildStoreHelper

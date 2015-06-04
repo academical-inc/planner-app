@@ -105,7 +105,7 @@ describe 'Resource', ->
       expect(result).toEqual camelize: true
 
 
-  describe '@createApiCall', ->
+  describe '.createApiCall', ->
 
     beforeEach ->
       H.ajax.install()
