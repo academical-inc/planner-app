@@ -1,5 +1,8 @@
 
 # Load libs
+request    = require 'request'
+fs         = require 'fs'
+jf         = require 'jsonfile'
 gulp       = require 'gulp'
 del        = require 'del'
 browserify = require 'browserify'
@@ -19,6 +22,8 @@ $ = require('gulp-load-plugins')()
 
 
 # Set vars
+jf.spaces = 2
+
 config =
   production: true
 
@@ -38,7 +43,6 @@ paths =
 
 
 # Helpers
-
 bundler = (watch = false)->
   # Create bundler
   b = browserify
@@ -65,6 +69,25 @@ bundle = (b)->
 
 
 # Tasks
+gulp.task 'fetch-school', ->
+  nickname = $.util.env.school
+  $.util.log "School: ", $.util.colors.cyan("#{nickname}")
+
+  if not env.SCHOOL? or env.SCHOOL.nickname != nickname
+    appEnv  = env[env.APP_ENV]
+    options =
+      url: "#{appEnv.API_PROTOCOL}://#{appEnv.API_HOST}/schools/#{nickname}"
+      json: true
+      qs: {camelize: true}
+    request.get options, (error, response, body)->
+      if error?
+        throw error
+      else if response.statusCode != 200
+        throw new Error "Could not fetch school #{nickname}: "+body.message
+      else
+        env.SCHOOL = body.data
+        jf.writeFileSync './.env.json', env
+
 gulp.task 'set-development', ->
   env.APP_ENV       = "development"
   config.production = false
@@ -77,7 +100,7 @@ gulp.task 'lint', ->
     .pipe $.coffeelint()
     .pipe $.coffeelint.reporter()
 
-gulp.task 'scripts', ['lint'], ->
+gulp.task 'scripts', ['lint', 'fetch-school'], ->
   bundle bundler()
 
 gulp.task 'styles', ->
