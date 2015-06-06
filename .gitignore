@@ -36,7 +36,11 @@ config/secrets.yml
 /.divshot-cache
 divshot.json
 
+# awspublish
+.awspublish*
+
 # environment
 .env.json
+.cfdists.json
 
 Thumbs.db

@@ -10,10 +10,12 @@ watchify   = require 'watchify'
 buffer     = require 'vinyl-buffer'
 source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
+through    = require 'through2'
 wiredep    = require 'wiredep'
 merge      = require 'merge-stream'
 bowerFiles = require 'main-bower-files'
 envify     = require 'envify/custom'
+cfdists    = require './.cfdists.json'
 env        = require './.env.json'
 karma      = require('karma').server
 
@@ -24,9 +26,32 @@ $ = require('gulp-load-plugins')()
 # Set vars
 jf.spaces = 2
 
-config =
-  production: true
 
+# Env
+config =
+  production: not $.util.env.dev is true
+  school: $.util.env.school
+
+env.APP_ENV = if config.production then "production" else "development"
+
+
+# Deploy Vars
+config.domain = if config.production
+  "#{config.school}.academical.co"
+else
+  "#{config.school}-staging.academical.co"
+
+config.aws =
+  Bucket: config.domain
+  region: "us-standard"
+  distributionId: cfdists[config.school][env.APP_ENV]
+
+publisher = $.awspublish.create params: config.aws
+headers   = {'Cache-Control': 'max-age=315360000, no-transform, public'}
+indexRe   = /^index\.[a-f0-9]{8}\.html(\.gz)*$/gi
+
+
+# Paths
 base =
   app: './app'
   dist: './dist'
@@ -67,10 +92,30 @@ bundle = (b)->
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
+s3WebUpdate = ()->
+  s3 = publisher.client
+  through.obj (file, enc, cb)->
+    dirRoot  = file.base
+    fname    = file.path.substr dirRoot.length
+    if fname.match indexRe
+      params =
+        WebsiteConfiguration:
+          IndexDocument:
+            Suffix: fname
+      s3.putBucketWebsite params, (err, response)->
+        if err?
+          $.util.log new $.util.PluginError('s3-web-update', err)
+          cb null, file
+          return
+        else
+          cb null, file
+    else
+      cb null, file
+
 
 # Tasks
 gulp.task 'fetch-school', ->
-  nickname = $.util.env.school
+  nickname = config.school
   $.util.log "School: ", $.util.colors.cyan("#{nickname}")
 
   if not env.SCHOOL? or env.SCHOOL.nickname != nickname
@@ -88,9 +133,9 @@ gulp.task 'fetch-school', ->
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
 
-gulp.task 'set-development', ->
-  env.APP_ENV       = "development"
-  config.production = false
+gulp.task 'clear-school', ->
+  delete env.SCHOOL
+  jf.writeFileSync './.env.json', env
 
 gulp.task 'clean', (cb)->
   del base.dist, cb
@@ -163,7 +208,7 @@ gulp.task 'test', (cb)->
     configFile: "#{__dirname}/karma.conf.coffee"
   , cb
 
-gulp.task 'serve', ->
+gulp.task 'server', ->
   gulp.src base.dist
     .pipe $.webserver(
       livereload: true
@@ -172,7 +217,7 @@ gulp.task 'serve', ->
       fallback: 'index.html'
     )
 
-gulp.task 'watch', ['serve'], ->
+gulp.task 'watch', ['server'], ->
   # Watch scripts with watchify
   b = bundler(true)
   b.on 'update', ->
@@ -189,15 +234,23 @@ gulp.task 'watch', ['serve'], ->
   # Watch bower.json
   gulp.watch "./bower.json", ['vendor', 'fonts']
 
-
 gulp.task 'build', (cb)->
-  runSeq 'clean',
-         ['scripts', 'styles', 'vendor', 'fonts', 'images', 'html', 'copy-extras'],
-         cb
+  tasks = ['scripts', 'styles', 'vendor', 'fonts', 'images', 'html', 'copy-extras']
+  runSeq 'clean', tasks, cb
 
-gulp.task 'dev', ['set-development', 'default']
-
-gulp.task 'default', ['build'], ->
+gulp.task 'serve', ['build'], ->
   gulp.start 'watch'
 
+gulp.task 'deploy', ['build'], ->
+  revAll = new $.revAll()
+  gulp.src "#{base.dist}/**"
+    .pipe revAll.revision()
+    .pipe $.awspublish.gzip()
+    .pipe publisher.publish(headers)
+    .pipe publisher.cache()
+    .pipe $.awspublish.reporter()
+    .pipe $.cloudfront(config.aws)
+    .pipe publisher.sync()
+    .pipe $.if(not config.production, s3WebUpdate())
 
+gulp.task 'default', ['build']
