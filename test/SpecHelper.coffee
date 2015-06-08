@@ -1,13 +1,22 @@
 
-$         = require 'jquery'
-_         = require 'underscore'
-React     = require 'react/addons'
-NodeUrl   = require 'url'
-Humps     = require 'humps'
-I18n      = require '../app/scripts/utils/I18n'
-TestUtils = React.addons.TestUtils
+$             = require 'jquery'
+_             = require 'underscore'
+React         = require 'react/addons'
+NodeUrl       = require 'url'
+Humps         = require 'humps'
+Env           = require '../app/scripts/Env'
+SchoolStore   = require '../app/scripts/stores/SchoolStore'
+{ActionTypes} = require '../app/scripts/constants/PlannerConstants'
+I18n          = require '../app/scripts/utils/I18n'
+TestUtils     = React.addons.TestUtils
 
+# Init School
+SchoolStore.dispatchCallback
+  action:
+    type: ActionTypes.INIT_SCHOOL
+    school: Env.SCHOOL
 I18n.init()
+
 
 class Ajax
 

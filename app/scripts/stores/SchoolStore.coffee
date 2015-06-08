@@ -18,7 +18,6 @@ class SchoolStore extends Store
     switch action.type
       when ActionTypes.INIT_SCHOOL
         _school = action.school
-        @emitChange()
 
 
 module.exports = new SchoolStore
