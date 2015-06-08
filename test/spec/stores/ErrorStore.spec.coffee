@@ -15,13 +15,6 @@ describe 'ErrorStore', ->
   afterEach ->
     @restore() if @restore?
 
-
-  describe 'init', ->
-
-    it 'initializes store correctly', ->
-      expect(ErrorStore.dispatchToken).toBeDefined()
-
-
-  describe 'when SOME_ACTION received', ->
+  describe 'when error action received', ->
 
 

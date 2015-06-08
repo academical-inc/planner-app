@@ -15,7 +15,6 @@ describe 'ApiUtils', ->
     @terms = [{startDate: "2015-01-01", endDate: "2015-05-01"}]
     @global = H.rewire ApiUtils,
       "Env.API_HOST": "API_HOST"
-      "Env.API_PROTOCOL": "API_PROTOCOL"
       Academical: H.spy "s1", retVal: @api
       "_api": @api
       "_currentStudent": id: "stud1"
@@ -27,4 +26,4 @@ describe 'ApiUtils', ->
 
     it 'inits correctly', ->
       ApiUtils.init()
-      expect(@api.setHost).toHaveBeenCalledWith "API_HOST", "API_PROTOCOL"
+      expect(@api.setHost).toHaveBeenCalledWith "API_HOST"
