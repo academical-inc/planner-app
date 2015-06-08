@@ -48,6 +48,7 @@ config.aws =
 
 publisher = $.awspublish.create params: config.aws
 headers   = {'Cache-Control': 'max-age=315360000, no-transform, public'}
+headers["x-amz-acl"] = 'private' if config.production
 indexRe   = /^index\.[a-f0-9]{8}\.html(\.gz)*$/gi
 
 
