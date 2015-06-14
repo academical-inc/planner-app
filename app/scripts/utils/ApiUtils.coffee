@@ -1,13 +1,9 @@
 
 $          = require 'jquery'
 Env        = require '../Env'
-_          = require '../utils/DateUtils'
 Academical = require '../api/Academical'
 
 _api                   = null
-_currentSchoolNickname = null
-_currentSchool         = null
-_hostname              = window.location.hostname
 
 # TODO Implement properly from login
 _currentStudent = id: "5501ec676d616308f5000000"
@@ -21,19 +17,10 @@ class ApiUtils
   @init: ->
     # TODO Should probably init current student and school here
     _api = new Academical
-    _api.setHost Env.API_HOST, Env.API_PROTOCOL
-    _currentSchoolNickname = _hostname.split(".")[0]
-
-  # TODO Implement properly from login
-  @currentSchool: -> _currentSchool
+    _api.setHost Env.API_HOST
 
   # TODO Implement properly from login
   @currentStudent: -> _currentStudent
-
-  @initSchool: (cb, nickname=_currentSchoolNickname)->
-    _api.schools.retrieve nickname, (error, school)->
-      _currentSchool = school if not error?
-      cb error, school
 
   @getSchedules: (cb, studentId=_currentStudent.id)->
     _api.students.listSchedules studentId,

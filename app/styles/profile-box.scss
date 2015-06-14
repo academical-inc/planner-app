@@ -1,44 +1,40 @@
 
 .pla-profile-box {
-  margin-top: -0.7em;
+  $img-size: 35px;
+  color: $academical-blue-sidebar;;
   margin-right: 1.5em;
-  display: inline-block;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-align: left;
 
-  img {
-    border-radius: 100%;
-    margin-right: 1em;
+  .profile img {
+    margin-right: .7em;
+    height: $img-size;
+    width: $img-size;
   }
 
-  .profile-logout {
-    display: inline-block;
-    vertical-align: middle;
+  .logout {
+    padding-left: $img-size + 9;
+    margin-top: -0.6em;
 
-    span {
-      display: block;
-      color: $academical-blue-sidebar;;
-      font-size: 0.9em;
-      font-weight: 600;
+    img {
+      zoom: 0.8;
+      margin-right: 0.5em;
     }
 
-    .logout {
-      display: block;
-      img {
-        display: inline-block;
-        margin-right: 0.5em;
-        border-radius: 0;
+    .logout-button {
+      color: $dark;
+      display: inline-block;
+      background: none;
+      border: none;
+      font-size: 0.8em;
+      padding: 0;
+      &:hover {
+        text-decoration: underline;
       }
-        .logout-button {
-          color: $dark;
-          display: inline-block;
-          background: none;
-          border: 0px;
-          font-size: 0.8em;
-          padding: 0;
-          text-decoration: underline;
-        }
     }
-
   }
+
 
 }
 

@@ -11,8 +11,8 @@ ErrorPage = React.createClass(
   mixins: [I18nMixin]
 
   render: ->
-    statusCode = @props.error.statusCode
-    errorMessage = @props.error.message
+    code = @props.code
+    msg  = @props.msg
 
     R.div className: 'pla-content container-fluid',
       PlainHeader({})
@@ -22,9 +22,8 @@ ErrorPage = React.createClass(
           R.div className: 'error-image',
             R.img src: "/images/error_icon.png"
           R.div className: 'error-text-box',
-            R.span className: 'code', statusCode
-            R.span className: 'message',
-              @t errorMessage
+            R.span className: 'code', code
+            R.span className: 'message', msg
             R.a
               className: 'btn btn-default error-button'
               href:'/'

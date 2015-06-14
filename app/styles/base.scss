@@ -107,3 +107,10 @@ i {
 .btn:focus,button:focus {
   outline: none !important;
 }
+
+/* Helpers */
+.vertical-align-helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}

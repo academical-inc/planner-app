@@ -1,21 +1,22 @@
 
-$              = require 'jquery'
-React          = require 'react'
-SectionStore   = require '../stores/SectionStore'
-ColorStore     = require '../stores/SectionColorStore'
-PreviewStore   = require '../stores/PreviewStore'
-EventStore     = require '../stores/EventStore'
-DateUtils      = require '../utils/DateUtils'
-ApiUtils       = require '../utils/ApiUtils'
-I18nMixin      = require '../mixins/I18nMixin'
-IconMixin      = require '../mixins/IconMixin'
-StoreMixin     = require '../mixins/StoreMixin'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-R              = React.DOM
+$             = require 'jquery'
+React         = require 'react'
+SchoolStore   = require '../stores/SchoolStore'
+SectionStore  = require '../stores/SectionStore'
+ColorStore    = require '../stores/SectionColorStore'
+PreviewStore  = require '../stores/PreviewStore'
+EventStore    = require '../stores/EventStore'
+_             = require '../utils/Utils'
+DateUtils     = require '../utils/DateUtils'
+I18nMixin     = require '../mixins/I18nMixin'
+IconMixin     = require '../mixins/IconMixin'
+StoreMixin    = require '../mixins/StoreMixin'
+AppActions    = require '../actions/AppActions'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 # Private
-_utcOffset     = -> ApiUtils.currentSchool().utcOffset
+_school        = SchoolStore.school()
 _sectionEvents = -> SectionStore.sectionEvents()
 _sectionColors = -> ColorStore.colors()
 _previewEvents = -> PreviewStore.allPreviewEvents()
@@ -91,22 +92,22 @@ WeekCalendar = React.createClass(
     @updateEventSource @sources.events, _events()
 
   removeSection: (sectionId)->
-    PlannerActions.removeSection sectionId
+    AppActions.removeSection sectionId
 
   removeEvent: (eventId)->
-    PlannerActions.removeEvent eventId
+    AppActions.removeEvent eventId
 
   handleSelect: (start, end)->
     @cal.fullCalendar 'unselect'
-    PlannerActions.openEventForm start, end
+    AppActions.openEventForm start, end
 
   handleEventUpdate: (event, delta)->
-    start = DateUtils.inUtcOffset event.start, _utcOffset()
-    end   = DateUtils.inUtcOffset event.end, _utcOffset()
-    PlannerActions.updateEvent event.id, start, end, delta.days()
+    start = DateUtils.inUtcOffset event.start, _school.utcOffset
+    end   = DateUtils.inUtcOffset event.end, _school.utcOffset
+    AppActions.updateEvent event.id, start, end, delta.days()
 
   handleSetWeek: (fcView)->
-    PlannerActions.setWeek fcView.start
+    _.debounce(AppActions.setWeek.bind(AppActions, fcView.start), 0)()
 
   componentDidMount: ->
     @cal = $(@getDOMNode())
@@ -146,7 +147,9 @@ WeekCalendar = React.createClass(
       icon = if event.del is true
         @spinnerMarkup className: 'pull-right'
       else
-        @iconMarkup "times", fw: false, inverse: true, className: 'pull-right'
+        @imgIcon '/images/remove_icon.png',
+          className: 'remove-event-icon pull-right'
+          markup: true
 
       icon = $(icon)
       if event.isSection

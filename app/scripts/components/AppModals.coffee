@@ -7,14 +7,14 @@ ShareDialog   = React.createFactory require './ShareDialog'
 ErrorDialog   = React.createFactory require './ErrorDialog'
 R             = React.DOM
 
-PlannerModals = React.createClass(
+AppModals = React.createClass(
 
   mixins: [I18nMixin]
 
   render: ->
     ui = @props.ui
 
-    R.div className: "pla-modals",
+    R.div className: "pla-app-modals",
       EventForm({})
       SummaryDialog fields: ui.summaryFields
       ShareDialog({})
@@ -22,4 +22,4 @@ PlannerModals = React.createClass(
 
 )
 
-module.exports = PlannerModals
+module.exports = AppModals

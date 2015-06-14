@@ -1,0 +1,42 @@
+
+.pla-app-header {
+
+  height: 11%;
+
+  .navbar {
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  .container-fluid {
+    height: 100%;
+    padding: 0;
+    background: $header-gray;
+  }
+
+  .navbar-nav {
+    width: 25%;
+    height: 100%;
+
+    &:last-child {
+      text-align: right;
+    }
+
+    >li {
+      display: inline-block;
+      vertical-align: middle;
+      float: none;
+    }
+  }
+
+  .nav-logo-box {
+    background-color: $academical-blue;
+    border-bottom: 1px solid $academical-blue-filter;
+  }
+
+  .nav-menus .pla-dropdown {
+    margin-left: .7em;
+  }
+}

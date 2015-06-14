@@ -1,8 +1,8 @@
 
-H          = require '../../SpecHelper'
-Resource   = require '../../../app/scripts/api/Resource'
-ApiError   = require '../../../app/scripts/api/ApiError'
-Academical = require '../../../app/scripts/api/Academical'
+H            = require '../../SpecHelper'
+Resource     = require '../../../app/scripts/api/Resource'
+RequestError = require '../../../app/scripts/errors/RequestError'
+Academical   = require '../../../app/scripts/api/Academical'
 
 
 describe 'Resource', ->
@@ -53,7 +53,7 @@ describe 'Resource', ->
     it 'throws correct error when a connection error occurs', ->
       err = message: "Some connection error"
       @handler err, null
-      expect(@cb).toHaveBeenCalledWith H.any(ApiError), null
+      expect(@cb).toHaveBeenCalledWith H.any(RequestError), null
       expect(@cb.calls.mostRecent().args[0].message).toEqual "Connection Error
       - Some connection error"
 
@@ -63,7 +63,7 @@ describe 'Resource', ->
         status: 503
         body: {message: "Wrong", success: false}
       @handler null, response
-      expect(@cb).toHaveBeenCalledWith H.any(ApiError), "Wrong"
+      expect(@cb).toHaveBeenCalledWith H.any(RequestError), "Wrong"
       expect(@cb.calls.mostRecent().args[0].message).toEqual(
         "API Error - Incorrect!\nResponse Status: 503\nAPI Message: Wrong"
       )
@@ -105,7 +105,7 @@ describe 'Resource', ->
       expect(result).toEqual camelize: true
 
 
-  describe '@createApiCall', ->
+  describe '.createApiCall', ->
 
     beforeEach ->
       H.ajax.install()
@@ -127,7 +127,7 @@ describe 'Resource', ->
     it 'throws error when request fails', ->
       @res.call "param1", @cb
       H.ajax.fail 500, "Oops!"
-      expect(@cb).toHaveBeenCalledWith H.any(ApiError), "Oops!"
+      expect(@cb).toHaveBeenCalledWith H.any(RequestError), "Oops!"
       e = @cb.calls.mostRecent().args[0]
       expect(e.apiMsg).toEqual "Oops!"
 

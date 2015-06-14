@@ -1,6 +1,4 @@
 
-Bloodhound    = require 'bloodhound'
-Env           = require '../Env'
 Store         = require './Store'
 {ActionTypes} = require '../constants/PlannerConstants'
 

@@ -1,5 +1,6 @@
 
 $                 = require 'jquery'
+_                 = require '../utils/Utils'
 I18n              = require '../utils/I18n'
 ApiUtils          = require '../utils/ApiUtils'
 ActionUtils       = require '../utils/ActionUtils'
@@ -9,8 +10,10 @@ ScheduleStore     = require '../stores/ScheduleStore'
 SectionStore      = require '../stores/SectionStore'
 SectionColorStore = require '../stores/SectionColorStore'
 EventStore        = require '../stores/EventStore'
+NavError          = require '../errors/NavError'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
+{DebounceRates}   = require '../constants/PlannerConstants'
 
 
 # Private
@@ -61,6 +64,22 @@ buildCurrentSchedule = ({id, exclude}={})->
 
   ScheduleFactory.create obj, exclude: exclude
 
+saveSchedule = _.debounce (
+  (scheduleId)->
+    toSave = buildCurrentSchedule id: scheduleId
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.SAVE_SCHEDULE
+      schedule: toSave
+
+    ApiUtils.saveSchedule toSave.id, toSave, ActionUtils.handleServerResponse(
+      ActionTypes.SAVE_SCHEDULE_SUCCESS
+      ActionTypes.SAVE_SCHEDULE_FAIL
+      (response)-> schedule: response
+      -> scheduleId: toSave.id
+    )
+    return
+  ), DebounceRates.SAVE_RATE
+
 
 class ScheduleActions
 
@@ -69,7 +88,7 @@ class ScheduleActions
       type: ActionTypes.OPEN_SCHEDULE
       schedule: schedule
 
-  @initSchedules: ->
+  @getSchedules: ->
     getSchedules(
       ActionTypes.GET_SCHEDULES
       ActionTypes.GET_SCHEDULES_SUCCESS
@@ -80,14 +99,13 @@ class ScheduleActions
     PlannerDispatcher.dispatchViewAction
       type: ActionTypes.GET_SCHEDULES
 
-    console.log scheduleId
-
     ApiUtils.getSchedule(
       scheduleId,
       ActionUtils.handleServerResponse(
         ActionTypes.GET_SCHEDULES_SUCCESS
         ActionTypes.GET_SCHEDULES_FAIL
         (response)-> schedules: [response]
+        (err)-> error: new NavError err
       )
     )
 
@@ -104,7 +122,6 @@ class ScheduleActions
 
   @duplicateSchedule: ->
     newSchedule = buildCurrentSchedule exclude: ['id']
-    console.log newSchedule
     newSchedule.name = I18n.t "copyOf", name: newSchedule.name
     createSchedule newSchedule
 
@@ -128,18 +145,8 @@ class ScheduleActions
       name: name
     @saveSchedule scheduleId
 
-  @saveSchedule: (id)->
-    toSave = buildCurrentSchedule id: id
-    PlannerDispatcher.dispatchViewAction
-      type: ActionTypes.SAVE_SCHEDULE
-      schedule: toSave
-
-    ApiUtils.saveSchedule toSave.id, toSave, ActionUtils.handleServerResponse(
-      ActionTypes.SAVE_SCHEDULE_SUCCESS
-      ActionTypes.SAVE_SCHEDULE_FAIL
-      (response)-> schedule: response
-      -> scheduleId: toSave.id
-    )
+  @saveSchedule: (scheduleId)->
+    saveSchedule scheduleId
 
 
 module.exports = ScheduleActions

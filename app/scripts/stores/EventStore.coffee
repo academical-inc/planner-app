@@ -1,18 +1,18 @@
 
 $                = require 'jquery'
 Store            = require './Store'
+SchoolStore      = require './SchoolStore'
 ScheduleStore    = require './ScheduleStore'
 ChildStoreHelper = require '../utils/ChildStoreHelper'
-ApiUtils         = require '../utils/ApiUtils'
 EventUtils       = require '../utils/EventUtils'
 DateUtils        = require '../utils/DateUtils'
 {ActionTypes}    = require '../constants/PlannerConstants'
 
 
 # Private
-_          = new ChildStoreHelper(ScheduleStore, 'events')
-_utcOffset = -> ApiUtils.currentSchool().utcOffset
-_toRevert  = {}
+_         = new ChildStoreHelper(ScheduleStore, 'events')
+_school   = SchoolStore.school()
+_toRevert = {}
 
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
@@ -26,7 +26,7 @@ cleanScheduleEvents = (scheduleId)->
   _.setElements scheduleId, events
 
 updateTime = (date, time)->
-  DateUtils.setTimeAndFormat date, time, _utcOffset()
+  DateUtils.setTimeAndFormat date, time, _school.utcOffset
 
 updateDays = (event, dayDelta)->
   event.recurrence.daysOfWeek = event.recurrence.daysOfWeek.map (day)->

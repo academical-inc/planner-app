@@ -7,6 +7,7 @@ module.exports =
     "VIEW_ACTION"
   }
   ActionTypes: {
+    "INIT_SCHOOL"
     "OPEN_SCHEDULE"
     "GET_SCHEDULES"
     "GET_SCHEDULES_SUCCESS"
@@ -56,5 +57,15 @@ module.exports =
     PREV: 'prev'
     TODAY: 'today'
     NEXT: 'next'
+  }
+  DebounceRates: {  # milliseconds
+    SAVE_RATE: 1000
+    SEARCH_RATE: 100
+  }
+  Pages: {
+    "LANDING"
+    "APP"
+    "SINGLE_SCHEDULE"
+    "ERROR"
   }
   POLL_INTERVAL: 120000  # milliseconds

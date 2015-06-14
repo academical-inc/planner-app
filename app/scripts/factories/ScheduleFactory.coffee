@@ -1,7 +1,8 @@
 
-$                 = require 'jquery'
-Factory           = require './Factory'
-ApiUtils          = require '../utils/ApiUtils'
+$           = require 'jquery'
+Factory     = require './Factory'
+ApiUtils    = require '../utils/ApiUtils'
+SchoolStore = require '../stores/SchoolStore'
 
 
 # TODO Tests
@@ -11,8 +12,8 @@ class ScheduleFactory extends Factory
     "id":             null
     "name":           null
     "studentId":      -> ApiUtils.currentStudent().id
-    "schoolId":       -> ApiUtils.currentSchool().id
-    "term":           -> ApiUtils.currentSchool().terms[0]
+    "schoolId":       -> SchoolStore.school().id
+    "term":           -> SchoolStore.school().terms[0]
     "sectionIds":     null
     "sectionColors":  {}
     "totalCredits":   null

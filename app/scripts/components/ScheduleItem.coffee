@@ -1,10 +1,10 @@
 
-React          = require 'react'
-ItemMixin      = require '../mixins/ItemMixin'
-IconMixin      = require '../mixins/IconMixin'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-R              = React.DOM
+React         = require 'react'
+ItemMixin     = require '../mixins/ItemMixin'
+IconMixin     = require '../mixins/IconMixin'
+AppActions    = require '../actions/AppActions'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 
 # TODO Tests
@@ -19,7 +19,7 @@ ScheduleItem = React.createClass(
     @refs.editInput.getDOMNode().value
 
   updateScheduleName: (name)->
-    PlannerActions.updateScheduleName @props.item.id, name
+    AppActions.updateScheduleName @props.item.id, name
     @setState editing: false
 
   handleEvent: (e)->
@@ -63,9 +63,9 @@ ScheduleItem = React.createClass(
           schedule.name
         R.span className: "pull-right",
           if @state.editing
-            R.span null,
-              @icon("check", onClick: @handleSaveEdit)
+            R.span className: 'edit-icons',
               @icon("times", onClick: @handleCancelEdit)
+              @icon("check", onClick: @handleSaveEdit)
           else
             @icon "pencil", onClick: @handleEdit
           @renderDeleteIcon()
