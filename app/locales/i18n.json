@@ -43,6 +43,7 @@
       "today": "Today"
     },
     "profile": {
+      "user": "User",
       "logout": "Log Out"
     },
     "searchBar": {
@@ -145,6 +146,7 @@
       "today": "Hoy"
     },
     "profile": {
+      "user": "Usuario",
       "logout": "Salir"
     },
     "searchBar": {
