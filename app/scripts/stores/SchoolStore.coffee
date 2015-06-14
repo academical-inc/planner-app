@@ -12,7 +12,7 @@ class SchoolStore extends Store
   school: ->
     _school
 
-  dispatchCallback: (payload)=>
+  dispatchCallback: (payload)->
     action = payload.action
 
     switch action.type
