@@ -31,6 +31,9 @@ class Router
       when Pages.ERROR
         render ErrorPage props
 
+  @redirect: (path)->
+    Page.redirect path
+
   @defRoute: (path, cb)->
     Page path, cb
 
