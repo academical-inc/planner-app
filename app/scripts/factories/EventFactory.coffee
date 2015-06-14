@@ -1,8 +1,8 @@
 
-$         = require 'jquery'
-Factory   = require './Factory'
-ApiUtils  = require '../utils/ApiUtils'
-DateUtils = require '../utils/DateUtils'
+$           = require 'jquery'
+Factory     = require './Factory'
+SchoolStore = require '../stores/SchoolStore'
+DateUtils   = require '../utils/DateUtils'
 
 
 # TODO Tests
@@ -13,7 +13,7 @@ class EventFactory extends Factory
     "name": null
     "startDt": null
     "endDt": null
-    "timezone": -> ApiUtils.currentSchool().timezone
+    "timezone": -> SchoolStore.school().timezone
     "location": null
     "description": null
     "color": null

@@ -16,8 +16,10 @@ describe "EventForm", ->
     @global  = H.rewire EventForm,
       EventFormStore: @store
       PlannerActions: @actions
-      _utcOffset: -> -240
-      _term: -> endDate: "2015-05-31"
+      _school:
+        utcOffset: -240
+      _term:
+        endDate: "2015-05-31"
 
   afterEach ->
     @global()

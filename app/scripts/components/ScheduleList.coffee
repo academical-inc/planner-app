@@ -1,15 +1,15 @@
 
-React          = require 'react'
-$              = require 'jquery'
-{UiConstants}  = require '../constants/PlannerConstants'
-MediaQueries   = require '../utils/MediaQueries.coffee'
-IconMixin      = require '../mixins/IconMixin'
-I18nMixin      = require '../mixins/I18nMixin'
-ScheduleStore  = require '../stores/ScheduleStore'
-PlannerActions = require '../actions/PlannerActions'
-Dropdown       = React.createFactory require './Dropdown'
-ScheduleItem   = React.createFactory require './ScheduleItem'
-R              = React.DOM
+React         = require 'react'
+$             = require 'jquery'
+{UiConstants} = require '../constants/PlannerConstants'
+MediaQueries  = require '../utils/MediaQueries.coffee'
+IconMixin     = require '../mixins/IconMixin'
+I18nMixin     = require '../mixins/I18nMixin'
+ScheduleStore = require '../stores/ScheduleStore'
+AppActions    = require '../actions/AppActions'
+Dropdown      = React.createFactory require './Dropdown'
+ScheduleItem  = React.createFactory require './ScheduleItem'
+R             = React.DOM
 
 
 ScheduleList = React.createClass(
@@ -25,16 +25,16 @@ ScheduleList = React.createClass(
     @setState state
 
   addSchedule: (name)->
-    PlannerActions.createSchedule name
+    AppActions.createSchedule name
 
   openSchedule: (scheduleItem)->
     schedule =
       id: scheduleItem.id
       name: scheduleItem.val
-    PlannerActions.openSchedule schedule
+    AppActions.openSchedule schedule
 
   deleteSchedule: (scheduleItem)->
-    PlannerActions.deleteSchedule scheduleItem.id if scheduleItem.id?
+    AppActions.deleteSchedule scheduleItem.id if scheduleItem.id?
 
   getInitialState: ->
     @getState()

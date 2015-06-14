@@ -1,61 +1,46 @@
 
-Page           = require 'page'
-React          = require 'react'
-I18n           = require './utils/I18n'
-ApiUtils       = require './utils/ApiUtils'
-PlannerError   = require './errors/PlannerError'
-PlannerActions = require './actions/PlannerActions'
-ErrorPage      = React.createFactory require './components/ErrorPage'
+# Init School
+school      = require('./Env').SCHOOL
+AppActions  = require './actions/AppActions'
+AppActions.initSchool school
+
+# Require Modules
+_           = require './utils/Utils'
+Router      = require './utils/Router'
+I18n        = require './utils/I18n'
+ApiUtils    = require './utils/ApiUtils'
+UserStore   = require './stores/UserStore'
+{Pages}     = require './constants/PlannerConstants'
 
 {POLL_INTERVAL} = require './constants/PlannerConstants'
 
-# Initializers
+
+# Library Initializers (Patchers)
 require './initializers/bootstrap'
 
-I18n.init()
+
+# Init modules
+Router.init()
 ApiUtils.init()
+I18n.init if _.qs("lang")? then _.qs("lang") else school.locale
 
 
-Page '/', ->
-  # TODO init this as an action. School and User stores
-  ApiUtils.initSchool (err, school)->
-    if err?
-      # TODO - Properly transition between APIErrors/PlannerErrors.
-      error = new PlannerError "errors.pageNotFound", 404
-      React.render(
-        ErrorPage error: error
-        document.body
-      )
-    else
-      PlannerActions.initSchedules()
-      # TODO Tests
-      # OK because POLL_INTERVAL will always be sufficiently big
-      setInterval PlannerActions.updateSchedules, POLL_INTERVAL
+# Routes
+defRoute = Router.defRoute
+goTo     = Router.goTo
 
-      PlannerApp = React.createFactory require './components/PlannerApp'
-      React.render(
-        PlannerApp ui: school.appUi
-        document.body
-      )
+defRoute '/', ->
+  if UserStore.isLoggedIn()
+    AppActions.getSchedules()
+    # TODO Tests
+    # OK because POLL_INTERVAL will always be sufficiently big
+    setInterval AppActions.updateSchedules, POLL_INTERVAL
+    goTo Pages.APP, ui: school.appUi
+  else
+    goTo Pages.LANDING
 
 
-Page '/schedules/:scheduleId', (ctx)->
-  SingleSchedulePage = React.createFactory(
-    require './components/SingleSchedulePage'
-  )
+defRoute '/schedules/:scheduleId', (ctx)->
+  goTo Pages.SINGLE_SCHEDULE, scheduleId: ctx.params.scheduleId
 
-  React.render(
-    SingleSchedulePage scheduleId: ctx.params.scheduleId
-    document.body
-  )
-
-
-Page '*', ->
-  error = new PlannerError "errors.pageNotFound", 404
-  React.render(
-    ErrorPage error: error
-    document.body
-  )
-
-Page()
-
+Router.route()

@@ -1,6 +1,6 @@
 
 $                 = require 'jquery'
-_                 = require '../utils/HelperUtils'
+_                 = require '../utils/Utils'
 I18n              = require '../utils/I18n'
 ApiUtils          = require '../utils/ApiUtils'
 ActionUtils       = require '../utils/ActionUtils'
@@ -10,6 +10,7 @@ ScheduleStore     = require '../stores/ScheduleStore'
 SectionStore      = require '../stores/SectionStore'
 SectionColorStore = require '../stores/SectionColorStore'
 EventStore        = require '../stores/EventStore'
+NavError          = require '../errors/NavError'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 {ActionTypes}     = require '../constants/PlannerConstants'
 {DebounceRates}   = require '../constants/PlannerConstants'
@@ -87,11 +88,25 @@ class ScheduleActions
       type: ActionTypes.OPEN_SCHEDULE
       schedule: schedule
 
-  @initSchedules: ->
+  @getSchedules: ->
     getSchedules(
       ActionTypes.GET_SCHEDULES
       ActionTypes.GET_SCHEDULES_SUCCESS
       ActionTypes.GET_SCHEDULES_FAIL
+    )
+
+  @getSchedule: (scheduleId) ->
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.GET_SCHEDULES
+
+    ApiUtils.getSchedule(
+      scheduleId,
+      ActionUtils.handleServerResponse(
+        ActionTypes.GET_SCHEDULES_SUCCESS
+        ActionTypes.GET_SCHEDULES_FAIL
+        (response)-> schedules: [response]
+        (err)-> error: new NavError err
+      )
     )
 
   @updateSchedules: ->

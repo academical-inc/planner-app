@@ -1,10 +1,10 @@
 
-React          = require 'react'
-ItemMixin      = require '../mixins/ItemMixin'
-IconMixin      = require '../mixins/IconMixin'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-R              = React.DOM
+React         = require 'react'
+ItemMixin     = require '../mixins/ItemMixin'
+IconMixin     = require '../mixins/IconMixin'
+AppActions    = require '../actions/AppActions'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 
 # TODO Tests
@@ -19,7 +19,7 @@ ScheduleItem = React.createClass(
     @refs.editInput.getDOMNode().value
 
   updateScheduleName: (name)->
-    PlannerActions.updateScheduleName @props.item.id, name
+    AppActions.updateScheduleName @props.item.id, name
     @setState editing: false
 
   handleEvent: (e)->

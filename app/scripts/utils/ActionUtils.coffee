@@ -1,4 +1,5 @@
 
+AppError          = require '../errors/AppError'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 
@@ -13,9 +14,9 @@ class ActionUtils
   )->
     (err, response)->
       if err?
-        payload       = errorPayload err, response
+        payload       = error: new AppError err
+        payload       = $.extend true, {}, payload, errorPayload(err, response)
         payload.type  = errorAction
-        payload.error = err
         PlannerDispatcher.dispatchServerAction payload
       else
         payload      = successPayload response
