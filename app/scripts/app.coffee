@@ -10,35 +10,32 @@ Router      = require './utils/Router'
 I18n        = require './utils/I18n'
 ApiUtils    = require './utils/ApiUtils'
 UserStore   = require './stores/UserStore'
+AuthError   = require './errors/AuthError'
 {Pages}     = require './constants/PlannerConstants'
-
-{POLL_INTERVAL} = require './constants/PlannerConstants'
-
 
 # Library Initializers (Patchers)
 require './initializers/bootstrap'
-
 
 # Init modules
 Router.init()
 ApiUtils.init()
 I18n.init if _.qs("lang")? then _.qs("lang") else school.locale
 
-
 # Routes
 defRoute = Router.defRoute
 goTo     = Router.goTo
 
 defRoute '/', ->
-  if UserStore.isLoggedIn()
-    AppActions.getSchedules()
-    # TODO Tests
-    # OK because POLL_INTERVAL will always be sufficiently big
-    setInterval AppActions.updateSchedules, POLL_INTERVAL
-    goTo Pages.APP, ui: school.appUi
-  else
-    goTo Pages.LANDING
-
+  try
+    if UserStore.isLoggedIn()
+      goTo Pages.APP, ui: school.appUi
+    else
+      goTo Pages.LANDING
+  catch e
+    if e instanceof AuthError
+      goTo Pages.LANDING, error: e.message
+    else
+      goTo Pages.ERROR, msg: e.message
 
 defRoute '/schedules/:scheduleId', (ctx)->
   goTo Pages.SINGLE_SCHEDULE, scheduleId: ctx.params.scheduleId
