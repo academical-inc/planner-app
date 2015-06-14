@@ -17,11 +17,12 @@ PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 
 # Private
-getSchedules = (action, success, fail)->
+getSchedules = (userId, action, success, fail)->
   PlannerDispatcher.dispatchViewAction
     type: action
 
   ApiUtils.getSchedules(
+    userId
     ActionUtils.handleServerResponse(
       success
       fail
@@ -88,11 +89,20 @@ class ScheduleActions
       type: ActionTypes.OPEN_SCHEDULE
       schedule: schedule
 
-  @getSchedules: ->
+  @getSchedules: (userId)->
     getSchedules(
+      userId
       ActionTypes.GET_SCHEDULES
       ActionTypes.GET_SCHEDULES_SUCCESS
       ActionTypes.GET_SCHEDULES_FAIL
+    )
+
+  @updateSchedules: (userId)->
+    getSchedules(
+      userId
+      ActionTypes.UPDATE_SCHEDULES
+      ActionTypes.UPDATE_SCHEDULES_SUCCESS
+      ActionTypes.UPDATE_SCHEDULES_FAIL
     )
 
   @getSchedule: (scheduleId) ->
@@ -107,13 +117,6 @@ class ScheduleActions
         (response)-> schedules: [response]
         (err)-> error: new NavError err
       )
-    )
-
-  @updateSchedules: ->
-    getSchedules(
-      ActionTypes.UPDATE_SCHEDULES
-      ActionTypes.UPDATE_SCHEDULES_SUCCESS
-      ActionTypes.UPDATE_SCHEDULES_FAIL
     )
 
   @createSchedule: (scheduleName)->
