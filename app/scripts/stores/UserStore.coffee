@@ -27,6 +27,7 @@ updateUser = (user)->
   localStorage.setItem AuthConstants.USER_STORAGE, JSON.stringify(_user)
 
 
+# TODO Test
 class UserStore extends Store
 
   user: ->
