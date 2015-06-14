@@ -16,9 +16,13 @@
         "Please email support@academical.co with the details of your situation and the following message:",
         "{{errMsg}}"
       ],
-      "notFound": [
-        "Oops! Resource not found!"
-      ]
+      "authError": [
+        "Oops! There was an error logging in",
+        "Please try again."
+      ],
+      "notFound": "Oops! Resource not found!",
+      "notLoggedIn": "You need to log in first.",
+      "notAuthorized": "Not authorized."
     },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
@@ -106,7 +110,7 @@
         "Por favor revisa tu conexión e intenta de nuevo."
       ],
       "apiError": [
-        "Oops! Parece que hay un problema con nuestros servidores.",
+        "Ups! Parece que hay un problema con nuestros servidores.",
         "Por favor danos un momento e intenta de nuevo."
       ],
       "clientError": [
@@ -114,9 +118,13 @@
         "Por favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje:",
         "{{errMsg}}"
       ],
-      "notFound": [
-        "Oops! No encontramos el recurso que buscas!"
-      ]
+      "authError": [
+        "Ups! Hubo un problema haciendo login",
+        "Por favor intenta de nuevo."
+      ],
+      "notFound":  "Ups! No encontramos el recurso que buscas!",
+      "notLoggedIn": "Debes hacer login para completar esta acción.",
+      "notAuthorized": "No tienes autorización para completar esta acción."
     },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
