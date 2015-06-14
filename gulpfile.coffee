@@ -102,6 +102,7 @@ bundle = (b)->
 s3WebUpdate = ()->
   s3 = publisher.client
   through.obj (file, enc, cb)->
+    return if not file.path?
     dirRoot  = file.base
     fname    = file.path.substr dirRoot.length
     if fname.match indexRe
