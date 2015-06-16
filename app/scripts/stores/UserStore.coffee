@@ -69,6 +69,7 @@ class UserStore extends Store
         logout()
       when ActionTypes.LOGOUT_USER
         logout()
+        @emitChange()
 
 
 module.exports = new UserStore

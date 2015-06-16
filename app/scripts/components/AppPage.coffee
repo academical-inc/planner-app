@@ -17,10 +17,13 @@ R               = React.DOM
 # Private
 # TODO Test
 # OK because POLL_INTERVAL will always be sufficiently big
+_interval = null
 _initSchedules = _.debounce(
   (userId)->
     AppActions.getSchedules userId
-    setInterval AppActions.updateSchedules.bind(AppActions, userId), POLL_INTERVAL
+    _interval = setInterval(
+      AppActions.updateSchedules.bind(AppActions,userId), POLL_INTERVAL
+    )
     return
   , 0
 )
@@ -38,7 +41,10 @@ AppPage = React.createClass(
     @getState()
 
   onChange: ->
-    @setState @getState()
+    if UserStore.user()?
+      @setState @getState()
+    else
+      clearInterval _interval
 
   componentDidMount: ->
     if @state.userId?
