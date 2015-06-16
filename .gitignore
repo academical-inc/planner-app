@@ -42,5 +42,6 @@ divshot.json
 # environment
 .env.json
 .cfdists.json
+.auth.json
 
 Thumbs.db

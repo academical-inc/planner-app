@@ -17,6 +17,7 @@ merge      = require 'merge-stream'
 bowerFiles = require 'main-bower-files'
 envify     = require 'envify/custom'
 cfdists    = require './.cfdists.json'
+auth       = require './.auth.json'
 env        = require './.env.json'
 karma      = require('karma').server
 
@@ -132,12 +133,15 @@ gulp.task 'fetch-school', ->
       url: "#{appEnv.API_PROTOCOL}://#{appEnv.API_HOST}/schools/#{nickname}"
       json: true
       qs: {camelize: true}
+      headers:
+        "Authorization": "Bearer #{auth["TOKEN"]}"
     request.get options, (error, response, body)->
       if error?
         throw error
       else if response.statusCode != 200
         throw new Error "Could not fetch school #{nickname}: "+body.message
       else
+        appEnv.SECTIONS_URL = "//s3.amazonaws.com/section-dumps/#{nickname}.json"
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
 
