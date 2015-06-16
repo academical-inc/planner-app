@@ -99,6 +99,19 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "loginDialog": {
+      "header": "Log in",
+      "loading": "Logging in",
+      "reminderHeader": "Remember that:",
+      "reminder": [
+        "This app DOES NOT register your schedule. It just helps you plan it.",
+        "Its use under the sole responsability of the student.",
+        "Academical uses the course catalog provided by the University"
+      ],
+      "uniandes": "Log In with Uniandes",
+      "facebook": "Log In with Facebook",
+      "google": "Log In with Google"
+    },
     "empty": "N/A",
     "copyOf": "Copy of {{name}}"
   },
@@ -201,6 +214,19 @@
     },
     "errorDialog": {
       "header": "Error!"
+    },
+    "loginDialog": {
+      "header": "Ingresa",
+      "loading": "Ingresando",
+      "reminderHeader": "Recuerda que:",
+      "reminder": [
+        "La aplicación NO! inscribe el horario. Solo es una herramienta para planear opciones de horario.",
+        "Su uso está bajo responsabilidad de cada estudiante.",
+        "Academical toma la información del catálogo de cursos que provee la Universidad"
+      ],
+      "uniandes": "Ingresa con Uniandes",
+      "facebook": "Ingresa con Facebook",
+      "google": "Ingresa con Google"
     },
     "empty": "N/A",
     "copyOf": "Copia de {{name}}"

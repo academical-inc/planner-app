@@ -3,6 +3,7 @@ ids =
   SCHEDULE_LIST: 'pla-schedule-list'
   SEARCH_FILTERS: 'pla-search-filters'
   WEEK_CALENDAR: 'pla-week-calendar'
+  LOGIN_MODAL: 'pla-login-modal'
   EVENT_MODAL: 'pla-event-modal'
   SUMMARY_MODAL: 'pla-summary-modal'
   SHARE_MODAL: 'pla-share-modal'
@@ -19,6 +20,7 @@ module.exports =
     SCHEDULE_LIST: "##{ids.SCHEDULE_LIST}"
     SEARCH_FILTERS: "##{ids.SEARCH_FILTERS}"
     WEEK_CALENDAR: "##{ids.WEEK_CALENDAR}"
+    LOGIN_MODAL: "##{ids.LOGIN_MODAL}"
     EVENT_MODAL: "##{ids.EVENT_MODAL}"
     SUMMARY_MODAL: "##{ids.SUMMARY_MODAL}"
     SHARE_MODAL: "##{ids.SHARE_MODAL}"
@@ -37,6 +39,10 @@ module.exports =
     ESC: 27
     UP: 38
     DOWN: 40
+  site:
+    ABOUT: "//academical.co/about"
+    CONTACT: "//academical.co/contact"
+    PRIVACY: "//academical.co/privacy"
   DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   COLORS: [
     "#2daae1"

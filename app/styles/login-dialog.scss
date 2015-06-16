@@ -1,0 +1,25 @@
+
+.pla-login-dialog {
+
+  .providers {
+    margin-top: 10px;
+
+    .fa-spinner {
+      margin-left: .4em;
+    }
+  }
+
+  .reminder {
+    text-align: center;
+
+    .header {
+      color: $red;
+    }
+    p {
+      text-align: justify;
+    }
+    a:last-child {
+      font-weight: 700;
+    }
+  }
+}
