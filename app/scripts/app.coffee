@@ -35,6 +35,7 @@ defRoute '/', ->
     if e instanceof AuthError
       goTo Pages.LANDING, error: e.message
     else
+      console.error e
       goTo Pages.ERROR, msg: e.message
 
 defRoute '/schedules/:scheduleId', (ctx)->
