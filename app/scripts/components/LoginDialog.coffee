@@ -21,17 +21,17 @@ LoginDialog = React.createClass(
     selected: null
 
   renderLoginBtns: (providers=SchoolStore.school().identityProviders)->
-    providers.map (provider)=>
-      part = if provider.indexOf(".") != -1
-        provider.split(".")[0]
+    providers.map (connection)=>
+      part = if connection.indexOf(".") != -1
+        connection.split(".")[0]
       else
-        provider.split("-")[0]
+        connection.split("-")[0]
       R.a
         key: "login-#{part}"
         className: "btn btn-block btn-social btn-#{part}"
-        onClick: @login.bind @, provider
+        onClick: @login.bind @, connection
         R.i className: "fa fa-#{part}"
-        if @state.selected is part
+        if @state.selected is connection
           R.span null,
             @t("loginDialog.loading")
             @renderSpinner()
