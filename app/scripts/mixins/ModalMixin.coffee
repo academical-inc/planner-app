@@ -66,7 +66,7 @@ module.exports =
         "aria-labelledby": labelId
         "aria-hidden": true
       },
-      R.div className: "modal-dialog pla-modal",
+      R.div className: "modal-dialog pla-modal #{modalId}",
         R.div className: "modal-content",
           R.div className: "modal-header",
             R.button className: "close", "data-dismiss": "modal",
