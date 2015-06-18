@@ -4,7 +4,7 @@ $        = require 'jquery'
 Utils    = require './Utils'
 Url      = require './Url'
 ApiError = require '../errors/ApiError'
-request  = require './request'
+Request  = require './Request'
 
 
 class Resource
@@ -38,7 +38,7 @@ class Resource
 
       data = Resource._formatRequestData method, data
 
-      request method, fullUrl, Resource._responseHandler(cb),
+      Request method, fullUrl, Resource._responseHandler(cb),
         data: data
         headers: @_api.get("headers")
         timeout: @_api.get("timeout")
