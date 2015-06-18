@@ -1,6 +1,7 @@
 
 $               = require 'jquery'
 SchoolActions   = require './SchoolActions'
+AuthActions     = require './AuthActions'
 ScheduleActions = require './ScheduleActions'
 SectionActions  = require './SectionActions'
 EventActions    = require './EventActions'
@@ -10,10 +11,11 @@ ExportActions   = require './ExportActions'
 SearchActions   = require './SearchActions'
 
 
-# # TODO Test All Actions
+# TODO Test All Actions
 module.exports = $.extend(
   {},
   SchoolActions
+  AuthActions
   ScheduleActions
   SectionActions
   EventActions

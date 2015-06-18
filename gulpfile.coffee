@@ -1,5 +1,6 @@
 
 # Load libs
+extend     = require 'extend'
 request    = require 'request'
 fs         = require 'fs'
 jf         = require 'jsonfile'
@@ -16,6 +17,7 @@ merge      = require 'merge-stream'
 bowerFiles = require 'main-bower-files'
 envify     = require 'envify/custom'
 cfdists    = require './.cfdists.json'
+auth       = require './.auth.json'
 env        = require './.env.json'
 karma      = require('karma').server
 
@@ -28,11 +30,15 @@ jf.spaces = 2
 
 
 # Env
+env.APP_ENV = if $.util.env.dev is true
+  "development"
+else if $.util.env.test is true
+  "test"
+else
+  "production"
 config =
-  production: not $.util.env.dev is true
+  production: env.APP_ENV is "production"
   school: $.util.env.school
-
-env.APP_ENV = if config.production then "production" else "development"
 
 
 # Deploy Vars
@@ -71,6 +77,7 @@ paths =
 # Helpers
 bundler = (watch = false)->
   # Create bundler
+  distEnv = extend {}, env[env.APP_ENV], SCHOOL: env.SCHOOL,APP_ENV: env.APP_ENV
   b = browserify
     entries: "#{base.app}/#{paths.main.script}"
     debug: not config.production
@@ -82,7 +89,7 @@ bundler = (watch = false)->
   # Apply browserify transforms
   b.transform 'coffeeify'
   b.transform 'browserify-shim'
-  b.transform envify(env)
+  b.transform envify(distEnv)
   b
 
 bundle = (b)->
@@ -96,6 +103,7 @@ bundle = (b)->
 s3WebUpdate = ()->
   s3 = publisher.client
   through.obj (file, enc, cb)->
+    return if not file.path?
     dirRoot  = file.base
     fname    = file.path.substr dirRoot.length
     if fname.match indexRe
@@ -125,12 +133,15 @@ gulp.task 'fetch-school', ->
       url: "#{appEnv.API_PROTOCOL}://#{appEnv.API_HOST}/schools/#{nickname}"
       json: true
       qs: {camelize: true}
+      headers:
+        "Authorization": "Bearer #{auth["TOKEN"]}"
     request.get options, (error, response, body)->
       if error?
         throw error
       else if response.statusCode != 200
         throw new Error "Could not fetch school #{nickname}: "+body.message
       else
+        appEnv.SECTIONS_URL = "//s3.amazonaws.com/section-dumps/#{nickname}.json"
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
 
@@ -205,6 +216,7 @@ gulp.task 'copy-extras', ->
     .pipe gulp.dest(base.dist)
 
 gulp.task 'test', (cb)->
+  env.APP_ENV = "test"
   karma.start
     configFile: "#{__dirname}/karma.conf.coffee"
   , cb

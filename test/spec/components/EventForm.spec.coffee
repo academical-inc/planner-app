@@ -15,7 +15,7 @@ describe "EventForm", ->
     ]
     @global  = H.rewire EventForm,
       EventFormStore: @store
-      PlannerActions: @actions
+      AppActions: @actions
       _school:
         utcOffset: -240
       _term:

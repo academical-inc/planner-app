@@ -1,16 +1,16 @@
 
 React         = require 'react'
-IconMixin     = require '../mixins/IconMixin'
 StoreMixin    = require '../mixins/StoreMixin'
 ScheduleStore = require '../stores/ScheduleStore'
 AppActions    = require '../actions/AppActions'
+LoadingView   = React.createFactory require './LoadingView'
 WeekCalendar  = React.createFactory require './WeekCalendar'
 R             = React.DOM
 
 
 SchedulePage = React.createClass(
 
-  mixins: [IconMixin, StoreMixin(ScheduleStore)]
+  mixins: [StoreMixin(ScheduleStore)]
 
   getInitialState: ->
     schedule: false
@@ -30,9 +30,7 @@ SchedulePage = React.createClass(
         if @state.schedule is true
           @renderContent()
         else
-          R.div className: "loading-indicator",
-            R.span className: "vertical-align-helper"
-            @renderSpinner()
+          LoadingView {}
 
 )
 

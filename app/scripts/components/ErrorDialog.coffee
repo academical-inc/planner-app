@@ -18,7 +18,7 @@ ErrorDialog = React.createClass(
     @show()
 
   getInitialState: ->
-    error: "Error!"
+    error: @props.error
 
   renderBody: ->
     R.div className: "pla-error-dialog",

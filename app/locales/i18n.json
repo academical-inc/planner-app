@@ -16,9 +16,13 @@
         "Please email support@academical.co with the details of your situation and the following message:",
         "{{errMsg}}"
       ],
-      "notFound": [
-        "Oops! Resource not found!"
-      ]
+      "authError": [
+        "Oops! There was an error logging in",
+        "Please try again."
+      ],
+      "notFound": "Oops! Resource not found!",
+      "notLoggedIn": "You need to log in first.",
+      "notAuthorized": "Not authorized."
     },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
@@ -39,6 +43,7 @@
       "today": "Today"
     },
     "profile": {
+      "user": "User",
       "logout": "Log Out"
     },
     "searchBar": {
@@ -94,8 +99,81 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "loginDialog": {
+      "header": "Log in",
+      "loading": "Logging in",
+      "reminderHeader": "Remember that:",
+      "reminder": [
+        "This app DOES NOT register your schedule. It just helps you plan it.",
+        "Its use under the sole responsability of the student.",
+        "Academical uses the course catalog provided by the University"
+      ],
+      "uniandes": "Log In with Uniandes",
+      "facebook": "Log In with Facebook",
+      "google": "Log In with Google"
+    },
     "empty": "N/A",
-    "copyOf": "Copy of {{name}}"
+    "copyOf": "Copy of {{name}}",
+    "landing": {
+      "section1": {
+        "title": "YOUR CLASS SCHEDULE",
+        "titleStrong": " EASY AND FAST",
+        "subtitle": "Stop planning your schedule manually, sifting through a bunch of pages and ending up stressed for something that should be simple",
+        "videoBtn": "Click to watch the video"
+      },
+      "section2": {
+        "title": "Features",
+        "subtitle": "Academical helps you with the process of planning your class schedule",
+        "title1": "Search",
+        "sen1": "Look up the courses by different criteria",
+        "title2": "Build",
+        "sen2": "Visually create and organize your class schedule",
+        "title3": "Check",
+        "sen3": "Check the seats availability in real time",
+        "title4": "Other features",
+        "sen4": "Export your schedules, share them on social media and organize your extracurricular activities"
+      },
+      "section3": {
+        "stats1": "Two",
+        "stats1Sub": "Universities use",
+        "stats2": "More than 15.000",
+        "stats2Sub": "students use our aplication",
+        "stats3": "9.2/10",
+        "stats3Sub": "Students satisfaction",
+        "testimonies": {
+          "title": "Testimonies",
+          "first": {
+            "sentence": "It's a super practical and easy to use tool. It avoids the pain of planning the schedule by hand or excel, but also it has many more features that make it awesome!",
+            "name": "Maria Camila Remolina",
+            "info": "5th semester, Physics",
+            "university": "Universidad de los Andes"
+          },
+          "second": {
+            "sentence": "Thank you very much for your tireless work for the wellbeing of students! You have turned a long and exhausting process into an intuitive, easy and handy activity that is imperative each semester!",
+            "name": "Gabriel Castillo Szpoganicz",
+            "info": "10th semester, Design and Business",
+            "university": "Universidad de los Andes"
+          },
+          "third": {
+            "sentence": "Since I started using Academical the long and exhausting process of planning the class schedule is now simple and intuitive.",
+            "name": "Danilo Miranda",
+            "info": "8th semester",
+            "university": "CESA"
+          },
+          "fourth": {
+            "sentence": "Since Academical started as a class schedule planner, I've always used it and I truly consider it as an essential tool for every student",
+            "name": "Nicolás Silva Cadena",
+            "info": "2nd semester",
+            "university": "CESA"
+          }
+        }
+      },
+      "footer": {
+        "about": "About",
+        "contact": "Contact",
+        "privacy": "Terms and Privacy"
+      }
+    }
   },
   "es": {
     "errors": {
@@ -106,7 +184,7 @@
         "Por favor revisa tu conexión e intenta de nuevo."
       ],
       "apiError": [
-        "Oops! Parece que hay un problema con nuestros servidores.",
+        "Ups! Parece que hay un problema con nuestros servidores.",
         "Por favor danos un momento e intenta de nuevo."
       ],
       "clientError": [
@@ -114,9 +192,13 @@
         "Por favor envía un correo a support@academical.co con los detalles de tu situación y el siguiente mensaje:",
         "{{errMsg}}"
       ],
-      "notFound": [
-        "Oops! No encontramos el recurso que buscas!"
-      ]
+      "authError": [
+        "Ups! Hubo un problema haciendo login",
+        "Por favor intenta de nuevo."
+      ],
+      "notFound":  "Ups! No encontramos el recurso que buscas!",
+      "notLoggedIn": "Debes hacer login para completar esta acción.",
+      "notAuthorized": "No tienes autorización para completar esta acción."
     },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {
@@ -137,6 +219,7 @@
       "today": "Hoy"
     },
     "profile": {
+      "user": "Usuario",
       "logout": "Salir"
     },
     "searchBar": {
@@ -192,7 +275,80 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "loginDialog": {
+      "header": "Ingresa",
+      "loading": "Ingresando",
+      "reminderHeader": "Recuerda que:",
+      "reminder": [
+        "La aplicación NO! inscribe el horario. Solo es una herramienta para planear opciones de horario.",
+        "Su uso está bajo responsabilidad de cada estudiante.",
+        "Academical toma la información del catálogo de cursos que provee la Universidad"
+      ],
+      "uniandes": "Ingresa con Uniandes",
+      "facebook": "Ingresa con Facebook",
+      "google": "Ingresa con Google"
+    },
     "empty": "N/A",
-    "copyOf": "Copia de {{name}}"
+    "copyOf": "Copia de {{name}}",
+    "landing": {
+      "section1": {
+        "title": "TU HORARIO DE CLASES",
+        "titleStrong": " FÁCIL Y RÁPIDO",
+        "subtitle": "Deja de hacer manualmente tu horario, consultar miles de páginas y estresarte por un proceso tan simple!",
+        "videoBtn": "Click para ver el video"
+      },
+      "section2": {
+        "title": "Funcionalidades",
+        "subtitle": "Academical te ayuda en tu proceso de planear el horario de clases",
+        "title1": "Busca",
+        "sen1": "Busca los cursos por diferentes criterios",
+        "title2": "Construye",
+        "sen2": "Visualmente crea y organiza tu horario de clases",
+        "title3": "Revisa",
+        "sen3": "Mira la disponibilidad de cupos en tiempo real",
+        "title4": "Otras funcionalidades",
+        "sen4": "Exporta tus horarios, compártelos en redes sociales y organiza actividades extracurriculares"
+      },
+      "section3": {
+        "stats1": "Dos",
+        "stats1Sub": "Universidades usan",
+        "stats2": "Más de 14.000",
+        "stats2Sub": "Estudiantes usando nuestra aplicación",
+        "stats3": "9.2/10",
+        "stats3Sub": "Satisfacción de estudiantes",
+        "testimonies": {
+          "title": "Testimonios",
+          "first": {
+            "sentence": "Es una herramienta super práctica y fácil de usar. No solo evita el tedio de hacer horarios a mano o en excel, sino que tiene muchas caracteristicas más que hacen que no sea una simple herramienta que cumple una única función.",
+            "name": "Maria Camila Remolina",
+            "info": "5to semestre, Física",
+            "university": "Universidad de los Andes"
+          },
+          "second": {
+            "sentence": "Mil Gracias por su incansable trabajo por el bien de los estudiantes!. Han convertido un proceso que era largo y agobiante en una actividad intuitiva, cómoda y sencilla que es determinante cada semestre!",
+            "name": "Gabriel Castillo Szpoganicz",
+            "info": "10mo semestre, Diseño y Administración",
+            "university": "Universidad de los Andes"
+          },
+          "third": {
+            "sentence": "Desde que comencé a usar Academical el proceso largo y agobiante de planear el horario de clases ahora es una actividad cómoda y sencilla que es determinante cada semestre!",
+            "name": "Danilo Miranda",
+            "info": "8vo semestre",
+            "university": "CESA"
+          },
+          "fourth": {
+            "sentence": "Desde que existe Academical para la planeación del horario de clases, la he utilizado de manera constante y verdaderamente la considero como una herramienta fundamental para cada uno de los estudiantes.",
+            "name": "Nicolás Silva Cadena",
+            "info": "2do semestre",
+            "university": "CESA"
+          }
+        }
+      },
+      "footer": {
+        "about": "Nosotros",
+        "contact": "Contáctanos",
+        "privacy": "Términos y Privacidad"
+      }
+    }
   }
 }

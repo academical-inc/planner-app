@@ -6,6 +6,9 @@ class Students extends Resource
 
   path: "students"
 
+  create: Resource.createApiCall
+    method: "post"
+
   retrieve: Resource.createApiCall
     method: "get"
     path: "{id}"

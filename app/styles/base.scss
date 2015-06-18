@@ -64,6 +64,9 @@ i {
     vertical-align: baseline;
   }
 }
+.fa-uniandes:before {
+  content: url(/images/provider_uniandes.png);
+}
 
 /* Inputs */
 .form-group input {
@@ -86,6 +89,13 @@ i {
 .btn {
   border-radius: 2px;
   padding: 0.4em 1em;
+}
+.btn-uniandes {
+  @include btn-social($uniandes, #000);
+}
+.btn-social,.btn-social-icon {
+  padding-left: 44px;
+  font-weight: 300;
 }
 .btn-danger {
   background-color: $red !important;
