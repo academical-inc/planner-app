@@ -1,9 +1,9 @@
 
 H = require '../../SpecHelper'
-_ = require '../../../app/scripts/utils/HelperUtils'
+_ = require '../../../app/scripts/utils/Utils'
 
 
-describe 'HelperUtils', ->
+describe 'Utils', ->
 
   beforeEach ->
     @arr = ["some", 34, 5, {thing: "5"}, 34]
@@ -179,3 +179,11 @@ describe 'HelperUtils', ->
       re = /\bempty/gi
       indices = _.findAllRegexMatches re, @str
       expect(indices).toEqual []
+
+  describe '.qs', ->
+
+    it 'extracts param value properly', ->
+      str = "?a=1&b=2&c"
+      expect(_.qs('a', str)).toEqual "1"
+      expect(_.qs('b')).toEqual "2"
+      expect(_.qs('c')).toEqual ""

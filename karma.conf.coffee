@@ -1,5 +1,8 @@
 # Karma configuration
 # Generated on Mon Oct 20 2014 17:00:17 GMT-0400 (EDT)
+extend = require 'extend'
+env    = require './.env.json'
+env    = extend {}, env["test"], SCHOOL: env.SCHOOL, APP_ENV: "test"
 
 module.exports = (config) ->
   config.set
@@ -85,7 +88,7 @@ module.exports = (config) ->
       transform: [
         'coffeeify'
         'browserify-shim'
-        ['envify', require('./.env.json')]
+        ['envify', env]
         ['rewireify', {
             ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee,SpinnerMixin.coffee,FormMixin.coffee"
           }

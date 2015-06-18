@@ -1,17 +1,17 @@
 
-React          = require 'react'
-IconMixin      = require '../mixins/IconMixin'
-ItemMixin      = require '../mixins/ItemMixin'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-R              = React.DOM
+React         = require 'react'
+IconMixin     = require '../mixins/IconMixin'
+ItemMixin     = require '../mixins/ItemMixin'
+AppActions    = require '../actions/AppActions'
+{UiConstants} = require '../constants/PlannerConstants'
+R             = React.DOM
 
 EventItem = React.createClass(
 
   mixins: [IconMixin, ItemMixin]
 
   handleColorSelect: (color)->
-    PlannerActions.changeEventColor @props.item.id, color
+    AppActions.changeEventColor @props.item.id, color
 
   render: ->
     headingId      = "event-heading-#{@props.item.id}"

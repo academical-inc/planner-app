@@ -1,42 +1,27 @@
 
 $          = require 'jquery'
 Env        = require '../Env'
-_          = require '../utils/DateUtils'
+UserStore  = require '../stores/UserStore'
 Academical = require '../api/Academical'
 
-_api                   = null
-_currentSchoolNickname = null
-_currentSchool         = null
-_hostname              = window.location.hostname
-
-# TODO Implement properly from login
-_currentStudent = id: "5501ec676d616308f5000000"
-# _currentStudent = id: "552edf8b6d6163c2b1000000"
-
+# Private
+_api = null
 
 class ApiUtils
 
-  @api = _api
-
-  @init: ->
+  @init: ()->
     # TODO Should probably init current student and school here
     _api = new Academical
     _api.setHost Env.API_HOST, Env.API_PROTOCOL
-    _currentSchoolNickname = _hostname.split(".")[0]
+    UserStore.addChangeListener ->
+      authToken = UserStore.authToken()
+      _api.addHeaders "Authorization": "Bearer #{authToken}" if authToken?
 
-  # TODO Implement properly from login
-  @currentSchool: -> _currentSchool
+  @fetchUser: (user, cb)->
+    _api.students.create user, cb
 
-  # TODO Implement properly from login
-  @currentStudent: -> _currentStudent
-
-  @initSchool: (cb, nickname=_currentSchoolNickname)->
-    _api.schools.retrieve nickname, (error, school)->
-      _currentSchool = school if not error?
-      cb error, school
-
-  @getSchedules: (cb, studentId=_currentStudent.id)->
-    _api.students.listSchedules studentId,
+  @getSchedules: (userId, cb)->
+    _api.students.listSchedules userId,
       includeSections: true,
       expandEvents: true,
       cb

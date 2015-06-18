@@ -1,5 +1,5 @@
 
-_ = require '../utils/HelperUtils'
+_ = require '../utils/Utils'
 
 class Factory
 

@@ -1,10 +1,10 @@
 
-React          = require 'react'
-_              = require '../utils/HelperUtils'
-I18nMixin      = require '../mixins/I18nMixin'
-SectionUtils   = require '../utils/SectionUtils'
-PlannerActions = require '../actions/PlannerActions'
-R              = React.DOM
+React        = require 'react'
+_            = require '../utils/Utils'
+I18nMixin    = require '../mixins/I18nMixin'
+SectionUtils = require '../utils/SectionUtils'
+AppActions   = require '../actions/AppActions'
+R            = React.DOM
 
 
 ResultItem = React.createClass(

@@ -7,7 +7,7 @@ SearchStore          = require '../stores/SearchStore'
 PreviewStore         = require '../stores/PreviewStore'
 {UiConstants}        = require '../constants/PlannerConstants'
 {PreviewTypes}       = require '../constants/PlannerConstants'
-PlannerActions       = require '../actions/PlannerActions'
+AppActions           = require '../actions/AppActions'
 ResultList           = React.createFactory require './ResultList'
 SearchFilters        = React.createFactory require './SearchFilters'
 SearchFiltersTrigger = React.createFactory require './SearchFiltersTrigger'
@@ -19,7 +19,7 @@ _selectedParent = null
 _lastResults = []
 _lastFocused = null
 
-# TODO Tests
+# TODO Test
 SearchBar = React.createClass(
 
   mixins: [I18nMixin, IconMixin, StoreMixin(SearchStore)]
@@ -52,7 +52,7 @@ SearchBar = React.createClass(
   search: ->
     val = @refs.input.getDOMNode().value
     if val.length >= UiConstants.search.MIN_LEN
-      PlannerActions.search val
+      AppActions.search val
     else
       @setState results: [], focusedIndex: null
 
@@ -63,13 +63,13 @@ SearchBar = React.createClass(
       PreviewTypes.PRIMARY
 
   addPreview: (section, previewType=@previewType())->
-    PlannerActions.addPreview section, previewType
+    AppActions.addPreview section, previewType
 
   removePreview: (previewType=@previewType())->
-    PlannerActions.removePreview previewType
+    AppActions.removePreview previewType
 
   addSection: (section)->
-    PlannerActions.addSection section, UiConstants.DEFAULT_SECTION_COLOR
+    AppActions.addSection section, UiConstants.DEFAULT_SECTION_COLOR
 
   focusResult: (idx)->
     section = @state.results[idx]
@@ -129,6 +129,7 @@ SearchBar = React.createClass(
       @setState inputVal: ""
 
   handleEscPressed: ->
+    @unfocusResult()
     if @state.corequisites
       @clearCorequisites()
     else

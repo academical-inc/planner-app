@@ -1,5 +1,9 @@
 
 # Load libs
+extend     = require 'extend'
+request    = require 'request'
+fs         = require 'fs'
+jf         = require 'jsonfile'
 gulp       = require 'gulp'
 del        = require 'del'
 browserify = require 'browserify'
@@ -7,10 +11,13 @@ watchify   = require 'watchify'
 buffer     = require 'vinyl-buffer'
 source     = require 'vinyl-source-stream'
 runSeq     = require 'run-sequence'
+through    = require 'through2'
 wiredep    = require 'wiredep'
 merge      = require 'merge-stream'
 bowerFiles = require 'main-bower-files'
 envify     = require 'envify/custom'
+cfdists    = require './.cfdists.json'
+auth       = require './.auth.json'
 env        = require './.env.json'
 karma      = require('karma').server
 
@@ -19,9 +26,39 @@ $ = require('gulp-load-plugins')()
 
 
 # Set vars
-config =
-  production: true
+jf.spaces = 2
 
+
+# Env
+env.APP_ENV = if $.util.env.dev is true
+  "development"
+else if $.util.env.test is true
+  "test"
+else
+  "production"
+config =
+  production: env.APP_ENV is "production"
+  school: $.util.env.school
+
+
+# Deploy Vars
+config.domain = if config.production
+  "#{config.school}.academical.co"
+else
+  "#{config.school}-staging.academical.co"
+
+config.aws =
+  Bucket: config.domain
+  region: "us-standard"
+  distributionId: cfdists[config.school][env.APP_ENV]
+
+publisher = $.awspublish.create params: config.aws
+headers   = {'Cache-Control': 'max-age=315360000, no-transform, public'}
+headers["x-amz-acl"] = 'private' if config.production
+indexRe   = /^index\.[a-f0-9]{8}\.html(\.gz)*$/gi
+
+
+# Paths
 base =
   app: './app'
   dist: './dist'
@@ -38,9 +75,9 @@ paths =
 
 
 # Helpers
-
 bundler = (watch = false)->
   # Create bundler
+  distEnv = extend {}, env[env.APP_ENV], SCHOOL: env.SCHOOL,APP_ENV: env.APP_ENV
   b = browserify
     entries: "#{base.app}/#{paths.main.script}"
     debug: not config.production
@@ -52,7 +89,7 @@ bundler = (watch = false)->
   # Apply browserify transforms
   b.transform 'coffeeify'
   b.transform 'browserify-shim'
-  b.transform envify(env)
+  b.transform envify(distEnv)
   b
 
 bundle = (b)->
@@ -63,11 +100,54 @@ bundle = (b)->
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
+s3WebUpdate = ()->
+  s3 = publisher.client
+  through.obj (file, enc, cb)->
+    return if not file.path?
+    dirRoot  = file.base
+    fname    = file.path.substr dirRoot.length
+    if fname.match indexRe
+      params =
+        WebsiteConfiguration:
+          IndexDocument:
+            Suffix: fname
+      s3.putBucketWebsite params, (err, response)->
+        if err?
+          $.util.log new $.util.PluginError('s3-web-update', err)
+          cb null, file
+          return
+        else
+          cb null, file
+    else
+      cb null, file
+
 
 # Tasks
-gulp.task 'set-development', ->
-  env.APP_ENV       = "development"
-  config.production = false
+gulp.task 'fetch-school', ->
+  nickname = config.school
+  $.util.log "School: ", $.util.colors.cyan("#{nickname}")
+
+  if not env.SCHOOL? or env.SCHOOL.nickname != nickname
+    appEnv  = env[env.APP_ENV]
+    options =
+      url: "#{appEnv.API_PROTOCOL}://#{appEnv.API_HOST}/schools/#{nickname}"
+      json: true
+      qs: {camelize: true}
+      headers:
+        "Authorization": "Bearer #{auth["TOKEN"]}"
+    request.get options, (error, response, body)->
+      if error?
+        throw error
+      else if response.statusCode != 200
+        throw new Error "Could not fetch school #{nickname}: "+body.message
+      else
+        appEnv.SECTIONS_URL = "//s3.amazonaws.com/section-dumps/#{nickname}.json"
+        env.SCHOOL = body.data
+        jf.writeFileSync './.env.json', env
+
+gulp.task 'clear-school', ->
+  delete env.SCHOOL
+  jf.writeFileSync './.env.json', env
 
 gulp.task 'clean', (cb)->
   del base.dist, cb
@@ -77,7 +157,7 @@ gulp.task 'lint', ->
     .pipe $.coffeelint()
     .pipe $.coffeelint.reporter()
 
-gulp.task 'scripts', ['lint'], ->
+gulp.task 'scripts', ['lint', 'fetch-school'], ->
   bundle bundler()
 
 gulp.task 'styles', ->
@@ -136,11 +216,12 @@ gulp.task 'copy-extras', ->
     .pipe gulp.dest(base.dist)
 
 gulp.task 'test', (cb)->
+  env.APP_ENV = "test"
   karma.start
     configFile: "#{__dirname}/karma.conf.coffee"
   , cb
 
-gulp.task 'serve', ->
+gulp.task 'server', ->
   gulp.src base.dist
     .pipe $.webserver(
       livereload: true
@@ -149,7 +230,7 @@ gulp.task 'serve', ->
       fallback: 'index.html'
     )
 
-gulp.task 'watch', ['serve'], ->
+gulp.task 'watch', ['server'], ->
   # Watch scripts with watchify
   b = bundler(true)
   b.on 'update', ->
@@ -166,15 +247,23 @@ gulp.task 'watch', ['serve'], ->
   # Watch bower.json
   gulp.watch "./bower.json", ['vendor', 'fonts']
 
-
 gulp.task 'build', (cb)->
-  runSeq 'clean',
-         ['scripts', 'styles', 'vendor', 'fonts', 'images', 'html', 'copy-extras'],
-         cb
+  tasks = ['scripts', 'styles', 'vendor', 'fonts', 'images', 'html', 'copy-extras']
+  runSeq 'clean', tasks, cb
 
-gulp.task 'dev', ['set-development', 'default']
-
-gulp.task 'default', ['build'], ->
+gulp.task 'serve', ['build'], ->
   gulp.start 'watch'
 
+gulp.task 'deploy', ['build'], ->
+  revAll = new $.revAll()
+  gulp.src "#{base.dist}/**"
+    .pipe revAll.revision()
+    .pipe $.awspublish.gzip()
+    .pipe publisher.publish(headers)
+    .pipe publisher.cache()
+    .pipe $.awspublish.reporter()
+    .pipe $.cloudfront(config.aws)
+    .pipe publisher.sync()
+    .pipe $.if(not config.production, s3WebUpdate())
 
+gulp.task 'default', ['build']

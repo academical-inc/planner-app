@@ -1,15 +1,15 @@
 
-React          = require 'react'
-I18nMixin      = require '../mixins/I18nMixin'
-IconMixin      = require '../mixins/IconMixin'
-ScheduleStore  = require '../stores/ScheduleStore'
+React         = require 'react'
+I18nMixin     = require '../mixins/I18nMixin'
+IconMixin     = require '../mixins/IconMixin'
+ScheduleStore = require '../stores/ScheduleStore'
 # TODO Revisit this design. Must require even if not using
-ExportStore    = require '../stores/ExportStore'
-PlannerActions = require '../actions/PlannerActions'
-{UiConstants}  = require '../constants/PlannerConstants'
-Dropdown       = React.createFactory require './Dropdown'
-OptionsItem    = React.createFactory require './OptionsItem'
-R              = React.DOM
+ExportStore   = require '../stores/ExportStore'
+AppActions    = require '../actions/AppActions'
+{UiConstants} = require '../constants/PlannerConstants'
+Dropdown      = React.createFactory require './Dropdown'
+OptionsItem   = React.createFactory require './OptionsItem'
+R             = React.DOM
 
 
 # TODO Test
@@ -56,10 +56,10 @@ OptionsMenu = React.createClass(
       when "opt5" then @exportImage()
 
   openSummaryDialog: ->
-    PlannerActions.openSummaryDialog()
+    AppActions.openSummaryDialog()
 
   duplicateSchedule: ->
-    PlannerActions.duplicateSchedule()
+    AppActions.duplicateSchedule()
 
   openShareDialog: ->
     # TODO Dispatching an action and creating a store seems like overkill for
@@ -67,10 +67,10 @@ OptionsMenu = React.createClass(
     $(UiConstants.selectors.SHARE_MODAL).modal 'show'
 
   exportICS: ->
-    PlannerActions.exportToICS ScheduleStore.current().id
+    AppActions.exportToICS ScheduleStore.current().id
 
   exportImage: ->
-    PlannerActions.exportToImage $(UiConstants.selectors.WEEK_CALENDAR)[0]
+    AppActions.exportToImage $(UiConstants.selectors.WEEK_CALENDAR)[0]
 
   render: ->
     Dropdown(

@@ -1,15 +1,15 @@
 
-React          = require 'react'
-PlannerActions = require '../actions/PlannerActions'
-SectionStore   = require '../stores/SectionStore'
-ColorStore     = require '../stores/SectionColorStore'
-EventStore     = require '../stores/EventStore'
-I18nMixin      = require '../mixins/I18nMixin'
-StoreMixin     = require '../mixins/StoreMixin'
-PanelItemList  = React.createFactory require './PanelItemList'
-SectionItem    = React.createFactory require './SectionItem'
-EventItem      = React.createFactory require './EventItem'
-R              = React.DOM
+React         = require 'react'
+AppActions    = require '../actions/AppActions'
+SectionStore  = require '../stores/SectionStore'
+ColorStore    = require '../stores/SectionColorStore'
+EventStore    = require '../stores/EventStore'
+I18nMixin     = require '../mixins/I18nMixin'
+StoreMixin    = require '../mixins/StoreMixin'
+PanelItemList = React.createFactory require './PanelItemList'
+SectionItem   = React.createFactory require './SectionItem'
+EventItem     = React.createFactory require './EventItem'
+R             = React.DOM
 
 ScheduleInfoBar = React.createClass(
 
@@ -26,13 +26,13 @@ ScheduleInfoBar = React.createClass(
     @props.initialState or @getState()
 
   handleEventAdd: ->
-    PlannerActions.openEventForm()
+    AppActions.openEventForm()
 
   handleEventRemove: (event)->
-    PlannerActions.removeEvent event.id
+    AppActions.removeEvent event.id
 
   handleSectionRemove: (section)->
-    PlannerActions.removeSection section.id
+    AppActions.removeSection section.id
 
   onChange: ->
     @setState @getState()

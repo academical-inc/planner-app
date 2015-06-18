@@ -1,13 +1,13 @@
 
-_             = require '../utils/HelperUtils'
+_             = require '../utils/Utils'
 Store         = require './Store'
 SectionStore  = require './SectionStore'
-ApiUtils      = require '../utils/ApiUtils'
+SchoolStore   = require './SchoolStore'
 {ActionTypes} = require '../constants/PlannerConstants'
 
 
 fields = ->
-  fds = ApiUtils.currentSchool().appUi.summaryFields
+  fds = SchoolStore.school().appUi.summaryFields
   fds.map (f)->
     _.camelize f.field
 
@@ -26,7 +26,6 @@ class SummaryDialogStore extends Store
           val.join ", "
         else
           val
-
 
   dispatchCallback: (payload)=>
     action = payload.action

@@ -7,6 +7,12 @@ module.exports =
     "VIEW_ACTION"
   }
   ActionTypes: {
+    "INIT_SCHOOL"
+    "LOGIN_USER"
+    "LOGOUT_USER"
+    "FETCH_USER"
+    "FETCH_USER_SUCCESS"
+    "FETCH_USER_FAIL"
     "OPEN_SCHEDULE"
     "GET_SCHEDULES"
     "GET_SCHEDULES_SUCCESS"
@@ -57,5 +63,16 @@ module.exports =
   DebounceRates: {  # milliseconds
     SAVE_RATE: 1000
     SEARCH_RATE: 100
+  }
+  Pages: {
+    "LANDING"
+    "APP"
+    "SINGLE_SCHEDULE"
+    "ERROR"
+  }
+  AuthConstants: {
+    "TOKEN_STORAGE": "academical:auth0-token"
+    "USER_STORAGE": "academical:user"
+    "AUTH0_SCOPE": "openid name email picture app_metadata"
   }
   POLL_INTERVAL: 120000  # milliseconds

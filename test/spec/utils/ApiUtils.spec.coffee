@@ -18,13 +18,6 @@ describe 'ApiUtils', ->
       "Env.API_PROTOCOL": "API_PROTOCOL"
       Academical: H.spy "s1", retVal: @api
       "_api": @api
-      "_hostname": "school.host.com"
-      "_currentStudent": id: "stud1"
-      "_currentSchool":
-        id: "school1"
-        terms: @terms
-        timezone: "America/Bogota"
-        utcOffset: -300
 
   afterEach ->
     @global()
@@ -34,4 +27,3 @@ describe 'ApiUtils', ->
     it 'inits correctly', ->
       ApiUtils.init()
       expect(@api.setHost).toHaveBeenCalledWith "API_HOST", "API_PROTOCOL"
-      expect(ApiUtils.__get__("_currentSchoolNickname")).toEqual "school"

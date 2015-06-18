@@ -3,27 +3,22 @@ $             = require 'jquery'
 React         = require 'react'
 ModalMixin    = require '../mixins/ModalMixin'
 I18nMixin     = require '../mixins/I18nMixin'
-ErrorStore    = require '../stores/ErrorStore'
+StoreMixin    = require '../mixins/StoreMixin'
+AppErrorStore = require '../stores/AppErrorStore'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
 
 ErrorDialog = React.createClass(
 
-  mixins: [I18nMixin, ModalMixin]
+  mixins: [I18nMixin, ModalMixin, StoreMixin(AppErrorStore)]
 
   onChange: ->
-    @setState error: ErrorStore.getError()
+    @setState error: AppErrorStore.msg()
     @show()
 
   getInitialState: ->
-    error: "Error!"
-
-  componentDidMount: ->
-    ErrorStore.addChangeListener @onChange
-
-  componentWillUnmount: ->
-    ErrorStore.removeChangeListener @onChange
+    error: @props.error
 
   renderBody: ->
     R.div className: "pla-error-dialog",
