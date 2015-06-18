@@ -25,7 +25,6 @@ ShareDialog = React.createClass(
             type: "text"
             value: @state.link
             autoComplete: "off"
-            # readOnly: true
           R.button
             className: "btn btn-success"
             onClick: @copy
