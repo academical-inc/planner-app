@@ -43,6 +43,9 @@ module.exports =
     ABOUT: "//academical.co/about"
     CONTACT: "//academical.co/contact"
     PRIVACY: "//academical.co/privacy"
+  share:
+    MAC_COPY: "⌘ - C"
+    PC_COPY: "Ctrl - C"
   DAYS: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"]
   COLORS: [
     "#2daae1"

@@ -97,7 +97,8 @@
       "header": "Share your schedule with friends!",
       "linkMsg": "Copy this link to share",
       "socialMsg": "Share in Facebook or Twitter",
-      "copy": "COPY"
+      "copy": "COPY",
+      "msg": "My schedule in Academical: "
     },
     "errorDialog": {
       "header": "Error!"
@@ -276,7 +277,8 @@
       "header": "Comparte tu horario con amigos!",
       "linkMsg": "Copia este link para compartir",
       "socialMsg": "Comparte en Facebook o Twitter",
-      "copy": "COPIAR"
+      "copy": "COPIAR",
+      "msg": "Mi horario en Academical: "
     },
     "errorDialog": {
       "header": "Error!"
