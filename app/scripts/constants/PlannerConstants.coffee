@@ -71,8 +71,21 @@ module.exports =
     "ERROR"
   }
   AuthConstants: {
-    "TOKEN_STORAGE": "academical:auth0-token"
-    "USER_STORAGE": "academical:user"
-    "AUTH0_SCOPE": "openid name email picture app_metadata"
+    TOKEN_STORAGE: "academical:auth0-token"
+    USER_STORAGE: "academical:user"
+    AUTH0_SCOPE: "openid name email picture app_metadata"
+    Providers: {
+      WAAD: "waad"
+    }
+  }
+  Office365Constants: {
+    API_HOST: "https://outlook.office365.com"
+  }
+  GoogleApiConstants: {
+    API_HOST: "https://www.googleapis.com"
+  }
+  ShareConstants: {
+    FB_SHARE_URL: "https://www.facebook.com/dialog/share"
+    TW_SHARE_URL: "https://twitter.com/intent/tweet"
   }
   POLL_INTERVAL: 120000  # milliseconds
