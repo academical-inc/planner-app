@@ -8,6 +8,8 @@ class Env
   @API_PROTOCOL:     process.env.API_PROTOCOL
   @AUTH0_DOMAIN:     process.env.AUTH0_DOMAIN
   @AUTH0_CLIENT_ID:  process.env.AUTH0_CLIENT_ID
+  @GOOGLE_API_KEY:   process.env.GOOGLE_API_KEY
+  @FB_APP_ID:        process.env.FB_APP_ID
   @SCHOOL:           process.env.SCHOOL
 
 
