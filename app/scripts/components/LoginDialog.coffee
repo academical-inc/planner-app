@@ -40,9 +40,9 @@ LoginDialog = React.createClass(
 
   renderBody: ->
     R.div className: 'pla-login-dialog container-fluid',
-      R.div className: 'col-md-6 providers',
+      R.div className: 'providers',
         @renderLoginBtns()
-      R.div className: 'col-md-6 reminder',
+      R.div className: 'reminder',
         R.h4 className: "header", @t("loginDialog.reminderHeader")
         @t("loginDialog.reminder").map (msg, i)->
           R.p key: "reminder-#{i}", msg

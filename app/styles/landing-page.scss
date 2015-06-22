@@ -80,12 +80,12 @@
     h1 {
       font-weight: 300;
       color: #ffffff;
-      font-size: 300%; /* 42px / 14 */
+      font-size: 260%; 
     }
     p {
       font-weight: 300;
       color: #ffffff;
-      font-size: 143%; /* 20px / 14 */
+      font-size: 123%; 
     }
   }
   .sec1-2  {
@@ -98,11 +98,11 @@
     h2 {
       font-weight: 600;
       color: #2daae1;
-      font-size: 143%; /* 20px / 14 */
+      font-size: 123%; 
       margin-top: 10px;
     }
     .img-mac{
-      width: 60%;
+      width: 56%;
     }
     .video-play{
       position: absolute;
@@ -156,24 +156,24 @@
   h1 {
     font-weight: 300;
     color: #454545;
-    font-size: 265%; //36px;
-    margin-top: 10%;
+    font-size: 235%;
+    margin-top: 9%;
   }
   h2 {
     font-weight: 600;
     color: #454545;
-    font-size: 130%; //18px
+    font-size: 110%; 
   }
   h3 {
     margin: 3% 15% 6% 15%;
     font-weight: 400;
     color: #606060;
-    font-size: 120%; //17px
+    font-size: 110%; 
   }
   p {
     font-weight: 400;
     color: #606060;
-    font-size: 100%; //14px
+    font-size: 90%; 
     padding: 10px 20px 0px 20px;
   }
   div#functions {
@@ -194,7 +194,7 @@
   h1 {
     font-weight: 300;
     color: #454545;
-    font-size: 265%; //36px;
+    font-size: 235%; //36px;
     margin-top: 10%;
   }
   img{
@@ -218,27 +218,30 @@
   h1 {
     font-weight: 800;
     color: #ffffff;
-    font-size: 180%; //25px;
+    font-size: 150%;
     margin-bottom: 0px;
     margin-top: 0px;
+    span {
+      margin-left: 7px;
+    }
   }
   h2{
     font-weight: 300;
     color: #ffffff;
-    font-size: 140%;//20px;
+    font-size: 125%;
     margin-top: 2px;
   }
   h3 {
    font-weight: 300;
    color: #454545;
-   font-size: 265%; //36px;
+   font-size: 235%; //36px;
    margin-top: 3.5%;
   }
   p {
     margin-top: 5px;
     font-weight: 400;
     color: #606060;
-    font-size: 100%; //14px
+    font-size: 90%; //14px
     text-align: justify;
   }
   .row{
@@ -271,7 +274,7 @@
   }
   .testibox{
     text-align: center;
-    margin: 2% 5% 3.5% 5%;
+    margin: 1% 5% 2.5% 5%;
   }
   .leftarrow    {
     background:url(/images/testimonials_left_arrow.png);
@@ -314,6 +317,7 @@
     }
     li {
       border: 1px solid #454545;
+      margin-left: 5px;
     }
   }
 }
@@ -557,11 +561,11 @@
       margin-bottom: 5%;
       position: relative;
        h1 {
-      font-size: 160%; //before 280%
+      font-size: 220%; 
       margin-top: 7%;
       }
       p {
-        font-size: 75%;
+        font-size: 105%;
         margin: 0 2% 5% 2%;
       }
     }
@@ -569,7 +573,7 @@
       position: relative;
       height: 120px;
       h2 {
-        font-size: 90%;
+        font-size: 130%;
         color: #ffffff;
       }
       .img-mac{
@@ -591,18 +595,19 @@
   }
   .sec2  {
     height: 100%;
+    margin-bottom: 4%;
     h1 {
-      font-size: 170%;
+      font-size: 240%;
     }
     h2 {
-      font-size: 100%;
+      font-size: 150%;
     }
     h3 {
       margin: 6% 2% 4% 2%;
-      font-size: 85%;
+      font-size: 118%;
     }
     p {
-      font-size: 70%;
+      font-size: 100%;
       padding: 0px 0px 5px 0px;
     }
     img{
@@ -632,6 +637,7 @@
     padding-right: 0px;
     .stats-test-box{
       position: relative;
+      margin-bottom: 6%;
     }
     .special-footer-case{
       position: relative;
@@ -678,18 +684,18 @@
       }
     }
     h1 {
-      font-size: 145%;
+      font-size: 195%;
     }
     h2{
-      font-size: 115%;
+      font-size: 165%;
     }
     h3 {
-      font-size: 170%;
-      margin-top: 5%;
+      font-size: 240%;
+      margin-top: 10%;
       margin-bottom: 3%;
     }
     p {
-      font-size: 85%;
+      font-size: 120%;
       text-align: center;
     }
   }
@@ -697,9 +703,10 @@
       margin-bottom: 5px;
       margin-right: 10px;
       margin-left: 10px;
+      display: inline-block;
   }
   .icons-block-inline{
-    display: block;
+      display: block;
       img{
           width: 30px;
       }
@@ -777,18 +784,18 @@
     .sec1-1{
       position: relative;
       h1 {
-        font-size: 280%;
-        margin-top: 2%;
+        font-size: 300%;
+        margin-top: 7%;
       }
       p {
-        font-size: 121%;
+        font-size: 150%;
         margin: 0 5% 5% 5%;
       }
     }
     .sec1-2  {
       position: relative;
       h2 {
-        font-size: 110%;
+        font-size: 160%;
       }
       .img-mac{
         width: 75%;
@@ -808,17 +815,17 @@
   .sec2  {
     height: 100%;
     h1 {
-      font-size: 245%;
+      font-size: 35px;
     }
     h2 {
-      font-size: 120%;
+      font-size: 17px;
     }
     h3 {
       margin: 4% 5% 4% 5%;
-      font-size: 110%;
+      font-size: 17px;
     }
     p {
-      font-size: 95%;
+      font-size: 13px;
       padding: 0px 20px 5px 20px;
     }
     img{
@@ -875,18 +882,18 @@
       }
     }
     h1 {
-      font-size: 145%;
+      font-size: 22px;
     }
     h2{
-      font-size: 115%;
+      font-size: 18px;
     }
     h3 {
-     font-size: 245%;
+     font-size: 35px;
      margin-top: 5%;
      margin-bottom: 3%;
     }
     p {
-      font-size: 100%;
+      font-size: 14px;
     }
   }
 }
