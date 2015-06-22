@@ -7,7 +7,6 @@
 
   height: 80%;
   width: 100%;
-  white-space: nowrap;
   text-align: center;
 
   .helper {
@@ -27,14 +26,17 @@
   }
 
   .error-image {
-    padding-top: 3em;
     display: inline-block;
     vertical-align: middle;
+    width: 30%;
   }
 
   .error-text-box {
     display: inline-block;
     padding: 1em;
+    vertical-align: middle;
+    text-align: left;
+    width: 70%;
 
     .code {
       color: $red;
@@ -45,11 +47,9 @@
     }
 
     .message {
-      float: right;
       display: inline-block;
       color: $gray;
       font-size: 3em;
-      white-space: nowrap;
     }
   }
 

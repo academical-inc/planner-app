@@ -19,7 +19,7 @@ _selectedParent = null
 _lastResults = []
 _lastFocused = null
 
-# TODO Tests
+# TODO Test
 SearchBar = React.createClass(
 
   mixins: [I18nMixin, IconMixin, StoreMixin(SearchStore)]
@@ -129,6 +129,7 @@ SearchBar = React.createClass(
       @setState inputVal: ""
 
   handleEscPressed: ->
+    @unfocusResult()
     if @state.corequisites
       @clearCorequisites()
     else

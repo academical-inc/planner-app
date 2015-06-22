@@ -25,7 +25,7 @@ AppHeader = React.createClass(
             WeekControl({})
           R.ul className: "nav navbar-nav",
             R.span className: "vertical-align-helper"
-            ProfileBox name: "Juan", url: "//placehold.it/50x50"
+            ProfileBox {}
 
 )
 

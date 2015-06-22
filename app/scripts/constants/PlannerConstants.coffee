@@ -8,6 +8,11 @@ module.exports =
   }
   ActionTypes: {
     "INIT_SCHOOL"
+    "LOGIN_USER"
+    "LOGOUT_USER"
+    "FETCH_USER"
+    "FETCH_USER_SUCCESS"
+    "FETCH_USER_FAIL"
     "OPEN_SCHEDULE"
     "GET_SCHEDULES"
     "GET_SCHEDULES_SUCCESS"
@@ -67,5 +72,20 @@ module.exports =
     "APP"
     "SINGLE_SCHEDULE"
     "ERROR"
+  }
+  AuthConstants: {
+    TOKEN_STORAGE: "academical:auth0-token"
+    USER_STORAGE: "academical:user"
+    AUTH0_SCOPE: "openid name email picture app_metadata"
+    Providers: {
+      WAAD: "waad"
+    }
+  }
+  GoogleApiConstants: {
+    API_HOST: "https://www.googleapis.com"
+  }
+  ShareConstants: {
+    FB_SHARE_URL: "https://www.facebook.com/dialog/share"
+    TW_SHARE_URL: "https://twitter.com/intent/tweet"
   }
   POLL_INTERVAL: 120000  # milliseconds

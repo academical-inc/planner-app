@@ -12,13 +12,12 @@ class SchoolStore extends Store
   school: ->
     _school
 
-  dispatchCallback: (payload)=>
+  dispatchCallback: (payload)->
     action = payload.action
 
     switch action.type
       when ActionTypes.INIT_SCHOOL
         _school = action.school
-        @emitChange()
 
 
 module.exports = new SchoolStore

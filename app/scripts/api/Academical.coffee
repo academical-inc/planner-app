@@ -47,6 +47,9 @@ class Academical
   setHeaders: (headers)->
     @_set "headers", headers
 
+  addHeaders: (headers)->
+    @setHeaders $.extend(true, {}, @get("headers"), headers)
+
   setTimeout: (timeout)->
     @_set "timeout", timeout
 

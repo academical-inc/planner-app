@@ -18,7 +18,6 @@ describe 'ApiUtils', ->
       "Env.API_PROTOCOL": "API_PROTOCOL"
       Academical: H.spy "s1", retVal: @api
       "_api": @api
-      "_currentStudent": id: "stud1"
 
   afterEach ->
     @global()

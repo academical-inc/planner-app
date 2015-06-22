@@ -13,6 +13,8 @@ ErrorPage = React.createClass(
   render: ->
     code = @props.code
     msg  = @props.msg
+    if Array.isArray msg
+      msg = msg.map (er, i)-> R.p(key: "errLine-#{i}", er)
 
     R.div className: 'pla-content container-fluid',
       ErrorHeader({})

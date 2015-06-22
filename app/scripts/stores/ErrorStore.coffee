@@ -35,7 +35,10 @@ class ErrorStore extends Store
             _msg = I18n.t "errors.apiError"
           else if code == 404
             _msg = I18n.t "errors.notFound"
-          # TODO Handle Not Authorized
+          else if code == 401
+            _msg = I18n.t "errors.notLoggedIn"
+          else if code == 403
+            _msg = I18n.t "errors.notAuthorized"
           else if code >= 400 and code < 500
             _msg = I18n.t "errors.clientError", errMsg: error.message
         else
