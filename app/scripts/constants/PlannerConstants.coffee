@@ -78,9 +78,6 @@ module.exports =
       WAAD: "waad"
     }
   }
-  Office365Constants: {
-    API_HOST: "https://outlook.office365.com"
-  }
   GoogleApiConstants: {
     API_HOST: "https://www.googleapis.com"
   }
