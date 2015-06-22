@@ -11,7 +11,6 @@ DateUtils        = require '../utils/DateUtils'
 
 # Private
 _         = new ChildStoreHelper(ScheduleStore, 'events')
-_school   = SchoolStore.school()
 _toRevert = {}
 
 cleanScheduleEvents = (scheduleId)->
@@ -26,7 +25,7 @@ cleanScheduleEvents = (scheduleId)->
   _.setElements scheduleId, events
 
 updateTime = (date, time)->
-  DateUtils.setTimeAndFormat date, time, _school.utcOffset
+  DateUtils.setTimeAndFormat date, time, SchoolStore.school().utcOffset
 
 updateDays = (event, dayDelta)->
   event.recurrence.daysOfWeek = event.recurrence.daysOfWeek.map (day)->
