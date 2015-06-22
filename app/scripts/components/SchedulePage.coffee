@@ -1,11 +1,12 @@
 
-React         = require 'react'
-IconMixin     = require '../mixins/IconMixin'
-StoreMixin    = require '../mixins/StoreMixin'
-ScheduleStore = require '../stores/ScheduleStore'
-AppActions    = require '../actions/AppActions'
-WeekCalendar  = React.createFactory require './WeekCalendar'
-R             = React.DOM
+React              = require 'react'
+IconMixin          = require '../mixins/IconMixin'
+StoreMixin         = require '../mixins/StoreMixin'
+ScheduleStore      = require '../stores/ScheduleStore'
+AppActions         = require '../actions/AppActions'
+WeekCalendar       = React.createFactory require './WeekCalendar'
+SchedulePageHeader = React.createFactory require './SchedulePageHeader'
+R                  = React.DOM
 
 
 SchedulePage = React.createClass(
@@ -22,7 +23,10 @@ SchedulePage = React.createClass(
     AppActions.getSchedule @props.scheduleId
 
   renderContent: ->
-    WeekCalendar {}
+    R.div className: 'row',
+      R.div className: 'col-md-offset-1 col-md-10',
+        R.div className: 'pla-schedule-container',
+          WeekCalendar {}
 
   render: ->
     R.div className: "pla-content container-fluid",

@@ -1,20 +1,20 @@
 
-React          = require 'react'
-I18nMixin      = require '../mixins/I18nMixin'
-LogoBox        = React.createFactory require './LogoBox'
-PlannerActions = require '../actions/PlannerActions'
-R              = React.DOM
+React      = require 'react'
+I18nMixin  = require '../mixins/I18nMixin'
+LogoBox    = React.createFactory require './LogoBox'
+AppActions = require '../actions/AppActions'
+R          = React.DOM
 
 
-SharePageHeader = React.createClass(
+SchedulePageHeader = React.createClass(
 
   mixins: [I18nMixin]
 
   handleClick: ->
-    PlannerActions.duplicateSchedule()
+    AppActions.duplicateSchedule()
 
   render: ->
-    R.section className: 'pla-share-header hidden-xs hidden-sm',
+    R.section className: 'pla-schedule-header hidden-xs hidden-sm',
       R.nav className: "navbar navbar-default", role: "navigation",
         R.div className: "container-fluid",
           R.ul className: "nav navbar-nav pla-logo",
@@ -22,7 +22,7 @@ SharePageHeader = React.createClass(
           R.ul className: "nav navbar-nav",
             R.li null,
               R.span className: 'helper', null
-              R.div className: 'pla-share-button',
+              R.div className: 'pla-schedule-button',
                 R.button
                   className: 'btn btn-default'
                   onClick: @handleClick
@@ -31,5 +31,5 @@ SharePageHeader = React.createClass(
 
 )
 
-module.exports = SharePageHeader
+module.exports = SchedulePageHeader
 
