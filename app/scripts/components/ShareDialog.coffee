@@ -65,16 +65,19 @@ ShareDialog = React.createClass(
 
   onChange: ->
     cur = ScheduleStore.current()
-    if not _urls[cur.id]?
-      GoogleApi.shorten @longUrl(cur.id),
-        (err, shortUrl)=>
-          if err?
-            @setState link: @longUrl(cur.id)
-          else
-            _urls[cur.id] = shortUrl
-            @setState link: shortUrl
+    if cur?
+      if not _urls[cur.id]?
+        GoogleApi.shorten @longUrl(cur.id),
+          (err, shortUrl)=>
+            if err?
+              @setState link: @longUrl(cur.id)
+            else
+              _urls[cur.id] = shortUrl
+              @setState link: shortUrl
+      else
+        @setState link: _urls[cur.id]
     else
-      @setState link: _urls[cur.id]
+      @setState link: ""
 
   onShown: ->
     @refs.copyInput.getDOMNode().select()
