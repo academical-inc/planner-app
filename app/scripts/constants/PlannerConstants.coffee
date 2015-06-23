@@ -59,6 +59,7 @@ module.exports =
     PREV: 'prev'
     TODAY: 'today'
     NEXT: 'next'
+    GOTO_DATE: 'gotoDate'
   }
   DebounceRates: {  # milliseconds
     SAVE_RATE: 1000
