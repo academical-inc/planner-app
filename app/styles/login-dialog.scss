@@ -1,5 +1,6 @@
 .pla-modal.pla-login-modal {
-  width: 27%;
+  width: 29%;
+  max-width: 365px;
   margin: 5% auto;
 
   .modal-content .modal-header .close {
@@ -7,7 +8,7 @@
   }
 
   .modal-footer {
-    padding: 0;
+    padding: 3%;
   }
 }
 
@@ -77,61 +78,81 @@
 -------------------------------------------------------------------------------------------------- */
 @media screen and (max-width: 599px) {
 
-.pla-modal.pla-login-modal {
-  width: 80%;
-
-  .modal-content .modal-header h4 {
-    font-size: 160%;
-  }
-
-  .modal-footer {
-    padding: 3%;
-  }
-}
-
-.pla-login-dialog {
-
-  .providers {
-    .btn-social {
-      font-size: 12px;
-      width: 101%;
-    }
-  }
-
-  .reminder {
-    text-align: center;
-
-    .header {
+  .pla-modal.pla-login-modal {
+    width: 80%;
+    max-width: 240px;
+    .modal-content .modal-header h4 {
       font-size: 16px;
     }
-    p {
-      font-size: 12px;
+  }
+
+  .pla-login-dialog {
+    .providers {
+      .btn-social {
+        font-size: 12px;
+        width: 101%;
+      }
     }
-    a:last-child {
-      font-size: 13px;
+
+    .reminder {
+      text-align: center;
+      .header {
+        font-size: 16px;
+      }
+      p {
+        font-size: 12px;
+      }
+      a:last-child {
+        font-size: 13px;
+      }
     }
   }
-}
-
 }
 
 /* Tables and Medium devices (Tables and small desktops, 1100px and down until 600px)
 -------------------------------------------------------------------------------------------------- */
 
 @media screen and (min-width: 600px) and (max-width: 1199px) {
+  .pla-modal.pla-login-modal {
+    width: 50%;
+    max-width: 365px;
+    min-width: 325px;
 
-.pla-modal.pla-login-modal {
-  width: 50%;
-
-  .modal-content .modal-header h4 {
-    font-size: 160%;
-  }
-
-  .modal-footer {
-    padding: 3%;
+    .modal-content .modal-header h4 {
+      font-size: 19px;
+    }
   }
 }
 
 
+/* Large devices (large desktops, 1500px and up)
+-------------------------------------------------------------------------------------------------- */
+
+@media screen and (min-width: 1500px){
+
+  .pla-modal.pla-login-modal {
+    width: 35%;
+    max-width: 410px;
+  }
+  .pla-login-dialog {
+    .providers {
+      .btn-social {
+        font-size: 17px;
+      }
+    }
+
+    .reminder {
+      text-align: center;
+      .header {
+        font-size: 19px;
+      }
+      p {
+        font-size: 16px;
+      }
+      a:last-child {
+        font-size: 17px;
+      }
+    }
+  }
 
 }

@@ -80,7 +80,7 @@
     h1 {
       font-weight: 300;
       color: #ffffff;
-      font-size: 260%; 
+      font-size: 300%; 
     }
     p {
       font-weight: 300;
@@ -926,10 +926,11 @@
   .sec1  {
     .sec1-1{
       h1 {
-      font-size: 450%;
+      font-size: 390%;
       }
       p {
-        font-size: 220%;
+        font-size: 180%;
+        margin: 2% 10%;
       }
     }
     .sec1-2{
@@ -940,7 +941,7 @@
   }
   .sec2  {
     h1 {
-      font-size: 400%;
+      font-size: 380%;
     }
     h2 {
       font-size: 150%; //18px
@@ -959,7 +960,7 @@
   }
   .sec3  {
     h1 {
-      font-size: 400%;
+      font-size: 380%;
     }
   }
   .sec4  {
@@ -970,7 +971,7 @@
       font-size: 180%;//20px;
     }
     h3 {
-     font-size: 400%; //36px;
+     font-size: 380%; //36px;
      margin-top: 5%;
      margin-bottom: 3%
     }
@@ -978,9 +979,10 @@
       font-size: 120%; //14px
     }
   }
-  .footerbox{
+  .footerbox {
+    padding: 30px 0;
     a#terminos_and_policy_btn {
-      font-size: 17px;
+      font-size: 21px;
     }
   }
 }
