@@ -25,7 +25,7 @@ logout = ->
 
 updateUser = (user)->
   _user = $.extend true, {}, _user, user
-  Lscache.set AuthConstants.USER_STORAGE, JSON.stringify(_user)
+  Lscache.set AuthConstants.USER_STORAGE, _user
 
 
 # TODO Test
@@ -45,7 +45,7 @@ class UserStore extends Store
       userStorage  = AuthConstants.USER_STORAGE
       expiration   = AuthConstants.TOKEN_EXPIRTATION
       _authToken = Lscache.get tokenStorage
-      _user      = JSON.parse Lscache.get(userStorage)
+      _user      = Lscache.get userStorage
       if loggedIn()
         @emitChange()
         return true
@@ -53,7 +53,7 @@ class UserStore extends Store
       [_user, _authToken] = Auth.parseHash()
       if loggedIn()
         Lscache.set tokenStorage, _authToken, expiration
-        Lscache.set userStorage, JSON.stringify(_user), expiration
+        Lscache.set userStorage, _user, expiration
         @emitChange()
         true
       else
