@@ -6,7 +6,6 @@
   .modal-content .modal-header .close {
     width: 14%;
   }
-
   .modal-footer {
     padding: 3%;
   }
@@ -29,6 +28,7 @@
       text-align: center;
       margin-right: auto;
       margin-left: auto;
+      border: #9E9E9E solid 1px;
 
       .fa {
         width: 38px;
@@ -59,7 +59,7 @@
       content:"";
       vertical-align:top;
       display:inline-block;
-      width:36%;
+      width:28%;
       height:0.65em;
       border-bottom:1px solid #ccc;
       margin:0 2% 0 -55%;
