@@ -1,9 +1,10 @@
 
-$               = require 'jquery'
-Store           = require './Store'
-Auth           = require '../utils/Auth'
-{ActionTypes}   = require '../constants/PlannerConstants'
-{AuthConstants} = require '../constants/PlannerConstants'
+$       = require 'jquery'
+Lscache = require 'lscache'
+Store   = require './Store'
+Auth    = require '../utils/Auth'
+
+{ActionTypes, AuthConstants} = require '../constants/PlannerConstants'
 
 
 # Private
@@ -19,12 +20,12 @@ loggedIn = ->
 
 logout = ->
   clear()
-  localStorage.removeItem AuthConstants.TOKEN_STORAGE
-  localStorage.removeItem AuthConstants.USER_STORAGE
+  Lscache.remove AuthConstants.TOKEN_STORAGE
+  Lscache.remove AuthConstants.USER_STORAGE
 
 updateUser = (user)->
   _user = $.extend true, {}, _user, user
-  localStorage.setItem AuthConstants.USER_STORAGE, JSON.stringify(_user)
+  Lscache.set AuthConstants.USER_STORAGE, JSON.stringify(_user)
 
 
 # TODO Test
@@ -42,16 +43,17 @@ class UserStore extends Store
     else
       tokenStorage = AuthConstants.TOKEN_STORAGE
       userStorage  = AuthConstants.USER_STORAGE
-      _authToken = localStorage.getItem tokenStorage
-      _user      = JSON.parse localStorage.getItem(userStorage)
+      expiration   = AuthConstants.TOKEN_EXPIRTATION
+      _authToken = Lscache.get tokenStorage
+      _user      = JSON.parse Lscache.get(userStorage)
       if loggedIn()
         @emitChange()
         return true
 
       [_user, _authToken] = Auth.parseHash()
       if loggedIn()
-        localStorage.setItem tokenStorage, _authToken
-        localStorage.setItem userStorage, JSON.stringify(_user)
+        Lscache.set tokenStorage, _authToken, expiration
+        Lscache.set userStorage, JSON.stringify(_user), expiration
         @emitChange()
         true
       else
