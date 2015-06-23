@@ -112,6 +112,7 @@
         "Its use under the sole responsability of the student.",
         "Academical uses the course catalog provided by the University"
       ],
+      "or": "or",
       "uniandes": "Log In with Uniandes",
       "facebook": "Log In with Facebook",
       "google": "Log In with Google"
@@ -292,6 +293,7 @@
         "Su uso está bajo responsabilidad de cada estudiante.",
         "Academical toma la información del catálogo de cursos que provee la Universidad"
       ],
+      "or": "ó",
       "uniandes": "Ingresa con Uniandes",
       "facebook": "Ingresa con Facebook",
       "google": "Ingresa con Google"
