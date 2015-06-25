@@ -19,8 +19,8 @@ R               = React.DOM
 # OK because POLL_INTERVAL will always be sufficiently big
 _interval = null
 _initSchedules = _.debounce(
-  (userId)->
-    AppActions.getSchedules userId
+  (userId, initialScheduleId)->
+    AppActions.getSchedules userId, initialScheduleId
     _interval = setInterval(
       AppActions.updateSchedules.bind(AppActions,userId), POLL_INTERVAL
     )
@@ -48,13 +48,13 @@ AppPage = React.createClass(
 
   componentDidMount: ->
     if @state.userId?
-      _initSchedules @state.userId
+      _initSchedules @state.userId, @props.initialScheduleId
     else
       AppActions.fetchUser UserStore.user()
 
   componentWillUpdate: (nextProps, nextState)->
     if not @state.userId? and nextState.userId?
-      _initSchedules nextState.userId
+      _initSchedules nextState.userId, @props.initialScheduleId
 
   render: ->
     if @state.userId?

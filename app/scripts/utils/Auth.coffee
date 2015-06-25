@@ -1,4 +1,5 @@
 
+_               = require '../utils/Utils'
 Auth0           = require 'auth0-js'
 Env             = require '../Env'
 UserFactory     = require '../factories/UserFactory'
@@ -8,16 +9,21 @@ AuthError       = require '../errors/AuthError'
 _auth0 = new Auth0
   domain: Env.AUTH0_DOMAIN
   clientID: Env.AUTH0_CLIENT_ID
-  callbackURL: window.location.href
+  callbackURL: _.origin()
   callbackOnLocationHash: true
 
 # TODO Test
 class Auth
 
-  @login: (connection, scope=AuthConstants.AUTH0_SCOPE)->
+  @login: (
+    connection,
+    scope=AuthConstants.AUTH0_SCOPE,
+    state=window.location.pathname
+  )->
     _auth0.login
       connection: connection
       scope: scope
+      state: state
 
   @parseHash: (hash=window.location.hash)->
     result = _auth0.parseHash hash

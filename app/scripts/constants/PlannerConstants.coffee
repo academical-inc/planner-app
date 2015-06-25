@@ -26,6 +26,9 @@ module.exports =
     "DELETE_SCHEDULE"
     "DELETE_SCHEDULE_SUCCESS"
     "DELETE_SCHEDULE_FAIL"
+    "GET_SCHEDULE"
+    "GET_SCHEDULE_SUCCESS"
+    "GET_SCHEDULE_FAIL"
     "UPDATE_SCHEDULE_NAME"
     "SAVE_SCHEDULE"
     "SAVE_SCHEDULE_SUCCESS"
@@ -54,6 +57,10 @@ module.exports =
   PreviewTypes: {
     "PRIMARY"
     "SECONDARY"
+  }
+  CalendarDates: {
+    "TERM_START"
+    "TERM_END"
   }
   WeekCalendarCommands: {
     PREV: 'prev'

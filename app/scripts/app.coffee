@@ -25,16 +25,21 @@ I18n.init if _.qs("lang")? then _.qs("lang") else school.locale
 defRoute = Router.defRoute
 goTo     = Router.goTo
 
+# Check for route overrides in state.
+Router.redirect _.hs('state') if _.hs('state')?
+
 defRoute '/', ->
   try
+    initialScheduleId = _.qs('open-schedule') if _.qs('open-schedule')
     if UserStore.isLoggedIn()
-      goTo Pages.APP, ui: school.appUi
+      goTo Pages.APP, ui: school.appUi, initialScheduleId: initialScheduleId
     else
       goTo Pages.LANDING
   catch e
     if e instanceof AuthError
       goTo Pages.LANDING, error: e.message
     else
+      # TODO - FIX THIS SHIT
       console.error e
       goTo Pages.ERROR, msg: e.message
 

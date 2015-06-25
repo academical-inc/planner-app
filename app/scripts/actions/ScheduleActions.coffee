@@ -17,7 +17,7 @@ PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 
 
 # Private
-getSchedules = (userId, action, success, fail)->
+getSchedules = (userId, action, success, fail, initialScheduleId = null)->
   PlannerDispatcher.dispatchViewAction
     type: action
 
@@ -26,7 +26,7 @@ getSchedules = (userId, action, success, fail)->
     ActionUtils.handleServerResponse(
       success
       fail
-      (response)-> schedules: response
+      (response)-> schedules: response, initialScheduleId: initialScheduleId
     )
   )
   return
@@ -89,12 +89,13 @@ class ScheduleActions
       type: ActionTypes.OPEN_SCHEDULE
       schedule: schedule
 
-  @getSchedules: (userId)->
+  @getSchedules: (userId, initialScheduleId)->
     getSchedules(
       userId
       ActionTypes.GET_SCHEDULES
       ActionTypes.GET_SCHEDULES_SUCCESS
-      ActionTypes.GET_SCHEDULES_FAIL
+      ActionTypes.GET_SCHEDULES_FAIL,
+      initialScheduleId
     )
 
   @updateSchedules: (userId)->
@@ -123,9 +124,10 @@ class ScheduleActions
     newSchedule = ScheduleFactory.create name: scheduleName
     createSchedule newSchedule
 
-  @duplicateSchedule: ->
+  @duplicateSchedule: (studentId = null) ->
     newSchedule = buildCurrentSchedule exclude: ['id']
     newSchedule.name = I18n.t "copyOf", name: newSchedule.name
+    newSchedule.studentId = studentId if studentId
     createSchedule newSchedule
 
   @deleteSchedule: (scheduleId)->

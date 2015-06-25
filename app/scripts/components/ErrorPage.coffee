@@ -1,7 +1,7 @@
 
 React       = require 'react'
-PlainHeader = React.createFactory require './PlainHeader'
-PlainFooter = React.createFactory require './PlainFooter'
+ErrorHeader = React.createFactory require './ErrorHeader'
+ErrorFooter = React.createFactory require './ErrorFooter'
 I18nMixin   = require '../mixins/I18nMixin'
 R           = React.DOM
 
@@ -17,7 +17,7 @@ ErrorPage = React.createClass(
       msg = msg.map (er, i)-> R.p(key: "errLine-#{i}", er)
 
     R.div className: 'pla-content container-fluid',
-      PlainHeader({})
+      ErrorHeader({})
       R.div className: 'pla-error-page',
         R.span className: 'helper'
         R.div className: 'error-content',
@@ -31,7 +31,7 @@ ErrorPage = React.createClass(
               href:'/'
               role: 'button'
               @t "errors.backHome"
-      PlainFooter({})
+      ErrorFooter({})
 
 )
 
