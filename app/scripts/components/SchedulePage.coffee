@@ -43,7 +43,7 @@ SchedulePage = React.createClass(
     @setState schedule: scheduleLoaded
 
   onUserChange: ->
-   @setState @getUserState()
+    @setState @getUserState()
 
   componentDidMount: ->
     AppActions.getSchedule @props.scheduleId

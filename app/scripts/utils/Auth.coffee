@@ -15,7 +15,11 @@ _auth0 = new Auth0
 # TODO Test
 class Auth
 
-  @login: (connection, scope=AuthConstants.AUTH0_SCOPE, state=window.location.pathname)->
+  @login: (
+    connection,
+    scope=AuthConstants.AUTH0_SCOPE,
+    state=window.location.pathname
+  )->
     _auth0.login
       connection: connection
       scope: scope
