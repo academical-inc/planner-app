@@ -62,6 +62,7 @@ module.exports =
     PREV: 'prev'
     TODAY: 'today'
     NEXT: 'next'
+    GOTO_DATE: 'gotoDate'
   }
   DebounceRates: {  # milliseconds
     SAVE_RATE: 1000
@@ -77,6 +78,7 @@ module.exports =
     TOKEN_STORAGE: "academical:auth0-token"
     USER_STORAGE: "academical:user"
     AUTH0_SCOPE: "openid name email picture app_metadata"
+    TOKEN_EXPIRTATION: 600  # minutes
     Providers: {
       WAAD: "waad"
     }

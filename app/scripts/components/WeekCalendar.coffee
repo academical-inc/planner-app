@@ -17,6 +17,7 @@ R             = React.DOM
 
 # Private
 _school        = SchoolStore.school()
+_term          = _school.terms[0]
 _sectionEvents = -> SectionStore.sectionEvents()
 _sectionColors = -> ColorStore.colors()
 _previewEvents = -> PreviewStore.allPreviewEvents()
@@ -124,8 +125,14 @@ WeekCalendar = React.createClass(
         events: []
         eventDataTransform: @eventDataTransform
 
+    defaultDate = if SchoolStore.nowIsBeforeTermStart()
+      _term.startDate
+    else if SchoolStore.nowIsAfterTermEnd()
+      _term.endDate
+
     @cal.fullCalendar(
       defaultView: "agendaWeek"
+      defaultDate: defaultDate if defaultDate?
       allDaySlot: false
       allDayText: false
       dayNamesShort: @t "calendar.days"

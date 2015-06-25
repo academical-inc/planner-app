@@ -40,7 +40,8 @@
       "image": "Export to Image"
     },
     "week": {
-      "today": "Today"
+      "today": "Today",
+      "classStart": "Start of Classes"
     },
     "profile": {
       "user": "User",
@@ -222,7 +223,8 @@
       "image": "Exportar a Imagen"
     },
     "week": {
-      "today": "Hoy"
+      "today": "Hoy",
+      "classStart": "Inicio de Clases"
     },
     "profile": {
       "user": "Usuario",
