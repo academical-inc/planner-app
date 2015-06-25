@@ -1,0 +1,92 @@
+
+.pla-section-item {
+
+  .label-seats {
+    display: inline-block;
+    border-radius: 50%;
+    font-size: .8em;
+    font-weight: 500;
+    padding: 0;
+    margin-right: .7em;
+    background: transparent;
+    color: $dark;
+    border: 1.5px solid;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+  }
+
+  .label-seats-success {
+    border-color: $brand-success;
+  }
+
+  .label-seats-warning {
+    border-color: $brand-warning;
+  }
+
+  .label-seats-danger {
+    border-color: $brand-danger;
+  }
+
+  .tooltip {
+    opacity: 1;
+  }
+  .tooltip-arrow {
+    border-top-color: $gray-lighter;
+  }
+  .tooltip-inner {
+    background-color: $white;
+    color: $dark;
+    font-size: .8em;
+    white-space: nowrap;
+    border-radius: 1em;
+    border: solid 1px $gray-lighter;
+    padding: 2px 9px;
+  }
+
+  .settings-icon img {
+    vertical-align: text-bottom;
+  }
+
+  .list-group {
+    margin-bottom: 0;
+
+    .list-group-item {
+      font-weight: 600;
+      font-size: .75em;
+      padding: .3em 1.35em;
+      border: 0;
+      color: $dark;
+
+      &:first-child.seats {
+        font-weight: 700;
+        color: $white;
+        border-radius: 0;
+      }
+
+      &:last-child {
+        padding-bottom: .9em;
+      }
+    }
+
+    .teachers {
+      margin-top: .9em;
+      font-weight: 700;
+    }
+
+    .list-group-item-success {
+      background-color: $brand-success;
+    }
+
+    .list-group-item-warning {
+      background-color: $brand-warning;
+    }
+
+    .list-group-item-danger {
+      background-color: $brand-danger;
+    }
+  }
+}

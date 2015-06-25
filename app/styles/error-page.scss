@@ -1,0 +1,65 @@
+
+
+@import "./error-header";
+@import "./error-footer";
+
+.pla-error-page {
+
+  height: 80%;
+  width: 100%;
+  text-align: center;
+
+  .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  .error-content {
+    display: inline-block;
+    vertical-align: middle;
+    width: 90%;
+
+    @media (min-width: $screen-sm-min) {
+      width: 60%;
+    }
+  }
+
+  .error-image {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30%;
+  }
+
+  .error-text-box {
+    display: inline-block;
+    padding: 1em;
+    vertical-align: middle;
+    text-align: left;
+    width: 70%;
+
+    .code {
+      color: $red;
+      display: block;
+      font-size: 5em;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .message {
+      display: inline-block;
+      color: $gray;
+      font-size: 3em;
+    }
+  }
+
+  .error-button {
+    background-color: $academical-blue-sidebar;
+    border: none;
+    color: $white;
+    float: right;
+    clear: both;
+    line-height: 2em;
+    margin-top: 1em;
+  }
+}

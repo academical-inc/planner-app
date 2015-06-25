@@ -1,0 +1,40 @@
+
+.pla-profile-box {
+  $img-size: 35px;
+  color: $academical-blue-sidebar;;
+  margin-right: 1.5em;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-align: left;
+
+  .profile img {
+    margin-right: .7em;
+    height: $img-size;
+    width: $img-size;
+  }
+
+  .logout {
+    padding-left: $img-size + 9;
+    margin-top: -0.6em;
+
+    img {
+      zoom: 0.8;
+      margin-right: 0.5em;
+    }
+
+    .logout-button {
+      color: $dark;
+      display: inline-block;
+      background: none;
+      border: none;
+      font-size: 0.8em;
+      padding: 0;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+
+}
+

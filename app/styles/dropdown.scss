@@ -1,0 +1,51 @@
+
+.pla-dropdown {
+
+  a {
+    color: $dark;
+    font-size: .9em;
+  }
+
+  .dropdown-menu {
+    li {
+      margin-left: 0;
+      border: none;
+
+      i {
+        color: $dark;
+      }
+    }
+    .divider {
+      background-color: #e5e5e5;
+    }
+  }
+
+  form.navbar-form {
+    white-space: nowrap;
+    button {
+      margin-left: 1em;
+      font-weight: 700;
+      padding: 3px 12px;
+    }
+    input{
+      width: 165px;
+      padding-left: .5em;
+      font-size: .9em;
+      height: 28px;
+
+      &::-webkit-input-placeholder {
+        font-style: italic;
+      }
+      &:-moz-placeholder { /* Firefox 18- */
+        font-style: italic;
+      }
+      &::-moz-placeholder {  /* Firefox 19+ */
+        font-style: italic;
+      }
+      &:-ms-input-placeholder {
+        font-style: italic;
+      }
+    }
+  }
+
+}
