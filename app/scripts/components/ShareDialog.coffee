@@ -1,7 +1,7 @@
 
 $             = require 'jquery'
 React         = require 'react'
-_             = require '../utils/BrowserUtils'
+_             = require '../utils/Utils'
 GoogleApi     = require '../utils/GoogleApi'
 ModalMixin    = require '../mixins/ModalMixin'
 I18nMixin     = require '../mixins/I18nMixin'

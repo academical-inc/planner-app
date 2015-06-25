@@ -14,9 +14,13 @@ _current       = null
 _lastCurrent   = null
 
 
-initSchedules = (schedules)->
+initSchedules = (schedules, initialScheduleId)->
   _schedules = schedules
-  setCurrent _schedules[0]
+  current = _schedules[0]
+  if initialScheduleId
+    matchedSchedules = (_schedules.filter (schedule) -> schedule.id == initialScheduleId)
+    current = matchedSchedules[0] if matchedSchedules.length > 0
+  setCurrent current
 
 setCurrent = (current)->
   _current = current
@@ -157,8 +161,7 @@ class ScheduleStore extends Store
         revertRemovedSchedule action.scheduleId
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
-        console.log action
-        initSchedules action.schedules
+        initSchedules action.schedules, action.initialScheduleId
         @emitChange()
       when ActionTypes.UPDATE_SCHEDULE_NAME
         updateScheduleName action.scheduleId, action.name

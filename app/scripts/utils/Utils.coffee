@@ -1,8 +1,6 @@
-
+BrowserUtils = require './BrowserUtils'
 
 class Utils
-
-  @_qs: null
 
   @find: (arr, test)->
     for val in arr
@@ -120,17 +118,5 @@ class Utils
     else
       obj
 
-  @qs: (param, queryStr=window.location.search)->
-    if not @_qs?
-      @_qs = {}
-      params = queryStr.substr(1).split('&')
-      for val in params
-        p = val.split '=', 2
-        if p.length == 1
-          @_qs[p[0]] = ''
-        else
-          @_qs[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '))
-    @_qs[param]
-
-
+Utils = $.extend {}, Utils, BrowserUtils
 module.exports = Utils
