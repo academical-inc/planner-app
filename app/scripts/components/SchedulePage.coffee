@@ -4,6 +4,7 @@ StoreMixin         = require '../mixins/StoreMixin'
 ScheduleStore      = require '../stores/ScheduleStore'
 UserStore          = require '../stores/UserStore'
 AppActions         = require '../actions/AppActions'
+{CalendarDates}    = require '../constants/PlannerConstants'
 LoadingView        = React.createFactory require './LoadingView'
 WeekCalendar       = React.createFactory require './WeekCalendar'
 LoginDialog        = React.createFactory require './LoginDialog'
@@ -63,7 +64,7 @@ SchedulePage = React.createClass(
         R.div className: 'row',
           R.div className: 'col-md-offset-1 col-md-10',
             R.div className: 'pla-schedule-container',
-              WeekCalendar {}
+              WeekCalendar defaultDate: CalendarDates.TERM_START
       LoginDialog ref: "loginDialog"
       ErrorDialog ref: "errorDialog"
 

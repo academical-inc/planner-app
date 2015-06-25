@@ -58,6 +58,10 @@ module.exports =
     "PRIMARY"
     "SECONDARY"
   }
+  CalendarDates: {
+    "TERM_START"
+    "TERM_END"
+  }
   WeekCalendarCommands: {
     PREV: 'prev'
     TODAY: 'today'
