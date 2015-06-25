@@ -61,10 +61,8 @@ SchedulePage = React.createClass(
       loginHandler: @promptForLogin,
       duplicateScheduleHandler: @duplicateSchedule
       R.section className: "pla-schedule-body",
-        R.div className: 'row',
-          R.div className: 'col-md-offset-1 col-md-10',
-            R.div className: 'pla-schedule-container',
-              WeekCalendar defaultDate: CalendarDates.TERM_START
+        R.div className: 'pla-schedule-container',
+          WeekCalendar defaultDate: CalendarDates.TERM_START
       LoginDialog ref: "loginDialog"
       ErrorDialog ref: "errorDialog"
 
