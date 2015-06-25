@@ -18,9 +18,9 @@ initSchedules = (schedules, initialScheduleId)->
   _schedules = schedules
   current = _schedules[0]
   if initialScheduleId
-    matchedSchedules = (_schedules.filter (schedule) \
-    -> schedule.id == initialScheduleId)
-    current = matchedSchedules[0] if matchedSchedules.length > 0
+    matchedSchedule = _.find _schedules,
+    (schedule) -> schedule.id == initialScheduleId
+    current = matchedSchedule if matchedSchedule
   setCurrent current
 
 setCurrent = (current)->
