@@ -31,5 +31,11 @@ class SearchActions
   @search: (query)->
     search query
 
+  @toggleFilter: (added, name, value)->
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.TOGGLE_FILTER
+      added: added
+      name: name
+      value: value
 
 module.exports = SearchActions

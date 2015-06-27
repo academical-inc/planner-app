@@ -2,6 +2,7 @@
 React         = require 'react'
 I18nMixin     = require '../mixins/I18nMixin'
 {UiConstants} = require '../constants/PlannerConstants'
+AppActions    = require '../actions/AppActions'
 R             = React.DOM
 
 
@@ -10,21 +11,32 @@ SearchFilters = React.createClass(
 
   mixins: [I18nMixin]
 
+  handleFilterChecked: (e)->
+    {target: {checked, name, value}} = e
+    AppActions.toggleFilter checked, name, value
+
   checkbox: (name, value)->
     R.div className: "checkbox", key: value,
       R.label null,
-        R.input type: "checkbox", value: value, name
+        R.input
+          type: "checkbox"
+          name: name
+          value: value
+          onChange: @handleFilterChecked
+          value
 
   renderFilter: (f)->
-    R.form null,
-      if f.values is true
-        R.div className: 'form-group',
-          @checkbox f.name, f.name
-      else
+    filterComp = switch f.type
+      when "values"
         R.div className: 'form-group',
           R.label null, f.name
           f.values.map (v)=>
-            @checkbox v, v
+            @checkbox f.name, v
+      when "boolean"
+        R.div className: 'form-group',
+          @checkbox f.name, f.name
+
+    R.form null, filterComp
 
   renderRow: (key, f1, f2)->
     R.div className: "row", key: "filters-row-#{key}",

@@ -50,6 +50,7 @@ module.exports =
     "SEARCH"
     "SEARCH_SUCCESS"
     "SEARCH_FAIL"
+    "TOGGLE_FILTER"
   }
   PreviewTypes: {
     "PRIMARY"
