@@ -51,10 +51,7 @@ SearchBar = React.createClass(
 
   search: ->
     val = @refs.input.getDOMNode().value
-    if val.length >= UiConstants.search.MIN_LEN
-      AppActions.search val
-    else
-      @setState results: [], focusedIndex: null
+    AppActions.search val
 
   previewType: ->
     if @state.corequisites
@@ -126,7 +123,7 @@ SearchBar = React.createClass(
     if @state.focusedIndex?
       @selectResult()
     else
-      @setState inputVal: ""
+      @search()
 
   handleEscPressed: ->
     @unfocusResult()
@@ -168,8 +165,12 @@ SearchBar = React.createClass(
       @setState results: [], inputVal: ''
 
   handleInputChange: (e)->
-    @setState inputVal: e.target.value
-    @search()
+    val = e.target.value
+    @setState inputVal: val
+    if val.length >= UiConstants.search.MIN_LEN
+      @search()
+    else
+      @setState results: [], focusedIndex: null
 
   renderCoreqsMessage: ->
     R.div className: 'corequisites-message',
@@ -184,6 +185,7 @@ SearchBar = React.createClass(
     if @state.searching
       @renderSpinner iconProps
     else
+      iconProps.onClick = @search
       @icon "search", iconProps
 
   render: ->
