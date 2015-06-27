@@ -23,6 +23,14 @@ class Utils
     @removeAt arr, idx
     el
 
+  @uniq: (arr)->
+    set = {}
+    res = []
+    for val in arr
+      res.push val if not (set[val] is true)
+      set[val] = true
+    res
+
   @getNested: (obj, key)->
     val = obj
     for part in key.split(".")
