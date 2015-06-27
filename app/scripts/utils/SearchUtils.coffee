@@ -1,8 +1,13 @@
 
-Bloodhound    = require 'bloodhound'
-Env           = require '../Env'
+$           = require 'jquery'
+Bloodhound  = require 'bloodhound'
+Env         = require '../Env'
+SchoolStore = require '../stores/SchoolStore'
+UserStore   = require '../stores/UserStore'
+SearchStore = require '../stores/SearchStore'
 
 # Private
+# TODO Remove Bloodhound, may be making it slow
 datumTokenizer = (section)->
   teacherNames = section.teacherNames.map (name)->
     Bloodhound.tokenizers.whitespace name
@@ -21,21 +26,44 @@ datumTokenizer = (section)->
 identify = (section)->
   section.id
 
+prepareRequest = (query, settings)->
+  {nickname, terms} = SchoolStore.school()
+  authToken         = UserStore.authToken()
+  params =
+    q: query
+    school: nickname
+    term: terms[0].name
+    filters: JSON.stringify SearchStore.filters()
+    camelize: true
+
+  settings.url    += "?#{$.param(params)}"
+  settings.headers = "Authorization": "Bearer #{authToken}" if authToken?
+  settings
+
+transform = (response)->
+  response.data
+
+sync  = (cb)->
+  (results)->
+
+async = (cb)->
+  (results)->
+    cb null, (if results.length > 0 then results else [null])
+
+
 _engine = new Bloodhound
-  prefetch:
-    url: Env.SECTIONS_URL
-    ttl: 1
-  identify:    identify
+  remote:
+    url: "//#{Env.API_HOST}/sections/search"
+    prepare: prepareRequest
+    transform: transform
+  identify: identify
   datumTokenizer: datumTokenizer
   queryTokenizer: Bloodhound.tokenizers.whitespace
-
 
 # TODO Test
 class SearchUtils
 
   @search: (query, cb)->
-    _engine.search query, (results)->
-      cb null, (if results.length > 0 then results else [null])
-
+    _engine.search query, sync(cb), async(cb)
 
 module.exports = SearchUtils
