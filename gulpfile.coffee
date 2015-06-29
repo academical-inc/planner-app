@@ -141,7 +141,6 @@ gulp.task 'fetch-school', ->
       else if response.statusCode != 200
         throw new Error "Could not fetch school #{nickname}: "+body.message
       else
-        appEnv.SECTIONS_URL = "//s3.amazonaws.com/section-dumps/#{nickname}.json"
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
 
@@ -208,7 +207,9 @@ gulp.task 'images', ->
     .pipe gulp.dest("#{base.dist}/images")
 
 gulp.task 'html', ->
+  analyticsIds = require './.analytics.json'
   gulp.src paths.html, cwd: base.app
+    .pipe($.mustache(analyticsIds[config.school]))
     .pipe gulp.dest(base.dist)
 
 gulp.task 'copy-extras', ->

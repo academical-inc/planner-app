@@ -43,5 +43,6 @@ divshot.json
 .env.json
 .cfdists.json
 .auth.json
+.analytics.json
 
 Thumbs.db
