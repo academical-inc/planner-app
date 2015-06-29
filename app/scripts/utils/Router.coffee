@@ -36,8 +36,11 @@ class Router
       when Pages.ERROR
         render ErrorPage props
 
-  @redirect: (path)->
-    Page.redirect path
+  @redirect: (path, force = false)->
+    if !force
+      Page.redirect path
+    else
+      window.location.href = path
 
   @defRoute: (path, cb)->
     Page path, cb

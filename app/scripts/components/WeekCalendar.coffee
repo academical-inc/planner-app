@@ -1,22 +1,24 @@
 
-$             = require 'jquery'
-React         = require 'react'
-SchoolStore   = require '../stores/SchoolStore'
-SectionStore  = require '../stores/SectionStore'
-ColorStore    = require '../stores/SectionColorStore'
-PreviewStore  = require '../stores/PreviewStore'
-EventStore    = require '../stores/EventStore'
-_             = require '../utils/Utils'
-DateUtils     = require '../utils/DateUtils'
-I18nMixin     = require '../mixins/I18nMixin'
-IconMixin     = require '../mixins/IconMixin'
-StoreMixin    = require '../mixins/StoreMixin'
-AppActions    = require '../actions/AppActions'
-{UiConstants} = require '../constants/PlannerConstants'
-R             = React.DOM
+$               = require 'jquery'
+React           = require 'react'
+SchoolStore     = require '../stores/SchoolStore'
+SectionStore    = require '../stores/SectionStore'
+ColorStore      = require '../stores/SectionColorStore'
+PreviewStore    = require '../stores/PreviewStore'
+EventStore      = require '../stores/EventStore'
+_               = require '../utils/Utils'
+DateUtils       = require '../utils/DateUtils'
+I18nMixin       = require '../mixins/I18nMixin'
+IconMixin       = require '../mixins/IconMixin'
+StoreMixin      = require '../mixins/StoreMixin'
+AppActions      = require '../actions/AppActions'
+{UiConstants}   = require '../constants/PlannerConstants'
+{CalendarDates} = require '../constants/PlannerConstants'
+R               = React.DOM
 
 # Private
 _school        = SchoolStore.school()
+_term          = _school.terms[0]
 _sectionEvents = -> SectionStore.sectionEvents()
 _sectionColors = -> ColorStore.colors()
 _previewEvents = -> PreviewStore.allPreviewEvents()
@@ -31,6 +33,14 @@ WeekCalendar = React.createClass(
     {store: PreviewStore, handler: "onPreviewChange"}
     {store: EventStore, handler: "onEventsChange"}
   )]
+
+  setDefaultDate : ->
+    beforeTermStart = SchoolStore.nowIsBeforeTermStart()
+    afterTermEnd = SchoolStore.nowIsAfterTermEnd()
+    if beforeTermStart || @props.defaultDate == CalendarDates.TERM_START
+      _term.startDate
+    else if afterTermEnd || @props.defaultDate == CalendarDates.TERM_END
+      _term.endDate
 
   sectionEventDataTransform: (sectionEvent)->
     section = sectionEvent.section
@@ -124,8 +134,11 @@ WeekCalendar = React.createClass(
         events: []
         eventDataTransform: @eventDataTransform
 
+    defaultDate = @setDefaultDate()
+
     @cal.fullCalendar(
       defaultView: "agendaWeek"
+      defaultDate: defaultDate if defaultDate?
       allDaySlot: false
       allDayText: false
       dayNamesShort: @t "calendar.days"

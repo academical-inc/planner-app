@@ -1,11 +1,12 @@
 
-React       = require 'react'
-I18nMixin   = require '../mixins/I18nMixin'
-IconMixin   = require '../mixins/IconMixin'
-AppActions  = require '../actions/AppActions'
-UserStore   = require '../stores/UserStore'
-OptionsItem = React.createFactory require './OptionsItem'
-R           = React.DOM
+React         = require 'react'
+I18nMixin     = require '../mixins/I18nMixin'
+IconMixin     = require '../mixins/IconMixin'
+AppActions    = require '../actions/AppActions'
+UserStore     = require '../stores/UserStore'
+{UiConstants} = require '../constants/PlannerConstants'
+OptionsItem   = React.createFactory require './OptionsItem'
+R             = React.DOM
 
 ProfileBox = React.createClass(
 
