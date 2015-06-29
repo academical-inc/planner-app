@@ -5,6 +5,6 @@ class AcademicalError extends Error
     if Error.captureStackTrace?
       Error.captureStackTrace @, @
     else
-      @stack = (new Error message).stack
+      @stack = (new Error @message).stack
 
 module.exports = AcademicalError

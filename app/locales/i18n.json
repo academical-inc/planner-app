@@ -119,6 +119,8 @@
     },
     "empty": "N/A",
     "copyOf": "Copy of {{name}}",
+    "duplicateSchedule": "Add to my schedules",
+    "loginToDuplicate": "Log in to Academical",
     "landing": {
       "section1": {
         "title": "YOUR CLASS SCHEDULE",
@@ -300,6 +302,8 @@
     },
     "empty": "N/A",
     "copyOf": "Copia de {{name}}",
+    "duplicateSchedule": "Agregar a mis Horarios",
+    "loginToDuplicate": "Ingresa a Academical",
     "landing": {
       "section1": {
         "title": "TU HORARIO DE CLASES",
