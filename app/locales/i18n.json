@@ -113,6 +113,7 @@
         "Its use under the sole responsability of the student.",
         "Academical uses the course catalog provided by the University"
       ],
+      "or": "or",
       "uniandes": "Log In with Uniandes",
       "facebook": "Log In with Facebook",
       "google": "Log In with Google"
@@ -292,10 +293,11 @@
       "loading": "Ingresando",
       "reminderHeader": "Recuerda que:",
       "reminder": [
-        "La aplicación NO! inscribe el horario. Solo es una herramienta para planear opciones de horario.",
+        "La aplicación NO inscribe el horario. Solo te ayuda a planear opciones de horario.",
         "Su uso está bajo responsabilidad de cada estudiante.",
         "Academical toma la información del catálogo de cursos que provee la Universidad"
       ],
+      "or": "ó",
       "uniandes": "Ingresa con Uniandes",
       "facebook": "Ingresa con Facebook",
       "google": "Ingresa con Google"
