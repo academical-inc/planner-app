@@ -1,5 +1,3 @@
-
-
 module.exports =
   UiConstants: require './UiConstants'
   PayloadSources: {
@@ -96,3 +94,5 @@ module.exports =
     TW_SHARE_URL: "https://twitter.com/intent/tweet"
   }
   POLL_INTERVAL: 120000  # milliseconds
+  MAX_SCHEDULE_NAME_LENGTH: 23
+  MAX_SCHEDULES: 7

@@ -1,7 +1,6 @@
 
 React         = require 'react'
 $             = require 'jquery'
-{UiConstants} = require '../constants/PlannerConstants'
 MediaQueries  = require '../utils/MediaQueries.coffee'
 IconMixin     = require '../mixins/IconMixin'
 I18nMixin     = require '../mixins/I18nMixin'
@@ -10,6 +9,10 @@ AppActions    = require '../actions/AppActions'
 Dropdown      = React.createFactory require './Dropdown'
 ScheduleItem  = React.createFactory require './ScheduleItem'
 R             = React.DOM
+
+{ UiConstants,
+  MAX_SCHEDULES,
+  MAX_SCHEDULE_NAME_LENGTH } = require '../constants/PlannerConstants'
 
 
 ScheduleList = React.createClass(
@@ -61,8 +64,8 @@ ScheduleList = React.createClass(
       itemType: ScheduleItem
       addItemPlaceholder: @t "scheduleList.namePlaceholder"
       closeOnAdd: false
-      maxInputLength: UiConstants.MAX_SCHEDULE_NAME_LENGTH
-      maxItems: UiConstants.MAX_SCHEDULES
+      maxInputLength: MAX_SCHEDULE_NAME_LENGTH
+      maxItems: MAX_SCHEDULES
       handleItemAdd: @addSchedule
       handleItemSelected: @openSchedule
       handleItemDelete: @deleteSchedule
