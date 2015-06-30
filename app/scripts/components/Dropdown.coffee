@@ -79,6 +79,7 @@ Dropdown = React.createClass(
             type: "text"
             placeholder: @props.addItemPlaceholder
             disabled: @state.inputDisabled
+            maxLength: @props.maxInputLength
             onChange: @handleInputChange
         R.button
           className: 'btn btn-success btn-xs'
