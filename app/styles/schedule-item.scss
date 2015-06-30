@@ -5,12 +5,13 @@
     padding: .6em 1.2em;
     width: 100%;
 
-    span {
+    span.schedule-name {
       max-width: 75%;
       display: inline-block;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      vertical-align: bottom;
     }
   }
 

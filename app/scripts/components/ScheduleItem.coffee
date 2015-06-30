@@ -3,8 +3,10 @@ React         = require 'react'
 ItemMixin     = require '../mixins/ItemMixin'
 IconMixin     = require '../mixins/IconMixin'
 AppActions    = require '../actions/AppActions'
-{UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
+
+{ UiConstants,
+  MAX_SCHEDULE_NAME_LENGTH } = require '../constants/PlannerConstants'
 
 
 # TODO Tests
@@ -56,11 +58,12 @@ ScheduleItem = React.createClass(
             type: "text"
             placeholder: schedule.name
             autoFocus: true
+            maxLength: MAX_SCHEDULE_NAME_LENGTH
             onKeyDown: @handleKeyDown
             onClick: @handleEvent
             ref: "editInput"
         else
-          schedule.name
+          R.span className: "schedule-name", schedule.name
         R.span className: "pull-right",
           if @state.editing
             R.span className: 'edit-icons',
