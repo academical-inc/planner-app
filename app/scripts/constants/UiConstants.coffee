@@ -32,7 +32,7 @@ module.exports =
     LOWER: bound: 10, className: "warning"
     ZERO:  className: "danger"
   search:
-    MIN_LEN: 2
+    MIN_LEN: 3
     MAX_RESULTS: 30
   keys:
     ENTER: 13
