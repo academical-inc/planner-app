@@ -54,6 +54,9 @@ SearchBar = React.createClass(
     val = @refs.input.getDOMNode().value
     AppActions.search val
 
+  clearSearch: ->
+    AppActions.clearSearch()
+
   previewType: ->
     if @state.corequisites
       PreviewTypes.SECONDARY
@@ -171,7 +174,7 @@ SearchBar = React.createClass(
     if val.length >= UiConstants.search.MIN_LEN
       @search()
     else
-      @setState results: [], focusedIndex: null
+      @clearSearch()
 
   renderCoreqsMessage: ->
     R.div className: 'corequisites-message',

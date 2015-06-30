@@ -31,6 +31,11 @@ class SearchActions
   @search: (query)->
     search query
 
+  @clearSearch: ->
+    SearchUtils.clearSearch()
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.CLEAR_SEARCH
+
   @toggleFilter: (added, name, value)->
     PlannerDispatcher.dispatchViewAction
       type: ActionTypes.TOGGLE_FILTER

@@ -73,6 +73,11 @@ class SearchStore extends Store
         _results = action.results
         _query   = action.query
         @emitChange()
+      when ActionTypes.CLEAR_SEARCH
+        _searching = false
+        _query     = null
+        _results   = []
+        @emitChange()
       when ActionTypes.TOGGLE_FILTER
         toggleFilter action.added, action.name, action.value
 

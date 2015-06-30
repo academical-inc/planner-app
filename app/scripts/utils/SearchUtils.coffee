@@ -8,6 +8,8 @@ SearchStore = require '../stores/SearchStore'
 
 # Private
 # TODO Remove Bloodhound, may be making it slow
+_q = ""
+
 datumTokenizer = (section)->
   teacherNames = section.teacherNames.map (name)->
     Bloodhound.tokenizers.whitespace name
@@ -38,17 +40,19 @@ prepareRequest = (query, settings)->
 
   settings.url    += "?#{$.param(params)}"
   settings.headers = "Authorization": "Bearer #{authToken}" if authToken?
+  _q = query
   settings
 
 transform = (response)->
   response.data
 
-sync  = (cb)->
+sync  = (query, cb)->
   (results)->
 
-async = (cb)->
+async = (query, cb)->
   (results)->
-    cb null, (if results.length > 0 then results else [null])
+    if _q is query
+      cb null, (if results.length > 0 then results else [null])
 
 
 _engine = new Bloodhound
@@ -64,6 +68,9 @@ _engine = new Bloodhound
 class SearchUtils
 
   @search: (query, cb)->
-    _engine.search query, sync(cb), async(cb)
+    _engine.search query, sync(query, cb), async(query, cb)
+
+  @clearSearch: ->
+    _q = null
 
 module.exports = SearchUtils

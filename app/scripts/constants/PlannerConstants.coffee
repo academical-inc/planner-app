@@ -51,6 +51,7 @@ module.exports =
     "SEARCH"
     "SEARCH_SUCCESS"
     "SEARCH_FAIL"
+    "CLEAR_SEARCH"
     "TOGGLE_FILTER"
     "MAX_SCHEDULES_FAIL"
   }
