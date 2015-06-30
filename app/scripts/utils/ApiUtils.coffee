@@ -22,13 +22,12 @@ class ApiUtils
 
   @getSchedules: (userId, cb)->
     _api.students.listSchedules userId,
-      includeSections: true,
-      expandEvents: true,
+      includeSections: true
       cb
 
   @getSchedule: (scheduleId, cb, params={})->
     params = $.extend(
-      true, {includeSections: true, expandEvents: true}, params
+      true, {includeSections: true}, params
     )
     _api.schedules.retrieve scheduleId,
       params
@@ -39,7 +38,6 @@ class ApiUtils
       data: schedule
       params:
         includeSections: true
-        expandEvents: true
       cb
 
   @deleteSchedule: (scheduleId, cb)->
@@ -50,7 +48,6 @@ class ApiUtils
       data: toSave,
       params:
         includeSections: true
-        expandEvents: true
       cb
 
 module.exports = ApiUtils
