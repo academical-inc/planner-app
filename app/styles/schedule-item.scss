@@ -3,6 +3,15 @@
 
   a {
     padding: .6em 1.2em;
+    width: 100%;
+
+    span {
+      max-width: 75%;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
 
   .dirty {

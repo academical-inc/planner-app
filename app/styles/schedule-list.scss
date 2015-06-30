@@ -11,9 +11,21 @@
       background-color: $white;
     }
 
+    span.title {
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 175px;
+      vertical-align: bottom;
+    }
     span.caret {
       color: lightgray;
       margin-left: .7em;
     }
+  }
+
+  .dropdown-menu {
+    max-width: 20em;
   }
 }
