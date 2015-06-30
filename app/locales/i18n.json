@@ -51,6 +51,7 @@
     "searchBar": {
       "placeholder": "Search Course Sections",
       "filters": "Filter: ",
+      "filtering": "Filtering ",
       "corequisites": "Select Corequisite",
       "noResults": "No Results"
     },
@@ -236,6 +237,7 @@
     "searchBar": {
       "placeholder": "Busca Secciones",
       "filters": "Filtrar: ",
+      "filtering": "Filtrando ",
       "corequisites": "Seleccionar Complementaria",
       "noResults": "No hay resultados"
     },

@@ -235,6 +235,7 @@ SearchBar = React.createClass(
           handleResultClicked: @selectResult
       SearchFiltersTrigger
         collapsed: @state.filtersCollapsed
+        filtering: @state.filtering
         filtersSelector: UiConstants.selectors.SEARCH_FILTERS
         filtersId: UiConstants.ids.SEARCH_FILTERS
       R.div null,

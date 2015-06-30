@@ -11,13 +11,30 @@
   padding-top: .4em;
   background-color: $academical-blue-filter;
   border-radius: .3em;
-  border-bottom: 2.5em solid $academical-blue-filter;
+  // border-bottom: 2.5em solid $academical-blue-filter;
   color: $white;
   font-size: .8em;
   font-weight: normal;
 
-  &.collapsed {
+  &.collapsed,&.filtering {
     border-bottom: none;
+  }
+
+  &.filtering {
+    background-color: $green;
+    width: 27%;
+
+    .filters-toggle {
+      &:after {
+        font-family: FontAwesome;
+        content: "\f00c"; // Checkmark
+        color: $white;
+        padding: 0;
+      }
+    }
+    .filters-toggle.collapsed:after {
+      content: "\f00c"; // Checkmark
+    }
   }
 
   .filters-toggle {

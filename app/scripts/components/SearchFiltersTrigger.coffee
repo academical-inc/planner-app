@@ -11,6 +11,12 @@ SearchFiltersTrigger = React.createClass(
   render: ->
     className = 'pla-search-filters-trigger'
     className += " collapsed" if @props.collapsed
+    className += " filtering" if @props.filtering
+
+    title = if @props.filtering
+      @t "searchBar.filtering"
+    else
+      @t "searchBar.filters"
 
     R.div className: className,
       R.a
@@ -19,7 +25,7 @@ SearchFiltersTrigger = React.createClass(
         "data-toggle": "collapse"
         "aria-expanded": "false"
         "aria-controls": @props.filtersId
-        @t "searchBar.filters"
+        title
 
 )
 
