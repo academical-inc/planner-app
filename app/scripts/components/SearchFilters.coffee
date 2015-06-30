@@ -1,6 +1,8 @@
 
+$             = require 'jquery'
 React         = require 'react'
 I18nMixin     = require '../mixins/I18nMixin'
+IconMixin     = require '../mixins/IconMixin'
 {UiConstants} = require '../constants/PlannerConstants'
 AppActions    = require '../actions/AppActions'
 R             = React.DOM
@@ -9,11 +11,15 @@ R             = React.DOM
 # TODO Tests
 SearchFilters = React.createClass(
 
-  mixins: [I18nMixin]
+  mixins: [I18nMixin, IconMixin]
 
   handleFilterChecked: (e)->
     {target: {checked, name, value}} = e
     AppActions.toggleFilter checked, name, value
+
+  handleSearch: (e)->
+    $(@getDOMNode()).collapse 'toggle'
+    @props.handleSearch() if @props.handleSearch?
 
   checkbox: (name, value)->
     R.div className: "checkbox", key: value,
@@ -57,6 +63,14 @@ SearchFilters = React.createClass(
 
     R.div className: "pla-search-filters collapse", id: id,
       @renderFilters filters
+      R.div className: "row",
+        R.button
+          className: "btn btn-search btn-success btn-xs pull-right"
+          type: "button"
+          onClick: @handleSearch
+          R.span null,
+            @t "searchBar.applyFilters"
+            @icon "filter"
 
 )
 

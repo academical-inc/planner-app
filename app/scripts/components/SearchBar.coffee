@@ -239,7 +239,10 @@ SearchBar = React.createClass(
         filtersSelector: UiConstants.selectors.SEARCH_FILTERS
         filtersId: UiConstants.ids.SEARCH_FILTERS
       R.div null,
-        SearchFilters filters: @props.ui.searchFilters, ref: "filters"
+        SearchFilters
+          filters: @props.ui.searchFilters
+          handleSearch: @search
+          ref: "filters"
       @renderCoreqsMessage() if coreqs
 
 )
