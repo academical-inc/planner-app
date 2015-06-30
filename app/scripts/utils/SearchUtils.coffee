@@ -53,7 +53,7 @@ async = (cb)->
 
 _engine = new Bloodhound
   remote:
-    url: "//#{Env.API_HOST}/sections/search"
+    url: "#{Env.API_PROTOCOL}://#{Env.API_HOST}/sections/search"
     prepare: prepareRequest
     transform: transform
   identify: identify
