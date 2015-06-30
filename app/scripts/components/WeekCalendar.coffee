@@ -143,6 +143,8 @@ WeekCalendar = React.createClass(
       allDayText: false
       dayNamesShort: @t "calendar.days"
       scrollTime: "07:00:00"
+      columnFormat:
+        week: 'ddd - MMM D'
       firstDay: 1
       weekends: true
       editable: true
