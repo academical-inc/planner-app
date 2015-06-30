@@ -11,8 +11,9 @@ SchoolStore    = require '../stores/SchoolStore'
 EventFormStore = require '../stores/EventFormStore'
 WeekStore      = require '../stores/WeekStore'
 AppActions     = require '../actions/AppActions'
-{UiConstants}  = require '../constants/PlannerConstants'
 R              = React.DOM
+
+{UiConstants, MAX_EVENT_NAME_LENGTH} = require '../constants/PlannerConstants'
 
 # Private
 _ = $.extend true, {}, Utils, DateUtils
@@ -166,7 +167,7 @@ EventForm = React.createClass(
     [@validateDays, @validateRepeatUntil]
 
   renderInput: (id, {label, ref, type, placeholder, inputGroup, onFocus,\
-      val, onChange}={})->
+      val, maxLength, onChange}={})->
     type ?= "text"
 
     inputProps =
@@ -175,6 +176,7 @@ EventForm = React.createClass(
       id: id
       ref: ref
       placeholder: placeholder
+      maxLength: maxLength
       defaultValue: val if not onChange?
       value: val if onChange?
       onChange: onChange
@@ -222,6 +224,7 @@ EventForm = React.createClass(
       @renderInput nameId,
         ref: "name"
         placeholder: @t("eventForm.namePlaceholder")
+        maxLength: MAX_EVENT_NAME_LENGTH
       R.div className: "row",
         R.div className: "col-md-6", startInput
         R.div className: "col-md-6", endInput
