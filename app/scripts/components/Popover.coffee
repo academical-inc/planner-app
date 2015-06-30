@@ -1,9 +1,12 @@
 
-React = require 'react'
-R     = React.DOM
+React        = require 'react'
+ClickOutside = require 'react-onclickoutside'
+R            = React.DOM
 
 
 Popover = React.createClass(
+
+  mixins: [ClickOutside]
 
   componentDidMount: ->
     $el = $(@getDOMNode())
@@ -30,6 +33,10 @@ Popover = React.createClass(
     React.unmountComponentAtNode $tip.find('.popover-title')[0]
     React.unmountComponentAtNode $tip.find('.popover-content')[0]
     $(@getDOMNode()).popover 'destroy'
+
+  handleClickOutside: (e)->
+    $el = $(@getDOMNode())
+    $el.popover 'hide'
 
   render: ->
     @props.children
