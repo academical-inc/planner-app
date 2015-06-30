@@ -131,7 +131,7 @@ Dropdown = React.createClass(
           onClick: @toggleDropdown
           "aria-expanded": false
         }
-        @props.title
+        R.span className: 'title', @props.title
         R.span className: 'caret'
       )
       ul
