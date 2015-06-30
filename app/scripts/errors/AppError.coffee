@@ -3,7 +3,7 @@ AcademicalError = require './AcademicalError'
 
 class AppError extends AcademicalError
 
-  constructor: (@requestError)->
-    super()
+  constructor: (@requestError, msg)->
+    super(msg)
 
 module.exports = AppError
