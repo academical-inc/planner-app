@@ -51,8 +51,9 @@ SearchBar = React.createClass(
     @initFiltersCollapse()
 
   search: ->
-    val = @refs.input.getDOMNode().value
-    AppActions.search val
+    input = @refs.input.getDOMNode()
+    input.focus()
+    AppActions.search input.value
 
   clearSearch: ->
     AppActions.clearSearch()
