@@ -3,6 +3,7 @@ React                = require 'react'
 I18nMixin            = require '../mixins/I18nMixin'
 IconMixin            = require '../mixins/IconMixin'
 StoreMixin           = require '../mixins/StoreMixin'
+ColorUtils           = require '../utils/ColorUtils'
 SearchStore          = require '../stores/SearchStore'
 PreviewStore         = require '../stores/PreviewStore'
 {UiConstants}        = require '../constants/PlannerConstants'
@@ -66,7 +67,7 @@ SearchBar = React.createClass(
     AppActions.removePreview previewType
 
   addSection: (section)->
-    AppActions.addSection section, UiConstants.DEFAULT_SECTION_COLOR
+    AppActions.addSection section, ColorUtils.nextColor()
 
   focusResult: (idx)->
     section = @state.results[idx]
