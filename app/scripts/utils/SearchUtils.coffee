@@ -1,10 +1,10 @@
 
-$           = require 'jquery'
-Bloodhound  = require 'bloodhound'
-Env         = require '../Env'
-SchoolStore = require '../stores/SchoolStore'
-UserStore   = require '../stores/UserStore'
-SearchStore = require '../stores/SearchStore'
+$                  = require 'jquery'
+Bloodhound         = require 'bloodhound'
+Env                = require '../Env'
+SchoolStore        = require '../stores/SchoolStore'
+UserStore          = require '../stores/UserStore'
+SearchFiltersStore = require '../stores/SearchFiltersStore'
 
 # Private
 # TODO Remove Bloodhound, may be making it slow
@@ -35,7 +35,7 @@ prepareRequest = (query, settings)->
     q: query
     school: nickname
     term: terms[0].name
-    filters: JSON.stringify SearchStore.filters()
+    filters: JSON.stringify SearchFiltersStore.filters()
     camelize: true
 
   settings.url    += "?#{$.param(params)}"

@@ -5,6 +5,7 @@ IconMixin            = require '../mixins/IconMixin'
 StoreMixin           = require '../mixins/StoreMixin'
 ColorUtils           = require '../utils/ColorUtils'
 SearchStore          = require '../stores/SearchStore'
+SearchFiltersStore   = require '../stores/SearchFiltersStore'
 PreviewStore         = require '../stores/PreviewStore'
 {UiConstants}        = require '../constants/PlannerConstants'
 {PreviewTypes}       = require '../constants/PlannerConstants'
@@ -23,22 +24,38 @@ _lastFocused = null
 # TODO Test
 SearchBar = React.createClass(
 
-  mixins: [I18nMixin, IconMixin, StoreMixin(SearchStore)]
+  mixins: [I18nMixin, IconMixin, StoreMixin(
+    {store: SearchStore, handler: "onSearchChange"}
+    {store: SearchFiltersStore, handler: "onFiltersChange"}
+  )]
 
-  getState: ->
+  getResults: ->
+    SearchStore.results()[...UiConstants.search.MAX_RESULTS]
+
+  isFiltering: ->
+    SearchFiltersStore.filters().length > 0
+
+  getInitialState: ->
     corequisites: false
     filtersCollapsed: true
+    filtering: @isFiltering()
     focusedIndex: null
     disabledIndex: null
     inputVal: SearchStore.query()
     searching: SearchStore.searching()
-    results: SearchStore.results()[...UiConstants.search.MAX_RESULTS]
+    results: @getResults()
 
-  getInitialState: ->
-    @getState()
+  onSearchChange: ->
+    st =
+      focusedIndex: null
+      disabledIndex: null
+      searching: SearchStore.searching()
+      results: @getResults()
+    st.inputVal = SearchStore.query() if SearchStore.query()?
+    @setState st
 
-  onChange: ->
-    @setState @getState()
+  onFiltersChange: ->
+    @setState filtering: @isFiltering()
 
   initFiltersCollapse: ->
     filters = $(@refs.filters.getDOMNode())
