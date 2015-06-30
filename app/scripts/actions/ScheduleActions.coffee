@@ -4,16 +4,20 @@ _                 = require '../utils/Utils'
 I18n              = require '../utils/I18n'
 ApiUtils          = require '../utils/ApiUtils'
 ActionUtils       = require '../utils/ActionUtils'
+I18n              = require '../utils/I18n'
 ScheduleFactory   = require '../factories/ScheduleFactory'
 EventFactory      = require '../factories/EventFactory'
 ScheduleStore     = require '../stores/ScheduleStore'
 SectionStore      = require '../stores/SectionStore'
 SectionColorStore = require '../stores/SectionColorStore'
 EventStore        = require '../stores/EventStore'
+AppError          = require '../errors/AppError'
 NavError          = require '../errors/NavError'
 PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
-{ActionTypes}     = require '../constants/PlannerConstants'
-{DebounceRates}   = require '../constants/PlannerConstants'
+
+{ ActionTypes,
+  DebounceRates,
+  MAX_SCHEDULES } = require '../constants/PlannerConstants'
 
 
 # Private
@@ -125,10 +129,15 @@ class ScheduleActions
     createSchedule newSchedule
 
   @duplicateSchedule: (studentId = null) ->
-    newSchedule = buildCurrentSchedule exclude: ['id']
-    newSchedule.name = I18n.t "copyOf", name: newSchedule.name
-    newSchedule.studentId = studentId if studentId
-    createSchedule newSchedule
+    if ScheduleStore.all().length >= MAX_SCHEDULES
+      PlannerDispatcher.dispatchViewAction
+        type: ActionTypes.MAX_SCHEDULES_FAIL
+        error: new AppError null, I18n.t "errors.maxSchedules"
+    else
+      newSchedule = buildCurrentSchedule exclude: ['id']
+      newSchedule.name = I18n.t "copyOf", name: newSchedule.name
+      newSchedule.studentId = studentId if studentId
+      createSchedule newSchedule
 
   @deleteSchedule: (scheduleId)->
     PlannerDispatcher.dispatchViewAction

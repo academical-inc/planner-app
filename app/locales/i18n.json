@@ -22,7 +22,8 @@
       ],
       "notFound": "Oops! Resource not found!",
       "notLoggedIn": "You need to log in first.",
-      "notAuthorized": "Not authorized."
+      "notAuthorized": "Not authorized.",
+      "maxSchedules": "You have reached the limit of schedules"
     },
     "days": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     "dropdown": {
@@ -206,7 +207,8 @@
       ],
       "notFound":  "Ups! No encontramos el recurso que buscas!",
       "notLoggedIn": "Debes hacer login para completar esta acción.",
-      "notAuthorized": "No tienes autorización para completar esta acción."
+      "notAuthorized": "No tienes autorización para completar esta acción.",
+      "maxSchedules": "No puedes crear más horarios."
     },
     "days": ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
     "dropdown": {

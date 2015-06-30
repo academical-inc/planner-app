@@ -52,6 +52,7 @@ module.exports =
     "SEARCH_SUCCESS"
     "SEARCH_FAIL"
     "TOGGLE_FILTER"
+    "MAX_SCHEDULES_FAIL"
   }
   PreviewTypes: {
     "PRIMARY"
