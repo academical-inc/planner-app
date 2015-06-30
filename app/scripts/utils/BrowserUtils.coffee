@@ -5,7 +5,7 @@ class BrowserUtils
   @_hs: null
 
   @isMac: ->
-    navigator.platform.indexOf "Mac" != -1
+    navigator.platform.indexOf("Mac") != -1
 
   @openWindow: (url)->
     console.log url
