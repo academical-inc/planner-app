@@ -2,13 +2,13 @@
 
 StoreMixin = (stores...)->
   last = stores[stores.length-1]
-  handlerName = if last.constructor.name == "Object" and last.handlerName?
-    last.handlerName
+  handlerName = if last.handler?
+    last.handler
   else
     "onChange"
 
   _store = (storeInfo)->
-    if storeInfo.constructor.name == "Object"
+    if storeInfo.store?
       [storeInfo.store, storeInfo.handler or handlerName]
     else
       [storeInfo, handlerName]
