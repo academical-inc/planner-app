@@ -70,7 +70,7 @@ module.exports =
   }
   DebounceRates: {  # milliseconds
     SAVE_RATE: 1000
-    SEARCH_RATE: 100
+    SEARCH_RATE: 450
   }
   Pages: {
     "LANDING"
