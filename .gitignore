@@ -1,3 +1,4 @@
+.DS_Store
 *.rbc
 capybara-*.html
 .rspec
@@ -30,3 +31,18 @@ config/secrets.yml
 
 # sass
 /.sass-cache
+
+# divshot
+/.divshot-cache
+divshot.json
+
+# awspublish
+.awspublish*
+
+# environment
+.env.json
+.cfdists.json
+.auth.json
+.analytics.json
+
+Thumbs.db

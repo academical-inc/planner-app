@@ -1,0 +1,31 @@
+
+.pla-schedule-list {
+  background-color: $white;
+  border: 1px solid #e5e5e5;
+  border-radius: 2px;
+
+  a.dropdown-toggle {
+    padding: .2em .7em;
+
+    &:hover,&:focus {
+      background-color: $white;
+    }
+
+    span.title {
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 175px;
+      vertical-align: bottom;
+    }
+    span.caret {
+      color: lightgray;
+      margin-left: .7em;
+    }
+  }
+
+  .dropdown-menu {
+    max-width: 20em;
+  }
+}

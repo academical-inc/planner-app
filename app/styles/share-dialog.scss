@@ -1,0 +1,52 @@
+
+.pla-modal.pla-share-modal {
+  width: 40%;
+
+  .modal-footer {
+    padding: 0;
+  }
+}
+
+.pla-share-dialog {
+  $input-height: 3em;
+
+  label {
+    margin-top: 1em;
+    margin-bottom: .8em;
+    font-weight: 600;
+    font-size: .8em;
+    color: $dark;
+  }
+
+  .input-group {
+    width: 100%;
+
+    input {
+      color: $dark;
+      width: 80%;
+      text-decoration: underline;
+      box-shadow: none;
+    }
+    input,button {
+      height: $input-height;
+      box-sizing: border-box;
+      float: left;
+      font-size: .9em;
+    }
+    button {
+      font-weight: 600;
+    }
+  }
+
+  .form-group:last-child {
+    margin-bottom: .2em;
+
+    img {
+      zoom: 0.8;
+    }
+    img + img {
+      margin-left: 1em;
+    }
+  }
+
+}

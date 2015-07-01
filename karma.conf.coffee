@@ -1,5 +1,8 @@
 # Karma configuration
 # Generated on Mon Oct 20 2014 17:00:17 GMT-0400 (EDT)
+extend = require 'extend'
+env    = require './.env.json'
+env    = extend {}, env["test"], SCHOOL: env.SCHOOL, APP_ENV: "test"
 
 module.exports = (config) ->
   config.set
@@ -10,13 +13,21 @@ module.exports = (config) ->
 
     # frameworks to use
     # available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify', 'jasmine']
+    frameworks: ['browserify', 'jasmine-ajax', 'jasmine']
 
+    # Proxy to serve statis assets
+    proxies: {
+      '/images/': 'http://localhost:9876/base/dist/images/'
+    },
 
     # list of files / patterns to load in the browser
     files: [
+      {pattern: 'dist/images/**/*.png', watched: false, included: false, served: true}
       'dist/scripts/vendor.js'
-      'test/**/*.spec.coffee'
+      'test/shims/*.{js,coffee}'
+      'test/SpecHelper.coffee'
+      'test/shared/**/*.coffee'
+      'test/spec/**/*.spec.coffee'
     ]
 
 
@@ -28,7 +39,8 @@ module.exports = (config) ->
     # preprocess matching files before serving them to the browser
     # available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.spec.coffee': ['browserify']
+      'test/SpecHelper.coffee': ['browserify']
+      'test/**/*.coffee': ['browserify']
     }
 
 
@@ -62,7 +74,7 @@ module.exports = (config) ->
 
     # start these browsers
     # available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'PhantomJS']
+    browsers: ['Chrome']
 
 
     # Continuous Integration mode
@@ -70,9 +82,18 @@ module.exports = (config) ->
     singleRun: false
 
     browserify: {
+      bundleDelay: 1500
       extensions: ['.coffee']
       debug: true
-      transform: ['coffeeify']
+      transform: [
+        'coffeeify'
+        'browserify-shim'
+        ['envify', env]
+        ['rewireify', {
+            ignore: "I18nMixin.coffee,ItemMixin.coffee,IconMixin.coffee,ModalMixin.coffee,SpinnerMixin.coffee,FormMixin.coffee"
+          }
+        ]
+      ]
     }
 
 

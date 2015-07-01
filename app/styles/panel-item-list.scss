@@ -1,0 +1,56 @@
+
+.pla-panel-item-list {
+  padding-right: 1px;
+  margin-top: 20px;
+
+  .list-header,.list-subheader {
+    text-align: left;
+    margin-left: 7%;
+    color: white;
+    font-weight: 300;
+    font-size: 1.5em;
+  }
+
+  .list-subheader {
+    font-size: 1em;
+  }
+
+  .panel-group{
+    width: 100%;
+    margin-bottom: 0;
+
+    .pla-item {
+      + .pla-item {
+        margin-top: .07em;
+      }
+    }
+  }
+
+  .add-item-bar {
+    text-align: left;
+    margin-top: 5%;
+    margin-left: 5%;
+
+    .btn-circle{
+      background-color: white;
+      border-color: white;
+      padding: 0;
+      width: 2em;
+      height: 2em;
+
+      img {
+        zoom: 0.78;
+        vertical-align: baseline;
+      }
+    }
+
+    .add-item-header {
+      cursor: pointer;
+      font-size: .9em;
+      font-weight: 300;
+      color: $white;
+      margin-left: 3%;
+    }
+  }
+}
+

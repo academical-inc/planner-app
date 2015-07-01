@@ -1,0 +1,23 @@
+$icon-font-path: "bootstrap-sass-official/assets/fonts/";
+$fa-font-path:   "fonts";
+$mm_width:       0.2;
+$mm_maxWidth:    200px;
+$screen-xl-min:  2100px;
+
+// Override default bootstrap font family
+$font-family-sans-serif:  'Open Sans', sans-serif;
+$brand-success:           $green;
+$brand-warning:           $yellow;
+$brand-danger:            $red;
+$brand-info:              $academical-blue-sidebar;
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+@import "bootstrap-sass-datepicker/sass/datepicker";
+
+@import "font-awesome/scss/font-awesome";
+
+@import "bootstrap-social/bootstrap-social.scss";
+
+@import "jQuery.mmenu/src/scss/jquery.mmenu";
+@import "jQuery.mmenu/src/scss/addons/jquery.mmenu.dragopen";
+

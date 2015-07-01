@@ -1,0 +1,990 @@
+
+
+/* ==========================================================================
+ Academical Inc.
+
+ Planner Site
+ ========================================================================== */
+
+
+/***********************************************************************
+* Base static
+***********************************************************************/
+
+/*  Navbar
+-------------------------------------------------------------------- */
+.header-index{
+  padding: 12px 40px 15px 70px;
+  position: fixed;
+  background-color: #2997D6;
+  height: 65px;
+  img{
+    width: 225px;
+    margin-left: 1.5%
+  }
+  .header_buttons{
+    display: inline;
+    float: right;
+    .signin_button{
+      color: #ffffff;
+      font-size: 15px;
+      border: 1px solid #ffffff;
+      background: transparent;
+      padding: 8px 35px 8px 35px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .language_button{
+      color: #ffffff;
+      font-size: 13px;
+      background: transparent;
+      padding: 0px 5px 0px 5px;
+      float: right;
+      border: 0px;
+      margin-top: 6%;
+    }
+    .left_button{
+      border-right: 1px solid #ffffff;
+     }
+    .language_button:hover{
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: 700;
+    }
+    .language_button:focus {
+      outline:0;
+    }
+    .button_highlight{
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+}
+
+
+/*  1st Section - Presentation
+-------------------------------------------------------------------- */
+.sec1  {
+  background: url(/images/background_image.jpg) no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  padding: 0;
+  .sec1-1  {
+    text-align: center;
+    margin-top: 6.0%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    h1 {
+      font-weight: 300;
+      color: #ffffff;
+      font-size: 300%; 
+    }
+    p {
+      font-weight: 300;
+      color: #ffffff;
+      font-size: 123%; 
+    }
+  }
+  .sec1-2  {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin-bottom: 1%;
+    h2 {
+      font-weight: 600;
+      color: #2daae1;
+      font-size: 123%; 
+      margin-top: 10px;
+    }
+    .img-mac{
+      width: 56%;
+    }
+    .video-play{
+      position: absolute;
+      top: 42%;
+      text-align: center;
+      width: 21%;
+      left: 0;
+      right: 0;
+      img{
+        width: 37%;
+      }
+    }
+    .popup-link:focus {
+      outline: none;
+    }
+    .popup-link:hover{
+      opacity: 0.7;
+      cursor: pointer;
+      text-decoration: none;
+      h2{
+        opacity: 0.7;
+        text-decoration: none;
+      }
+    }
+    .btn_play{
+      background: url(/images/play_btn.png) no-repeat center center;
+      height:90px;
+      &:focus {
+        outline: none;
+      }
+    }
+    .btn_play:hover{
+      opacity: 0.7;
+      cursor: pointer;
+      text-decoration: none;
+      h2{
+        opacity: 0.7;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+
+/*  2nd Section - Features
+ -------------------------------------------------------------------- */
+
+.sec2  {
+  text-align: center;
+  height: 100vh;
+  h1 {
+    font-weight: 300;
+    color: #454545;
+    font-size: 235%;
+    margin-top: 9%;
+  }
+  h2 {
+    font-weight: 600;
+    color: #454545;
+    font-size: 110%; 
+  }
+  h3 {
+    margin: 3% 15% 6% 15%;
+    font-weight: 400;
+    color: #606060;
+    font-size: 110%; 
+  }
+  p {
+    font-weight: 400;
+    color: #606060;
+    font-size: 90%; 
+    padding: 10px 20px 0px 20px;
+  }
+  div#functions {
+    margin: auto;
+    width: 85%;
+  }
+}
+
+
+
+/*   3rd Section - Universities
+ -------------------------------------------------------------------- */
+
+.sec3  {
+  margin: 0 16% 10% 16%;
+  text-align: center;
+  height: 100vh;
+  h1 {
+    font-weight: 300;
+    color: #454545;
+    font-size: 235%; //36px;
+    margin-top: 10%;
+  }
+  img{
+    margin-top: 10%;
+    border: 1px solid #D3D3D3;
+    width: 95%;
+    display:inline-block;
+    float:none;
+  }
+}
+
+
+/*  4rd Section - Stats & Testimonies
+ -------------------------------------------------------------------- */
+
+.sec4  {
+  text-align: center;
+  height: 100vh;
+  position: relative;
+  padding: 0;
+  h1 {
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 150%;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    span {
+      margin-left: 7px;
+    }
+  }
+  h2{
+    font-weight: 300;
+    color: #ffffff;
+    font-size: 125%;
+    margin-top: 2px;
+  }
+  h3 {
+   font-weight: 300;
+   color: #454545;
+   font-size: 235%; //36px;
+   margin-top: 3.5%;
+  }
+  p {
+    margin-top: 5px;
+    font-weight: 400;
+    color: #606060;
+    font-size: 90%; //14px
+    text-align: justify;
+  }
+  .row{
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .stats-test-box{
+    position: absolute;
+    bottom: 8%;
+    left: 0;
+    right: 0;
+  }
+  .stats{
+    text-align: center;
+    background: #EA4E59;
+    vertical-align: middle;
+    padding: 3% 0% 1.5% 0%;
+      img{
+        margin-bottom: 9px;
+      }
+  }
+  .statsbox{
+    border: 1px solid #ffffff;
+    padding: 15px 20px 10px 20px;
+    margin: 10px 10px 10px 10px;
+    display:inline-block;
+    float:none;
+    vertical-align: middle;
+    height: 105%;
+  }
+  .testibox{
+    text-align: center;
+    margin: 1% 5% 2.5% 5%;
+  }
+  .leftarrow    {
+    background:url(/images/testimonials_left_arrow.png);
+    background-repeat: no-repeat;
+    width:40px;
+    height:40px;
+    border: 0;
+    display:inline-block;
+    float:none;
+  }
+  .rightarrow    {
+    background:url(/images/testimonials_right_arrow.png);
+    background-repeat: no-repeat;
+    width:40px;
+    height:40px;
+    border: 0;
+    display:inline-block;
+    float:none;
+  }
+  .centercontent{
+    display:inline-block;
+    float:none;
+    vertical-align: middle;
+    img{
+      float: left;
+      width: 15%;
+      margin-right: 20px;
+      margin-bottom: 50px;
+    }
+    .item img {
+      display: inline;
+    }
+  }
+  .carousel-indicators {
+    margin-left: 0;
+    width: 100%;
+    position: initial;
+    .active {
+      background-color: #454545;
+    }
+    li {
+      border: 1px solid #454545;
+      margin-left: 5px;
+    }
+  }
+}
+
+/*  Footer
+ -------------------------------------------------------------------- */
+
+.footerbox{
+  text-align: center;
+  background:#2DAAE1;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  a#terminos_and_policy_btn {
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 13px;
+    margin-right: 30px;
+    cursor: pointer;
+    padding-bottom: 5px;
+  }
+  a#terminos_and_policy_btn:hover {
+   text-decoration: none;
+  }
+  a#icon_btn {
+    padding-right: 10px;
+  }
+}
+.special-footer-case{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.icons-block-inline{
+  display:inline;
+}
+
+/*  Navigation Menu
+-------------------------------------------------------------------- */
+.onepage-pagination li {
+  padding-right: 7px;
+  text-align: center;
+}
+.onepage-pagination li a:before {
+  width: 11px;
+  height: 11px;
+  border: 1px solid #454545;
+  background: rgba(0,0,0,0);
+  border-radius: 50px;
+}
+.onepage-pagination li a.active:before {
+  width: 13px;
+  height: 13px;
+  background: #454545;
+  border: 1px solid black;
+  margin-top: 0px;
+  left: 9px;
+  border-radius: 50px;
+}
+
+/*  Animations
+-------------------------------------------------------------------- */
+
+.fadeInUp-animation, {
+  -webkit-animation-duration: 2s;
+  -webkit-animation-delay: 1s;
+  -moz-animation-duration: 2s;
+  -moz-animation-delay: 1s;
+}
+
+.rotateInDownRight-animation, .rotateInDownLeft-animation, .fadeInDown-animation{
+  -webkit-animation-duration: 1s;
+  -webkit-animation-delay: 1s;
+  -moz-animation-duration: 1s;
+  -moz-animation-delay: 1s;
+}
+
+/*  Sign-in Dialog
+ -------------------------------------------------------------------- */
+
+.dialog-signin{
+  .cont1-singin{
+    text-align:center;
+  }
+  .btn-facebook{
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    border: 1px solid #ffffff;
+    background: #3b5998;
+    padding: 8px 20px 8px 15px;
+    border-radius: 5px;
+  }
+  .btn-signin-uniandes{
+    background-color: #2DAAE1;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    padding: 10px 45px 10px 45px;
+    border-radius: 5px;
+    margin-top: 5px;
+    border: 0px;
+  }
+  .facebook-icon{
+    width: 7%;
+    margin-left: 5px;
+    margin-right: 18px;
+  }
+  .university-logo-singin{
+    width:60%;
+  }
+  .divider{
+    margin:15px auto;
+    overflow:hidden;
+    text-align:center;
+    line-height:1.2em;
+  }
+  .divider:before, .divider:after{
+    content:"";
+    vertical-align:top;
+    display:inline-block;
+    width:40%;
+    height:0.65em;
+    border-bottom:1px solid #ccc;
+    margin:0 2% 0 -55%;
+  }
+  .divider:after{
+    margin:0 -55% 0 2%;
+  }
+  .text-register{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1 {
+    font-weight: 300;
+    color: #454545;
+    font-size: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+  h2{
+    font-weight: 800;
+    color: #ea4e59 ;
+    font-size: 17px;
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  h3 {
+    a{
+      color: #009fda;
+    }
+   font-weight: 400;
+   color: #454545;
+   font-size: 14px;
+   padding-top:10px;
+   display: inline;
+  }
+  h4{
+    font-weight: 800;
+    color: #ea4e59 ;
+    font-size: 16px;
+    margin: 0px 4px 0 4px;
+    display: inline;
+  }
+  h5 {
+    a{
+      color: #454545;
+    }
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+  }
+  h6 {
+   font-weight: 400;
+   color: #454545;
+   font-size: 14px;
+  }
+  input[type="text"], input[type="password"]
+  {
+    background-color:#EDEDED;
+    font-weight: 300;
+    font-size: 13px;
+    color: #454545;
+    height: 40px;
+    border-right: 0px;
+  }
+  label{
+    text-align: left;
+    display:block;
+    font-weight: 400;
+    font-size: 13px;
+    margin-left: 14px;
+  }
+}
+
+
+
+/***********************************************************************
+* Media Queries
+***********************************************************************/
+
+
+/* Phones and small devices (Phones and small tablets, 600px and down)
+-------------------------------------------------------------------------------------------------- */
+@media screen and (max-width: 599px) {
+  body, html {
+    overflow: visible;
+  }
+  .header-index{
+    height: 51px;
+    padding: 12px 5px 15px 12px;
+    img{
+      width: 150px;
+    }
+    .header_buttons{
+      .signin_button{
+        font-size: 11px;
+        padding: 5px 10px 5px 10px;
+        margin-right: 3px;
+      }
+      .language_button{
+        font-size: 11px;
+      }
+      .language_button:hover{
+          font-size: 12px;
+      }
+      .button_highlight{
+      font-size: 12px;
+      font-weight: 700;
+      }
+    }
+  }
+  .sec1  {
+    height: 100%;
+    .sec1-1{
+      margin-top: 20%;
+      margin-bottom: 5%;
+      position: relative;
+       h1 {
+      font-size: 220%; 
+      margin-top: 7%;
+      }
+      p {
+        font-size: 105%;
+        margin: 0 2% 5% 2%;
+      }
+    }
+    .sec1-2  {
+      position: relative;
+      height: 120px;
+      h2 {
+        font-size: 130%;
+        color: #ffffff;
+      }
+      .img-mac{
+        width: 0%;
+      }
+      .video-play{
+        width: 55%;
+        top: 0px;
+        img{
+          width: 60px;
+        }
+      }
+      .btn_play{
+        background:url(/images/play_btn_white.png) no-repeat center center;
+        background-size: 60px;
+        height: 60px;
+      }
+    }
+  }
+  .sec2  {
+    height: 100%;
+    margin-bottom: 4%;
+    h1 {
+      font-size: 240%;
+    }
+    h2 {
+      font-size: 150%;
+    }
+    h3 {
+      margin: 6% 2% 4% 2%;
+      font-size: 118%;
+    }
+    p {
+      font-size: 100%;
+      padding: 0px 0px 5px 0px;
+    }
+    img{
+      width: 95px;
+    }
+    div#functions {
+      width: 100%;
+    }
+  }
+  .sec3  {
+    height: 100%;
+    margin: 0 0% 10% 0%;
+    h1 {
+      font-size: 170%;
+    }
+    img{
+      margin-top: 6%;
+      width: 230px;
+    }
+    .col-xs-6{
+      width: 100%;
+    }
+  }
+  .sec4  {
+    height: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    .stats-test-box{
+      position: relative;
+      margin-bottom: 6%;
+    }
+    .special-footer-case{
+      position: relative;
+    }
+    .stats {
+      img{
+        width: 35px;
+      }
+      .people-stats-icon{
+        width: 65px;
+      }
+      .academical-stats-icon{
+        width: 130px;
+        margin-top: -4%;
+      }
+      .col-xs-3 {
+        width: 55%;
+      }
+    }
+    .statsbox{
+      margin: 10px 5px 10px 5px;
+      padding: 10px 5px 5px 5px;
+      min-height: 0px;
+    }
+    .testi{
+      padding-left: 0px;
+      padding-right: 0px
+    }
+    .testibox{
+      margin: 2% 0% 2% 0%;
+    }
+    .centercontent{
+      img{
+        width: 90px;
+        float: none;
+        margin-bottom: 0px;
+        margin-right: 0px;
+      }
+      .leftarrow, .rightarrow{
+        width: 20px;
+      }
+      .rightarrow{
+        float: right;
+      }
+    }
+    h1 {
+      font-size: 195%;
+    }
+    h2{
+      font-size: 165%;
+    }
+    h3 {
+      font-size: 240%;
+      margin-top: 10%;
+      margin-bottom: 3%;
+    }
+    p {
+      font-size: 120%;
+      text-align: center;
+    }
+  }
+  .footerbox a#terminos_and_policy_btn {
+      margin-bottom: 5px;
+      margin-right: 10px;
+      margin-left: 10px;
+      display: inline-block;
+  }
+  .icons-block-inline{
+      display: block;
+      img{
+          width: 30px;
+      }
+  }
+  .modal-dialog{
+      max-width: 283px;
+      margin-left: auto;
+      margin-right: auto;
+   }
+  .dialog-signin{
+    .col-xs-6{
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .btn-facebook{
+      font-size: 13px;
+      padding: 8px 10px 8px 10px;
+    }
+    .divider{
+      margin:10px auto;
+    }
+    .btn-signin-uniandes{
+      font-size: 13px;
+      padding: 10px 20px 10px 20px;
+    }
+    h3 {
+      font-size: 12px;
+    }
+    h5 {
+      font-size: 14px;
+    }
+    input[type="text"], input[type="password"]
+    {
+      font-size: 12px;
+      height: 37px;
+    }
+    label{
+      font-size: 12px;
+    }
+  }
+}
+
+/* Tables and Medium devices (Tables and small desktops, 1100px and down until 600px)
+-------------------------------------------------------------------------------------------------- */
+
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+
+  body, html {
+    overflow: visible;
+  }
+  .header-index{
+    img{
+      width: 200px;
+      margin-left: -4.5%;
+    }
+    .header_buttons{
+      .signin_button{
+        font-size: 14px;
+        padding: 8px 20px 8px 20px;
+      }
+      .language_button{
+        font-size: 12px;
+      }
+      .language_button:hover{
+        font-size: 13px;
+      }
+      .button_highlight{
+        font-size: 13px;
+        font-weight: 700;
+      }
+    }
+  }
+  .sec1  {
+    height: 100%;
+    .sec1-1{
+      position: relative;
+      h1 {
+        font-size: 300%;
+        margin-top: 7%;
+      }
+      p {
+        font-size: 150%;
+        margin: 0 5% 5% 5%;
+      }
+    }
+    .sec1-2  {
+      position: relative;
+      h2 {
+        font-size: 160%;
+      }
+      .img-mac{
+        width: 75%;
+      }
+      .video-play{
+        width: 26%;
+        img{
+          width: 37%;
+        }
+      }
+      .btn_play{
+        background-size: 70px;
+        height: 70px;
+      }
+    }
+  }
+  .sec2  {
+    height: 100%;
+    h1 {
+      font-size: 35px;
+    }
+    h2 {
+      font-size: 17px;
+    }
+    h3 {
+      margin: 4% 5% 4% 5%;
+      font-size: 17px;
+    }
+    p {
+      font-size: 13px;
+      padding: 0px 20px 5px 20px;
+    }
+    img{
+      width: 120px;
+    }
+  }
+  .sec3  {
+    height: 100%;
+    margin: 0 0% 10% 0%;
+    h1 {
+      font-size: 245%;
+    }
+    img{
+      max-width: 315px;
+    }
+  }
+  .sec4  {
+    height: 100%;
+    .stats-test-box{
+      position: relative;
+    }
+    .special-footer-case{
+      position: relative;
+    }
+    .stats
+    {
+      img{
+       width: 23%
+      }
+      .people-stats-icon{
+       width: 40%
+      }
+      .academical-stats-icon{
+        width: 75%
+      }
+    }
+    .statsbox{
+      margin:0px 5px 5px 5px;
+      padding: 15px 0px 10px 0px;
+      min-height: 150px;
+    }
+    .testi{
+      padding-left: 0px;
+      padding-right: 0px
+    }
+    .testibox{
+      margin: 2% 0% 2% 0%;
+    }
+    .centercontent{
+      img{
+        width: 75px;
+        margin-bottom: 40px;
+        margin-top: 10px;
+      }
+    }
+    h1 {
+      font-size: 22px;
+    }
+    h2{
+      font-size: 18px;
+    }
+    h3 {
+     font-size: 35px;
+     margin-top: 5%;
+     margin-bottom: 3%;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
+
+/* Large devices (large desktops, 1500px and up)
+-------------------------------------------------------------------------------------------------- */
+
+@media screen and (min-width: 1500px){
+  .header-index{
+    img{
+      width: 275px;
+    }
+    .header_buttons{
+      .signin_button{
+        font-size: 20px;
+      }
+      .language_button{
+        font-size: 18px;
+      }
+      .language_button:hover{
+          font-size: 19px;
+      }
+      .button_highlight{
+        font-size: 19px;
+        font-weight: 700;
+      }
+    }
+  }
+  .sec1  {
+    .sec1-1{
+      h1 {
+      font-size: 390%;
+      }
+      p {
+        font-size: 180%;
+        margin: 2% 10%;
+      }
+    }
+    .sec1-2{
+      h2 {
+        font-size: 200%;
+      }
+    }
+  }
+  .sec2  {
+    h1 {
+      font-size: 380%;
+    }
+    h2 {
+      font-size: 150%; //18px
+    }
+    h3 {
+      margin: 4% 15% 7% 15%;
+      font-size: 160%;
+    }
+    p {
+      font-size: 120%; //14px
+      padding: 10px 20px 0px 20px;
+    }
+    img{
+      width: 75%
+    }
+  }
+  .sec3  {
+    h1 {
+      font-size: 380%;
+    }
+  }
+  .sec4  {
+    h1 {
+      font-size: 210%; //25px;
+    }
+    h2{
+      font-size: 180%;//20px;
+    }
+    h3 {
+     font-size: 380%; //36px;
+     margin-top: 5%;
+     margin-bottom: 3%
+    }
+    p {
+      font-size: 120%; //14px
+    }
+  }
+  .footerbox {
+    padding: 30px 0;
+    a#terminos_and_policy_btn {
+      font-size: 21px;
+    }
+  }
+}
+
+
