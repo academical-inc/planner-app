@@ -136,7 +136,7 @@ gulp.task 'fetch-school', ->
       json: true
       qs: {camelize: true}
       headers:
-        "Authorization": "Bearer #{auth["TOKEN"]}"
+        "Authorization": "Bearer #{auth[env.APP_ENV]}"
     request.get options, (error, response, body)->
       if error?
         throw error
