@@ -1,6 +1,7 @@
 
-Store = require './Store'
-I18n  = require '../utils/I18n'
+Store   = require './Store'
+Bugnsag = require '../utils/Bugsnag'
+I18n    = require '../utils/I18n'
 
 # Private
 _code = null
@@ -42,12 +43,17 @@ class ErrorStore extends Store
               _msg = I18n.t "errors.notAuthorized"
             else if code >= 400 and code < 500
               _msg = I18n.t "errors.clientError", errMsg: error.message
+
+            if code >= 500
+              Bugsnag.notify error, error.type, {}, "error"
+            else
+              Bugsnag.notify error, error.type
           else
-            # TODO Unknown error
+            Bugsnag.notify error
       else
         _msg = error.message
+        Bugsnag.notify error, "CustomError", {}, "info"
 
-      # TODO Log errors to server or tool
       @emitChange()
 
 

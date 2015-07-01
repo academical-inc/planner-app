@@ -10,6 +10,7 @@ class Env
   @AUTH0_CLIENT_ID:  process.env.AUTH0_CLIENT_ID
   @GOOGLE_API_KEY:   process.env.GOOGLE_API_KEY
   @FB_APP_ID:        process.env.FB_APP_ID
+  @BUGSNAG_API_KEY:  process.env.BUGSNAG_API_KEY
   @SCHOOL:           process.env.SCHOOL
 
 

@@ -34,6 +34,8 @@ env.APP_ENV = if $.util.env.dev is true
   "development"
 else if $.util.env.test is true
   "test"
+else if $.util.env.staging is true
+  "staging"
 else
   "production"
 config =

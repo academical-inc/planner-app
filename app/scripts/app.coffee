@@ -6,6 +6,7 @@ AppActions.initSchool school
 
 # Require Modules
 _           = require './utils/Utils'
+Bugsnag     = require './utils/Bugsnag'
 Router      = require './utils/Router'
 I18n        = require './utils/I18n'
 ApiUtils    = require './utils/ApiUtils'
@@ -17,6 +18,7 @@ AuthError   = require './errors/AuthError'
 require './initializers/bootstrap'
 
 # Init modules
+Bugsnag.init()
 Router.init()
 ApiUtils.init()
 I18n.init if _.qs("lang")? then _.qs("lang") else school.locale
@@ -40,6 +42,7 @@ defRoute '/', ->
       goTo Pages.LANDING, error: e.message
     else
       # TODO - FIX THIS SHIT
+      Bugsnag.notify e
       console.error e
       goTo Pages.ERROR, msg: e.message
 
