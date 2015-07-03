@@ -10,17 +10,18 @@ PlannerDispatcher = require '../dispatcher/PlannerDispatcher'
 # Private
 search = _.debounce (
   (query)->
-    PlannerDispatcher.dispatchViewAction
-      type: ActionTypes.SEARCH
-      query: query
-
-    SearchUtils.search query, ActionUtils.handleServerResponse(
-      ActionTypes.SEARCH_SUCCESS
-      ActionTypes.SEARCH_FAIL
-      (response)->
+    if query?
+      PlannerDispatcher.dispatchViewAction
+        type: ActionTypes.SEARCH
         query: query
-        results: response
-    )
+
+      SearchUtils.search query, ActionUtils.handleServerResponse(
+        ActionTypes.SEARCH_SUCCESS
+        ActionTypes.SEARCH_FAIL
+        (response)->
+          query: query
+          results: response
+      )
     return
   ), DebounceRates.SEARCH_RATE
 
@@ -33,6 +34,7 @@ class SearchActions
 
   @clearSearch: ->
     SearchUtils.clearSearch()
+    @search null
     PlannerDispatcher.dispatchViewAction
       type: ActionTypes.CLEAR_SEARCH
 

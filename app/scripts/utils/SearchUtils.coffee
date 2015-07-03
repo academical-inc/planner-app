@@ -68,7 +68,10 @@ _engine = new Bloodhound
 class SearchUtils
 
   @search: (query, cb)->
-    _engine.search query, sync(query, cb), async(query, cb)
+    if query?
+      _engine.search query, sync(query, cb), async(query, cb)
+    else
+      cb([])
 
   @clearSearch: ->
     _q = null
