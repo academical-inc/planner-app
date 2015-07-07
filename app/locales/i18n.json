@@ -68,6 +68,7 @@
     "section": {
       "seats": "Seats: {{seats}}",
       "seatsTT": "Seats available",
+      "demandTT": "Estimated demand",
       "info": "{{credits}} credits - Section {{number}} - {{id}}",
       "noTeacher": "No teacher assigned yet",
       "noDepartment": "Unknown department"
@@ -255,6 +256,7 @@
     "section": {
       "seats": "Cupos: {{seats}}",
       "seatsTT": "Cupos disponibles",
+      "demandTT": "Demanda estimada",
       "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
       "noTeacher": "Aún no hay profesor asignado",
       "noDepartment": "Programa desconocido"

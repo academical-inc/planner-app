@@ -1,9 +1,11 @@
 
 React        = require 'react'
+_            = require '../utils/Utils'
 I18nMixin    = require '../mixins/I18nMixin'
 IconMixin    = require '../mixins/IconMixin'
 ItemMixin    = require '../mixins/ItemMixin'
 SectionUtils = require '../utils/SectionUtils'
+SchoolStore  = require '../stores/SchoolStore'
 AppActions   = require '../actions/AppActions'
 ColorPalette = React.createFactory require './ColorPalette'
 R            = React.DOM
@@ -13,6 +15,10 @@ SectionItem = React.createClass(
 
   mixins: [I18nMixin, IconMixin, ItemMixin]
 
+  infoFields: (key)->
+    @fields ?= SchoolStore.school().appUi.infoFields
+    @fields[key]
+
   handleColorSelect: (color)->
     section  = @props.item
     AppActions.changeSectionColor section.id, color
@@ -20,7 +26,7 @@ SectionItem = React.createClass(
   componentDidMount: ->
     $(@refs.seatsIndicator.getDOMNode()).tooltip
       placement: "top"
-      title: @t "section.seatsTT"
+      title: @t "section.#{@infoFields("seats")["nameKey"]}"
 
   render: ->
     section        = @props.item
@@ -57,7 +63,7 @@ SectionItem = React.createClass(
           R.span
             className: "label-seats label-seats-#{seatsClass}"
             ref: "seatsIndicator"
-            section.seats.available
+            _.getNested section, @infoFields("seats")["value"]
           @renderSettings()
       R.div
         className: "panel-collapse collapse"
