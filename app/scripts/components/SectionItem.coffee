@@ -15,18 +15,17 @@ SectionItem = React.createClass(
 
   mixins: [I18nMixin, IconMixin, ItemMixin]
 
-  infoFields: (key)->
-    @fields ?= SchoolStore.school().appUi.infoFields
-    @fields[key]
+  fieldFor: SectionUtils.fieldFor
 
   handleColorSelect: (color)->
     section  = @props.item
     AppActions.changeSectionColor section.id, color
 
   componentDidMount: ->
+    school = SchoolStore.school().nickname
     $(@refs.seatsIndicator.getDOMNode()).tooltip
       placement: "top"
-      title: @t "section.#{@infoFields("seats")["nameKey"]}"
+      title: @t "section.seatsTT.#{school}"
 
   render: ->
     school         = SchoolStore.school().nickname
@@ -36,14 +35,8 @@ SectionItem = React.createClass(
     colorPaletteId = "section-colors-#{section.id}"
     seatsClass     = SectionUtils.seatsColorClass section
     colorStyle     = borderColor: @props.color
-    teacherNames   = if section.teacherNames.length > 0
-      section.teacherNames.join ", "
-    else
-      @t "section.noTeacher"
-    department = if section.departments.length > 0
-      section.departments[0].name
-    else
-      @t "section.noDepartment"
+    teacherNames   = SectionUtils.teacherNames(section)
+    department     = SectionUtils.department(section)
 
     R.div className: "pla-section-item pla-item panel panel-default",
       R.div
@@ -64,7 +57,7 @@ SectionItem = React.createClass(
           R.span
             className: "label-seats label-seats-#{seatsClass}"
             ref: "seatsIndicator"
-            _.getNested section, @infoFields("seats")["value"]
+            _.getNested section, @fieldFor("seats")
           @renderSettings()
       R.div
         className: "panel-collapse collapse"
@@ -74,7 +67,10 @@ SectionItem = React.createClass(
         "aria-labelledby": headingId
         R.ul className: "list-group",
           R.li className: "list-group-item list-group-item-#{seatsClass} seats",
-            @t("section.seats", seats: section.seats.available)
+            @t(
+              "section.seats.#{school}"
+              seats: _.getNested(section,@fieldFor("seats"))
+            )
           R.li className: "list-group-item teachers",
             teacherNames
           R.li className: "list-group-item",

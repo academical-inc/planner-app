@@ -72,9 +72,14 @@
       "createEvent": "Create new event"
     },
     "section": {
-      "seats": "Seats: {{seats}}",
-      "seatsTT": "Seats available",
-      "demandTT": "Estimated demand",
+      "seats": {
+        "uniandes": "Seats: {{seats}}",
+        "cesa": "Demand: {{seats}}"
+      },
+      "seatsTT": {
+        "uniandes": "Seats available",
+        "cesa": "Estimated demand"
+      },
       "info": {
         "uniandes": "{{credits}} credits - Section {{number}} - {{id}}",
         "cesa": "{{credits}} credits - Session {{number}} - {{id}}"
@@ -269,9 +274,14 @@
       "createEvent": "Crear nuevo evento"
     },
     "section": {
-      "seats": "Cupos: {{seats}}",
-      "seatsTT": "Cupos disponibles",
-      "demandTT": "Demanda estimada",
+      "seats": {
+        "uniandes": "Cupos: {{seats}}",
+        "cesa": "Demanda: {{seats}}"
+      },
+      "seatsTT": {
+        "uniandes": "Cupos disponibles",
+        "cesa": "Demanda estimada"
+      },
       "info": {
         "uniandes": "{{credits}} créditos - Sección {{number}} - {{id}}",
         "cesa": "{{credits}} créditos - Sesión {{number}} - {{id}}"
