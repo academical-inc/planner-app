@@ -29,6 +29,7 @@ SectionItem = React.createClass(
       title: @t "section.#{@infoFields("seats")["nameKey"]}"
 
   render: ->
+    school         = SchoolStore.school().nickname
     section        = @props.item
     headingId      = "section-heading-#{section.id}"
     contentId      = "section-info-#{section.id}"
@@ -77,7 +78,7 @@ SectionItem = React.createClass(
           R.li className: "list-group-item teachers",
             teacherNames
           R.li className: "list-group-item",
-            @t("section.info", credits: section.credits,\
+            @t("section.info.#{school}", credits: section.credits,\
               number: section.sectionNumber, id: section.sectionId)
           R.li className: "list-group-item clearfix",
             R.span null, department
