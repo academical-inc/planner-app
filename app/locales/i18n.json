@@ -122,6 +122,9 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "messageDialog": {
+      "header": "Info:"
+    },
     "loginDialog": {
       "header": "Log in",
       "loading": "Logging in",
@@ -142,6 +145,13 @@
     "duplicateSchedule": "Add to my schedules",
     "loginToDuplicate": "Log in to Academical",
     "landing": {
+      "dialogMessage": [
+        "Hola!",
+        "En el momento Academical no tiene la oferta de cursos del 2015-2. La universidad está terminando de definirla para que puedas planear y registrar tu horario.",
+        "La universidad te avisará cuando tenga la oferta oficial.",
+        "Cualquier inquietud no dudes en decirnos que para eso estamos!",
+        "Equipo Academical"
+      ],
       "section1": {
         "title": "YOUR CLASS SCHEDULE",
         "titleStrong": " EASY AND FAST",
@@ -325,6 +335,9 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "messageDialog": {
+      "header": "Info:"
+    },
     "loginDialog": {
       "header": "Ingresa",
       "loading": "Ingresando",
@@ -345,6 +358,13 @@
     "duplicateSchedule": "Agregar a mis Horarios",
     "loginToDuplicate": "Ingresa a Academical",
     "landing": {
+      "dialogMessage": [
+        "Hola!",
+        "En el momento Academical no tiene la oferta de cursos del 2015-2. La universidad está terminando de definirla para que puedas planear y registrar tu horario.",
+        "La universidad te avisará cuando tenga la oferta oficial.",
+        "Cualquier inquietud no dudes en decirnos que para eso estamos!",
+        "Equipo Academical"
+      ],
       "section1": {
         "title": "TU HORARIO DE CLASES",
         "titleStrong": " FÁCIL Y RÁPIDO",

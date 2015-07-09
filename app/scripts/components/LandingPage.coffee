@@ -4,6 +4,7 @@ I18nMixin     = require '../mixins/I18nMixin'
 {UiConstants} = require '../constants/PlannerConstants'
 LoginDialog   = React.createFactory require './LoginDialog'
 ErrorDialog   = React.createFactory require './ErrorDialog'
+MessageDialog = React.createFactory require './MessageDialog'
 R             = React.DOM
 
 
@@ -12,9 +13,10 @@ LandingPage = React.createClass(
   mixins: [I18nMixin]
 
   openLogin: ->
-    @refs.loginDialog.show()
+    @refs.messageDialog.show()
 
   componentDidMount: ->
+    @refs.messageDialog.show()
     @refs.errorDialog.show() if @props.error?
     $(@refs.videoLink.getDOMNode()).magnificPopup type: 'iframe'
     $(@refs.videoBtn.getDOMNode()).magnificPopup type: 'iframe'
@@ -120,6 +122,7 @@ LandingPage = React.createClass(
       }, React.createElement('img', src: '/images/github_logo.png'))))))))
       LoginDialog ref: "loginDialog"
       ErrorDialog ref: "errorDialog", error: @props.error
+      MessageDialog ref: "messageDialog", message: @t("landing.dialogMessage")
 
 )
 

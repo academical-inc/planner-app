@@ -34,6 +34,7 @@ defRoute '/', ->
   try
     initialScheduleId = _.qs('open-schedule') if _.qs('open-schedule')
     if UserStore.isLoggedIn()
+      AppActions.logout()
       goTo Pages.APP, ui: school.appUi, initialScheduleId: initialScheduleId
     else
       goTo Pages.LANDING
@@ -47,6 +48,8 @@ defRoute '/', ->
       goTo Pages.ERROR, msg: e.message
 
 defRoute '/schedules/:scheduleId', (ctx)->
+  if UserStore.isLoggedIn()
+    AppActions.logout()
   goTo Pages.SINGLE_SCHEDULE, scheduleId: ctx.params.scheduleId
 
 Router.route()
