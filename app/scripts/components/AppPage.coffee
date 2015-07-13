@@ -11,7 +11,8 @@ AppModals       = React.createFactory require './AppModals'
 AppHeader       = React.createFactory require './AppHeader'
 R               = React.DOM
 
-{POLL_INTERVAL} = require '../constants/PlannerConstants'
+{AuthConstants: {TOKEN_EXPIRATION_MS},
+POLL_INTERVAL}  = require '../constants/PlannerConstants'
 
 
 # Private
@@ -24,6 +25,7 @@ _initSchedules = _.debounce(
     _interval = setInterval(
       AppActions.updateSchedules.bind(AppActions,userId), POLL_INTERVAL
     )
+    setTimeout (->clearInterval(_interval)), TOKEN_EXPIRATION_MS
     return
   , 0
 )

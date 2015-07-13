@@ -3,6 +3,7 @@ React        = require 'react'
 _            = require '../utils/Utils'
 I18nMixin    = require '../mixins/I18nMixin'
 SectionUtils = require '../utils/SectionUtils'
+SchoolStore  = require '../stores/SchoolStore'
 AppActions   = require '../actions/AppActions'
 R            = React.DOM
 
@@ -10,6 +11,8 @@ R            = React.DOM
 ResultItem = React.createClass(
 
   mixins: [I18nMixin]
+
+  fieldFor: SectionUtils.fieldFor
 
   getDefaultProps: ->
     query: ""
@@ -38,16 +41,11 @@ ResultItem = React.createClass(
 
   # TODO Test
   render: ->
-    section = @props.section
-    colorClass = SectionUtils.seatsColorClass section
-    teacherNames = if section.teacherNames.length > 0
-      section.teacherNames.join ", "
-    else
-      @t "section.noTeacher"
-    department = if section.departments.length > 0
-      section.departments[0].name
-    else
-      @t "section.noDepartment"
+    school       = SchoolStore.school().nickname
+    section      = @props.section
+    colorClass   = SectionUtils.seatsColorClass section
+    teacherNames = SectionUtils.teacherNames(section)
+    department   = SectionUtils.department(section)
 
     R.div
       className: 'pla-result-item'
@@ -60,7 +58,10 @@ ResultItem = React.createClass(
       R.div null,
         @highlight department
         R.span className: "label label-#{colorClass}",
-          @t "section.seats", seats: section.seats.available
+          @t(
+            "section.seats.#{school}"
+            seats: _.getNested section, @fieldFor("seats")
+          )
       R.div null,
         @highlight teacherNames
 

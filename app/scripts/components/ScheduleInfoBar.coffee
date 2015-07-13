@@ -1,6 +1,7 @@
 
 React         = require 'react'
 AppActions    = require '../actions/AppActions'
+SchoolStore   = require '../stores/SchoolStore'
 SectionStore  = require '../stores/SectionStore'
 ColorStore    = require '../stores/SectionColorStore'
 EventStore    = require '../stores/EventStore'
@@ -38,12 +39,13 @@ ScheduleInfoBar = React.createClass(
     @setState @getState()
 
   render: ->
+    school = SchoolStore.school().nickname
     R.div className: "pla-schedule-info-bar",
       PanelItemList
         itemType: SectionItem
         header: @t "sidebar.sectionsHeader"
         subheader: @t(
-          "sidebar.sectionsHeaderInfo"
+          "sidebar.sectionsHeaderInfo.#{school}"
           sections: @state.totalSections
           credits: @state.totalCredits
         )

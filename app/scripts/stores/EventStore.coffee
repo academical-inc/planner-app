@@ -27,6 +27,11 @@ cleanScheduleEvents = (scheduleId)->
 updateTime = (date, time)->
   DateUtils.setTimeAndFormat date, time, SchoolStore.school().utcOffset
 
+updateDate = (date, dayDelta, time)->
+  date = updateTime date, time
+  date = DateUtils.setDate date, dayDelta: dayDelta
+  date.format()
+
 updateDays = (event, dayDelta)->
   event.recurrence.daysOfWeek = event.recurrence.daysOfWeek.map (day)->
     dayNo = DateUtils.getDayNo day
@@ -49,8 +54,8 @@ updateEvent = (event)->
   if old?
     _toRevert[old.id] = $.extend true, {}, old
     old.dirtyUpdate = true
-    old.startDt = updateTime old.startDt, event.startDt
-    old.endDt   = updateTime old.endDt, event.endDt
+    old.startDt = updateDate old.startDt, event.dayDelta, event.startDt
+    old.endDt   = updateDate old.endDt, event.dayDelta, event.endDt
     repeatUntil = updateTime old.recurrence.repeatUntil, event.startDt
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta

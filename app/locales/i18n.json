@@ -49,7 +49,10 @@
       "logout": "Log Out"
     },
     "searchBar": {
-      "placeholder": "Search Course Sections",
+      "placeholder": {
+        "uniandes": "Search Course Sections",
+        "cesa": "Search Course Sessions"
+      },
       "applyFilters": "Apply",
       "filters": "Filter: ",
       "filtering": "Filtering ",
@@ -58,7 +61,10 @@
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
-      "sectionsHeaderInfo": "Sections: {{sections}} - Credits: {{credits}}",
+      "sectionsHeaderInfo": {
+        "uniandes": "Sections: {{sections}} - Credits: {{credits}}",
+        "cesa": "Sessions: {{sections}} - Credits: {{credits}}"
+      },
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
@@ -66,9 +72,18 @@
       "createEvent": "Create new event"
     },
     "section": {
-      "seats": "Seats: {{seats}}",
-      "seatsTT": "Seats available",
-      "info": "{{credits}} credits - Section {{number}} - {{id}}",
+      "seats": {
+        "uniandes": "Seats: {{seats}}",
+        "cesa": "Demand: {{seats}}"
+      },
+      "seatsTT": {
+        "uniandes": "Seats available",
+        "cesa": "Estimated demand"
+      },
+      "info": {
+        "uniandes": "{{credits}} credits - Section {{number}} - {{id}}",
+        "cesa": "{{credits}} credits - Session {{number}} - {{id}}"
+      },
       "noTeacher": "No teacher assigned yet",
       "noDepartment": "Unknown department"
     },
@@ -121,6 +136,7 @@
       "facebook": "Log In with Facebook",
       "google": "Log In with Google"
     },
+    "in": "in",
     "empty": "N/A",
     "copyOf": "Copy of {{name}}",
     "duplicateSchedule": "Add to my schedules",
@@ -236,7 +252,10 @@
       "logout": "Salir"
     },
     "searchBar": {
-      "placeholder": "Busca Secciones",
+      "placeholder": {
+        "uniandes": "Busca Secciones",
+        "cesa": "Busca Sesiones"
+      },
       "applyFilters": "Aplicar",
       "filters": "Filtrar: ",
       "filtering": "Filtrando ",
@@ -245,7 +264,10 @@
     },
     "sidebar": {
       "sectionsHeader": "Mis Cursos",
-      "sectionsHeaderInfo": "Secciones: {{sections}} - Créditos: {{credits}}",
+      "sectionsHeaderInfo": {
+        "uniandes": "Secciones: {{sections}} - Créditos: {{credits}}",
+        "cesa": "Sesiones: {{sections}} - Créditos: {{credits}}"
+      },
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"
@@ -253,9 +275,18 @@
       "createEvent": "Crear nuevo evento"
     },
     "section": {
-      "seats": "Cupos: {{seats}}",
-      "seatsTT": "Cupos disponibles",
-      "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
+      "seats": {
+        "uniandes": "Cupos: {{seats}}",
+        "cesa": "Demanda: {{seats}}"
+      },
+      "seatsTT": {
+        "uniandes": "Cupos disponibles",
+        "cesa": "Demanda estimada"
+      },
+      "info": {
+        "uniandes": "{{credits}} créditos - Sección {{number}} - {{id}}",
+        "cesa": "{{credits}} créditos - Sesión {{number}} - {{id}}"
+      },
       "noTeacher": "Aún no hay profesor asignado",
       "noDepartment": "Programa desconocido"
     },
@@ -308,6 +339,7 @@
       "facebook": "Ingresa con Facebook",
       "google": "Ingresa con Google"
     },
+    "in": "en",
     "empty": "N/A",
     "copyOf": "Copia de {{name}}",
     "duplicateSchedule": "Agregar a mis Horarios",

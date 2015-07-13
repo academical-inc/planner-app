@@ -173,6 +173,10 @@ WeekCalendar = React.createClass(
       else if event.isEvent and not(event.del is true)
         icon.on "click", @removeEvent.bind(@, event.id)
       jqElement.find('.fc-time').append icon
+      if !!event.location
+        loc = "#{@t('in')} #{event.location}"
+        jqElement.find('.fc-title').append $('<br/><br/>')
+        jqElement.find('.fc-title').append loc
     jqElement
 
   render: ->
