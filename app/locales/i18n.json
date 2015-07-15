@@ -123,7 +123,7 @@
       "header": "Error!"
     },
     "messageDialog": {
-      "header": "Info:"
+      "header": "Important!"
     },
     "loginDialog": {
       "header": "Log in",
@@ -147,8 +147,8 @@
     "landing": {
       "dialogMessage": [
         "Hola!",
-        "En el momento Academical no tiene la oferta de cursos del 2015-2. La universidad está terminando de definirla para que puedas planear y registrar tu horario.",
-        "La universidad te avisará cuando tenga la oferta oficial.",
+        "Ya tenemos la oferta de cursos del 2015-2 del cesa para que planees tu horario.",
+        "La oferta de cursos y su información puede cambiar, por tal razón sugerimos que antes de registrar sus clases vuelvan y revisen por el sistema \"Alas\"de la universidad.",
         "Cualquier inquietud no dudes en decirnos que para eso estamos!",
         "Equipo Academical"
       ],
@@ -336,7 +336,7 @@
       "header": "Error!"
     },
     "messageDialog": {
-      "header": "Info:"
+      "header": "Importante!"
     },
     "loginDialog": {
       "header": "Ingresa",
@@ -360,8 +360,8 @@
     "landing": {
       "dialogMessage": [
         "Hola!",
-        "En el momento Academical no tiene la oferta de cursos del 2015-2. La universidad está terminando de definirla para que puedas planear y registrar tu horario.",
-        "La universidad te avisará cuando tenga la oferta oficial.",
+        "Ya tenemos la oferta de cursos del 2015-2 del cesa para que planees tu horario.",
+        "La oferta de cursos y su información puede cambiar, por tal razón sugerimos que antes de registrar sus clases vuelvan y revisen por el sistema \"Alas\"de la universidad.",
         "Cualquier inquietud no dudes en decirnos que para eso estamos!",
         "Equipo Academical"
       ],
