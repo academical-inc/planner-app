@@ -125,7 +125,11 @@ s3WebUpdate = ()->
 
 
 # Tasks
-gulp.task 'fetch-school', ->
+gulp.task 'clear-school', ->
+  delete env.SCHOOL
+  jf.writeFileSync './.env.json', env
+
+gulp.task 'fetch-school', ['clear-school'], (cb)->
   nickname = config.school
   $.util.log "School: ", $.util.colors.cyan("#{nickname}")
 
@@ -145,10 +149,9 @@ gulp.task 'fetch-school', ->
       else
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
-
-gulp.task 'clear-school', ->
-  delete env.SCHOOL
-  jf.writeFileSync './.env.json', env
+        cb()
+  else
+    cb()
 
 gulp.task 'clean', (cb)->
   del base.dist, cb
