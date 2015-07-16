@@ -253,6 +253,17 @@ gulp.task 'build', (cb)->
 gulp.task 'serve', ['build'], ->
   gulp.start 'watch'
 
+gulp.task 'deploy', ['build'], (cb)->
+  name  = require('./.dsnames.json')[config.school]
+  spawn = require('child_process').spawn
+  divshot = spawn 'divshot', ['push', env.APP_ENV, '--app', name]
+  divshot.stdout.on 'data', (data)->
+    $.util.log data
+  divshot.stderr.on 'data', (data)->
+    $.util.log "Error: " + data
+  divshot.on 'close', (code)->
+    cb()
+
 gulp.task 'deploy-aws', ['build'], ->
   opts =
     Bucket: config.domain
