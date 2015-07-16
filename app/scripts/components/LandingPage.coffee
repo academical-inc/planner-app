@@ -7,16 +7,21 @@ ErrorDialog   = React.createFactory require './ErrorDialog'
 MessageDialog = React.createFactory require './MessageDialog'
 R             = React.DOM
 
+{CLOSED}      = require '../Env'
+
 
 LandingPage = React.createClass(
 
   mixins: [I18nMixin]
 
   openLogin: ->
-    @refs.messageDialog.show()
+    if CLOSED
+      @refs.messageDialog.show()
+    else
+      @refs.loginDialog.show()
 
   componentDidMount: ->
-    @refs.messageDialog.show()
+    @refs.messageDialog.show() if CLOSED
     @refs.errorDialog.show() if @props.error?
     $(@refs.videoLink.getDOMNode()).magnificPopup type: 'iframe'
     $(@refs.videoBtn.getDOMNode()).magnificPopup type: 'iframe'
