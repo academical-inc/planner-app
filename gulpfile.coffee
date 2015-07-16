@@ -38,6 +38,9 @@ else if $.util.env.staging is true
   "staging"
 else
   "production"
+
+env[env.APP_ENV].CLOSED = $.util.env.close
+
 config =
   production: env.APP_ENV is "production"
   school: $.util.env.school
