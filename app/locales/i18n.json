@@ -122,6 +122,9 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "messageDialog": {
+      "header": "Important!"
+    },
     "loginDialog": {
       "header": "Log in",
       "loading": "Logging in",
@@ -142,6 +145,13 @@
     "duplicateSchedule": "Add to my schedules",
     "loginToDuplicate": "Log in to Academical",
     "landing": {
+      "dialogMessage": [
+        "Hola!",
+        "Ya tenemos la oferta de cursos del 2015-2 del cesa para que planees tu horario.",
+        "La oferta de cursos y su información puede cambiar, por tal razón sugerimos que antes de registrar sus clases vuelvan y revisen por el sistema \"Alas\"de la universidad.",
+        "Cualquier inquietud no dudes en decirnos que para eso estamos!",
+        "Equipo Academical"
+      ],
       "section1": {
         "title": "YOUR CLASS SCHEDULE",
         "titleStrong": " EASY AND FAST",
@@ -325,6 +335,9 @@
     "errorDialog": {
       "header": "Error!"
     },
+    "messageDialog": {
+      "header": "Importante!"
+    },
     "loginDialog": {
       "header": "Ingresa",
       "loading": "Ingresando",
@@ -345,6 +358,13 @@
     "duplicateSchedule": "Agregar a mis Horarios",
     "loginToDuplicate": "Ingresa a Academical",
     "landing": {
+      "dialogMessage": [
+        "Hola!",
+        "Ya tenemos la oferta de cursos del 2015-2 del cesa para que planees tu horario.",
+        "La oferta de cursos y su información puede cambiar, por tal razón sugerimos que antes de registrar sus clases vuelvan y revisen por el sistema \"Alas\"de la universidad.",
+        "Cualquier inquietud no dudes en decirnos que para eso estamos!",
+        "Equipo Academical"
+      ],
       "section1": {
         "title": "TU HORARIO DE CLASES",
         "titleStrong": " FÁCIL Y RÁPIDO",
