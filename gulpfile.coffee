@@ -124,6 +124,7 @@ gulp.task 'clear-school', ->
   delete env.SCHOOL
   jf.writeFileSync './.env.json', env
 
+# TODO remove clear-school
 gulp.task 'fetch-school', ['clear-school'], (cb)->
   nickname = config.school
   $.util.log "School: ", $.util.colors.cyan("#{nickname}")
@@ -144,9 +145,6 @@ gulp.task 'fetch-school', ['clear-school'], (cb)->
       else
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
-        cb()
-  else
-    cb()
 
 gulp.task 'clean', (cb)->
   del base.dist, cb
