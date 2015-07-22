@@ -258,9 +258,9 @@ gulp.task 'deploy', ['build'], (cb)->
   spawn = require('child_process').spawn
   divshot = spawn 'divshot', ['push', env.APP_ENV, '--app', name]
   divshot.stdout.on 'data', (data)->
-    $.util.log data
+    $.util.log data.toString()
   divshot.stderr.on 'data', (data)->
-    $.util.log "Error: " + data
+    $.util.log "Error: " + data.toString()
   divshot.on 'close', (code)->
     cb()
 

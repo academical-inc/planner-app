@@ -1,6 +1,7 @@
 
 React           = require 'react'
 _               = require '../utils/Utils'
+PollUtils       = require '../utils/PollUtils'
 StoreMixin      = require '../mixins/StoreMixin'
 UserStore       = require '../stores/UserStore'
 AppActions      = require '../actions/AppActions'
@@ -16,20 +17,13 @@ POLL_INTERVAL}  = require '../constants/PlannerConstants'
 
 
 # Private
-# TODO Test
-# OK because POLL_INTERVAL will always be sufficiently big
-_interval = null
 _initSchedules = _.debounce(
   (userId, initialScheduleId)->
     AppActions.getSchedules userId, initialScheduleId
-    _interval = setInterval(
-      AppActions.updateSchedules.bind(AppActions,userId), POLL_INTERVAL
-    )
-    setTimeout (->clearInterval(_interval)), TOKEN_EXPIRATION_MS
+    PollUtils.poll userId
     return
   , 0
 )
-
 
 # TODO Test
 AppPage = React.createClass(
@@ -46,7 +40,7 @@ AppPage = React.createClass(
     if UserStore.user()?
       @setState @getState()
     else
-      clearInterval _interval
+      PollUtils.clear()
 
   componentDidMount: ->
     if @state.userId?

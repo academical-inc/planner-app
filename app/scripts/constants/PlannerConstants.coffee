@@ -83,8 +83,8 @@ module.exports =
     TOKEN_STORAGE: "academical:auth0-token"
     USER_STORAGE: "academical:user"
     AUTH0_SCOPE: "openid name email picture app_metadata"
-    TOKEN_EXPIRTATION: 600  # minutes
-    TOKEN_EXPIRATION_MS: 36000000 # milliseconds
+    TOKEN_EXPIRTATION: 540  # 9 hours in minutes
+    TOKEN_EXPIRATION_MS: 32400000  # 9 hours in milliseconds
     Providers: {
       WAAD: "waad"
     }
