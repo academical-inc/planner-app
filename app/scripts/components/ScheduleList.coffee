@@ -46,6 +46,8 @@ ScheduleList = React.createClass(
     ScheduleStore.addChangeListener @onChange
     if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
+        navbar:
+          add: false
         dragOpen:
           open: true
       )
@@ -54,7 +56,7 @@ ScheduleList = React.createClass(
   componentWillUnmount: ->
     ScheduleStore.removeChangeListener @onChange
 
-  render: ->
+  renderDropdown: ->
     Dropdown(
       id: UiConstants.ids.SCHEDULE_LIST
       className: 'pla-schedule-list'
@@ -70,6 +72,23 @@ ScheduleList = React.createClass(
       handleItemSelected: @openSchedule
       handleItemDelete: @deleteSchedule
     )
+
+  renderList: ->
+    R.div id: UiConstants.ids.SCHEDULE_LIST,
+      R.ul null,
+        @state.schedules.map (sch, i)=>
+          R.li
+            key: "sch-#{i}"
+            onClick: =>
+              @openSchedule id: sch.id, val: sch.name
+              $(@getDOMNode()).data("mmenu").close()
+            R.a href: UiConstants.selectors.SCHEDULE_LIST, sch.name
+
+  render: ->
+    if not MediaQueries.matchesMDAndUp()
+      @renderList()
+    else
+      @renderDropdown()
 
 )
 
