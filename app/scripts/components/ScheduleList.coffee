@@ -4,7 +4,9 @@ $             = require 'jquery'
 MediaQueries  = require '../utils/MediaQueries.coffee'
 IconMixin     = require '../mixins/IconMixin'
 I18nMixin     = require '../mixins/I18nMixin'
+StoreMixin    = require '../mixins/StoreMixin'
 ScheduleStore = require '../stores/ScheduleStore'
+UiStore       = require '../stores/UiStore'
 AppActions    = require '../actions/AppActions'
 Dropdown      = React.createFactory require './Dropdown'
 ScheduleItem  = React.createFactory require './ScheduleItem'
@@ -17,12 +19,21 @@ R             = React.DOM
 
 ScheduleList = React.createClass(
 
-  mixins: [IconMixin, I18nMixin]
+  mixins: [IconMixin, I18nMixin, StoreMixin(
+    {store: ScheduleStore, handler: 'onChange'}
+    {store: UiStore, handler: 'onUiChange'}
+  )]
 
   getState: ->
     current = ScheduleStore.current()
     current: if current? then current.name else @renderSpinner()
     schedules: ScheduleStore.all()
+
+  onUiChange: ->
+    if UiStore.scheduleList()
+      @refs.dropdown.toggleDropdown()
+    else
+      @refs.dropdown.closeDropdown()
 
   onChange: (state=@getState())->
     @setState state
@@ -43,7 +54,6 @@ ScheduleList = React.createClass(
     @getState()
 
   componentDidMount: ->
-    ScheduleStore.addChangeListener @onChange
     if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
         dragOpen:
@@ -51,12 +61,10 @@ ScheduleList = React.createClass(
       )
     return
 
-  componentWillUnmount: ->
-    ScheduleStore.removeChangeListener @onChange
-
   render: ->
     Dropdown(
       id: UiConstants.ids.SCHEDULE_LIST
+      ref: 'dropdown'
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
       title: @state.current
