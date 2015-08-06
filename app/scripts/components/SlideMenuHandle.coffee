@@ -8,18 +8,18 @@ R             = React.DOM
 SlideMenuHandle = React.createClass(
 
   handleClick: (e)->
-    $(UiConstants.selectors.SCHEDULE_LIST).trigger "open.mm"
+    $(UiConstants.selectors.SCHEDULE_LIST).data("mmenu").open()
 
   render: ->
     classes = Classnames({
-      'pla-slide-menu-handle'
-      'hidden-md'
-      'hidden-lg'
       'fa'
       'fa-th-list'
       'fa-2x'
     })
-    R.i className: classes, onClick: @handleClick
+    R.div
+      className: 'pla-slide-menu-handle hidden-md hidden-lg',
+      onClick: @handleClick
+      R.i className: classes
 
 )
 
