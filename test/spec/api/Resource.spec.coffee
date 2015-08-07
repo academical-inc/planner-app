@@ -78,31 +78,31 @@ describe 'Resource', ->
 
       it 'returns correct request data when not wrapped in "data" key', ->
         result  = Resource._formatRequestData "post", @reqData
-        expect(result).toEqual data: {field_one: 1, field_two: 2}, camelize: true
+        expect(result).toEqual data: {field_one: 1, field_two: 2}
 
       it 'returns correct request data when wrapped in "data" key', ->
         result  = Resource._formatRequestData "post", data: @reqData
-        expect(result).toEqual data: {field_one: 1, field_two: 2}, camelize: true
+        expect(result).toEqual data: {field_one: 1, field_two: 2}
 
       it 'includes provided "params" outside of "data" key wrap', ->
         result  = Resource._formatRequestData "post", data: @reqData, params:g:5
         expect(result).toEqual
-          data: {field_one: 1, field_two: 2}, camelize: true, g: 5
+          data: {field_one: 1, field_two: 2}, g: 5
 
     it 'returns correct request data (as is) when GETing', ->
       result  = Resource._formatRequestData "get", @reqData
-      expect(result).toEqual field_one: 1, field_two: 2, camelize: true
+      expect(result).toEqual field_one: 1, field_two: 2
 
     it 'returns correct request data with additional params', ->
       @reqData.params = g: 5
       result  = Resource._formatRequestData "get", @reqData
-      expect(result).toEqual field_one: 1, field_two: 2, camelize: true, g: 5
+      expect(result).toEqual field_one: 1, field_two: 2,  g: 5
 
     it 'returns correct request data when no data given', ->
       result  = Resource._formatRequestData "get"
-      expect(result).toEqual camelize: true
+      expect(result).toEqual {}
       result  = Resource._formatRequestData "post"
-      expect(result).toEqual camelize: true
+      expect(result).toEqual {}
 
 
   describe '.createApiCall', ->

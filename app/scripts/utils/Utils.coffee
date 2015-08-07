@@ -1,5 +1,17 @@
 BrowserUtils = require './BrowserUtils'
 
+transformKeys = (obj, func)->
+  return null if not obj?
+  if Array.isArray obj
+    obj.map (el)-> transformKeys el, func
+  else if typeof obj == 'object'
+    resObj = {}
+    for key of obj
+      resObj[func(key)] = transformKeys obj[key], func
+    resObj
+  else
+    obj
+
 class Utils
 
   @find: (arr, test)->
@@ -79,15 +91,6 @@ class Utils
       indices.push result.index
     indices
 
-  # TODO Test
-  # https://github.com/domchristie/humps/blob/master/humps.js#L49
-  @camelize: (str)->
-    str = str.replace /[\-_\s]+(.)?/g, (match, chr)->
-      if chr then chr.toUpperCase() else ''
-    # Ensure 1st char is always lowercase
-    str.replace /^([A-Z])/, (match, chr)->
-      if chr then chr.toLowerCase() else ''
-
   # http://davidwalsh.name/javascript-debounce-function
   @debounce: (func, wait, immediate) ->
     timeout = undefined
@@ -109,6 +112,19 @@ class Utils
       return
 
   # TODO Test
+  # https://github.com/domchristie/humps/blob/master/humps.js#L49
+  @camelized: (str)->
+    str = str.replace /[\-_\s]+(.)?/g, (match, chr)->
+      if chr then chr.toUpperCase() else ''
+    # Ensure 1st char is always lowercase
+    str.replace /^([A-Z])/, (match, chr)->
+      if chr then chr.toLowerCase() else ''
+
+  # TODO Test
+  @camelizedKeys: (obj)->
+    transformKeys obj, @camelized
+
+  # TODO Test
   # https://github.com/epeli/underscore.string
   @underscored: (str)->
     str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').\
@@ -116,15 +132,7 @@ class Utils
 
   # TODO Test
   @underscoredKeys: (obj)->
-    if Array.isArray obj
-      obj.map (el)=> @underscoredKeys el
-    else if typeof obj == 'object'
-      undObj = {}
-      for key of obj
-        undObj[@underscored(key)] = @underscoredKeys obj[key]
-      undObj
-    else
-      obj
+    transformKeys obj, @underscored
 
 Utils = $.extend {}, Utils, BrowserUtils
 module.exports = Utils
