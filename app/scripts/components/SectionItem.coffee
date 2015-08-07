@@ -15,8 +15,6 @@ SectionItem = React.createClass(
 
   mixins: [I18nMixin, IconMixin, ItemMixin]
 
-  fieldFor: SectionUtils.fieldFor
-
   handleColorSelect: (color)->
     section  = @props.item
     AppActions.changeSectionColor section.id, color
@@ -57,7 +55,7 @@ SectionItem = React.createClass(
           R.span
             className: "label-seats label-seats-#{seatsClass}"
             ref: "seatsIndicator"
-            _.getNested section, @fieldFor("seats")
+            _.getNested section, SectionUtils.fieldFor("seats")
           @renderSettings()
       R.div
         className: "panel-collapse collapse"
@@ -69,7 +67,7 @@ SectionItem = React.createClass(
           R.li className: "list-group-item list-group-item-#{seatsClass} seats",
             @t(
               "section.seats.#{school}"
-              seats: _.getNested(section,@fieldFor("seats"))
+              seats: _.getNested(section,SectionUtils.fieldFor("seats"))
             )
           R.li className: "list-group-item teachers",
             teacherNames

@@ -15,13 +15,6 @@ describe 'ScheduleItem', ->
         onClick: @clickHandler
         handleItemDelete: @deleteHandler
 
-    it 'renders properties correctly', ->
-      item = H.render ScheduleItem, @props
-      anchor = H.findWithTag item, "a"
-
-      expect(item.props.onClick).toEqual @props.onClick
-      expect(anchor.props.children[0]).toEqual @props.item.name
-
     it 'renders spinner when item (schedule) is for delete', ->
       @props.item.del = true
       item = H.render ScheduleItem, @props
