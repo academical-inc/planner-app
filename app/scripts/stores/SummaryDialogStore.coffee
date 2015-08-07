@@ -10,7 +10,7 @@ fields = ->
   fds = SchoolStore.school().appUi.summaryFields
   fds.map (f)->
     if typeof f.field is 'string'
-      _.camelize f.field
+      _.camelized f.field
     else
       f.field
 
@@ -25,7 +25,7 @@ class SummaryDialogStore extends Store
     sections.map (section)->
       fds.map (f)->
         if f.list?
-          val = _.getNested section, _.camelize(f.list)
+          val = _.getNested section, _.camelized(f.list)
           res = val.map (el)-> el[f.field]
           res.join ", "
         else
