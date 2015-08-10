@@ -25,17 +25,17 @@ areOverlapping = (ev1, ev2)->
 
 anyOverlapping = (prevEvents, allSectionEvents)->
   prevEvents.forEach (prevEv)->
-    prevEv.event.isOverlapping = false
+    prevEv.isOverlapping = false
     allSectionEvents.forEach (secEv)->
-      if areOverlapping prevEv.event, secEv.event
-        prevEv.event.isOverlapping = true
+      if areOverlapping prevEv, secEv
+        prevEv.isOverlapping = true
         _isOverlapping = true
   prevEvents
 
 previewEvents = (section)->
-  prevEvents = EventUtils.getSectionEvents [section]
+  section.expanded ?= EventUtils.expandEvents section, section.events
   sectionEvents = SectionStore.sectionEvents()
-  anyOverlapping prevEvents, sectionEvents
+  anyOverlapping section.expanded, sectionEvents
 
 addPreview = (previewType, section)->
   _previews[previewType].section = section

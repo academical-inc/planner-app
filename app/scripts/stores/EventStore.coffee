@@ -13,6 +13,16 @@ DateUtils        = require '../utils/DateUtils'
 _         = new ChildStoreHelper(ScheduleStore, 'events')
 _toRevert = {}
 
+expandEvent = (ev)->
+  ev.expanded = EventUtils.expandEvents ev, [ev] if not ev.expanded?
+
+expandCurrent = ->
+  _.currentElements.forEach expandEvent
+
+setCurrent = ->
+  _.setCurrent()
+  expandCurrent()
+
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
   events = events.filter (ev)-> not(ev.dirtyAdd is true)
@@ -46,12 +56,13 @@ updateDays = (event, dayDelta)->
 
 addEvent = (event)->
   event.dirtyAdd = true
-  EventUtils.expandEventThruWeek event
+  event.expanded = EventUtils.expandThruWeek event
   _.addElement event
 
 updateEvent = (event)->
   [old, idx] = _.findElement event.id
   if old?
+    delete old.expanded
     _toRevert[old.id] = $.extend true, {}, old
     old.dirtyUpdate = true
     old.startDt = updateDate old.startDt, event.dayDelta, event.startDt
@@ -59,9 +70,7 @@ updateEvent = (event)->
     repeatUntil = updateTime old.recurrence.repeatUntil, event.startDt
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta
-    EventUtils.expandEventThruWeek old,
-      startDt: event.startDt
-      endDt: event.endDt
+    old.expanded = EventUtils.expandThruWeek old
 
 removeEvent = (eventId)->
   [ev, i] = _.findElement eventId
@@ -72,6 +81,7 @@ changeColor = (eventId, color)->
   event.color = color if event?
 
 
+# TODO Test Event expansion
 class EventStore extends Store
 
   events: (id)->
@@ -84,7 +94,7 @@ class EventStore extends Store
     @events(id).filter (ev)-> not(ev.del is true)
 
   expandedEvents: (id)->
-    EventUtils.getScheduleEvents @events(id)
+    EventUtils.concatExpandedEvents @events(id)
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -92,22 +102,22 @@ class EventStore extends Store
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
         _.wait()
-        _.setCurrent()
+        setCurrent()
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         _.wait()
         _.initElementsMap action.schedules
-        _.setCurrent()
+        setCurrent()
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _.wait()
         _.updateSchedule action.schedule
-        _.setCurrent()
+        setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         _.wait()
         _.removeSchedule action.scheduleId
-        _.setCurrent()
+        setCurrent()
         @emitChange()
       when ActionTypes.ADD_EVENT
         addEvent action.event
@@ -125,13 +135,13 @@ class EventStore extends Store
         _.wait()
         _.updateSchedule action.schedule
         if ScheduleStore.current().id == action.schedule.id
-          _.setCurrent()
+          setCurrent()
           @emitChange()
       when ActionTypes.SAVE_SCHEDULE_FAIL
         _.wait()
         cleanScheduleEvents action.scheduleId
         if ScheduleStore.current().id == action.scheduleId
-          _.setCurrent()
+          setCurrent()
           @emitChange()
 
 
