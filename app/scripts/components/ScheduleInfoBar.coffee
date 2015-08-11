@@ -42,6 +42,7 @@ ScheduleInfoBar = React.createClass(
     school = SchoolStore.school().nickname
     R.div className: "pla-schedule-info-bar",
       PanelItemList
+        className: "pla-section-list"
         itemType: SectionItem
         header: @t "sidebar.sectionsHeader"
         subheader: @t(
@@ -53,6 +54,7 @@ ScheduleInfoBar = React.createClass(
         items: @state.sections
         colors: @state.sectionColors
       PanelItemList
+        className: "pla-event-list"
         itemType: EventItem
         header: @t "sidebar.eventsHeader"
         handleItemAdd: @handleEventAdd

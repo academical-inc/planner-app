@@ -2,6 +2,7 @@
 React           = require 'react'
 _               = require '../utils/Utils'
 PollUtils       = require '../utils/PollUtils'
+Tutorial        = require '../utils/Tutorial'
 StoreMixin      = require '../mixins/StoreMixin'
 UserStore       = require '../stores/UserStore'
 AppActions      = require '../actions/AppActions'
@@ -17,10 +18,11 @@ POLL_INTERVAL}  = require '../constants/PlannerConstants'
 
 
 # Private
-_initSchedules = _.debounce(
+_init = _.debounce(
   (userId, initialScheduleId)->
     AppActions.getSchedules userId, initialScheduleId
     PollUtils.poll userId
+    Tutorial.init()
     return
   , 0
 )
@@ -44,13 +46,13 @@ AppPage = React.createClass(
 
   componentDidMount: ->
     if @state.userId?
-      _initSchedules @state.userId, @props.initialScheduleId
+      _init @state.userId, @props.initialScheduleId
     else
       AppActions.fetchUser UserStore.user()
 
   componentWillUpdate: (nextProps, nextState)->
     if not @state.userId? and nextState.userId?
-      _initSchedules nextState.userId, @props.initialScheduleId
+      _init nextState.userId, @props.initialScheduleId
 
   render: ->
     if @state.userId?
