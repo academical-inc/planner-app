@@ -104,6 +104,72 @@
       "untilDate": "Pick a date",
       "addEvent": "Add Event"
     },
+    "tutorial": {
+      "start": "Start",
+      "finish": "End",
+      "next": "Next",
+      "prev": "Prev",
+      "try": "Try it!",
+      "welcome": {
+        "header": "Welcome!",
+        "content": [
+          "This is the new Academical! Now plan your schedules even faster and easier than before.",
+          "Follow this simple tutorial to get to know the app."
+        ]
+      },
+      "schedules": {
+        "header": "Schedules",
+        "content": [
+          "Open, create, edit and delete schedules here. You can create up to 7!"
+        ]
+      },
+      "options": {
+        "header": "Options",
+        "content": [
+          "You can do stuff with your schedule here like duplicate it, get a summary or export it!"
+        ]
+      },
+      "search": {
+        "header": "Search and Filters",
+        "content": [
+          "Start to type the name of a class, teacher or course code to search for classes",
+          "Use the filters to search classes under specific criteria."
+        ]
+      },
+      "results": {
+        "header": "Results",
+        "content": [
+          "Navigate the results using your mouse or kerboard arrows.",
+          "Add a class by clicking it or pressing Enter. You can also select corequisites."
+        ]
+      },
+      "sections": {
+        "header": "Class Information",
+        "content": [
+          "Click a class to display detailed information.",
+          "You can also change its color or delete it from your schedule."
+        ]
+      },
+      "events": {
+        "header": "Events",
+        "content": [
+          "Click here or on the calendar to add events."
+        ]
+      },
+      "calendar": {
+        "header": "Tu Calendario",
+        "content": [
+          "Use these buttons to visualize your classess and events week to week."
+        ]
+      },
+      "end": {
+        "header": "Now, get to planning!",
+        "content": [
+          "That's it!",
+          "Oh! We almost forgot. Now you can check your schedules from a phone or tablet!"
+        ]
+      }
+    },
     "dialogs": {
       "ok": "OK",
       "save": "Save",
@@ -316,6 +382,72 @@
       "or": "Ó",
       "untilDate": "Elige una fecha",
       "addEvent": "Agregar Evento"
+    },
+    "tutorial": {
+      "start": "Iniciar",
+      "finish": "Terminar",
+      "next": "Siguiente",
+      "prev": "Atrás",
+      "try": "Inténtalo!",
+      "welcome": {
+        "header": "Bienvenido!",
+        "content": [
+          "Esta es la nueva versión de Academical! Ahora planea tus horarios de clase más fácil y rápido!",
+          "Sigue este tutorial para conocer mejor la aplicación."
+        ]
+      },
+      "schedules": {
+        "header": "Horarios",
+        "content": [
+          "Abre, crea, edita y elimina horarios aquí. Puedes crear hasta 7!"
+        ]
+      },
+      "options": {
+        "header": "Opciones",
+        "content": [
+          "Aquí puedes hacer cosas con tu horario como duplicarlo, ver su resumen o exportarlo!"
+        ]
+      },
+      "search": {
+        "header": "Búsqueda y Filtros",
+        "content": [
+          "Empieza a escribir el nombre de un curso, profesor o código para buscar clases.",
+          "Usa los filtros para buscar cursos bajo un criterio específico."
+        ]
+      },
+      "results": {
+        "header": "Resultados",
+        "content": [
+          "Navega los resultados utilizando el mouse o las flechas del teclado.",
+          "Agrega un curso haciendo click u oprimiendo Enter. También puedes seleccionar complementarias."
+        ]
+      },
+      "sections": {
+        "header": "Información de cursos",
+        "content": [
+          "Haz click en un curso para ver su información detallada.",
+          "También puedes cambiar el color o eliminar cursos."
+        ]
+      },
+      "events": {
+        "header": "Eventos",
+        "content": [
+          "Haz click aquí o sobre cualquier bloque en el calendario para agregar eventos."
+        ]
+      },
+      "calendar": {
+        "header": "Tu Calendario",
+        "content": [
+          "Utiliza estos botones para ver como tus eventos y clases cambian semana a semana."
+        ]
+      },
+      "end": {
+        "header": "A planear tu horario!",
+        "content": [
+          "Listo, eso es todo!",
+          "Ah! Casi se nos olvida. Ahora puedes consultar tus horarios desde tu celular y/o tableta!"
+        ]
+      }
     },
     "dialogs": {
       "ok": "OK",

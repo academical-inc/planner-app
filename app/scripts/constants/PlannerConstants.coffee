@@ -54,6 +54,8 @@ module.exports =
     "CLEAR_SEARCH"
     "TOGGLE_FILTER"
     "MAX_SCHEDULES_FAIL"
+    "TOGGLE_SCHEDULE_LIST"
+    "TOGGLE_OPTIONS_MENU"
   }
   PreviewTypes: {
     "PRIMARY"
