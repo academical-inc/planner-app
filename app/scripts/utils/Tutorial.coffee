@@ -63,107 +63,110 @@ goToSections = ->
 hideResults = ->
   Tutorial.hide 4
 
-_tutorial = new Tour
-  container: '.pla-content'
-  storage: false if Env.APP_ENV is "development"
-  template: renderTemplate()
-  onEnd: ->
-    ScheduleStore.removeChangeListener Tutorial.start
-    SearchStore.removeChangeListener goToResults
-    PreviewStore.removeChangeListener hideResults
-    SectionStore.removeChangeListener goToSections
-    return
-  steps: [
-    {
-      orphan: true
-      template: renderTemplate nextTxt: I18n.t("tutorial.start")
-      title: I18n.t "tutorial.welcome.header"
-      content: renderContent I18n.t("tutorial.welcome.content")
-    }
-    {
-      reflex: true
-      animation: false
-      element: '.pla-schedule-item:first-child'
-      title: I18n.t "tutorial.schedules.header"
-      content: renderContent I18n.t("tutorial.schedules.content")
-      onShow: ->
-        AppActions.toggleScheduleList()
-      onNext: ->
-        AppActions.toggleScheduleList()
-    }
-    {
-      reflex: true
-      animation: false
-      element: '.pla-options-item:first-child'
-      title: I18n.t "tutorial.options.header"
-      content: renderContent I18n.t("tutorial.options.content")
-      onShow: ->
-        AppActions.toggleOptionsMenu()
-      onNext: ->
-        AppActions.toggleOptionsMenu()
-    }
-    {
-      reflex: true
-      animation: false
-      element: '.pla-search-filters-trigger'
-      template: renderTemplate nextBtn: false, nextTxt: I18n.t("tutorial.try")
-      title: I18n.t "tutorial.search.header"
-      content: renderContent I18n.t("tutorial.search.content")
-      onShown: ->
-        $('.search-input>input').focus()
-        $('.pla-tutorial.step-3 .btn-success').on 'click', -> Tutorial.hide()
-    }
-    {
-      reflex: true
-      animation: false
-      element: '.result:first-child'
-      template: renderTemplate nextBtn: false, nextTxt: I18n.t("tutorial.try")
-      title: I18n.t "tutorial.results.header"
-      content: renderContent I18n.t("tutorial.results.content")
-      onShown: ->
-        $('.pla-tutorial.step-4 .btn-success').on 'click', -> Tutorial.hide()
-    }
-    {
-      reflex: true
-      animation: false
-      element: '.pla-section-list .panel-group'
-      title: I18n.t "tutorial.sections.header"
-      content: renderContent I18n.t("tutorial.sections.content")
-      onShown: ->
-        $('.pla-section-item:first-child .collapse').collapse 'toggle'
-    }
-    {
-      reflex: true
-      animation: false
-      element: '.pla-event-list .add-item-bar span'
-      title: I18n.t "tutorial.events.header"
-      content: renderContent I18n.t("tutorial.events.content")
-    }
-    {
-      reflex: true
-      animation: false
-      placement: 'bottom'
-      element: '.pla-week-control'
-      title: I18n.t "tutorial.calendar.header"
-      content: renderContent I18n.t("tutorial.calendar.content")
-    }
-    {
-      orphan: true
-      template: renderTemplate nextTxt: I18n.t("tutorial.finish")
-      title: I18n.t "tutorial.end.header"
-      content: renderContent I18n.t("tutorial.end.content")
-    }
-  ]
+
+_tutorial = null
+_steps = [
+  {
+    orphan: true
+    template: renderTemplate nextTxt: I18n.t("tutorial.start")
+    title: I18n.t "tutorial.welcome.header"
+    content: renderContent I18n.t("tutorial.welcome.content")
+  }
+  {
+    reflex: true
+    animation: false
+    element: '.pla-schedule-item:first-child'
+    title: I18n.t "tutorial.schedules.header"
+    content: renderContent I18n.t("tutorial.schedules.content")
+    onShow: ->
+      AppActions.toggleScheduleList()
+    onNext: ->
+      AppActions.toggleScheduleList()
+  }
+  {
+    reflex: true
+    animation: false
+    element: '.pla-options-item:first-child'
+    title: I18n.t "tutorial.options.header"
+    content: renderContent I18n.t("tutorial.options.content")
+    onShow: ->
+      AppActions.toggleOptionsMenu()
+    onNext: ->
+      AppActions.toggleOptionsMenu()
+  }
+  {
+    reflex: true
+    animation: false
+    element: '.pla-search-filters-trigger'
+    template: renderTemplate nextBtn: false, nextTxt: I18n.t("tutorial.try")
+    title: I18n.t "tutorial.search.header"
+    content: renderContent I18n.t("tutorial.search.content")
+    onShown: ->
+      $('.search-input>input').focus()
+      $('.pla-tutorial.step-3 .btn-success').on 'click', -> Tutorial.hide()
+      SearchStore.addChangeListener goToResults
+  }
+  {
+    reflex: true
+    animation: false
+    element: '.result:first-child'
+    template: renderTemplate nextBtn: false, nextTxt: I18n.t("tutorial.try")
+    title: I18n.t "tutorial.results.header"
+    content: renderContent I18n.t("tutorial.results.content")
+    onShown: ->
+      $('.pla-tutorial.step-4 .btn-success').on 'click', -> Tutorial.hide()
+      PreviewStore.addChangeListener hideResults
+      SectionStore.addChangeListener goToSections
+  }
+  {
+    reflex: true
+    animation: false
+    element: '.pla-section-list .panel-group'
+    title: I18n.t "tutorial.sections.header"
+    content: renderContent I18n.t("tutorial.sections.content")
+    onShown: ->
+      $('.pla-section-item:first-child .collapse').collapse 'toggle'
+  }
+  {
+    reflex: true
+    animation: false
+    element: '.pla-event-list .add-item-bar span'
+    title: I18n.t "tutorial.events.header"
+    content: renderContent I18n.t("tutorial.events.content")
+  }
+  {
+    reflex: true
+    animation: false
+    placement: 'bottom'
+    element: '.pla-week-control'
+    title: I18n.t "tutorial.calendar.header"
+    content: renderContent I18n.t("tutorial.calendar.content")
+  }
+  {
+    orphan: true
+    template: renderTemplate nextTxt: I18n.t("tutorial.finish")
+    title: I18n.t "tutorial.end.header"
+    content: renderContent I18n.t("tutorial.end.content")
+  }
+]
 
 # TODO Test
 class Tutorial
 
-  @init: ->
+  @init: (userId)->
+    _tutorial = new Tour
+      name: "tutorial-#{userId}"
+      container: '.pla-content'
+      template: renderTemplate()
+      steps: _steps
+      onEnd: ->
+        ScheduleStore.removeChangeListener Tutorial.start
+        SearchStore.removeChangeListener goToResults
+        PreviewStore.removeChangeListener hideResults
+        SectionStore.removeChangeListener goToSections
+        return
     _tutorial.init()
     ScheduleStore.addChangeListener @start
-    SearchStore.addChangeListener goToResults
-    PreviewStore.addChangeListener hideResults
-    SectionStore.addChangeListener goToSections
 
   @goTo: (step)->
     _tutorial.goTo step
@@ -173,9 +176,11 @@ class Tutorial
     selector += ".step-#{step}" if step?
     $(selector).popover("hide")
 
-  @start: ->
-    if ScheduleStore.all().length > 0
+  @start: =>
+    sch = ScheduleStore.all()[0]
+    if sch? and sch.sections.length is 0
       _tutorial.start()
+    ScheduleStore.removeChangeListener Tutorial.start
 
 
 module.exports = Tutorial
