@@ -22,7 +22,7 @@ _init = _.debounce(
   (userId, initialScheduleId)->
     AppActions.getSchedules userId, initialScheduleId
     PollUtils.poll userId
-    Tutorial.init()
+    Tutorial.init userId
     return
   , 0
 )
