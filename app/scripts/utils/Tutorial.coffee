@@ -2,7 +2,6 @@
 $             = require 'jquery'
 React         = require 'react'
 Tour          = require 'bootstrap-tour'
-Env           = require '../Env'
 I18n          = require '../utils/I18n'
 ScheduleStore = require '../stores/ScheduleStore'
 SearchStore   = require '../stores/SearchStore'
@@ -180,7 +179,7 @@ class Tutorial
     sch = ScheduleStore.all()[0]
     if sch? and sch.sections.length is 0
       _tutorial.start()
-    ScheduleStore.removeChangeListener Tutorial.start
+    ScheduleStore.removeChangeListener @start
 
 
 module.exports = Tutorial
