@@ -7,6 +7,7 @@ sections   = Humps.camelizeKeys require '../../fixtures/sections.json'
 
 
 describe 'EventUtils', ->
+  # TODO
 
   beforeEach ->
     @util = EventUtils
@@ -25,7 +26,11 @@ describe 'EventUtils', ->
     ]
     @expandExp = [{id:"e1",n:"ex1"},{id:"e1",n:"ex2"},{id:"e2",n:"ex3"}]
 
-  describe '.concatExpandedEvents', ->
+  describe '.expandEvents', ->
+    # TODO
+
+  xdescribe '.concatExpandedEvents', ->
+    # TODO Write according to new definition
 
     beforeEach ->
       @evFactory = H.spy "evFactory", retVal: (parent,e)->e
@@ -73,73 +78,20 @@ describe 'EventUtils', ->
         res = @util.concatExpandedEvents @events.mixed
         expect(res).toEqual @expandExp[0..1].concat [{id: "e2"}]
 
-
-  describe '.getScheduleEvents', ->
-
-    it 'returns correct expanded events with ref to parent', ->
-      events = @util.getScheduleEvents @events.expanded
-      expect(events.length).toEqual 3
-      events[0..1].forEach (ev, idx)=>
-        expect(ev.parent).toEqual @events.expanded[0]
-        expect(ev.ev).toEqual @expandExp[idx]
-      expect(events[2].parent).toEqual @events.expanded[1]
-      expect(events[2].ev).toEqual @expandExp[2]
-
-
-  describe '.getSectionEvents', ->
-
-    it 'returns correct events when 1 section with only 1 recurring event', ->
-      events = @util.getSectionEvents [sections[0]]
-      expect(events.length).toEqual sections[0].events[0].expanded.length
-      events.forEach (event, i)=>
-        expect(event.event).toEqual sections[0].events[0].expanded[i]
-        expect(event.section).toEqual sections[0]
-
-    it 'returns correct events when 1 section with > 1 recurring event', ->
-      events = @util.getSectionEvents [sections[1]]
-      expect(events.length).toEqual 6
-      events.forEach (event, i)=>
-        if i is 0 or i is 1
-          expect(event.event).toEqual sections[1].events[0].expanded[i]
-        else if i is 2 or i is 3
-          expect(event.event).toEqual sections[1].events[1].expanded[i-2]
-        else
-          expect(event.event).toEqual sections[1].events[2].expanded[i-4]
-        expect(event.section).toEqual sections[1]
-
-    it 'returns correct events when many sections provided', ->
-      events = @util.getSectionEvents sections
-      firstLength = sections[0].events[0].expanded.length
-      expect(events.length).toEqual firstLength + 6
-      for event, i in events[0...firstLength]
-        expect(event.event).toEqual sections[0].events[0].expanded[i]
-        expect(event.section).toEqual sections[0]
-
-      for event, i in events[firstLength...firstLength+6]
-        if i is 0 or i is 1
-          expect(event.event).toEqual sections[1].events[0].expanded[i]
-        else if i is 2 or i is 3
-          expect(event.event).toEqual sections[1].events[1].expanded[i-2]
-        else
-          expect(event.event).toEqual sections[1].events[2].expanded[i-4]
-        expect(event.section).toEqual sections[1]
-
-
-  describe '.expandEventThruWeek', ->
+  describe '.expandThruWeek', ->
 
     it 'expands event and transforms utc', ->
       ev =
         name: "Event 1"
-        startDt: "2015-01-01T08:00:00-05:00"
+        startDt: "2015-01-01T08:00:00-05:00" # Thursday
         endDt:   "2015-01-01T09:00:00-05:00"
         recurrence:
           daysOfWeek: ["MO", "TH"]
-      @util.expandEventThruWeek(ev)
-      expect(ev.expanded.length).toEqual 2
-      expect(ev.expanded[0].startDt).toEqual "2014-12-29T08:00:00-05:00"
-      expect(ev.expanded[0].endDt).toEqual "2014-12-29T09:00:00-05:00"
-      expect(ev.expanded[1].startDt).toEqual "2015-01-01T08:00:00-05:00"
-      expect(ev.expanded[1].endDt).toEqual "2015-01-01T09:00:00-05:00"
+          freq: "WEEKLY"
+      expanded = @util.expandThruWeek(ev)
+      expect(expanded.length).toEqual 3
+      expect(expanded[0].startDt.format()).toEqual "2015-01-01T08:00:00-05:00"
+      expect(expanded[0].endDt.format()).toEqual "2015-01-01T09:00:00-05:00"
 
     it 'does nothing if event does not have recurrence', ->
       ev =
@@ -147,5 +99,6 @@ describe 'EventUtils', ->
         startDt: "2015-01-01T13:00:00-05:00"
         endDt:   "2015-01-01T14:00:00-05:00"
 
-      @util.expandEventThruWeek(ev, -300)
-      expect(ev.expanded).toBeUndefined()
+      expanded = @util.expandThruWeek ev
+      expect(expanded.length).toEqual 1
+      expect(expanded[0]).toEqual ev

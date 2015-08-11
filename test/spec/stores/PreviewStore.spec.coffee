@@ -10,8 +10,8 @@ describe 'PreviewStore', ->
   beforeEach ->
     @assertPreview = (prev, res1, res2, overlap)=>
       expect(@primary()).toEqual prev
-      expect(@primaryEvs()[0].event.isOverlapping).toBe res1
-      expect(@primaryEvs()[1].event.isOverlapping).toBe res2
+      expect(@primaryEvs()[0].isOverlapping).toBe res1
+      expect(@primaryEvs()[1].isOverlapping).toBe res2
       expect(@overlap()).toBe overlap
 
     @primaryType   = "primary"
@@ -29,30 +29,26 @@ describe 'PreviewStore', ->
 
     @sectionEvents = [
       {
-        section: id: "sec1"
-        event:  # Tuesday 10-1120
-          startDt: "2015-01-06T10:00:00-05:00"
-          endDt:   "2015-01-06T11:20:00-05:00"
+        parent: id: "sec1"
+        startDt: "2015-01-06T10:00:00-05:00" # Tuesday 10-1120
+        endDt:   "2015-01-06T11:20:00-05:00"
       }
       {
-        section: id: "sec1"
-        event:  # Thursday 10-1120
-          startDt: "2015-01-08T10:00:00-05:00"
-          endDt:   "2015-01-08T11:20:00-05:00"
+        parent: id: "sec1"
+        startDt: "2015-01-08T10:00:00-05:00" # Thursday 10-1120
+        endDt:   "2015-01-08T11:20:00-05:00"
       }
     ]
     @previewEvents = [
       {
-        section: @primary
-        event:  # Tuesday 1130-1250
-          startDt: "2015-01-06T11:30:00-05:00"
-          endDt:   "2015-01-06T12:50:00-05:00"
+        parent: @primary
+        startDt: "2015-01-06T11:30:00-05:00" # Tuesday 1130-1250
+        endDt:   "2015-01-06T12:50:00-05:00"
       }
       {
-        section: @primary
-        event:  # Thursday 1130-1250
-          startDt: "2015-01-08T11:30:00-05:00"
-          endDt:   "2015-01-08T12:50:00-05:00"
+        parent: @primary
+        startDt: "2015-01-08T11:30:00-05:00" # Thursday 1130-1250
+        endDt:   "2015-01-08T12:50:00-05:00"
       }
     ]
 
@@ -88,7 +84,7 @@ describe 'PreviewStore', ->
       _previews: @previews
       _isOverlapping: false
       "SectionStore.sectionEvents": H.spy "s1", retVal: @sectionEvents
-      "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+      "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       PreviewTypes:
         PRIMARY: @primaryType
         SECONDARY: @secondaryType
@@ -128,50 +124,50 @@ describe 'PreviewStore', ->
       expect(@overlap()).toBe false
 
     it 'adds correctly when one preview event overlaps entirely', ->
-      @previewEvents[0].event.startDt = "2015-01-06T10:00:00-05:00"
-      @previewEvents[0].event.endDt   = "2015-01-06T11:20:00-05:00"
+      @previewEvents[0].startDt = "2015-01-06T10:00:00-05:00"
+      @previewEvents[0].endDt   = "2015-01-06T11:20:00-05:00"
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
       @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when all preview events overlap', ->
-      @previewEvents[0].event.startDt = "2015-01-06T10:00:00-05:00"
-      @previewEvents[0].event.endDt   = "2015-01-06T11:20:00-05:00"
-      @previewEvents[1].event.startDt = "2015-01-06T10:00:00-05:00"
-      @previewEvents[1].event.endDt   = "2015-01-06T11:20:00-05:00"
+      @previewEvents[0].startDt = "2015-01-06T10:00:00-05:00"
+      @previewEvents[0].endDt   = "2015-01-06T11:20:00-05:00"
+      @previewEvents[1].startDt = "2015-01-06T10:00:00-05:00"
+      @previewEvents[1].endDt   = "2015-01-06T11:20:00-05:00"
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
       @assertPreview @primaryPrev, true, true, true
 
     it 'adds correctly when preview event overlaps with start time', ->
-      @previewEvents[0].event.startDt = "2015-01-06T09:00:00-05:00"
-      @previewEvents[0].event.endDt   = "2015-01-06T10:20:00-05:00"
+      @previewEvents[0].startDt = "2015-01-06T09:00:00-05:00"
+      @previewEvents[0].endDt   = "2015-01-06T10:20:00-05:00"
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
       @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when preview event overlaps with end time', ->
-      @previewEvents[0].event.startDt = "2015-01-06T11:00:00-05:00"
-      @previewEvents[0].event.endDt   = "2015-01-06T12:20:00-05:00"
+      @previewEvents[0].startDt = "2015-01-06T11:00:00-05:00"
+      @previewEvents[0].endDt   = "2015-01-06T12:20:00-05:00"
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
       @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when preview event overlaps inside', ->
-      @previewEvents[0].event.startDt = "2015-01-06T10:10:00-05:00"
-      @previewEvents[0].event.endDt   = "2015-01-06T11:00:00-05:00"
+      @previewEvents[0].startDt = "2015-01-06T10:10:00-05:00"
+      @previewEvents[0].endDt   = "2015-01-06T11:00:00-05:00"
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
       @assertPreview @primaryPrev, true, false, true
 
     it 'adds correctly when preview event overlaps outside', ->
-      @previewEvents[0].event.startDt = "2015-01-06T09:50:00-05:00"
-      @previewEvents[0].event.endDt   = "2015-01-06T11:30:00-05:00"
+      @previewEvents[0].startDt = "2015-01-06T09:50:00-05:00"
+      @previewEvents[0].endDt   = "2015-01-06T11:30:00-05:00"
       H.rewire PreviewStore,
         "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
