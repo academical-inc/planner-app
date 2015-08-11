@@ -124,3 +124,10 @@ i {
   height: 100%;
   vertical-align: middle;
 }
+
+/* Libs */
+.mm-menu .mm-listview {
+  >li:not(.mm-divider):after {
+    left: 0;
+  }
+}

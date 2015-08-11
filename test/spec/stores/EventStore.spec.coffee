@@ -70,8 +70,6 @@ describe 'EventStore', ->
     H.spyOn EventStore, "emitChange"
     @restore = H.rewire EventStore,
       _: @childStoreHelper()
-      _school:
-        utcOffset: -300
       "EventUtils.expandEventThruWeek": @expandSpy
       "ScheduleStore.current": -> id: null
 

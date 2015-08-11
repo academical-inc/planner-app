@@ -123,17 +123,14 @@ Dropdown = React.createClass(
       R.ul ulProps, @renderItems(@props.items)
 
     @props.rootTag className: classes, id: @props.id,
-      R.a(
-        {
-          className: "dropdown-toggle"
-          role: "button"
-          href: "#"
-          onClick: @toggleDropdown
-          "aria-expanded": false
-        }
+      R.a
+        className: "dropdown-toggle"
+        role: "button"
+        href: "#"
+        onClick: @toggleDropdown
+        "aria-expanded": false
         R.span className: 'title', @props.title
         R.span className: 'caret'
-      )
       ul
 )
 
