@@ -109,6 +109,7 @@
       "finish": "End",
       "next": "Next",
       "prev": "Prev",
+      "try": "Try it!",
       "welcome": {
         "header": "Welcome!",
         "content": [
@@ -387,6 +388,7 @@
       "finish": "Terminar",
       "next": "Siguiente",
       "prev": "Atrás",
+      "try": "Inténtalo!",
       "welcome": {
         "header": "Bienvenido!",
         "content": [

@@ -106,7 +106,7 @@ _tutorial = new Tour
       reflex: true
       animation: false
       element: '.pla-search-filters-trigger'
-      template: renderTemplate nextBtn: false, nextTxt: I18n.t("dialogs.ok")
+      template: renderTemplate nextBtn: false, nextTxt: I18n.t("tutorial.try")
       title: I18n.t "tutorial.search.header"
       content: renderContent I18n.t("tutorial.search.content")
       onShown: ->
@@ -117,7 +117,7 @@ _tutorial = new Tour
       reflex: true
       animation: false
       element: '.result:first-child'
-      template: renderTemplate nextBtn: false, nextTxt: I18n.t("dialogs.ok")
+      template: renderTemplate nextBtn: false, nextTxt: I18n.t("tutorial.try")
       title: I18n.t "tutorial.results.header"
       content: renderContent I18n.t("tutorial.results.content")
       onShown: ->
@@ -155,6 +155,7 @@ _tutorial = new Tour
     }
   ]
 
+# TODO Test
 class Tutorial
 
   @init: ->
@@ -172,10 +173,9 @@ class Tutorial
     selector += ".step-#{step}" if step?
     $(selector).popover("hide")
 
-  @start: =>
+  @start: ->
     if ScheduleStore.all().length > 0
       _tutorial.start()
-      ScheduleStore.removeChangeListener @start
 
 
 module.exports = Tutorial
