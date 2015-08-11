@@ -70,7 +70,9 @@ updateEvent = (event)->
     repeatUntil = updateTime old.recurrence.repeatUntil, event.startDt
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta
-    old.expanded = EventUtils.expandThruWeek old
+    old.expanded = EventUtils.expandThruWeek old,
+      startDt: event.startDt
+      endDt: event.endDt
 
 removeEvent = (eventId)->
   [ev, i] = _.findElement eventId

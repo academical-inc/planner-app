@@ -52,6 +52,7 @@ expandEvent = (parent, event, {freq, days, untilDt}={}, cb)->
     expanded.push event
   expanded
 
+# TODO Test
 class EventUtils
 
   @expandEvents: (parent, events)->
@@ -68,7 +69,8 @@ class EventUtils
       , []
     )
 
-  @expandThruWeek: (event)->
+  @expandThruWeek: (event, dates={})->
+    event = $.extend true, {}, event, dates
     untilDt = _.date(event.startDt).add 1, 'w'
     expandEvent event, event, untilDt: untilDt
 
