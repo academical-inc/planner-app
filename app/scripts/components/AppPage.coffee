@@ -1,6 +1,8 @@
 
 React           = require 'react'
 _               = require '../utils/Utils'
+PollUtils       = require '../utils/PollUtils'
+Tutorial        = require '../utils/Tutorial'
 StoreMixin      = require '../mixins/StoreMixin'
 UserStore       = require '../stores/UserStore'
 AppActions      = require '../actions/AppActions'
@@ -11,23 +13,19 @@ AppModals       = React.createFactory require './AppModals'
 AppHeader       = React.createFactory require './AppHeader'
 R               = React.DOM
 
-{POLL_INTERVAL} = require '../constants/PlannerConstants'
+{AuthConstants: {TOKEN_EXPIRATION_MS},
+POLL_INTERVAL}  = require '../constants/PlannerConstants'
 
 
 # Private
-# TODO Test
-# OK because POLL_INTERVAL will always be sufficiently big
-_interval = null
-_initSchedules = _.debounce(
+_init = _.debounce(
   (userId, initialScheduleId)->
     AppActions.getSchedules userId, initialScheduleId
-    _interval = setInterval(
-      AppActions.updateSchedules.bind(AppActions,userId), POLL_INTERVAL
-    )
+    PollUtils.poll userId
+    Tutorial.init userId
     return
   , 0
 )
-
 
 # TODO Test
 AppPage = React.createClass(
@@ -44,17 +42,17 @@ AppPage = React.createClass(
     if UserStore.user()?
       @setState @getState()
     else
-      clearInterval _interval
+      PollUtils.clear()
 
   componentDidMount: ->
     if @state.userId?
-      _initSchedules @state.userId, @props.initialScheduleId
+      _init @state.userId, @props.initialScheduleId
     else
       AppActions.fetchUser UserStore.user()
 
   componentWillUpdate: (nextProps, nextState)->
     if not @state.userId? and nextState.userId?
-      _initSchedules nextState.userId, @props.initialScheduleId
+      _init nextState.userId, @props.initialScheduleId
 
   render: ->
     if @state.userId?

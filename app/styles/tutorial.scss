@@ -1,0 +1,62 @@
+
+.popover.tour.pla-tutorial {
+
+  max-width: 30%;
+  width: 30%;
+  box-shadow: 0 2px 5px lightgray;
+  border-color: $border-gray;
+  background-clip: inherit;
+  padding: 0;
+
+  .tutorial-header {
+    color: $white;
+    background-color: $academical-blue-sidebar;
+    padding: .6em;
+    position: relative;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+
+    h4 {
+      border: none;
+      padding: 0;
+      background-color: inherit;
+      font-weight: 300;
+      font-size: 1.1em;
+      margin-left: .7em;
+    }
+    .close {
+      border-top-right-radius: inherit;
+      background-color: $academical-blue-filter;
+      width: 10%;
+      img {
+        zoom: 0.7;
+      }
+    }
+  }
+  .popover-content {
+    margin-top: .6em;
+    padding-bottom: 0;
+    color: $gray;
+    font-size: .9em;
+    .tutorial-text {
+      + .tutorial-text {
+        margin-top: 2em;
+      }
+    }
+  }
+  .tutorial-footer {
+    border-top: none;
+    padding: 0.7em 1.9em 1.6em 1.9em;
+    font-size: .7em;
+    button {
+      font-size: 1.2em;
+      float: none;
+    }
+  }
+}
+
+.pla-tutorial.step-0,.pla-tutorial.step-8 {
+  .tutorial-footer {
+    text-align: center;
+  }
+}

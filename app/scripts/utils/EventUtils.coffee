@@ -1,47 +1,77 @@
 
-$         = require 'jquery'
-DateUtils = require './DateUtils'
+$      = require 'jquery'
+Moment = require 'moment'
+_      = require './DateUtils'
 
 
+# TODO Test
+beforeOrSame = (dt1, dt2)->
+  dt1.isBefore(dt2) or dt1.isSame(dt2)
+
+eachForWeek = (startDt, endDt, untilDt, days, cb)->
+  [1..7].forEach ->
+    day = if startDt.day() is 0 then 7 else startDt.day()
+    day = _.getDayStr(day)
+    if days.indexOf(day) != -1 and beforeOrSame(startDt, untilDt)
+      cb startDt.clone(), endDt.clone()
+    startDt.add 1, 'd'
+    endDt.add 1, 'd'
+
+eachUntil = (startDt, endDt, untilDt, incr, cb)->
+  startDt = _.date startDt
+  endDt   = _.date endDt
+  untilDt = _.date untilDt
+  while beforeOrSame(startDt, untilDt)
+    cb startDt.clone(), endDt.clone()
+    startDt.add 1, incr
+    endDt.add 1, incr
+
+generateDates = (event, freq, untilDt, days, cb)->
+  incr = 'w'  # Always weekly here
+
+  if freq is "WEEKLY" and days?
+    eachUntil event.startDt, event.endDt, untilDt, incr, (startDt, endDt)->
+      eachForWeek startDt, endDt, untilDt, days, cb
+
+expandEvent = (parent, event, {freq, days, untilDt}={}, cb)->
+  expanded = []
+  if event.recurrence?
+    freq ?= event.recurrence.freq
+    days ?= event.recurrence.daysOfWeek
+    untilDt ?= event.recurrence.repeatUntil
+
+    generateDates event, freq, untilDt, days, (sdt, edt)->
+      expanded.push {
+        parent: parent
+        startDt: sdt
+        endDt: edt
+        timezone: event.timezone
+        location: event.location
+      }
+  else
+    expanded.push event
+  expanded
+
+# TODO Test
 class EventUtils
 
-  @concatExpandedEvents: (events, eventFactory)->
+  @expandEvents: (parent, events)->
     events.reduce(
-      (prevArr, event)->
-        if event.expanded?
-          prevArr.concat event.expanded.map ->
-            arguments[0].id = event.id
-            if eventFactory?
-              eventFactory event, arguments...
-            else
-              arguments[0]
-        else
-          event = eventFactory event, event if eventFactory?
-          prevArr.concat [event]
+      (mem, event)->
+        mem.concat expandEvent(parent, event)
       , []
     )
 
-  @getScheduleEvents: (events)->
-    @concatExpandedEvents events, (parent, ev)->
-      parent: parent, ev: ev
-
-  @getSectionEvents: (sections)->
-    sections.reduce(
-      (prevArr, curSec)=>
-        allSectionEvents = @concatExpandedEvents curSec.events, (parent, ev)->
-          section: curSec, event: ev
-        prevArr.concat allSectionEvents
+  @concatExpandedEvents: (objs)->
+    objs.reduce(
+      (mem, obj)->
+        mem.concat(obj.expanded or [])
       , []
     )
 
-  @expandEventThruWeek: (event, {startDt, endDt}={})->
-    startDt ?= event.startDt
-    endDt   ?= event.endDt
-    if event.recurrence?
-      event.expanded = event.recurrence.daysOfWeek.map (day)->
-        dayNo = DateUtils.getDayNo day
-        startDt: DateUtils.format DateUtils.setDay(startDt, dayNo)
-        endDt: DateUtils.format DateUtils.setDay(endDt, dayNo)
-
+  @expandThruWeek: (event, dates={})->
+    event = $.extend true, {}, event, dates
+    untilDt = _.date(event.startDt).add 1, 'w'
+    expandEvent event, event, untilDt: untilDt
 
 module.exports = EventUtils

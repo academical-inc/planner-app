@@ -54,6 +54,8 @@ module.exports =
     "CLEAR_SEARCH"
     "TOGGLE_FILTER"
     "MAX_SCHEDULES_FAIL"
+    "TOGGLE_SCHEDULE_LIST"
+    "TOGGLE_OPTIONS_MENU"
   }
   PreviewTypes: {
     "PRIMARY"
@@ -83,7 +85,8 @@ module.exports =
     TOKEN_STORAGE: "academical:auth0-token"
     USER_STORAGE: "academical:user"
     AUTH0_SCOPE: "openid name email picture app_metadata"
-    TOKEN_EXPIRTATION: 600  # minutes
+    TOKEN_EXPIRTATION: 540  # 9 hours in minutes
+    TOKEN_EXPIRATION_MS: 32400000  # 9 hours in milliseconds
     Providers: {
       WAAD: "waad"
     }

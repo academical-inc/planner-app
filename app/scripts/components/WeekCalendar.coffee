@@ -42,9 +42,8 @@ WeekCalendar = React.createClass(
     else if afterTermEnd || @props.defaultDate == CalendarDates.TERM_END
       _term.endDate
 
-  sectionEventDataTransform: (sectionEvent)->
-    section = sectionEvent.section
-    event   = sectionEvent.event
+  sectionEventDataTransform: (event)->
+    section = event.parent
 
     id:              section.id
     title:           section.courseName
@@ -58,20 +57,19 @@ WeekCalendar = React.createClass(
     allDay:          false
     isSection:       true
 
-  previewEventDataTransform: (sectionEvent)->
-    id:              sectionEvent.section.id
-    start:           sectionEvent.event.startDt
-    end:             sectionEvent.event.endDt
-    backgroundColor: 'red' if sectionEvent.event.isOverlapping
-    borderColor:     'red' if sectionEvent.event.isOverlapping
+  previewEventDataTransform: (event)->
+    id:              event.parent.id
+    start:           event.startDt
+    end:             event.endDt
+    backgroundColor: 'red' if event.isOverlapping
+    borderColor:     'red' if event.isOverlapping
     className:       'dirty-event'
     editable:        false
     allDay:          false
     isPreview:       true
 
-  eventDataTransform: (event)->
-    parent  = event.parent
-    ev      = event.ev
+  eventDataTransform: (ev)->
+    parent  = ev.parent
     isDirty = parent.dirtyAdd or parent.dirtyUpdate
     id:              parent.id
     title:           if isDirty then @t("calendar.saving") else parent.name
@@ -144,7 +142,6 @@ WeekCalendar = React.createClass(
       dayNamesShort: @t "calendar.days"
       scrollTime: "07:00:00"
       minTime: "06:00:00"
-      maxTime: "22:00:00"
       columnFormat:
         week: 'ddd - MMM D'
       firstDay: 1
@@ -174,6 +171,10 @@ WeekCalendar = React.createClass(
       else if event.isEvent and not(event.del is true)
         icon.on "click", @removeEvent.bind(@, event.id)
       jqElement.find('.fc-time').append icon
+      if !!event.location
+        loc = "#{@t('in')} #{event.location}"
+        jqElement.find('.fc-title').append $('<br/><br/>')
+        jqElement.find('.fc-title').append loc
     jqElement
 
   render: ->

@@ -9,7 +9,10 @@ SchoolStore   = require './SchoolStore'
 fields = ->
   fds = SchoolStore.school().appUi.summaryFields
   fds.map (f)->
-    _.camelize f.field
+    if typeof f.field is 'string'
+      _.camelized f.field
+    else
+      f.field
 
 
 # TODO Tests
@@ -21,11 +24,16 @@ class SummaryDialogStore extends Store
 
     sections.map (section)->
       fds.map (f)->
-        val = _.getNested section, f
-        if Array.isArray val
-          val.join ", "
+        if f.list?
+          val = _.getNested section, _.camelized(f.list)
+          res = val.map (el)-> el[f.field]
+          res.join ", "
         else
-          val
+          val = _.getNested section, f
+          if Array.isArray val
+            val.join ", "
+          else
+            val
 
   dispatchCallback: (payload)=>
     action = payload.action

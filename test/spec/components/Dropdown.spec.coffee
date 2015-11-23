@@ -322,7 +322,8 @@ describe 'Dropdown', ->
       expect(ddNode.getAttribute("class")).toContain "dropdown"
 
       toggle = H.findWithClass dd, "dropdown-toggle"
-      expect(toggle.props.children[0]).toEqual "title"
+      title = toggle.props.children[0].props.children
+      expect(title).toEqual "title"
 
       ul = H.findWithTag dd, "ul"
       expect(ul.props.children.length).toEqual 2

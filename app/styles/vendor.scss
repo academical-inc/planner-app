@@ -10,6 +10,7 @@ $brand-success:           $green;
 $brand-warning:           $yellow;
 $brand-danger:            $red;
 $brand-info:              $academical-blue-sidebar;
+$popover-border-color:    $border-gray;
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 
 @import "bootstrap-sass-datepicker/sass/datepicker";
@@ -18,6 +19,10 @@ $brand-info:              $academical-blue-sidebar;
 
 @import "bootstrap-social/bootstrap-social.scss";
 
+// Override mmenu defaults
+$mm_menuWidth:        0.25;
+$mm_menuMaxWidth:     250px;
+$mm_backgroundColor:  $academical-blue-sidebar;
+$mm_textColor:        $white;
 @import "jQuery.mmenu/src/scss/jquery.mmenu";
 @import "jQuery.mmenu/src/scss/addons/jquery.mmenu.dragopen";
-

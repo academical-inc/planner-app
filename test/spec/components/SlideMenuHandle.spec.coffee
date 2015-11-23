@@ -26,6 +26,6 @@ describe "SlideMenuHandle", ->
 
       H.sim.click(slideMenu.getDOMNode())
       expect(mock$).toHaveBeenCalledWith "selector"
-      expect(mock$El.trigger).toHaveBeenCalledWith "open.mm"
+      expect(mock$El.data).toHaveBeenCalledWith "mmenu"
       restore()
 
