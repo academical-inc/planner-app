@@ -2,7 +2,6 @@
 _               = require '../utils/Utils'
 Auth0           = require 'auth0-js'
 Env             = require '../Env'
-SchoolStore     = require '../stores/SchoolStore'
 UserFactory     = require '../factories/UserFactory'
 AuthError       = require '../errors/AuthError'
 {AuthConstants} = require '../constants/PlannerConstants'
@@ -19,14 +18,12 @@ class Auth
   @login: (
     connection,
     scope=AuthConstants.AUTH0_SCOPE,
-    state=window.location.pathname,
-    school=SchoolStore.school().nickname
+    state=window.location.pathname
   )->
     _auth0.login
       connection: connection
       scope: scope
       state: state
-      school: school
 
   @parseHash: (hash=window.location.hash)->
     result = _auth0.parseHash hash

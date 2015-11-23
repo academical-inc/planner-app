@@ -18,15 +18,7 @@ describe 'SectionItem', ->
       teacherNames: ["Dimitri Alejo", "Juan Tejada"]
       credits: 3
       departments: [{name: "Math Department"}]
-    @restore = H.rewire SectionItem,
-      SectionUtils:
-        seatsColorClass: -> "success"
-        teacherNames: -> "Dimitri Alejo, Juan Tejada"
-        department: -> "Math Department"
-        fieldFor: -> "seats.available"
-
-  afterEach ->
-    @restore()
+    @color = "#fff"
 
   describe '#render', ->
 

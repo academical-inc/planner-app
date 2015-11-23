@@ -41,3 +41,4 @@ class BrowserUtils
     origin
 
 module.exports = BrowserUtils
+

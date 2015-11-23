@@ -30,7 +30,9 @@ describe 'WeekCalendar', ->
     beforeEach ->
       @sec = sections[0]
       @ev  = @sec.events[0].expanded[0]
-      @ev.parent = @sec
+      @secEvData =
+        section: @sec
+        event: @ev
       @restore = H.rewire WeekCalendar,
         "_sectionColors": =>
           colors = {}
@@ -39,7 +41,7 @@ describe 'WeekCalendar', ->
       @cal = H.render WeekCalendar
 
     it 'transforms section event data into a fullcalendar event', ->
-      res = @cal.sectionEventDataTransform @ev
+      res = @cal.sectionEventDataTransform @secEvData
       expect(res).toEqual(
         id: @sec.id
         title: @sec.courseName

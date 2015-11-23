@@ -56,6 +56,7 @@ class Resource
         data
     else
       {}
+    formatted.camelize = true
     Utils.underscoredKeys formatted
 
   @_responseHandler: (cb)->
@@ -68,7 +69,7 @@ class Resource
       else
         [null, res.body.data]
 
-      cb e, Utils.camelizedKeys(result)
+      cb e, result
 
 
 module.exports = Resource

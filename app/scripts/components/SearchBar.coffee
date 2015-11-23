@@ -4,7 +4,6 @@ I18nMixin            = require '../mixins/I18nMixin'
 IconMixin            = require '../mixins/IconMixin'
 StoreMixin           = require '../mixins/StoreMixin'
 ColorUtils           = require '../utils/ColorUtils'
-SchoolStore          = require '../stores/SchoolStore'
 SearchStore          = require '../stores/SearchStore'
 SearchFiltersStore   = require '../stores/SearchFiltersStore'
 PreviewStore         = require '../stores/PreviewStore'
@@ -213,14 +212,13 @@ SearchBar = React.createClass(
 
   render: ->
     coreqs = @state.corequisites
-    school = SchoolStore.school().nickname
 
     R.div className: "pla-search-bar container-fluid",
       R.div className: 'search-input',
         R.input
           type: "text"
           ref: "input"
-          placeholder: @t "searchBar.placeholder.#{school}"
+          placeholder: @t "searchBar.placeholder"
           value: @state.inputVal
           onKeyDown: @handleInputKeyDown
           onBlur: @handleInputBlur

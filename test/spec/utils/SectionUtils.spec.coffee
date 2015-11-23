@@ -23,26 +23,26 @@ describe 'SectionUtils', ->
 
     it 'returns correct css class when seats available is >= upper bound ', ->
       sec = seats 50
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "upper"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "upper"
 
       sec = seats 60
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "upper"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "upper"
 
     it 'returns correct css class when seats available is < upper bound and
         >= lower bound', ->
       sec = seats 15
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "lower"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "lower"
 
       sec = seats 20
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "lower"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "lower"
 
     it 'returns correct css class when seats available is < lower bound ', ->
       sec = seats 14
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "zero"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "zero"
 
       sec = seats 0
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "zero"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "zero"
 
       sec = seats -3
-      expect(SectionUtils.seatsColorClass(sec, "uniandes")).toEqual "zero"
+      expect(SectionUtils.seatsColorClass(sec)).toEqual "zero"
 

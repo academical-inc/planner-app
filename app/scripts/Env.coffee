@@ -12,7 +12,6 @@ class Env
   @FB_APP_ID:        process.env.FB_APP_ID
   @BUGSNAG_API_KEY:  process.env.BUGSNAG_API_KEY
   @SCHOOL:           process.env.SCHOOL
-  @CLOSED:           process.env.CLOSED
 
 
 module.exports = Env

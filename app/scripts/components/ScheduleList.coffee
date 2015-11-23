@@ -4,9 +4,7 @@ $             = require 'jquery'
 MediaQueries  = require '../utils/MediaQueries.coffee'
 IconMixin     = require '../mixins/IconMixin'
 I18nMixin     = require '../mixins/I18nMixin'
-StoreMixin    = require '../mixins/StoreMixin'
 ScheduleStore = require '../stores/ScheduleStore'
-UiStore       = require '../stores/UiStore'
 AppActions    = require '../actions/AppActions'
 Dropdown      = React.createFactory require './Dropdown'
 ScheduleItem  = React.createFactory require './ScheduleItem'
@@ -19,21 +17,12 @@ R             = React.DOM
 
 ScheduleList = React.createClass(
 
-  mixins: [IconMixin, I18nMixin, StoreMixin(
-    {store: ScheduleStore, handler: 'onChange'}
-    {store: UiStore, handler: 'onUiChange'}
-  )]
+  mixins: [IconMixin, I18nMixin]
 
   getState: ->
     current = ScheduleStore.current()
     current: if current? then current.name else @renderSpinner()
     schedules: ScheduleStore.all()
-
-  onUiChange: ->
-    if UiStore.scheduleList()
-      @refs.dropdown.toggleDropdown()
-    else
-      @refs.dropdown.closeDropdown()
 
   onChange: (state=@getState())->
     @setState state
@@ -54,19 +43,20 @@ ScheduleList = React.createClass(
     @getState()
 
   componentDidMount: ->
+    ScheduleStore.addChangeListener @onChange
     if not MediaQueries.matchesMDAndUp()
       $(@getDOMNode()).mmenu(
-        navbar:
-          add: false
         dragOpen:
           open: true
       )
     return
 
-  renderDropdown: ->
+  componentWillUnmount: ->
+    ScheduleStore.removeChangeListener @onChange
+
+  render: ->
     Dropdown(
       id: UiConstants.ids.SCHEDULE_LIST
-      ref: 'dropdown'
       className: 'pla-schedule-list'
       rootTag: @props.rootTag
       title: @state.current
@@ -80,23 +70,6 @@ ScheduleList = React.createClass(
       handleItemSelected: @openSchedule
       handleItemDelete: @deleteSchedule
     )
-
-  renderList: ->
-    R.div id: UiConstants.ids.SCHEDULE_LIST,
-      R.ul null,
-        @state.schedules.map (sch, i)=>
-          R.li
-            key: "sch-#{i}"
-            onClick: =>
-              @openSchedule id: sch.id, val: sch.name
-              $(@getDOMNode()).data("mmenu").close()
-            R.a href: UiConstants.selectors.SCHEDULE_LIST, sch.name
-
-  render: ->
-    if not MediaQueries.matchesMDAndUp()
-      @renderList()
-    else
-      @renderDropdown()
 
 )
 

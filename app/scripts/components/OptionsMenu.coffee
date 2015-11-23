@@ -2,9 +2,7 @@
 React         = require 'react'
 I18nMixin     = require '../mixins/I18nMixin'
 IconMixin     = require '../mixins/IconMixin'
-StoreMixin    = require '../mixins/StoreMixin'
 ScheduleStore = require '../stores/ScheduleStore'
-UiStore       = require '../stores/UiStore'
 # TODO Revisit this design. Must require even if not using
 ExportStore   = require '../stores/ExportStore'
 AppActions    = require '../actions/AppActions'
@@ -17,13 +15,7 @@ R             = React.DOM
 # TODO Test
 OptionsMenu = React.createClass(
 
-  mixins: [I18nMixin, IconMixin, StoreMixin(UiStore)]
-
-  onChange: ->
-    if UiStore.optionsMenu()
-      @refs.dropdown.toggleDropdown()
-    else
-      @refs.dropdown.closeDropdown()
+  mixins: [I18nMixin, IconMixin]
 
   getItems: ->
     [
@@ -83,7 +75,6 @@ OptionsMenu = React.createClass(
   render: ->
     Dropdown(
       className: 'pla-options-menu'
-      ref: 'dropdown'
       rootTag: @props.rootTag
       title: @imgIcon "/images/sidebar_icon.png"
       itemType: OptionsItem

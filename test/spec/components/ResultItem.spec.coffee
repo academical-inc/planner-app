@@ -14,19 +14,10 @@ describe 'ResultItem', ->
       departments: [{name: "Mathematics"}]
       seats: available: 5
     @query = "Alg"
-    @restore = H.rewire ResultItem,
-      SectionUtils:
-        seatsColorClass: -> "success"
-        teacherNames: -> "Alfonso Ruiz, German Bravo"
-        department: -> "Mathematics"
-        fieldFor: -> "seats.available"
     @item = H.render ResultItem,
       section: @sec
       query: @query
       focused: false
-
-  afterEach ->
-    @restore()
 
   describe '#highlight', ->
 

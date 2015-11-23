@@ -76,7 +76,7 @@
     "lscache": "^1.0.5",
     "mustache": "^1.0.0",
     "page": "^1.6.3",
-    "react": "^0.13.3",
+    "react": "^0.13.1",
     "react-onclickoutside": "^0.2.3",
     "superagent": "^0.21.0"
   },
@@ -84,7 +84,6 @@
     "jquery": "global:$",
     "moment": "global:moment",
     "bloodhound": "global:Bloodhound",
-    "html2canvas": "global:html2canvas",
-    "bootstrap-tour": "global:Tour"
+    "html2canvas": "global:html2canvas"
   }
 }

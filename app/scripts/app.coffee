@@ -1,7 +1,6 @@
 
 # Init School
-Env         = require './Env'
-school      = Env.SCHOOL
+school      = require('./Env').SCHOOL
 AppActions  = require './actions/AppActions'
 AppActions.initSchool school
 
@@ -35,7 +34,6 @@ defRoute '/', ->
   try
     initialScheduleId = _.qs('open-schedule') if _.qs('open-schedule')
     if UserStore.isLoggedIn()
-      AppActions.logout() if Env.CLOSED
       goTo Pages.APP, ui: school.appUi, initialScheduleId: initialScheduleId
     else
       goTo Pages.LANDING
@@ -49,8 +47,6 @@ defRoute '/', ->
       goTo Pages.ERROR, msg: e.message
 
 defRoute '/schedules/:scheduleId', (ctx)->
-  if Env.CLOSED and UserStore.isLoggedIn()
-    AppActions.logout()
   goTo Pages.SINGLE_SCHEDULE, scheduleId: ctx.params.scheduleId
 
 Router.route()

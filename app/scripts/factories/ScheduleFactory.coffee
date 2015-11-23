@@ -11,7 +11,7 @@ class ScheduleFactory extends Factory
     "name":           null
     "studentId":      -> UserStore.user().id
     "schoolId":       -> SchoolStore.school().id
-    "term":           -> SchoolStore.school().terms[0].name
+    "term":           -> SchoolStore.school().terms[0]
     "sectionIds":     null
     "sectionColors":  {}
     "totalCredits":   null

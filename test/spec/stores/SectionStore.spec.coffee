@@ -62,9 +62,7 @@ describe 'SectionStore', ->
     @count    = SectionStore.count.bind SectionStore
     @childStoreHelper = childStoreHelper.bind null, @currentSchedId
     H.spyOn SectionStore, "emitChange"
-    @expandSpy = H.spy "expand", retVal: []
     @restore = H.rewire SectionStore,
-      "EventUtils.expandEvents": @expandSpy
       _: @childStoreHelper()
 
   afterEach ->
@@ -80,7 +78,7 @@ describe 'SectionStore', ->
 
   describe 'when OPEN_SCHEDULE received', ->
 
-    it 'sets current sections correctly according to current schedule id', ->
+    it 'sets current sections corretly according to current schedule id', ->
       H.rewire SectionStore,
         _: @childStoreHelper @sections, @sections.sch2
       expect(@current()).toEqual @sections.sch2
@@ -163,7 +161,7 @@ describe 'SectionStore', ->
       @payloads.add.action.section = id: "sec100", credits: 3
       @dispatch @payloads.add
       expect(@count()).toEqual 1
-      expect(@current()[0]).toEqual id: "sec100", credits: 3, expanded: []
+      expect(@current()[0]).toEqual id: "sec100", credits: 3
       expect(@credits()).toEqual 3
 
 

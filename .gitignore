@@ -34,7 +34,7 @@ config/secrets.yml
 
 # divshot
 /.divshot-cache
-.dsnames.json
+divshot.json
 
 # awspublish
 .awspublish*

@@ -49,10 +49,7 @@
       "logout": "Log Out"
     },
     "searchBar": {
-      "placeholder": {
-        "uniandes": "Search Course Sections",
-        "cesa": "Search Course Sessions"
-      },
+      "placeholder": "Search Course Sections",
       "applyFilters": "Apply",
       "filters": "Filter: ",
       "filtering": "Filtering ",
@@ -61,10 +58,7 @@
     },
     "sidebar": {
       "sectionsHeader": "My Courses",
-      "sectionsHeaderInfo": {
-        "uniandes": "Sections: {{sections}} - Credits: {{credits}}",
-        "cesa": "Sessions: {{sections}} - Credits: {{credits}}"
-      },
+      "sectionsHeaderInfo": "Sections: {{sections}} - Credits: {{credits}}",
       "eventsHeader": "My Events",
       "item":{
         "delete": "Delete"
@@ -72,18 +66,9 @@
       "createEvent": "Create new event"
     },
     "section": {
-      "seats": {
-        "uniandes": "Seats: {{seats}}",
-        "cesa": "Demand: {{seats}}"
-      },
-      "seatsTT": {
-        "uniandes": "Seats available",
-        "cesa": "Estimated demand"
-      },
-      "info": {
-        "uniandes": "{{credits}} credits - Section {{number}} - {{id}}",
-        "cesa": "{{credits}} credits - Session {{number}} - {{id}}"
-      },
+      "seats": "Seats: {{seats}}",
+      "seatsTT": "Seats available",
+      "info": "{{credits}} credits - Section {{number}} - {{id}}",
       "noTeacher": "No teacher assigned yet",
       "noDepartment": "Unknown department"
     },
@@ -104,72 +89,6 @@
       "untilDate": "Pick a date",
       "addEvent": "Add Event"
     },
-    "tutorial": {
-      "start": "Start",
-      "finish": "End",
-      "next": "Next",
-      "prev": "Prev",
-      "try": "Try it!",
-      "welcome": {
-        "header": "Welcome!",
-        "content": [
-          "This is the new Academical! Now plan your schedules even faster and easier than before.",
-          "Follow this simple tutorial to get to know the app."
-        ]
-      },
-      "schedules": {
-        "header": "Schedules",
-        "content": [
-          "Open, create, edit and delete schedules here. You can create up to 7!"
-        ]
-      },
-      "options": {
-        "header": "Options",
-        "content": [
-          "You can do stuff with your schedule here like duplicate it, get a summary or export it!"
-        ]
-      },
-      "search": {
-        "header": "Search and Filters",
-        "content": [
-          "Start to type the name of a class, teacher or course code to search for classes",
-          "Use the filters to search classes under specific criteria."
-        ]
-      },
-      "results": {
-        "header": "Results",
-        "content": [
-          "Navigate the results using your mouse or kerboard arrows.",
-          "Add a class by clicking it or pressing Enter. You can also select corequisites."
-        ]
-      },
-      "sections": {
-        "header": "Class Information",
-        "content": [
-          "Click a class to display detailed information.",
-          "You can also change its color or delete it from your schedule."
-        ]
-      },
-      "events": {
-        "header": "Events",
-        "content": [
-          "Click here or on the calendar to add events."
-        ]
-      },
-      "calendar": {
-        "header": "Tu Calendario",
-        "content": [
-          "Use these buttons to visualize your classess and events week to week."
-        ]
-      },
-      "end": {
-        "header": "Now, get to planning!",
-        "content": [
-          "That's it!",
-          "Oh! We almost forgot. Now you can check your schedules from a phone or tablet!"
-        ]
-      }
-    },
     "dialogs": {
       "ok": "OK",
       "save": "Save",
@@ -188,9 +107,6 @@
     "errorDialog": {
       "header": "Error!"
     },
-    "messageDialog": {
-      "header": "Important!"
-    },
     "loginDialog": {
       "header": "Log in",
       "loading": "Logging in",
@@ -205,26 +121,11 @@
       "facebook": "Log In with Facebook",
       "google": "Log In with Google"
     },
-    "in": "in",
     "empty": "N/A",
     "copyOf": "Copy of {{name}}",
     "duplicateSchedule": "Add to my schedules",
     "loginToDuplicate": "Log in to Academical",
     "landing": {
-      "dialogMessage": {
-        "cesa": [
-          "Hola!",
-          "En el momento no está disponible la oferta de cursos del 2016-1. Estamos a la espera de que la Universidad nos la envíe para que comiences a planear tu horario de clases.",
-          "Puedes seguirnos en <a target=\"_blank\" href=\"https://facebook.com/academicalapp\">Facebook</a> donde informaremos cuando la tengamos o si quieres te avisamos dejando tu correo aquí <a target=\"_blank\" href=\"https://goo.gl/kocJkh\">https://goo.gl/kocJkh</a>",
-          "Equipo Academical"
-        ],
-        "uniandes": [
-          "Hola!",
-          "En el momento no está disponible la oferta de cursos del 2016-1. Estamos a la espera de que la Universidad nos la envíe para que comiences a planear tu horario de clases.",
-          "Puedes seguirnos en <a target=\"_blank\" href=\"https://facebook.com/academicalapp\">Facebook</a> donde informaremos cuando la tengamos o si quieres te avisamos dejando tu correo aquí <a target=\"_blank\" href=\"https://goo.gl/mkq1ea\">https://goo.gl/mkq1ea</a>",
-          "Equipo Academical"
-        ]
-      },
       "section1": {
         "title": "YOUR CLASS SCHEDULE",
         "titleStrong": " EASY AND FAST",
@@ -335,10 +236,7 @@
       "logout": "Salir"
     },
     "searchBar": {
-      "placeholder": {
-        "uniandes": "Busca Secciones",
-        "cesa": "Busca Sesiones"
-      },
+      "placeholder": "Busca Secciones",
       "applyFilters": "Aplicar",
       "filters": "Filtrar: ",
       "filtering": "Filtrando ",
@@ -347,10 +245,7 @@
     },
     "sidebar": {
       "sectionsHeader": "Mis Cursos",
-      "sectionsHeaderInfo": {
-        "uniandes": "Secciones: {{sections}} - Créditos: {{credits}}",
-        "cesa": "Sesiones: {{sections}} - Créditos: {{credits}}"
-      },
+      "sectionsHeaderInfo": "Secciones: {{sections}} - Créditos: {{credits}}",
       "eventsHeader": "Mis Eventos",
       "item":{
         "delete": "Eliminar"
@@ -358,18 +253,9 @@
       "createEvent": "Crear nuevo evento"
     },
     "section": {
-      "seats": {
-        "uniandes": "Cupos: {{seats}}",
-        "cesa": "Demanda: {{seats}}"
-      },
-      "seatsTT": {
-        "uniandes": "Cupos disponibles",
-        "cesa": "Demanda estimada"
-      },
-      "info": {
-        "uniandes": "{{credits}} créditos - Sección {{number}} - {{id}}",
-        "cesa": "{{credits}} créditos - Sesión {{number}} - {{id}}"
-      },
+      "seats": "Cupos: {{seats}}",
+      "seatsTT": "Cupos disponibles",
+      "info": "{{credits}} créditos - Sección {{number}} - {{id}}",
       "noTeacher": "Aún no hay profesor asignado",
       "noDepartment": "Programa desconocido"
     },
@@ -390,72 +276,6 @@
       "untilDate": "Elige una fecha",
       "addEvent": "Agregar Evento"
     },
-    "tutorial": {
-      "start": "Iniciar",
-      "finish": "Terminar",
-      "next": "Siguiente",
-      "prev": "Atrás",
-      "try": "Inténtalo!",
-      "welcome": {
-        "header": "Bienvenido!",
-        "content": [
-          "Esta es la nueva versión de Academical! Ahora planea tus horarios de clase más fácil y rápido!",
-          "Sigue este tutorial para conocer mejor la aplicación."
-        ]
-      },
-      "schedules": {
-        "header": "Horarios",
-        "content": [
-          "Abre, crea, edita y elimina horarios aquí. Puedes crear hasta 7!"
-        ]
-      },
-      "options": {
-        "header": "Opciones",
-        "content": [
-          "Aquí puedes hacer cosas con tu horario como duplicarlo, ver su resumen o exportarlo!"
-        ]
-      },
-      "search": {
-        "header": "Búsqueda y Filtros",
-        "content": [
-          "Empieza a escribir el nombre de un curso, profesor o código para buscar clases.",
-          "Usa los filtros para buscar cursos bajo un criterio específico."
-        ]
-      },
-      "results": {
-        "header": "Resultados",
-        "content": [
-          "Navega los resultados utilizando el mouse o las flechas del teclado.",
-          "Agrega un curso haciendo click u oprimiendo Enter. También puedes seleccionar complementarias."
-        ]
-      },
-      "sections": {
-        "header": "Información de cursos",
-        "content": [
-          "Haz click en un curso para ver su información detallada.",
-          "También puedes cambiar el color o eliminar cursos."
-        ]
-      },
-      "events": {
-        "header": "Eventos",
-        "content": [
-          "Haz click aquí o sobre cualquier bloque en el calendario para agregar eventos."
-        ]
-      },
-      "calendar": {
-        "header": "Tu Calendario",
-        "content": [
-          "Utiliza estos botones para ver como tus eventos y clases cambian semana a semana."
-        ]
-      },
-      "end": {
-        "header": "A planear tu horario!",
-        "content": [
-          "Listo, eso es todo!",
-          "Ah! Casi se nos olvida. Ahora puedes consultar tus horarios desde tu celular y/o tableta!"
-        ]
-      }
-    },
     "dialogs": {
       "ok": "OK",
       "save": "Guardar",
@@ -474,9 +294,6 @@
     "errorDialog": {
       "header": "Error!"
     },
-    "messageDialog": {
-      "header": "Importante!"
-    },
     "loginDialog": {
       "header": "Ingresa",
       "loading": "Ingresando",
@@ -491,26 +308,11 @@
       "facebook": "Ingresa con Facebook",
       "google": "Ingresa con Google"
     },
-    "in": "en",
     "empty": "N/A",
     "copyOf": "Copia de {{name}}",
     "duplicateSchedule": "Agregar a mis Horarios",
     "loginToDuplicate": "Ingresa a Academical",
     "landing": {
-      "dialogMessage": {
-        "cesa": [
-          "Hola!",
-          "En el momento no está disponible la oferta de cursos del 2016-1. Estamos a la espera de que la Universidad nos la envíe para que comiences a planear tu horario de clases.",
-          "Puedes seguirnos en <a target=\"_blank\" href=\"https://facebook.com/academicalapp\">Facebook</a> donde informaremos cuando la tengamos o si quieres te avisamos dejando tu correo aquí <a target=\"_blank\" href=\"https://goo.gl/kocJkh\">https://goo.gl/kocJkh</a>",
-          "Equipo Academical"
-        ],
-        "uniandes": [
-          "Hola!",
-          "En el momento no está disponible la oferta de cursos del 2016-1. Estamos a la espera de que la Universidad nos la envíe para que comiences a planear tu horario de clases.",
-          "Puedes seguirnos en <a target=\"_blank\" href=\"https://facebook.com/academicalapp\">Facebook</a> donde informaremos cuando la tengamos o si quieres te avisamos dejando tu correo aquí <a target=\"_blank\" href=\"https://goo.gl/mkq1ea\">https://goo.gl/mkq1ea</a>",
-          "Equipo Academical"
-        ]
-      },
       "section1": {
         "title": "TU HORARIO DE CLASES",
         "titleStrong": " FÁCIL Y RÁPIDO",

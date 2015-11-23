@@ -2,14 +2,12 @@
 $                  = require 'jquery'
 Bloodhound         = require 'bloodhound'
 Env                = require '../Env'
-Utils              = require '../utils/Utils'
 SchoolStore        = require '../stores/SchoolStore'
 UserStore          = require '../stores/UserStore'
 SearchFiltersStore = require '../stores/SearchFiltersStore'
 
 # Private
 # TODO Remove Bloodhound, may be making it slow
-# TODO Unify all requests in ApiUtils
 _q = ""
 
 datumTokenizer = (section)->
@@ -38,6 +36,7 @@ prepareRequest = (query, settings)->
     school: nickname
     term: terms[0].name
     filters: JSON.stringify SearchFiltersStore.filters()
+    camelize: true
 
   settings.url    += "?#{$.param(params)}"
   settings.headers = "Authorization": "Bearer #{authToken}" if authToken?
@@ -45,7 +44,7 @@ prepareRequest = (query, settings)->
   settings
 
 transform = (response)->
-  Utils.camelizedKeys response.data
+  response.data
 
 sync  = (query, cb)->
   (results)->
@@ -69,10 +68,7 @@ _engine = new Bloodhound
 class SearchUtils
 
   @search: (query, cb)->
-    if query?
-      _engine.search query, sync(query, cb), async(query, cb)
-    else
-      cb([])
+    _engine.search query, sync(query, cb), async(query, cb)
 
   @clearSearch: ->
     _q = null

@@ -66,13 +66,13 @@ describe 'EventStore', ->
     @dispatch = EventStore.dispatchCallback
     @current  = EventStore.events
     @childStoreHelper = childStoreHelper.bind null, @currentSchedId
-    @expandSpy = H.spy "expand", retVal: []
-    @expandWeekSpy = H.spy "expandWeek", retVal: []
+    @expandSpy = H.spy "expand"
     H.spyOn EventStore, "emitChange"
     @restore = H.rewire EventStore,
       _: @childStoreHelper()
-      "EventUtils.expandEvents": @expandSpy
-      "EventUtils.expandThruWeek": @expandWeekSpy
+      _school:
+        utcOffset: -300
+      "EventUtils.expandEventThruWeek": @expandSpy
       "ScheduleStore.current": -> id: null
 
   afterEach ->
@@ -141,9 +141,9 @@ describe 'EventStore', ->
       expect(@current()).toEqual []
       @payloads.add.action.event = id: "ev100"
       @dispatch @payloads.add
-      expected = id: "ev100", dirtyAdd: true, expanded: []
+      expected = id: "ev100", dirtyAdd: true
       expect(@current()[0]).toEqual expected
-      expect(@expandWeekSpy).toHaveBeenCalledWith expected
+      expect(@expandSpy).toHaveBeenCalledWith expected
 
 
   describe 'when UPDATE_EVENT received', ->
@@ -197,7 +197,7 @@ describe 'EventStore', ->
         _: @childStoreHelper @events, @events.sch1
       @payloads.update.action.event = @evPayload
       @dispatch @payloads.update
-      expect(@expandWeekSpy.calls.mostRecent().args[1]).toEqual \
+      expect(@expandSpy.calls.mostRecent().args[1]).toEqual \
         startDt: @evPayload.startDt, endDt: @evPayload.endDt
 
     it 'does not change days if dayDelta is 0', ->
@@ -302,8 +302,8 @@ describe 'EventStore', ->
           "ScheduleStore.current": -> id: "sch1"
         @payloads.saveFail.action.scheduleId = "sch1"
         @dispatch @payloads.saveFail
-        expect(@current()).toEqual [{id: "ev1", expanded: []}]
-        expect(EventStore.__get__("_").elementsMap.sch1).toEqual [{id: "ev1", expanded: []}]
+        expect(@current()).toEqual [{id: "ev1"}]
+        expect(EventStore.__get__("_").elementsMap.sch1).toEqual [{id: "ev1"}]
 
       it 'undeletes all dirty deleted events from saved schedule and sets
       current', ->
@@ -313,7 +313,7 @@ describe 'EventStore', ->
           "ScheduleStore.current": -> id: "sch1"
         @payloads.saveFail.action.scheduleId = "sch1"
         @dispatch @payloads.saveFail
-        expected = [{id: "ev1", expanded: []}, {id: "ev2", expanded: []}]
+        expected = [{id: "ev1"}, {id: "ev2"}]
         expect(@current()).toEqual expected
         expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
 
@@ -326,7 +326,7 @@ describe 'EventStore', ->
           "ScheduleStore.current": -> id: "sch1"
         @payloads.saveFail.action.scheduleId = "sch1"
         @dispatch @payloads.saveFail
-        expected = [{id: "ev1", expanded:[]}, original]
+        expected = [{id: "ev1"}, original]
         expect(@current()).toEqual expected
         expect(EventStore.__get__("_").elementsMap.sch1).toEqual expected
 

@@ -13,16 +13,6 @@ _ = new ChildStoreHelper(ScheduleStore, 'sections')
 wait = ->
   _.wait [SectionColorStore.dispatchToken]
 
-expandSectionEvents = (sec)->
-  sec.expanded = EventUtils.expandEvents sec, sec.events if not sec.expanded?
-
-expandCurrent = ->
-  _.currentElements.forEach expandSectionEvents
-
-setCurrent = ->
-  _.setCurrent()
-  expandCurrent()
-
 removeSection = (sectionId)->
   removed = _.removeElement sectionId
   if removed?
@@ -33,14 +23,13 @@ removeSection = (sectionId)->
       _.removeElement removed.corequisiteOfId
 
 
-# TODO Test Event expansion
 class SectionStore extends Store
 
   sections: (id)->
     _.currentElementsOr(id) or []
 
   sectionEvents: (id)->
-    EventUtils.concatExpandedEvents @sections(id)
+    EventUtils.getSectionEvents @sections(id)
 
   credits: (id)->
     @sections(id).reduce ((acum, section)-> acum + section.credits), 0.0
@@ -54,27 +43,26 @@ class SectionStore extends Store
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
         wait()
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS, \
            ActionTypes.UPDATE_SCHEDULES_SUCCESS
         wait()
         _.initElementsMap action.schedules
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         wait()
         _.updateSchedule action.schedule
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         wait()
         _.removeSchedule action.scheduleId
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.ADD_SECTION
         _.addElement action.section
-        expandSectionEvents action.section
         @emitChange()
       when ActionTypes.REMOVE_SECTION
         removeSection action.sectionId

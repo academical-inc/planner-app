@@ -13,16 +13,6 @@ DateUtils        = require '../utils/DateUtils'
 _         = new ChildStoreHelper(ScheduleStore, 'events')
 _toRevert = {}
 
-expandEvent = (ev)->
-  ev.expanded = EventUtils.expandEvents ev, [ev] if not ev.expanded?
-
-expandCurrent = ->
-  _.currentElements.forEach expandEvent
-
-setCurrent = ->
-  _.setCurrent()
-  expandCurrent()
-
 cleanScheduleEvents = (scheduleId)->
   events = _.elementsFor scheduleId
   events = events.filter (ev)-> not(ev.dirtyAdd is true)
@@ -36,11 +26,6 @@ cleanScheduleEvents = (scheduleId)->
 
 updateTime = (date, time)->
   DateUtils.setTimeAndFormat date, time, SchoolStore.school().utcOffset
-
-updateDate = (date, dayDelta, time)->
-  date = updateTime date, time
-  date = DateUtils.setDate date, dayDelta: dayDelta
-  date.format()
 
 updateDays = (event, dayDelta)->
   event.recurrence.daysOfWeek = event.recurrence.daysOfWeek.map (day)->
@@ -56,21 +41,20 @@ updateDays = (event, dayDelta)->
 
 addEvent = (event)->
   event.dirtyAdd = true
-  event.expanded = EventUtils.expandThruWeek event
+  EventUtils.expandEventThruWeek event
   _.addElement event
 
 updateEvent = (event)->
   [old, idx] = _.findElement event.id
   if old?
-    delete old.expanded
     _toRevert[old.id] = $.extend true, {}, old
     old.dirtyUpdate = true
-    old.startDt = updateDate old.startDt, event.dayDelta, event.startDt
-    old.endDt   = updateDate old.endDt, event.dayDelta, event.endDt
+    old.startDt = updateTime old.startDt, event.startDt
+    old.endDt   = updateTime old.endDt, event.endDt
     repeatUntil = updateTime old.recurrence.repeatUntil, event.startDt
     old.recurrence.repeatUntil = repeatUntil
     updateDays old, event.dayDelta
-    old.expanded = EventUtils.expandThruWeek old,
+    EventUtils.expandEventThruWeek old,
       startDt: event.startDt
       endDt: event.endDt
 
@@ -83,7 +67,6 @@ changeColor = (eventId, color)->
   event.color = color if event?
 
 
-# TODO Test Event expansion
 class EventStore extends Store
 
   events: (id)->
@@ -96,7 +79,7 @@ class EventStore extends Store
     @events(id).filter (ev)-> not(ev.del is true)
 
   expandedEvents: (id)->
-    EventUtils.concatExpandedEvents @events(id)
+    EventUtils.getScheduleEvents @events(id)
 
   dispatchCallback: (payload)=>
     action = payload.action
@@ -104,22 +87,22 @@ class EventStore extends Store
     switch action.type
       when ActionTypes.OPEN_SCHEDULE
         _.wait()
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         _.wait()
         _.initElementsMap action.schedules
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.CREATE_SCHEDULE_SUCCESS
         _.wait()
         _.updateSchedule action.schedule
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.DELETE_SCHEDULE_SUCCESS
         _.wait()
         _.removeSchedule action.scheduleId
-        setCurrent()
+        _.setCurrent()
         @emitChange()
       when ActionTypes.ADD_EVENT
         addEvent action.event
@@ -137,13 +120,13 @@ class EventStore extends Store
         _.wait()
         _.updateSchedule action.schedule
         if ScheduleStore.current().id == action.schedule.id
-          setCurrent()
+          _.setCurrent()
           @emitChange()
       when ActionTypes.SAVE_SCHEDULE_FAIL
         _.wait()
         cleanScheduleEvents action.scheduleId
         if ScheduleStore.current().id == action.scheduleId
-          setCurrent()
+          _.setCurrent()
           @emitChange()
 
 

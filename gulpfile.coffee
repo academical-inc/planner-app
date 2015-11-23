@@ -38,9 +38,6 @@ else if $.util.env.staging is true
   "staging"
 else
   "production"
-
-env[env.APP_ENV].CLOSED = $.util.env.close
-
 config =
   production: env.APP_ENV is "production"
   school: $.util.env.school
@@ -51,6 +48,16 @@ config.domain = if config.production
   "#{config.school}.academical.co"
 else
   "#{config.school}-staging.academical.co"
+
+config.aws =
+  Bucket: config.domain
+  region: "us-standard"
+  distributionId: cfdists[config.school][env.APP_ENV]
+
+publisher = $.awspublish.create params: config.aws
+headers   = {'Cache-Control': 'max-age=315360000, no-transform, public'}
+headers["x-amz-acl"] = 'private' if config.production
+indexRe   = /^index\.[a-f0-9]{8}\.html(\.gz)*$/gi
 
 
 # Paths
@@ -95,10 +102,8 @@ bundle = (b)->
     .pipe $.if(config.production, $.uglify())
     .pipe gulp.dest("#{base.dist}/scripts")
 
-s3WebUpdate = (publisher)->
-  s3      = publisher.client
-  indexRe = /^index\.[a-f0-9]{8}\.html(\.gz)*$/gi
-
+s3WebUpdate = ()->
+  s3 = publisher.client
   through.obj (file, enc, cb)->
     return if not file.path?
     dirRoot  = file.base
@@ -120,12 +125,7 @@ s3WebUpdate = (publisher)->
 
 
 # Tasks
-gulp.task 'clear-school', ->
-  delete env.SCHOOL
-  jf.writeFileSync './.env.json', env
-
-# TODO remove clear-school
-gulp.task 'fetch-school', ['clear-school'], (cb)->
+gulp.task 'fetch-school', ->
   nickname = config.school
   $.util.log "School: ", $.util.colors.cyan("#{nickname}")
 
@@ -145,6 +145,10 @@ gulp.task 'fetch-school', ['clear-school'], (cb)->
       else
         env.SCHOOL = body.data
         jf.writeFileSync './.env.json', env
+
+gulp.task 'clear-school', ->
+  delete env.SCHOOL
+  jf.writeFileSync './.env.json', env
 
 gulp.task 'clean', (cb)->
   del base.dist, cb
@@ -253,27 +257,7 @@ gulp.task 'build', (cb)->
 gulp.task 'serve', ['build'], ->
   gulp.start 'watch'
 
-gulp.task 'deploy', ['build'], (cb)->
-  name  = require('./.dsnames.json')[config.school]
-  spawn = require('child_process').spawn
-  divshot = spawn 'divshot', ['push', env.APP_ENV, '--app', name]
-  divshot.stdout.on 'data', (data)->
-    $.util.log data.toString()
-  divshot.stderr.on 'data', (data)->
-    $.util.log "Error: " + data.toString()
-  divshot.on 'close', (code)->
-    cb()
-
-gulp.task 'deploy-aws', ['build'], ->
-  opts =
-    Bucket: config.domain
-    region: "us-standard"
-    distributionId: cfdists[config.school][env.APP_ENV]
-
-  publisher = $.awspublish.create params: opts
-  headers   = {'Cache-Control': 'max-age=315360000, no-transform, public'}
-  headers["x-amz-acl"] = 'private' if config.production
-
+gulp.task 'deploy', ['build'], ->
   revAll = new $.revAll()
   gulp.src "#{base.dist}/**"
     .pipe revAll.revision()
@@ -281,8 +265,8 @@ gulp.task 'deploy-aws', ['build'], ->
     .pipe publisher.publish(headers)
     .pipe publisher.cache()
     .pipe $.awspublish.reporter()
-    .pipe $.cloudfront(opts)
+    .pipe $.cloudfront(config.aws)
     .pipe publisher.sync()
-    .pipe $.if(not config.production, s3WebUpdate(publisher))
+    .pipe $.if(not config.production, s3WebUpdate())
 
 gulp.task 'default', ['build']

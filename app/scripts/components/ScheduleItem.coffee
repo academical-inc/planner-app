@@ -9,7 +9,7 @@ R             = React.DOM
   MAX_SCHEDULE_NAME_LENGTH } = require '../constants/PlannerConstants'
 
 
-# TODO Test
+# TODO Tests
 ScheduleItem = React.createClass(
 
   mixins: [ItemMixin, IconMixin]

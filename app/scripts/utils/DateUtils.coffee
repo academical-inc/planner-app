@@ -54,18 +54,6 @@ class DateUtils
     date.day day
     date
 
-  @setDate: (date, {dayDelta, newDate}={})->
-    if dayDelta?
-      date = @date date
-      date.date date.date() + dayDelta
-      date
-    else if newDate?
-      date = @date date
-      date.date newDate.date()
-      date
-    else
-      date
-
   @setWeek: (date, week)->
     date = @date date
     date.week week

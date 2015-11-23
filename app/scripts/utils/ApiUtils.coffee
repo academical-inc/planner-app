@@ -21,20 +21,33 @@ class ApiUtils
     _api.students.create user, cb
 
   @getSchedules: (userId, cb)->
-    _api.students.listSchedules userId, cb
+    _api.students.listSchedules userId,
+      includeSections: true
+      cb
 
   @getSchedule: (scheduleId, cb, params={})->
+    params = $.extend(
+      true, {includeSections: true}, params
+    )
     _api.schedules.retrieve scheduleId,
       params
       cb
 
   @createSchedule: (schedule, cb)->
-    _api.schedules.create schedule, cb
+    _api.schedules.create
+      data: schedule
+      params:
+        includeSections: true
+      cb
 
   @deleteSchedule: (scheduleId, cb)->
     _api.schedules.del scheduleId, cb
 
   @saveSchedule: (scheduleId, toSave, cb)->
-    _api.schedules.update scheduleId, toSave, cb
+    _api.schedules.update scheduleId,
+      data: toSave,
+      params:
+        includeSections: true
+      cb
 
 module.exports = ApiUtils

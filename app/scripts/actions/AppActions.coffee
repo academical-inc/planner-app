@@ -9,7 +9,6 @@ WeekActions     = require './WeekActions'
 ModalActions    = require './ModalActions'
 ExportActions   = require './ExportActions'
 SearchActions   = require './SearchActions'
-UiActions       = require './UiActions'
 
 
 # TODO Test All Actions
@@ -24,5 +23,4 @@ module.exports = $.extend(
   ModalActions
   ExportActions
   SearchActions
-  UiActions
 )

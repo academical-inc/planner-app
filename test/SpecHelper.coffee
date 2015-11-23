@@ -64,16 +64,16 @@ class Ajax
     if method == "get"
       if data?
         data = Humps.decamelizeKeys data
-        expect(url.query).toEqual $.param(data)
+        expect(url.query).toEqual $.param(data) + "&camelize=true"
       else
-        expect(url.query).toBeNull()
+        expect(url.query).toEqual "camelize=true"
     else
       reqData = if req._data? then req._data else req.data()
       if data?
         data = Humps.decamelizeKeys data
-        expect(reqData).toEqual data: data
+        expect(reqData).toEqual data: data, camelize: true
       else
-        expect(reqData).toEqual {}
+        expect(reqData).toEqual camelize: true
 
 
 # Private
@@ -90,9 +90,8 @@ class SpecHelper
   @$:         $
 
   @mock$: ({spyFuncs}={})->
-    spyFuncs ?= ["mmenu", "fullCalendar", "timepicker", "modal", "datepicker"]
+    spyFuncs ?= ["trigger", "mmenu", "fullCalendar", "timepicker", "modal", "datepicker"]
     mock$El = @spyObj "mock$El", spyFuncs
-    mock$El.data = @spy "data", retVal: @spyObj("open", ["open"])
     mock$ = @spy "mock$", retVal: mock$El
     [mock$, mock$El]
 

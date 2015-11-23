@@ -8,7 +8,7 @@ PanelItemList = React.createClass(
   mixins: [I18nMixin]
 
   render: ->
-    R.div className: "pla-panel-item-list #{@props.className}",
+    R.div className: "pla-panel-item-list",
       R.h4 className: "list-header", @props.header
       R.h5 className: "list-subheader", @props.subheader if @props.subheader?
       R.div
