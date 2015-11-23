@@ -13,7 +13,7 @@ MessageDialog = React.createClass(
   renderBody: ->
     R.div className: "pla-message-dialog",
       R.div className: "row", @props.message.map (msg, i)->
-        R.p key: "p-#{i}", msg
+        R.p key: "p-#{i}", dangerouslySetInnerHTML: {__html: msg}
 
   render: ->
     @renderModal(
