@@ -1,6 +1,7 @@
 
 React         = require 'react'
 I18nMixin     = require '../mixins/I18nMixin'
+SchoolStore   = require '../stores/SchoolStore'
 {UiConstants} = require '../constants/PlannerConstants'
 LoginDialog   = React.createFactory require './LoginDialog'
 ErrorDialog   = React.createFactory require './ErrorDialog'
@@ -127,7 +128,10 @@ LandingPage = React.createClass(
       }, React.createElement('img', src: '/images/github_logo.png'))))))))
       LoginDialog ref: "loginDialog"
       ErrorDialog ref: "errorDialog", error: @props.error
-      MessageDialog ref: "messageDialog", message: @t("landing.dialogMessage")
+      MessageDialog(
+        ref: "messageDialog",
+        message: @t("landing.dialogMessage.#{SchoolStore.school().nickname}")
+      )
 
 )
 
