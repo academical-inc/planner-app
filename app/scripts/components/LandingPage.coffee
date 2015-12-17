@@ -49,11 +49,11 @@ LandingPage = React.createClass(
         className: 'img-mac'), React.createElement('div', { className: 'container-fluid video-play' }, React.createElement('a', {
         className: 'popup-link'
         ref: 'videoLink'
-        href: 'https://www.youtube.com/watch?v=BazAC2wdhng'
+        href: 'https://www.youtube.com/watch?v=WEhQn5bKHDE'
       }, React.createElement('div', className: 'btn_play')), React.createElement('a', {
         className: 'popup-link'
         ref: 'videoBtn'
-        href: 'https://www.youtube.com/watch?v=BazAC2wdhng'
+        href: 'https://www.youtube.com/watch?v=WEhQn5bKHDE'
       }, React.createElement('h2', null, @t('landing.section1.videoBtn'))))))), React.createElement('section', null, React.createElement('div', { className: 'container-fluid sec2' }, React.createElement('h1', null, @t('landing.section2.title')), React.createElement('h3', null, @t('landing.section2.subtitle')), React.createElement('div', {
         className: 'row'
         id: 'functions'
