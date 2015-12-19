@@ -14,10 +14,14 @@ class SchoolStore extends Store
     _school
 
   nowIsBeforeTermStart: ->
-    DateUtils.now().week() < DateUtils.date(_school.terms[0].startDate).week()
+    DateUtils.now().isBefore(
+      DateUtils.date(_school.terms[0].startDate)
+    )
 
   nowIsAfterTermEnd: ->
-    DateUtils.now().week() > DateUtils.date(_school.terms[0].endDate).week()
+    DateUtils.now().isAfter(
+      DateUtils.date(_school.terms[0].endDate)
+    )
 
   dispatchCallback: (payload)->
     action = payload.action

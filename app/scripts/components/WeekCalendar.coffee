@@ -34,7 +34,7 @@ WeekCalendar = React.createClass(
     {store: EventStore, handler: "onEventsChange"}
   )]
 
-  setDefaultDate : ->
+  getDefaultDate : ->
     beforeTermStart = SchoolStore.nowIsBeforeTermStart()
     afterTermEnd = SchoolStore.nowIsAfterTermEnd()
     if beforeTermStart || @props.defaultDate == CalendarDates.TERM_START
@@ -132,7 +132,7 @@ WeekCalendar = React.createClass(
         events: []
         eventDataTransform: @eventDataTransform
 
-    defaultDate = @setDefaultDate()
+    defaultDate = @getDefaultDate()
 
     @cal.fullCalendar(
       defaultView: "agendaWeek"
