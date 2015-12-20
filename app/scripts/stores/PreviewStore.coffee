@@ -23,10 +23,28 @@ areSameWeekday = (dt1, dt2)->
 areSameMonthAndDay = (dt1, dt2)->
   dt1.month() is dt2.month() and dt1.date() is dt2.date()
 
+haveOverlappingDates = (ev1StDt, ev1EnDt, ev2StDt, ev2EnDt)->
+  ev1EnDt ?= DateUtils.date(ev1StDt)
+  ev2EnDt ?= DateUtils.date(ev2StDt)
+  ev1StDt  = DateUtils.date(ev1StDt).startOf('day')
+  ev2StDt  = DateUtils.date(ev2StDt).startOf('day')
+  ev1EnDt  = DateUtils.date(ev1EnDt).startOf('day')
+  ev2EnDt  = DateUtils.date(ev2EnDt).startOf('day')
+
+  not ((ev1StDt.isAfter(ev2EnDt) or ev1StDt.isSame(ev2EnDt)) or
+       (ev1EnDt.isBefore(ev2StDt) or ev1EnDt.isSame(ev2StDt)))
+
+
 areOverlapping = (ev1, ev2)->
   ev1St = DateUtils.date(ev1.startDt)
   ev2St = DateUtils.date(ev2.startDt)
   return false unless areSameWeekday(ev1St, ev2St)
+  return false unless haveOverlappingDates(
+    ev1St,
+    ev1.recurrence?.repeatUntil,
+    ev2St,
+    ev2.recurrence?.repeatUntil
+  )
 
   ev1En = DateUtils.date(ev1.endDt)
   ev2En = DateUtils.date(ev2.endDt)
