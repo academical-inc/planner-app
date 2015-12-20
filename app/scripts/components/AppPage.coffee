@@ -48,7 +48,8 @@ AppPage = React.createClass(
     if @state.userId?
       _init @state.userId, @props.initialScheduleId
     else
-      AppActions.fetchUser UserStore.user()
+      # Prevent ActionDispatch within an action
+      setTimeout (-> AppActions.fetchUser(UserStore.user())), 0
 
   componentWillUpdate: (nextProps, nextState)->
     if not @state.userId? and nextState.userId?

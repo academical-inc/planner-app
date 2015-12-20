@@ -103,6 +103,7 @@ createSchedule = ->
   newSchedule = ScheduleFactory.create name: I18n.t "scheduleList.defaultName"
   ApiUtils.createSchedule newSchedule, ActionUtils.handleServerResponse(
     # TODO Duplication!! Almost unavoidable
+    # This is beause I don't want to dispatch an action inside an action
     ActionTypes.CREATE_SCHEDULE_SUCCESS
     ActionTypes.CREATE_SCHEDULE_FAIL
     (response)-> schedule: response
