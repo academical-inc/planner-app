@@ -95,7 +95,6 @@ SearchBar = React.createClass(
     section = @state.results[idx]
     @setState
       focusedIndex: idx
-      inputVal: section.courseName
     @addPreview section
     @setState disabledIndex: if PreviewStore.isOverlapping() then idx else null
 
@@ -132,7 +131,8 @@ SearchBar = React.createClass(
     else
       @removePreview()
       @addSection section
-      @refs.input.getDOMNode().blur()
+      # Keep the results open after selecting a class
+      # @refs.input.getDOMNode().blur()
 
   selectResult: (section)->
     section ?= @state.results[@state.focusedIndex]
@@ -155,6 +155,7 @@ SearchBar = React.createClass(
     else
       if @state.results.length is 0
         @setState inputVal: ""
+        @clearSearch()
       else
         @setState results: []
 
@@ -185,7 +186,9 @@ SearchBar = React.createClass(
     if @state.corequisites
       @clearCorequisites()
     else
-      @setState results: [], inputVal: ''
+      # Don't clear search results when the input blurs, its handy to keep them
+      # there
+      # @setState results: [], inputVal: ''
 
   handleInputChange: (e)->
     val = e.target.value
