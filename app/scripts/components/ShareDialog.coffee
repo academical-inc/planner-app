@@ -95,9 +95,6 @@ ShareDialog = React.createClass(
             value: @state.link
             autoComplete: "off"
             readOnly: true
-          R.button
-            className: "btn btn-success"
-            @copyMsg()
       R.div className: "form-group",
         R.label null, @t("shareDialog.socialMsg")
         R.div null,
