@@ -23,6 +23,7 @@ LandingPage = React.createClass(
 
   componentDidMount: ->
     @refs.messageDialog.show() if CLOSED
+    @refs.announcementDialog.show()
     @refs.errorDialog.show() if @props.error?
     $(@refs.videoLink.getDOMNode()).magnificPopup type: 'iframe'
     $(@refs.videoBtn.getDOMNode()).magnificPopup type: 'iframe'
@@ -131,6 +132,10 @@ LandingPage = React.createClass(
       MessageDialog(
         ref: "messageDialog",
         message: @t("landing.dialogMessage.#{SchoolStore.school().nickname}")
+      )
+      MessageDialog(
+        ref: "announcementDialog",
+        message: @t("landing.dialogAnnounce.#{SchoolStore.school().nickname}")
       )
 
 )

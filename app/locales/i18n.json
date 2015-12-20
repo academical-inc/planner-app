@@ -229,6 +229,18 @@
           "Equipo Academical"
         ]
       },
+      "dialogAnnounce": {
+        "uniandes": [
+          "Hola!",
+          "Gracias por toda la retroalimentación que nos han dado! La tenemos muy en cuenta para mejorar Academical constantemente, y estamos trabajando con la universidad para que puedan planear tu horario sin dificultades.",
+          "Cualquier inquietud escríbenos a support@academical.co"
+        ],
+        "cesa": [
+          "Hola!",
+          "Gracias por toda la retroalimentación que nos han dado! La tenemos muy en cuenta para mejorar Academical constantemente, y estamos trabajando con la universidad para que puedan planear tu horario sin dificultades.",
+          "Cualquier inquietud escríbenos a support@academical.co"
+        ]
+      },
       "section1": {
         "title": "YOUR CLASS SCHEDULE",
         "titleStrong": " EASY AND FAST",
@@ -517,6 +529,18 @@
           "En el momento no está disponible la oferta de cursos del 2016-1. Estamos a la espera de que la Universidad nos la envíe para que comiences a planear tu horario de clases. La oferta de cursos estará disponible desde el 18 de Diciembre.",
           "Puedes seguirnos en <a target=\"_blank\" href=\"https://facebook.com/academicalapp\">Facebook</a> donde informaremos cuando la tengamos o si quieres te avisamos dejando tu correo aquí <a target=\"_blank\" href=\"https://goo.gl/mkq1ea\">https://goo.gl/mkq1ea</a>",
           "Equipo Academical"
+        ]
+      },
+      "dialogAnnounce": {
+        "uniandes": [
+          "Hola!",
+          "Gracias por toda la retroalimentación que nos han dado! La tenemos muy en cuenta para mejorar Academical constantemente, y estamos trabajando con la universidad para que puedan planear tu horario sin dificultades.",
+          "Cualquier inquietud escríbenos a support@academical.co"
+        ],
+        "cesa": [
+          "Hola!",
+          "Gracias por toda la retroalimentación que nos han dado! La tenemos muy en cuenta para mejorar Academical constantemente, y estamos trabajando con la universidad para que puedan planear tu horario sin dificultades.",
+          "Cualquier inquietud escríbenos a support@academical.co"
         ]
       },
       "section1": {
