@@ -62,6 +62,13 @@ class EventUtils
       , []
     )
 
+  @concatEvents: (objs)->
+    objs.reduce(
+      (mem, obj)->
+        mem.concat(obj.events or [])
+      , []
+    )
+
   @concatExpandedEvents: (objs)->
     objs.reduce(
       (mem, obj)->

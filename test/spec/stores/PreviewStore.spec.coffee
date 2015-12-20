@@ -127,9 +127,9 @@ describe 'PreviewStore', ->
       @previewEvents[0].startDt = "2015-01-06T10:00:00-05:00"
       @previewEvents[0].endDt   = "2015-01-06T11:20:00-05:00"
       H.rewire PreviewStore,
-        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, false, true
+      @assertPreview @primaryPrev, true, undefined, true
 
     it 'adds correctly when all preview events overlap', ->
       @previewEvents[0].startDt = "2015-01-06T10:00:00-05:00"
@@ -137,41 +137,41 @@ describe 'PreviewStore', ->
       @previewEvents[1].startDt = "2015-01-06T10:00:00-05:00"
       @previewEvents[1].endDt   = "2015-01-06T11:20:00-05:00"
       H.rewire PreviewStore,
-        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, true, true
+      @assertPreview @primaryPrev, true, undefined, true
 
     it 'adds correctly when preview event overlaps with start time', ->
       @previewEvents[0].startDt = "2015-01-06T09:00:00-05:00"
       @previewEvents[0].endDt   = "2015-01-06T10:20:00-05:00"
       H.rewire PreviewStore,
-        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, false, true
+      @assertPreview @primaryPrev, true, undefined, true
 
     it 'adds correctly when preview event overlaps with end time', ->
       @previewEvents[0].startDt = "2015-01-06T11:00:00-05:00"
       @previewEvents[0].endDt   = "2015-01-06T12:20:00-05:00"
       H.rewire PreviewStore,
-        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, false, true
+      @assertPreview @primaryPrev, true, undefined, true
 
     it 'adds correctly when preview event overlaps inside', ->
       @previewEvents[0].startDt = "2015-01-06T10:10:00-05:00"
       @previewEvents[0].endDt   = "2015-01-06T11:00:00-05:00"
       H.rewire PreviewStore,
-        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, false, true
+      @assertPreview @primaryPrev, true, undefined, true
 
     it 'adds correctly when preview event overlaps outside', ->
       @previewEvents[0].startDt = "2015-01-06T09:50:00-05:00"
       @previewEvents[0].endDt   = "2015-01-06T11:30:00-05:00"
       H.rewire PreviewStore,
-        "EventUtils.getSectionEvents": H.spy "s2", retVal: @previewEvents
+        "EventUtils.expandEvents": H.spy "s2", retVal: @previewEvents
       @dispatch @payloads.addPrimary
-      @assertPreview @primaryPrev, true, false, true
+      @assertPreview @primaryPrev, true, undefined, true
 
 
   describe 'when REMOVE_SECTION_PREVIEW received', ->

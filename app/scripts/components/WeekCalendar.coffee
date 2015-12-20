@@ -61,8 +61,8 @@ WeekCalendar = React.createClass(
     id:              event.parent.id
     start:           event.startDt
     end:             event.endDt
-    backgroundColor: 'red' if event.isOverlapping
-    borderColor:     'red' if event.isOverlapping
+    backgroundColor: 'red' if PreviewStore.isOverlapping()
+    borderColor:     'red' if PreviewStore.isOverlapping()
     className:       'dirty-event'
     editable:        false
     allDay:          false
