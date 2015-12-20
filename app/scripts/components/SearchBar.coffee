@@ -118,7 +118,7 @@ SearchBar = React.createClass(
       @refs.input.getDOMNode().blur()
 
   selectSection: (section)->
-    if section.corequisites.length > 0
+    if section.corequisites?.length > 0
       _selectedParent = section
       _lastResults = @state.results.concat []
       _lastFocused = @state.focusedIndex
