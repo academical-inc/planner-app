@@ -80,6 +80,10 @@
         "uniandes": "Seats available",
         "cesa": "Estimated demand"
       },
+      "sectionNumber": {
+        "uniandes": "Section {{number}}",
+        "cesa": "Session {{number}}"
+      },
       "info": {
         "uniandes": "{{credits}} credits - Section {{number}} - {{id}}",
         "cesa": "{{credits}} credits - Session {{number}} - {{id}}"
@@ -365,6 +369,10 @@
       "seatsTT": {
         "uniandes": "Cupos disponibles",
         "cesa": "Demanda estimada"
+      },
+      "sectionNumber": {
+        "uniandes": "Sección {{number}}",
+        "cesa": "Sesión {{number}}"
       },
       "info": {
         "uniandes": "{{credits}} créditos - Sección {{number}} - {{id}}",

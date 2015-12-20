@@ -53,6 +53,9 @@ ResultItem = React.createClass(
         @highlight section.sectionId
         R.span null, " "
         @highlight section.courseCode
+        R.span null, ' - ' + @t("section.sectionNumber.#{school}", {
+          number: section.sectionNumber
+        })
       R.div null,
         @highlight section.courseName
       R.div null,
