@@ -28,10 +28,10 @@ ProfileBox = React.createClass(
         R.span null, @user().name
       R.div
         className: "logout container-fluid"
-        onClick: @logout
         @imgIcon '/images/logout_icon.png'
         R.button
           className: "logout-button"
+          onClick: @logout
           @t("profile.logout")
 
 )
