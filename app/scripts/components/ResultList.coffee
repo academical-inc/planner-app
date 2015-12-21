@@ -16,9 +16,9 @@ ResultList = React.createClass(
   handleResultMouseLeave: (idx)->
     @props.handleResultMouseLeave idx
 
-  handleResultClicked: (result, e)->
+  handleResultClicked: (e)->
     e.preventDefault()
-    @props.handleResultClicked result
+    @props.handleResultClicked()
 
   renderNullItem: (idx)->
     R.li
@@ -35,7 +35,7 @@ ResultList = React.createClass(
       className: className,
       onMouseEnter: @handleResultMouseEnter.bind @, idx
       onMouseLeave: @handleResultMouseLeave.bind @, idx
-      onMouseDown: @handleResultClicked.bind @, result
+      onMouseDown: @handleResultClicked
       ResultItem
         section: result
         query: @props.query

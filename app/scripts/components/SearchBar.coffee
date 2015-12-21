@@ -110,6 +110,7 @@ SearchBar = React.createClass(
       focusedIndex: _lastFocused
 
   selectCorequisite: (coreq)->
+    return unless coreq?
     @removePreview PreviewTypes.PRIMARY
     @removePreview PreviewTypes.SECONDARY
     @addSection _selectedParent
@@ -117,6 +118,7 @@ SearchBar = React.createClass(
     @setState corequisites: false, results: SearchStore.results()
 
   selectSection: (section)->
+    return unless section?
     if section.corequisites?.length > 0
       _selectedParent = section
       _lastResults = @state.results.concat []
@@ -129,9 +131,8 @@ SearchBar = React.createClass(
           @refs.input.getDOMNode().focus()
     else
       @removePreview()
-      @addSection section
-      # Keep the results open after selecting a class
-      # @refs.input.getDOMNode().blur()
+      @setState focusedIndex: null, =>
+        @addSection section
 
   selectResult: (section)->
     section ?= @state.results[@state.focusedIndex]
