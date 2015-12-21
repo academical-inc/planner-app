@@ -13,4 +13,9 @@ class UiActions
     PlannerDispatcher.dispatchViewAction
       type: ActionTypes.TOGGLE_OPTIONS_MENU
 
+  @hideSearchResults: ->
+    PlannerDispatcher.dispatchViewAction
+      type: ActionTypes.CLEAR_SEARCH
+
+
 module.exports = UiActions

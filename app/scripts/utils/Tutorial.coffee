@@ -115,7 +115,9 @@ _steps = [
     onShown: ->
       $('.pla-tutorial.step-4 .btn-success').on 'click', -> Tutorial.hide()
       PreviewStore.addChangeListener hideResults
-      SectionStore.addChangeListener goToSections
+      SectionStore.addChangeListener ->
+        setTimeout(AppActions.hideSearchResults, 0)
+        goToSections()
   }
   {
     reflex: true
