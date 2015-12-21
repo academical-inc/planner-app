@@ -114,8 +114,7 @@ SearchBar = React.createClass(
     @removePreview PreviewTypes.SECONDARY
     @addSection _selectedParent
     @addSection coreq
-    @setState corequisites: false, =>
-      @refs.input.getDOMNode().blur()
+    @setState corequisites: false, results: SearchStore.results()
 
   selectSection: (section)->
     if section.corequisites?.length > 0
