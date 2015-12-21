@@ -6,6 +6,17 @@
     "**/.*",
     "**/node_modules/**"
   ],
+  "headers": [
+    {
+      "source": "**/*.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "max-age=0, s-maxage=3600, proxy-revalidate"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "**",
