@@ -15,7 +15,11 @@ class ChildStoreHelper
     @currentElements = @elementsFor scheduleId
 
   updateSchedule: (schedule)->
-    @setElements schedule.id, schedule[@collection]
+    els = if Array.isArray(schedule[@collection])
+      schedule[@collection].filter (el)-> Object.keys(el).length > 0
+    else
+      schedule[@collection]
+    @setElements schedule.id, els
 
   removeSchedule: (scheduleId)->
     delete @elementsMap[scheduleId]

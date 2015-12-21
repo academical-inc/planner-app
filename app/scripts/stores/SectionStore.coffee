@@ -26,7 +26,7 @@ setCurrent = ->
 removeSection = (sectionId)->
   removed = _.removeElement sectionId
   if removed?
-    if removed.corequisites? and removed.corequisites.length > 0
+    if removed.corequisites?.length > 0
       removed.corequisites.forEach (coreq)->
         _.removeElement coreq.id
     else if removed.corequisiteOfId?
