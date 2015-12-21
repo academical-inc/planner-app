@@ -1,7 +1,7 @@
 
 Store          = require './Store'
 SectionStore   = require './SectionStore'
-DateUtils      = require '../utils/DateUtils'
+_              = require '../utils/DateUtils'
 EventUtils     = require '../utils/EventUtils'
 {ActionTypes}  = require '../constants/PlannerConstants'
 {PreviewTypes} = require '../constants/PlannerConstants'
@@ -17,42 +17,38 @@ _previews[PreviewTypes.SECONDARY] = new Preview
 _isOverlapping = false
 
 
-areSameWeekday = (dt1, dt2)->
-  dt1.weekday() is dt2.weekday()
-
-areSameMonthAndDay = (dt1, dt2)->
-  dt1.month() is dt2.month() and dt1.date() is dt2.date()
-
 haveOverlappingDates = (ev1StDt, ev1EnDt, ev2StDt, ev2EnDt)->
-  ev1EnDt ?= DateUtils.date(ev1StDt)
-  ev2EnDt ?= DateUtils.date(ev2StDt)
-  ev1StDt  = DateUtils.date(ev1StDt).startOf('day')
-  ev2StDt  = DateUtils.date(ev2StDt).startOf('day')
-  ev1EnDt  = DateUtils.date(ev1EnDt).startOf('day')
-  ev2EnDt  = DateUtils.date(ev2EnDt).startOf('day')
+  ev1EnDt ?= _.date(ev1StDt)
+  ev2EnDt ?= _.date(ev2StDt)
+  ev1StDt  = _.date(ev1StDt).startOf('day')
+  ev2StDt  = _.date(ev2StDt).startOf('day')
+  ev1EnDt  = _.date(ev1EnDt).startOf('day')
+  ev2EnDt  = _.date(ev2EnDt).startOf('day')
 
-  not ((ev1StDt.isAfter(ev2EnDt) or ev1StDt.isSame(ev2EnDt)) or
-       (ev1EnDt.isBefore(ev2StDt) or ev1EnDt.isSame(ev2StDt)))
-
+  return not ((ev1StDt.isAfter(ev2EnDt) or ev1StDt.isSame(ev2EnDt)) or
+              (ev1EnDt.isBefore(ev2StDt) or ev1EnDt.isSame(ev2StDt)))
 
 areOverlapping = (ev1, ev2)->
-  ev1St = DateUtils.date(ev1.startDt)
-  ev2St = DateUtils.date(ev2.startDt)
-  return false unless areSameWeekday(ev1St, ev2St)
+  ev1St = _.date(ev1.startDt)
+  ev2St = _.date(ev2.startDt)
   return false unless haveOverlappingDates(
     ev1St,
     ev1.recurrence?.repeatUntil,
     ev2St,
     ev2.recurrence?.repeatUntil
   )
-
-  ev1En = DateUtils.date(ev1.endDt)
-  ev2En = DateUtils.date(ev2.endDt)
-  if not areSameMonthAndDay(ev1St, ev2St)
-    ev2St = DateUtils.setDate(ev2St, newDate: ev1St)
-    ev2En = DateUtils.setDate(ev2En, newDate: ev1En)
-
-  not (ev1St.valueOf() >= ev2En.valueOf() or ev1En.valueOf() <= ev2St.valueOf())
+  ev1En = _.date(ev1.endDt)
+  ev2En = _.date(ev2.endDt)
+  for day in ev1.recurrence.daysOfWeek
+    if day in ev2.recurrence.daysOfWeek
+      t1St = _.setTime(_.date(), ev1St)
+      t1En = _.setTime(_.date(), ev1En)
+      t2St = _.setTime(_.date(), ev2St)
+      t2En = _.setTime(_.date(), ev2En)
+      overlap = not (t1St.valueOf() >= t2En.valueOf() or
+                     t1En.valueOf() <= t2St.valueOf())
+      return true if overlap
+  return false
 
 anyOverlapping = (previewEvents, allSectionEvents)->
   previewEventsLen = previewEvents.length
