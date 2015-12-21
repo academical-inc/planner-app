@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "max-age=1800, must-revalidate"
+          "value": "max-age=0, s-maxage=3600, proxy-revalidate"
         }
       ]
     }
