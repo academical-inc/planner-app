@@ -8,7 +8,7 @@ ErrorDialog   = React.createFactory require './ErrorDialog'
 MessageDialog = React.createFactory require './MessageDialog'
 R             = React.DOM
 
-{CLOSED}      = require '../Env'
+{CLOSED, ANNOUNCE}      = require '../Env'
 
 
 LandingPage = React.createClass(
@@ -23,7 +23,7 @@ LandingPage = React.createClass(
 
   componentDidMount: ->
     @refs.messageDialog.show() if CLOSED
-    @refs.announcementDialog.show()
+    @refs.announcementDialog.show() if ANNOUNCE
     @refs.errorDialog.show() if @props.error?
     $(@refs.videoLink.getDOMNode()).magnificPopup type: 'iframe'
     $(@refs.videoBtn.getDOMNode()).magnificPopup type: 'iframe'

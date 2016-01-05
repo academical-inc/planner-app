@@ -39,7 +39,8 @@ else if $.util.env.staging is true
 else
   "production"
 
-env[env.APP_ENV].CLOSED = $.util.env.close
+env[env.APP_ENV].CLOSED   = $.util.env.close
+env[env.APP_ENV].ANNOUNCE = $.util.env.announce
 
 config =
   production: env.APP_ENV is "production"

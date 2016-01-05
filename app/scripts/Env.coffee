@@ -13,6 +13,7 @@ class Env
   @BUGSNAG_API_KEY:  process.env.BUGSNAG_API_KEY
   @SCHOOL:           process.env.SCHOOL
   @CLOSED:           process.env.CLOSED
+  @ANNOUNCE:         process.env.ANNOUNCE
 
 
 module.exports = Env
