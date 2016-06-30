@@ -164,6 +164,7 @@ class ScheduleStore extends Store
         @emitChange()
       when ActionTypes.GET_SCHEDULES_SUCCESS
         initSchedules action.schedules, action.initialScheduleId
+        createSchedule() if _schedules.length is 0
         @emitChange()
       when ActionTypes.UPDATE_SCHEDULE_NAME
         updateScheduleName action.scheduleId, action.name
