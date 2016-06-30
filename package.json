@@ -78,7 +78,7 @@
     "mustache": "^1.0.0",
     "page": "^1.6.3",
     "react": "^0.13.3",
-    "react-onclickoutside": "^0.2.3",
+    "react-onclickoutside": "0.2.3",
     "superagent": "^0.21.0"
   },
   "browserify-shim": {

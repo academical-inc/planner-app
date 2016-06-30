@@ -1,5 +1,5 @@
 
-Request = require '../api/request'
+Request = require '../api/Request'
 API_KEY = require('../Env').GOOGLE_API_KEY
 {GoogleApiConstants: {
   API_HOST
