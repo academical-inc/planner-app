@@ -19,6 +19,7 @@ _adalConfig = {
   tenant: 'uniandes.edu.co',
   clientId: 'de60bc32-cb18-48ee-8ec5-edf9ed56850b'
   disableRenewal: true
+  redirectUri: 'https://api.academical.co/auth/ad'
   # instance: 'https://uniandes.onmicrosoft.com/academical',
   # TODO add a state parameter
   # extraQueryParameter: 'nux=1',
