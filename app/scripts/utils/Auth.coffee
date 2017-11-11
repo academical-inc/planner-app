@@ -64,18 +64,15 @@ class Auth
 
   @extractUserAndTokenFromURL: (location=window.location)->
     hash = location.hash
-    qs = location.search
-    isAcademicalAuth = /academical_auth/.test(qs)
+    isAcademicalAuth = /academical_auth/.test(hash)
     if isAcademicalAuth
-      parsedQS = QueryString.parse(qs)
+      parsedQS = QueryString.parse(hash)
       if !parsedQS
         return [null, null]
 
       authToken = parsedQS.id_token
-      userId = parsedQS.user_id
       parsedToken  = Auth.decodeJWT(authToken)
       user = UserFactory.create({
-        id: userId,
         email: parsedToken.unique_name,
         name: parsedToken.name,
         auth0UserId: "waad|#{parsedToken.unique_name}",
