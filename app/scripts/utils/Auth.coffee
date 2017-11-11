@@ -78,6 +78,7 @@ class Auth
         id: userId,
         email: parsedToken.unique_name,
         name: parsedToken.name,
+        auth0UserId: "waad|${parsedToken.unique_name}",
       })
       return [user, authToken]
     else
