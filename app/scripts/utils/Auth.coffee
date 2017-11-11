@@ -2,6 +2,7 @@
 _               = require '../utils/Utils'
 Auth0           = require 'auth0-js'
 Adal            = require 'adal-angular'
+QueryString     = require 'query-string'
 Env             = require '../Env'
 SchoolStore     = require '../stores/SchoolStore'
 UserFactory     = require '../factories/UserFactory'
@@ -47,17 +48,49 @@ class Auth
         state: state
         school: school
 
-  @parseHash: (hash=window.location.hash)->
-    result = _auth0.parseHash hash
-    if result?
-      if result.error?
-        throw new AuthError result.error
-      if result.id_token? and result.profile?
-        result.profile['auth0UserId'] = result.profile.sub
-        user      = UserFactory.create result.profile
-        authToken = result.id_token
-        return [user, authToken]
-    [null, null]
+  @base64Decode: (encoded) ->
+    encoded = encoded
+      .replace(/\-/g, '+')
+      .replace(/\_/g, '/')
+
+    return window.atob(encoded)
+
+  @decodeJWT: (jwt)->
+    try
+      encoded = jwt and jwt.split('.')[1]
+      return JSON.parse(Auth.base64decode(encoded))
+    catch error
+      throw new AuthError error.message
+
+  @extractUserAndTokenFromURL: (location=window.location)->
+    hash = location.hash
+    qs = location.search
+    isAcademicalAuth = /academical_auth/.test(qs)
+    if isAcademicalAuth
+      parsedQS = QueryString.parse(qs)
+      if !parsedQS
+        return [null, null]
+
+      authToken = parsedQS.id_token
+      userId = parsedQS.user_id
+      parsedToken  = Auth.decodeJWT(authToken)
+      user = UserFactory.create({
+        id: userId,
+        email: parsedToken.unique_name,
+        name: parsedToken.name,
+      })
+      return [user, authToken]
+    else
+      result = _auth0.parseHash hash
+      if result?
+        if result.error?
+          throw new AuthError result.error
+        if result.id_token? and result.profile?
+          result.profile['auth0UserId'] = result.profile.sub
+          user      = UserFactory.create result.profile
+          authToken = result.id_token
+          return [user, authToken]
+      return [null, null]
 
 
 module.exports = Auth

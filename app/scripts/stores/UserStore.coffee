@@ -50,7 +50,7 @@ class UserStore extends Store
         @emitChange()
         return true
 
-      [_user, _authToken] = Auth.parseHash()
+      [_user, _authToken] = Auth.extractUserAndTokenFromURL()
       if loggedIn()
         Lscache.set tokenStorage, _authToken, expiration
         Lscache.set userStorage, _user, expiration
