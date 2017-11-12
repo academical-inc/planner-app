@@ -52,7 +52,7 @@ class Auth
   @decodeJWT: (jwt)->
     try
       encoded = jwt and jwt.split('.')[1]
-      return JSON.parse(Auth.base64decode(encoded))
+      return JSON.parse(Auth.base64Decode(encoded))
     catch error
       throw new AuthError error.message
 
