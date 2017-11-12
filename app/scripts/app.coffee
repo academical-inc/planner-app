@@ -28,8 +28,11 @@ I18n.init if _.qs("lang")? then _.qs("lang") else school.locale
 defRoute = Router.defRoute
 goTo     = Router.goTo
 
+# TODO this was a hack to allow users that login from the schedule page to be
+# redirected to the schedule page upon login. We should have a better way of
+# doing this
 # Check for route overrides in state.
-Router.redirect _.hs('state') if _.hs('state')?
+# Router.redirect _.hs('state') if _.hs('state')?
 
 defRoute '/', ->
   try
