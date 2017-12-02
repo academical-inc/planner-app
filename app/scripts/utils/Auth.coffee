@@ -63,7 +63,8 @@ class Auth
       return [null, null]
     authToken = parsedHash.id_token
     parsedToken  = Auth.decodeJWT(authToken)
-    isAcademicalAuth = parsedToken.iss isnt 'https://academical.auth0.com'
+    issuer = new URL(parsedToken.iss)
+    isAcademicalAuth = issuer.hostname isnt AuthConstants.AUTH0_ISSUER
     if isAcademicalAuth
       user = UserFactory.create({
         email: parsedToken.unique_name,
@@ -82,6 +83,5 @@ class Auth
           authToken = result.id_token
           return [user, authToken]
       return [null, null]
-
 
 module.exports = Auth

@@ -87,6 +87,7 @@ module.exports =
     AUTH0_SCOPE: "openid name email picture app_metadata"
     TOKEN_EXPIRTATION: 540  # 9 hours in minutes
     TOKEN_EXPIRATION_MS: 32400000  # 9 hours in milliseconds
+    AUTH0_ISSUER: "academical.auth0.com"
     Providers: {
       WAAD: "waad"
     }
