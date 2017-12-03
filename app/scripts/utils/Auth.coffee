@@ -18,7 +18,7 @@ _auth0 = new Auth0
 _adalConfig = {
   tenant: 'uniandes.edu.co',
   clientId: 'de60bc32-cb18-48ee-8ec5-edf9ed56850b'
-  disableRenewal: true
+  navigateToLoginRequestUrl: false
 }
 
 _adal = new Adal(_adalConfig)
@@ -56,6 +56,18 @@ class Auth
     catch error
       throw new AuthError error.message
 
+  @verifyWithADAL: (hash)->
+    errored = false
+    _adal.callback = (errorDesc, token, error) ->
+      if !!errorDesc or !!error
+        # Can't throw error inside ADAL callback otherwise it will swallow it
+        errored = true
+    _adal.handleWindowCallback(hash)
+
+    if errored
+      throw new AuthError 'Errored during ADAL verification'
+    return true
+
   @extractUserAndTokenFromURL: (location=window.location)->
     hash = location.hash
     parsedHash = QueryString.parse(hash)
@@ -63,9 +75,8 @@ class Auth
       return [null, null]
     authToken = parsedHash.id_token
     parsedToken  = Auth.decodeJWT(authToken)
-    issuer = new URL(parsedToken.iss)
-    isAcademicalAuth = issuer.hostname isnt AuthConstants.AUTH0_ISSUER
-    if isAcademicalAuth
+    isAcademicalAuth = parsedToken.iss isnt 'https://academical.auth0.com'
+    if isAcademicalAuth and Auth.verifyWithADAL(hash)
       user = UserFactory.create({
         email: parsedToken.unique_name,
         name: parsedToken.name,
