@@ -6,6 +6,6 @@ class AuthError extends AcademicalError
 
   constructor: (@requestError)->
     @message = I18n.t "errors.authError"
-    super()
+    super(@message)
 
 module.exports = AuthError
