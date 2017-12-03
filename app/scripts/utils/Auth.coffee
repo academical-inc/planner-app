@@ -70,10 +70,14 @@ class Auth
 
   @extractUserAndTokenFromURL: (location=window.location)->
     hash = location.hash
+    if !hash
+      return [null, null]
     parsedHash = QueryString.parse(hash)
-    if !parsedHash
+    if !parsedHash or Object.keys(parsedHash).length is 0
       return [null, null]
     authToken = parsedHash.id_token
+    if !authToken
+      return [null, null]
     parsedToken  = Auth.decodeJWT(authToken)
     issuer = new URL(parsedToken.iss)
     isAcademicalAuth = issuer.hostname isnt AuthConstants.AUTH0_ISSUER
