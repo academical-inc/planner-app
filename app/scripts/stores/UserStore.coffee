@@ -1,19 +1,25 @@
 
-$       = require 'jquery'
-Lscache = require 'lscache'
-Store   = require './Store'
-Auth    = require '../utils/Auth'
+$         = require 'jquery'
+Lscache   = require 'lscache'
+Store     = require './Store'
+Auth      = require '../utils/Auth'
+AuthError = require '../errors/AuthError'
 
-{ActionTypes, AuthConstants} = require '../constants/PlannerConstants'
+{ActionTypes, AuthConstants, Pages} = require '../constants/PlannerConstants'
 
 
 # Private
+TOKEN_RENEWAL_INTERVAL = 5 * 60 * 1000 # 5 minutes
+
 _user = null
 _authToken = null
+_interval = null
 
 clear = ->
+  clearInterval(_interval)
   _authToken = null
   _user      = null
+  _interval  = null
 
 loggedIn = ->
   _authToken? and _user?
@@ -27,6 +33,21 @@ updateUser = (user)->
   _user = $.extend true, {}, _user, user
   Lscache.set AuthConstants.USER_STORAGE, _user
 
+onTokenRenewed = (errorDesc, token, error)->
+  if !loggedIn()
+    return
+  if !!errorDesc or !!error
+    logout()
+    err = new AuthError('Could not renew token')
+    Router = require '../utils/Router'
+    Router.goTo Pages.LANDING, error: err.message
+  else
+    _authToken = token
+
+renewAuthToken = ->
+  if !loggedIn()
+    return
+  Auth.renewAuthToken(onTokenRenewed)
 
 # TODO Test
 class UserStore extends Store
@@ -54,6 +75,8 @@ class UserStore extends Store
       if loggedIn()
         Lscache.set tokenStorage, _authToken, expiration
         Lscache.set userStorage, _user, expiration
+        clearInterval(_interval)
+        _interval = setInterval(renewAuthToken, TOKEN_RENEWAL_INTERVAL)
         @emitChange()
         true
       else

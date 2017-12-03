@@ -100,4 +100,7 @@ class Auth
           return [user, authToken]
       return [null, null]
 
+  @renewAuthToken: (cb)->
+    _adal.acquireToken(_adalConfig.clientId, cb)
+
 module.exports = Auth
