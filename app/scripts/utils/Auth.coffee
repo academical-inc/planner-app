@@ -32,7 +32,6 @@ class Auth
     state=window.location.pathname,
     school=SchoolStore.school().nickname
   )->
-    # TODO Configure parameters sent to ADAL
     if connection is 'uniandes.edu.co'
       _adal.login()
     else

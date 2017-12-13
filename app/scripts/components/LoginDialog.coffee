@@ -8,6 +8,12 @@ SchoolStore   = require '../stores/SchoolStore'
 {UiConstants} = require '../constants/PlannerConstants'
 R             = React.DOM
 
+_onLoginCallback = null
+
+executeOnLoginCallback = ->
+  if !!_onLoginCallback
+    _onLoginCallback()
+    _onLoginCallback = null
 
 LoginDialog = React.createClass(
 
@@ -15,7 +21,11 @@ LoginDialog = React.createClass(
 
   login: (connection)->
     @setState selected: connection
+    executeOnLoginCallback()
     AppActions.login connection
+
+  registerOnLoginCallback: (callback) ->
+    _onLoginCallback = callback
 
   getInitialState: ->
     selected: null

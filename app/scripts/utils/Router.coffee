@@ -1,15 +1,19 @@
 
-Page           = require 'page'
-React          = require 'react'
-I18n           = require './I18n'
-{Pages}        = require '../constants/PlannerConstants'
-NavError       = require '../errors/NavError'
-NavErrorStore  = require '../stores/NavErrorStore'
-AuthErrorStore = require '../stores/AuthErrorStore'
-UserStore      = require '../stores/UserStore'
+Page                     = require 'page'
+React                    = require 'react'
+I18n                     = require './I18n'
+{RouterConstants, Pages} = require '../constants/PlannerConstants'
+NavError                 = require '../errors/NavError'
+NavErrorStore            = require '../stores/NavErrorStore'
+AuthErrorStore           = require '../stores/AuthErrorStore'
+UserStore                = require '../stores/UserStore'
+Lscache                  = require 'lscache'
 
 render = (component)->
   React.render component, document.body
+
+getRedirectRequest = ->
+    Lscache.get RouterConstants.REDIRECT_STORAGE
 
 # TODO Test
 class Router
@@ -42,12 +46,27 @@ class Router
     else
       window.location.href = path
 
+  @createRedirectRequest: (path) ->
+    expirationTime = 5 # Minutes
+    Lscache.set RouterConstants.REDIRECT_STORAGE,
+                { redirectPath: path }, expirationTime
+
+  @cleanRedirectRequests: ->
+    Lscache.remove RouterConstants.REDIRECT_STORAGE
+
+  @executeRedirectRequests: ->
+    redirectRequest = getRedirectRequest()
+    if !!redirectRequest
+      @cleanRedirectRequests()
+      @redirect redirectRequest.redirectPath
+
   @defRoute: (path, cb)->
     Page path, cb
 
   @route: ->
     @defRoute '*', =>
       @goTo Pages.ERROR, code: 404, msg: I18n.t "errors.notFound"
+
     Page()
 
 

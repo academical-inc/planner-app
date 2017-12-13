@@ -28,21 +28,18 @@ I18n.init if _.qs("lang")? then _.qs("lang") else school.locale
 defRoute = Router.defRoute
 goTo     = Router.goTo
 
-# TODO this was a hack to allow users that login from the schedule page to be
-# redirected to the schedule page upon login. We should have a better way of
-# doing this
-# Check for route overrides in state.
-# Router.redirect _.hs('state') if _.hs('state')?
-
 defRoute '/', ->
   try
-    initialScheduleId = _.qs('open-schedule') if _.qs('open-schedule')
     if UserStore.isLoggedIn()
       AppActions.logout() if Env.CLOSED
+      Router.executeRedirectRequests()
+
+      initialScheduleId = _.qs('open-schedule') if _.qs('open-schedule')
       goTo Pages.APP, ui: school.appUi, initialScheduleId: initialScheduleId
     else
       goTo Pages.LANDING
   catch e
+    Router.cleanRedirectRequests()
     if e instanceof AuthError
       goTo Pages.LANDING, error: e.message
     else

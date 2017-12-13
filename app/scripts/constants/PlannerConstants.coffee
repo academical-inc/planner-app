@@ -81,6 +81,9 @@ module.exports =
     "SINGLE_SCHEDULE"
     "ERROR"
   }
+  RouterConstants: {
+    REDIRECT_STORAGE: "academical:redirect-request"
+  }
   AuthConstants: {
     TOKEN_STORAGE: "academical:auth0-token"
     USER_STORAGE: "academical:user"

@@ -50,6 +50,9 @@ SchedulePage = React.createClass(
 
   promptForLogin: ->
     @refs.loginDialog.show()
+    @refs.loginDialog.registerOnLoginCallback(->
+      Router.createRedirectRequest window.location.pathname
+    )
 
   duplicateSchedule: ->
     userId = @state.userId
