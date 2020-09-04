@@ -2255,6 +2255,16 @@ fbjs@0.1.0-alpha.7:
     promise "^7.0.3"
     whatwg-fetch "^0.9.0"
 
+fbjs@^0.3.1:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.3.2.tgz#033a540595084b5de3509a405d06f1a2a8e5b9fb"
+  dependencies:
+    core-js "^1.0.0"
+    loose-envify "^1.0.0"
+    promise "^7.0.3"
+    ua-parser-js "^0.7.9"
+    whatwg-fetch "^0.9.0"
+
 fbjs@^0.8.4:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
@@ -5385,11 +5395,12 @@ react-onclickoutside@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-0.2.3.tgz#85e305765c51d14e1a9137d7f13062db28425787"
 
-react@^0.13.3:
-  version "0.13.3"
-  resolved "https://registry.yarnpkg.com/react/-/react-0.13.3.tgz#a2dfa85335d7dc02b82b482f089582e64cc13356"
+react@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-0.14.0.tgz#72e7c69233b082e37e1bbd3674a943db72d8f407"
   dependencies:
     envify "^3.0.0"
+    fbjs "^0.3.1"
 
 read-all-stream@^3.0.0:
   version "3.1.0"
