@@ -73,7 +73,7 @@
     "bugsnag-js": "^2.4.8",
     "classnames": "^1.2.0",
     "compression": "^1.4.0",
-    "express": "^4.11.2",
+    "express": "^4.17.3",
     "flux": "^2.0.1",
     "lscache": "^1.0.5",
     "mustache": "^1.0.0",
